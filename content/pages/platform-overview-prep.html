@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Platform Overview — Expansion Prep Pack · BlueWhale Stack</title>
+<style>
+  :root {
+    --brand: #002da1;
+    --brand-700: #002277;
+    --accent: #0891a8;
+    --ink: #0f172a;
+    --muted: #475569;
+    --line: #e2e8f0;
+    --bg-soft: #f8fafc;
+    --bg-brand: #eef2ff;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    line-height: 1.6;
+    margin: 0;
+    background: #fff;
+  }
+  .page { max-width: 880px; margin: 0 auto; padding: 56px 40px 96px; }
+  header.cover {
+    border-bottom: 4px solid var(--brand);
+    padding-bottom: 24px; margin-bottom: 40px;
+  }
+  .kicker { color: var(--brand); font-weight: 700; letter-spacing: .12em; text-transform: uppercase; font-size: 12px; }
+  h1 { font-size: 34px; line-height: 1.15; margin: 8px 0 6px; color: var(--ink); }
+  .subtitle { color: var(--muted); font-size: 15px; margin: 0; }
+  h2 {
+    font-size: 23px; margin: 48px 0 14px; padding-top: 18px;
+    border-top: 2px solid var(--line); color: var(--brand-700);
+  }
+  h3 { font-size: 17px; margin: 28px 0 8px; color: var(--ink); }
+  h4 { font-size: 14px; margin: 18px 0 6px; color: var(--accent); text-transform: uppercase; letter-spacing: .06em; }
+  p, li { font-size: 14.5px; color: #1e293b; }
+  ul, ol { padding-left: 22px; }
+  li { margin: 4px 0; }
+  code {
+    background: var(--bg-soft); border: 1px solid var(--line); border-radius: 4px;
+    padding: 1px 5px; font-size: 12.5px; font-family: "SFMono-Regular", Consolas, monospace; color: var(--brand-700);
+  }
+  pre {
+    background: var(--ink); color: #e2e8f0; padding: 14px 16px; border-radius: 8px;
+    overflow-x: auto; font-size: 12.5px; line-height: 1.5;
+  }
+  pre code { background: none; border: none; color: inherit; padding: 0; }
+  table {
+    width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 13px;
+  }
+  th, td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: var(--bg-brand); color: var(--brand-700); font-weight: 700; }
+  tbody tr:nth-child(even) { background: var(--bg-soft); }
+  .callout {
+    background: var(--bg-soft); border-left: 4px solid var(--brand);
+    padding: 12px 18px; border-radius: 0 8px 8px 0; margin: 16px 0; font-size: 13.5px;
+  }
+  .callout.warn { border-left-color: #d97706; background: #fffbeb; }
+  .callout.good { border-left-color: var(--accent); background: #ecfeff; }
+  .tag { display: inline-block; background: var(--brand); color: #fff; border-radius: 999px; padding: 1px 9px; font-size: 11px; font-weight: 700; vertical-align: middle; }
+  .new { background: var(--accent); }
+  .toc { background: var(--bg-soft); border: 1px solid var(--line); border-radius: 10px; padding: 18px 22px; margin: 8px 0 8px; }
+  .toc ol { margin: 6px 0 0; }
+  .meta { color: var(--muted); font-size: 12.5px; }
+  hr { border: none; border-top: 1px solid var(--line); margin: 32px 0; }
+  .check { list-style: none; padding-left: 4px; }
+  .check li::before { content: "☐ "; color: var(--brand); font-weight: 700; }
+  @media print {
+    .page { padding: 0 0 40px; max-width: none; }
+    h2 { page-break-after: avoid; }
+    table, pre, .callout { page-break-inside: avoid; }
+    a { color: var(--ink); text-decoration: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="cover">
+  <div class="kicker">Prep / Draft Workspace · Internal</div>
+  <h1>Platform Overview — Expansion Prep Pack</h1>
+  <p class="subtitle">Target page: <code>/platform</code> · BlueWhale Stack website · Prepared 2026-06-20</p>
+</header>
+
+<div class="callout">
+  <strong>Status:</strong> 🟢 Prep / draft. This is the staging document for the expanded
+  Platform Overview page. Nothing here is live yet — copy, materials and image briefs are
+  finalized here, then ported into <code>content/platform.ts</code> +
+  <code>app/platform/page.tsx</code> in an apply pass.<br /><br />
+  <strong>Goal of this pass:</strong> expand the current 8-section page into a richer,
+  complete overview — add proof, a how-it-works flow, deeper module/integration detail,
+  an honest comparison, editions context, outcomes and an FAQ — without losing the tight narrative.
+</div>
+
+<div class="callout good">
+  <strong>Sources of truth (do not contradict):</strong> <code>content/platform.ts</code>,
+  <code>content/modules.ts</code> (17 modules), <code>content/company.ts</code> (clouds,
+  compliance, headlineStats), <code>content/home.ts</code> (howItWorks, testimonials),
+  <code>content/editions.ts</code>.
+</div>
+
+<div class="callout warn">
+  <strong>Honesty guardrails:</strong>
+  <ul style="margin:8px 0 0">
+    <li><code>headlineStats</code> in <code>company.ts</code> are labelled <em>platform design targets</em> — keep metrics framed as targets/typical ranges, not guaranteed results.</li>
+    <li>Compliance: ISO 27001 and SOC 2 are <strong>"in progress"</strong> — never imply certified.</li>
+    <li>Numbers must trace back to existing content (no invented figures).</li>
+  </ul>
+</div>
+
+<div class="toc">
+  <strong>Contents</strong>
+  <ol>
+    <li>Page goals &amp; audience</li>
+    <li>Expanded section map (8 → 17 sections)</li>
+    <li>Section-by-section content</li>
+    <li>New content keys for <code>platform.ts</code></li>
+    <li>Image &amp; diagram briefs</li>
+    <li>Open questions before apply</li>
+    <li>Apply checklist</li>
+  </ol>
+</div>
+
+<h2>1 · Page goals &amp; audience</h2>
+<p><strong>Primary job of the page:</strong> convince a technical-but-budget-owning buyer
+(Head of Cloud / Platform, CISO, CTO, infra director) that BlueWhale Stack is <em>one</em>
+governed control plane that replaces a stack of point tools — across public cloud, private
+cloud, hybrid and on-prem — and is safe for regulated/sovereign environments.</p>
+
+<p><strong>What the visitor should be able to do after this page:</strong></p>
+<ol>
+  <li>Understand <em>what</em> the platform is in one sentence.</li>
+  <li>See <em>why</em> one platform beats their current tool sprawl (with a concrete comparison).</li>
+  <li>Trace <em>how</em> it works end to end (discover → govern → migrate → optimize).</li>
+  <li>Grasp the <em>architecture</em> (control plane over everything + real stack underneath).</li>
+  <li>Know it's <em>deployable their way</em> (SaaS / BYOC / Sovereign / On-prem) and <em>safe</em>.</li>
+  <li>Take the next step (Book a demo / See editions).</li>
+</ol>
+<p><strong>Tone:</strong> confident, concrete, engineering-credible. Lead with nouns and
+numbers, not adjectives. Avoid "revolutionary / cutting-edge / seamless."</p>
+
+<h2>2 · Expanded section map</h2>
+<p>Current page = 8 sections. Proposed expanded page = <strong>15+ sections</strong>
+(new ones tagged <span class="tag new">NEW</span>). Order is tuned for narrative momentum:
+hook → proof → problem → solution → how → architecture → depth → trust → flexibility →
+outcomes → answer objections → close.</p>
+
+<table>
+  <thead><tr><th>#</th><th>Section</th><th>Status</th><th>Bg</th><th>Content keys</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>Hero</td><td>refine</td><td>dark</td><td><code>platformHero</code> + <code>heroStats</code> <span class="tag new">NEW</span></td></tr>
+    <tr><td>2</td><td>Proof / stats bar</td><td><span class="tag new">NEW</span></td><td>light</td><td><code>platformStats</code></td></tr>
+    <tr><td>3</td><td>The problem (sprawl)</td><td><span class="tag new">NEW</span></td><td>light</td><td><code>platformProblem</code></td></tr>
+    <tr><td>4</td><td>One platform vs tool sprawl (comparison table)</td><td>expand</td><td>light</td><td><code>replaces</code> → <code>comparison</code></td></tr>
+    <tr><td>5</td><td>How it works (4-step flow)</td><td><span class="tag new">NEW</span></td><td>dark</td><td><code>howItWorksPlatform</code></td></tr>
+    <tr><td>6</td><td>Architecture — single control plane (layer map)</td><td>keep</td><td>dark</td><td>inline + <code>controlPlaneOutcomes</code></td></tr>
+    <tr><td>7</td><td>System architecture (under the hood)</td><td>keep</td><td>light</td><td><code>ArchitectureDiagram</code></td></tr>
+    <tr><td>8</td><td>The 17 modules (explorer + group tiles)</td><td>expand</td><td>light</td><td><code>ModuleExplorer</code> + <code>moduleGroupTiles</code></td></tr>
+    <tr><td>9</td><td>Integrations &amp; connectors</td><td><span class="tag new">NEW</span></td><td>dark</td><td><code>integrations</code></td></tr>
+    <tr><td>10</td><td>Capability pillars (6)</td><td>keep</td><td>light</td><td><code>pillars</code></td></tr>
+    <tr><td>11</td><td>Whale AI (4 tiers)</td><td>expand</td><td>dark</td><td><code>whaleTiers</code> + <code>whaleIntro</code></td></tr>
+    <tr><td>12</td><td>Deployment models (4)</td><td>expand</td><td>light</td><td><code>deploymentModels</code> + compare row</td></tr>
+    <tr><td>13</td><td>Security &amp; compliance posture</td><td>keep</td><td>light</td><td><code>securityPosture</code> + <code>compliance</code></td></tr>
+    <tr><td>14</td><td>Shaped per edition (strip)</td><td><span class="tag new">NEW</span></td><td>dark</td><td><code>editions</code> (reuse)</td></tr>
+    <tr><td>15</td><td>Outcomes / proof quotes</td><td><span class="tag new">NEW</span></td><td>light</td><td><code>testimonials</code> (reuse)</td></tr>
+    <tr><td>16</td><td>FAQ</td><td><span class="tag new">NEW</span></td><td>light</td><td><code>platformFaq</code></td></tr>
+    <tr><td>17</td><td>Final CTA</td><td><span class="tag new">NEW</span></td><td>dark</td><td><code>ctaSection</code> (reuse)</td></tr>
+  </tbody>
+</table>
+<div class="callout">Visual rhythm: alternate light / dark sections so the page breathes.
+Dark sections (hero, how-it-works, architecture, integrations, Whale AI, editions strip,
+CTA) carry the "command center" mood; light sections carry detail and proof.</div>
+
+<h2>3 · Section-by-section content</h2>
+
+<h3>1 · Hero <span class="meta">(refine)</span></h3>
+<ul>
+  <li><strong>Eyebrow:</strong> Platform</li>
+  <li><strong>H1:</strong> One platform. <em>Every cloud</em>, governed.</li>
+  <li><strong>Sub:</strong> (keep) BlueWhale Stack is a hyperscaler-neutral cloud management platform — inventory, provisioning, FinOps, security, ITSM, observability, migration and AI, unified in a single control plane across public cloud, private cloud, hybrid and on-premise data centers.</li>
+  <li><strong>Primary CTA:</strong> Book a demo → <code>/contact</code></li>
+  <li><strong>Secondary CTA:</strong> See editions → <code>/editions</code></li>
+  <li><span class="tag new">NEW</span> <strong>Trust microcopy:</strong> "Deploy as SaaS, in your own cloud, or fully air-gapped. No lock-in."</li>
+  <li><span class="tag new">NEW</span> <strong>Hero stat chips (3):</strong> 9+ clouds &amp; hypervisors · 17 modules, 1 control plane · 20–30% typical cloud savings</li>
+</ul>
+<pre><code>export const heroStats = [
+  { value: "9+",      label: "clouds &amp; hypervisors" },
+  { value: "17",      label: "modules · 1 control plane" },
+  { value: "20–30%",  label: "typical cloud savings" },
+];</code></pre>
+<p class="meta">Image: Brief H-1 (hero ambient control-plane visual).</p>
+
+<h3>2 · Proof / stats bar <span class="tag new">NEW</span> <span class="meta">(light)</span></h3>
+<p>Slim band of 4 headline metrics under the hero — instant credibility. Reuse
+<code>headlineStats</code> from <code>company.ts</code>.</p>
+<ul>
+  <li>20–30% — Cloud cost reduction via FinOps</li>
+  <li>9+ — Clouds &amp; hypervisors supported</li>
+  <li>5 — Editions for every operating model</li>
+  <li>99.9%+ — Platform SLA (SaaS)</li>
+</ul>
+<p><strong>Microcopy:</strong> "Figures are platform targets and typical customer ranges."</p>
+
+<h3>3 · The problem <span class="tag new">NEW</span> <span class="meta">(light)</span></h3>
+<ul>
+  <li><strong>Eyebrow:</strong> The problem</li>
+  <li><strong>Title:</strong> Multi-cloud got complex faster than teams could staff for it</li>
+</ul>
+<ol>
+  <li><strong>Cloud sprawl</strong> — AWS, Azure, GCP and on-prem each live in their own console. No one has a single map of the estate.</li>
+  <li><strong>Blind spend</strong> — Cloud bills climb ~28% a year, yet most orgs can't say which team owns which cost.</li>
+  <li><strong>Compliance drag</strong> — Audits mean weeks of manual evidence-gathering across disconnected, region-specific tooling.</li>
+</ol>
+<p class="meta">New key <code>platformProblem</code> (icons: Network, TrendingUp, ShieldAlert). Image: optional Brief D-2.</p>
+
+<h3>4 · One platform vs tool sprawl <span class="meta">(expand)</span></h3>
+<p>Keep the before→after blocks and add a comparison table mapping each category to the
+legacy tool and the BlueWhale module that absorbs it.</p>
+<ul>
+  <li><strong>Eyebrow:</strong> Why a platform</li>
+  <li><strong>Title:</strong> One platform instead of a tool sprawl</li>
+  <li><strong>Sub:</strong> BlueWhale Stack consolidates the disconnected tools teams stitch together — into one governed control plane that shares one identity model, one audit trail, and one data tier.</li>
+</ul>
+<table>
+  <thead><tr><th>What you run today</th><th>Typical point tool</th><th>BlueWhale Stack module</th></tr></thead>
+  <tbody>
+    <tr><td>Cost &amp; FinOps</td><td>Flexera / Cloudability</td><td>FinOps &amp; Billing (Whalenomics)</td></tr>
+    <tr><td>Monitoring &amp; APM</td><td>Datadog</td><td>Observe (OpenTelemetry)</td></tr>
+    <tr><td>ITSM &amp; CMP</td><td>ServiceNow</td><td>ITSM + Provisioning &amp; Catalog</td></tr>
+    <tr><td>Infrastructure-as-Code</td><td>Terraform / Pulumi</td><td>WhaleForge IaC + Landing Zone Builder</td></tr>
+    <tr><td>CSPM &amp; compliance</td><td>Prisma / Wiz</td><td>Security &amp; Compliance (Prowler-based CSPM)</td></tr>
+    <tr><td>DCIM</td><td>Legacy DCIM suites</td><td>DCIM + Capacity Planning</td></tr>
+    <tr><td>Identity &amp; PAM</td><td>Okta + standalone PAM</td><td>Identity &amp; Access (Whale IAM + PAM)</td></tr>
+  </tbody>
+</table>
+<p><strong>Closing line:</strong> "Same outcomes, one platform — so nothing falls between the tools."</p>
+<p class="meta">New key <code>comparison</code> — each module cell links to <code>/modules/[slug]</code>.</p>
+
+<h3>5 · How it works <span class="tag new">NEW</span> <span class="meta">(dark)</span></h3>
+<p>4-step horizontal flow — the spine of the story. Reuse <code>home.ts &gt; howItWorks</code>.</p>
+<ul>
+  <li><strong>Eyebrow:</strong> How it works</li>
+  <li><strong>Title:</strong> From connected to optimized — in one platform</li>
+</ul>
+<ol>
+  <li><strong>Discover &amp; Assess</strong> — Connect cloud accounts and on-prem. Auto-discover all resources and get a cloud readiness score within hours.</li>
+  <li><strong>Govern &amp; Secure</strong> — Apply centralized RBAC, compliance frameworks, and data-residency rules across every environment.</li>
+  <li><strong>Migrate &amp; Provision</strong> — Execute structured migrations with pre-built runbooks; provision via self-service with governance guardrails.</li>
+  <li><strong>Optimize &amp; Scale</strong> — Continuously right-size, enforce budgets, and automate — scale cloud operations without adding headcount.</li>
+</ol>
+<p class="meta">Image: Brief D-3 (4-step flow SVG).</p>
+
+<h3>6 · Architecture — single control plane <span class="meta">(keep, polish)</span></h3>
+<p>Keep the signature layered map (clouds row → control plane with module groups →
+outcomes row). Polish: move outcomes to a content key; link module chips to modules.</p>
+<ul>
+  <li><strong>Eyebrow:</strong> Architecture</li>
+  <li><strong>Title:</strong> A single control plane over everything</li>
+  <li><strong>Sub:</strong> Connect every cloud and data center; govern, optimize and automate from one layer.</li>
+  <li><strong>Outcomes row (4):</strong> −28% cloud spend · 97% compliance score · RPO &lt; 1hr · Govern at scale</li>
+</ul>
+<p class="meta">New key <code>controlPlaneOutcomes</code>. Image: Brief D-1 (upgrade inline JSX to SVG).</p>
+
+<h3>7 · System architecture — under the hood <span class="meta">(keep)</span></h3>
+<ul>
+  <li><strong>Eyebrow:</strong> System architecture</li>
+  <li><strong>Title:</strong> What runs under the hood</li>
+  <li><strong>Sub:</strong> (keep) A Next.js web app and a NestJS API gateway over Postgres (row-level security), Redis and Meilisearch — with queue-driven workers, AWS/Azure/GCP connectors, and a Go edge agent for on-prem.</li>
+</ul>
+<p class="meta">Image: Brief D-4 (system/stack diagram — replaces placeholder).</p>
+
+<h3>8 · The 17 modules <span class="meta">(expand)</span></h3>
+<p>Keep the interactive <code>ModuleExplorer</code>; add 5 group deep-tiles.</p>
+<ul>
+  <li><strong>Eyebrow:</strong> Modules</li>
+  <li><strong>Title:</strong> One platform, 17 modules</li>
+  <li><strong>Sub:</strong> A shared platform, gated per edition. Five layers, from cloud foundation to AI.</li>
+</ul>
+<table>
+  <thead><tr><th>Group</th><th>One-liner</th><th>Modules</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Foundation</strong></td><td>Connect, map, and govern access to every environment.</td><td>Identity &amp; Access · Cloud Connectors · Inventory &amp; URM · Provisioning &amp; Catalog · Audit Logs</td></tr>
+    <tr><td><strong>Operations</strong></td><td>Run, observe, secure and move workloads day to day.</td><td>ITSM · Observe · Migration Engine · Security &amp; Compliance</td></tr>
+    <tr><td><strong>Builder</strong></td><td>Design compliant foundations and control spend.</td><td>Landing Zone Builder · WhaleForge IaC · FinOps &amp; Billing</td></tr>
+    <tr><td><strong>Datacenter</strong></td><td>Manage physical infrastructure end to end.</td><td>DCIM · Bare-Metal Lifecycle · Capacity Planning · Backup &amp; DR</td></tr>
+    <tr><td><strong>Intelligence</strong></td><td>AI across every module, in four tiers.</td><td>Whale AI</td></tr>
+  </tbody>
+</table>
+<p class="meta">New key <code>moduleGroupTiles</code> derived from <code>moduleGroups</code> + <code>modules</code>.</p>
+
+<h3>9 · Integrations &amp; connectors <span class="tag new">NEW</span> <span class="meta">(dark)</span></h3>
+<ul>
+  <li><strong>Eyebrow:</strong> Integrations</li>
+  <li><strong>Title:</strong> It connects to what you already run</li>
+  <li><strong>Sub:</strong> Agentless cloud connectors plus a Go edge agent bring every environment under one pane — and open standards keep your existing tools in the loop.</li>
+</ul>
+<ul>
+  <li><strong>Clouds &amp; hypervisors (9+):</strong> AWS · Azure · Google Cloud · Oracle Cloud · IBM Cloud · Alibaba Cloud · VMware vSphere · Hyper-V · OpenStack · Nutanix · bare metal</li>
+  <li><strong>ITSM &amp; workflow (30+):</strong> ServiceNow · Jira · and more</li>
+  <li><strong>Cost &amp; billing sources:</strong> AWS CUR · Azure Billing · GCP BigQuery</li>
+  <li><strong>Open standards:</strong> OpenTelemetry · Terraform / CloudFormation · Redfish / IPMI / SNMP · SAML / SCIM / OIDC</li>
+</ul>
+<p><strong>Edge note:</strong> "On-prem credentials stay on-site — the Go edge agent connects outbound-only over HTTPS. No inbound ports."</p>
+<p class="meta">New key <code>integrations</code>. Image: optional Brief D-5.</p>
+
+<h3>10 · Capability pillars (6) <span class="meta">(keep)</span></h3>
+<p>Keep <code>pillars</code> exactly: Unified visibility · Centralized governance · FinOps
+&amp; cost control · Migration &amp; automation · AI-native · Sovereign-ready.</p>
+
+<h3>11 · Whale AI (4 tiers) <span class="meta">(expand)</span></h3>
+<ul>
+  <li><strong>Eyebrow:</strong> Whale AI</li>
+  <li><strong>Title:</strong> AI across every module — in four tiers</li>
+  <li><strong>Sub:</strong> (keep) From natural-language cost answers to autonomous, sovereign workflows.</li>
+  <li><span class="tag new">NEW</span> <strong>Intro:</strong> "Whale AI is woven through the platform, not bolted on — it works where the work already happens, and runs on in-region models for sovereign deployments."</li>
+  <li><strong>Tiers:</strong> Spark (Standard) · Tide (Enterprise · Telco) · Abyss (Enterprise+ · Government) · Predictive Ops (Datacenter)</li>
+</ul>
+<p class="meta">New key <code>whaleIntro</code>. Image: optional Brief D-6.</p>
+
+<h3>12 · Deployment models (4) <span class="meta">(expand)</span></h3>
+<ul>
+  <li><strong>Eyebrow:</strong> Deployment</li>
+  <li><strong>Title:</strong> Run it your way</li>
+  <li><strong>Sub:</strong> (keep) The same platform — delivered as SaaS, in your own cloud, or fully air-gapped.</li>
+</ul>
+<table>
+  <thead><tr><th>Model</th><th>Best for</th><th>Managed by</th><th>Data location</th><th>AI</th></tr></thead>
+  <tbody>
+    <tr><td><strong>SaaS</strong></td><td>Fastest to value</td><td>BlueWhale</td><td>BlueWhale region</td><td>Hosted</td></tr>
+    <tr><td><strong>BYOC</strong></td><td>Most flexible</td><td>You (Helm)</td><td>Your cloud</td><td>Your cloud</td></tr>
+    <tr><td><strong>Sovereign</strong></td><td>Air-gapped</td><td>You</td><td>In-country</td><td>In-region model</td></tr>
+    <tr><td><strong>On-premise</strong></td><td>Max control</td><td>You</td><td>Your data center</td><td>In-region model</td></tr>
+  </tbody>
+</table>
+<p class="meta">Extend <code>deploymentModels</code> items with bestFor / managedBy / dataLocation / ai. Image: Brief D-7.</p>
+
+<h3>13 · Security &amp; compliance posture <span class="meta">(keep)</span></h3>
+<ul>
+  <li><strong>Eyebrow:</strong> Security &amp; compliance</li>
+  <li><strong>Title:</strong> Trust built into every layer</li>
+  <li><strong>Sub:</strong> Security is not a module bolted on — it runs through the whole platform.</li>
+</ul>
+<p>Keep <code>securityPosture</code> checklist + <code>compliance</code> chips. Keep the
+"(in progress)" markers on ISO 27001 / SOC 2 exactly.</p>
+
+<h3>14 · Shaped per edition <span class="tag new">NEW</span> <span class="meta">(dark strip)</span></h3>
+<ul>
+  <li><strong>Eyebrow:</strong> Editions</li>
+  <li><strong>Title:</strong> One platform, shaped to how you operate</li>
+  <li><strong>Sub:</strong> The same control plane, gated and tuned across five editions.</li>
+  <li><strong>Editions:</strong> Standard · Enterprise · Datacenter · Government · Telco &amp; MSP</li>
+  <li><strong>CTA:</strong> Compare editions → <code>/editions</code></li>
+</ul>
+
+<h3>15 · Outcomes / proof quotes <span class="tag new">NEW</span> <span class="meta">(light)</span></h3>
+<p>Reuse 3 quotes from <code>home.ts &gt; testimonials</code>: National Digital Authority
+(95% compliance, −31% cost) · Gulf Telecom Group (12 customers in 60 days) · Meridian
+Financial ($412K quarterly savings).</p>
+
+<h3>16 · FAQ <span class="tag new">NEW</span> <span class="meta">(light)</span></h3>
+<ol>
+  <li><strong>Which clouds and hypervisors are supported?</strong> — AWS, Azure, Google Cloud, Oracle, IBM, Alibaba, VMware vSphere, Hyper-V, OpenStack and Nutanix, plus bare metal — 9+ environments under one control plane.</li>
+  <li><strong>Do I have to rip out my existing tools?</strong> — No. BlueWhale Stack can consolidate them over time and integrates with ServiceNow, Jira, Terraform and OpenTelemetry so you migrate at your pace.</li>
+  <li><strong>How is on-prem connected securely?</strong> — A Go edge agent connects outbound-only over HTTPS; on-prem credentials never leave your site, and there are no inbound ports to open.</li>
+  <li><strong>Can it run fully air-gapped?</strong> — Yes. The Sovereign and On-premise models run isolated, with in-region AI models, offline licensing and no call-home.</li>
+  <li><strong>How fast is time to value?</strong> — Connect accounts and auto-discover resources within hours; FinOps savings typically land in the first quarter (20–30% range).</li>
+  <li><strong>What does Whale AI run on?</strong> — Claude-powered tiers across modules, with in-region model options for sovereign deployments.</li>
+  <li><strong>What compliance frameworks are covered?</strong> — CIS, NIST, ISO 27001, HIPAA and more; ISO 27001 and SOC 2 Type II are in progress, with GDPR, DPDP, PDPA, PCI-DSS and regional frameworks supported.</li>
+  <li><strong>How is it licensed / packaged?</strong> — As five editions tuned to operating models; see Editions and Pricing.</li>
+</ol>
+<p class="meta">New key <code>platformFaq</code> — render as accordion (<code>&lt;details&gt;</code>).</p>
+
+<h3>17 · Final CTA <span class="tag new">NEW</span> <span class="meta">(dark)</span></h3>
+<ul>
+  <li><strong>Title:</strong> Ready to unify your cloud infrastructure?</li>
+  <li><strong>Sub:</strong> Talk to a solutions architect today — no commitment.</li>
+  <li><strong>Primary:</strong> Book a Demo → <code>/contact?intent=demo</code></li>
+  <li><strong>Secondary:</strong> Contact Sales → <code>/contact?intent=sales</code></li>
+</ul>
+
+<h2>4 · New content keys for <code>platform.ts</code></h2>
+<p>Existing exports stay; some get extra fields.</p>
+<ul>
+  <li><code>heroStats</code> — 3 hero chips.</li>
+  <li><code>platformStats</code> — reuse <code>headlineStats</code> (reference, no new data).</li>
+  <li><code>platformProblem</code> — title + 3 cards.</li>
+  <li><code>comparison</code> — [{ category, tool, module, moduleSlug }].</li>
+  <li><code>howItWorksPlatform</code> — reuse <code>home.ts &gt; howItWorks</code>.</li>
+  <li><code>controlPlaneOutcomes</code> — 4 strings (move out of JSX).</li>
+  <li><code>moduleGroupTiles</code> — derived from groups + modules.</li>
+  <li><code>integrations</code> — 4 groups { heading, count?, items[] }.</li>
+  <li><code>whaleIntro</code> — one string.</li>
+  <li><code>deploymentModels</code> — extend each item: + bestFor, managedBy, dataLocation, ai.</li>
+  <li><code>platformFaq</code> — [{ q, a }].</li>
+</ul>
+<p><strong>Reused (no new file):</strong> <code>compliance</code>, <code>clouds</code>,
+<code>headlineStats</code> (company.ts); <code>testimonials</code>, <code>ctaSection</code>,
+<code>howItWorks</code> (home.ts); <code>editions</code> (editions.ts); <code>modules</code>,
+<code>moduleGroups</code> (modules.ts).</p>
+
+<h2>5 · Image &amp; diagram briefs</h2>
+<div class="callout">
+  <strong>Conventions (all visuals):</strong>
+  <ul style="margin:8px 0 0">
+    <li>Brand blue <code>#002da1</code>; accent cyan (token <code>accent-500</code> = <code>#2ad4d4</code> in globals.css).</li>
+    <li>Code-based <strong>SVG/React</strong> preferred over raster — on-brand, no licensing, editable, theme-able.</li>
+    <li>Respect <code>prefers-reduced-motion</code>: every animation needs a static fallback.</li>
+    <li><code>role="img"</code> + <code>aria-label</code> (or <code>&lt;title&gt;</code>) on every diagram.</li>
+    <li>Dark sections: white/slate strokes on transparent; light sections: brand on white.</li>
+  </ul>
+</div>
+
+<h4>Diagram briefs (build as SVG)</h4>
+<p><strong>D-1 · Control-plane layer map</strong> (Section 6 — signature visual). Three
+stacked bands: clouds/hypervisors row → BlueWhale control plane bar with the 5 module-group
+chips → outcomes row (−28% spend, 97% compliance, RPO&lt;1hr, Govern at scale). Connector
+lines down to each cloud node; vertical "Whale AI" rail spanning all layers. Upgrade the
+inline JSX (page.tsx ~145–210) to one responsive SVG, dark bg. ~16/10.</p>
+<p><strong>D-2 · Tool-sprawl → one platform</strong> (Section 4 — optional). Left: 6–7
+scattered, tangled tool tiles (greyed). Right: one clean BlueWhale tile with ordered module
+rows. Arrow between. Light bg.</p>
+<p><strong>D-3 · How-it-works 4-step flow</strong> (Section 5). Horizontal (desktop) /
+vertical (mobile) 4-node flow with numbers 01–04, arrows, icons (Search, ShieldCheck,
+MoveRight, Gauge). Dark bg, progressive reveal + static fallback. ~16/5.</p>
+<p><strong>D-4 · System architecture</strong> (Section 7 — replaces placeholder). Layered
+real stack: Client (Next.js) → NestJS API gateway → data tier (Postgres RLS · Redis ·
+Meilisearch) → queue workers → connectors (agentless AWS/Azure/GCP + Go edge agent,
+outbound-only HTTPS to vSphere/Hyper-V/Nutanix/OC@C). Mark the security boundary. Light bg.
+~16/9. Most detailed — keep labels legible.</p>
+<p><strong>D-5 · Integration hub-and-spoke</strong> (Section 9 — optional). BlueWhale hub
+center; spokes grouped Clouds / ITSM / Billing / Open standards. Reuse CloudLogos. Dark bg.</p>
+<p><strong>D-6 · Whale AI tier ladder</strong> (Section 11 — optional). 4 ascending steps
+Spark → Tide → Abyss → Predictive Ops, each with its edition, as a rail across the 5 module
+groups. Dark bg.</p>
+<p><strong>D-7 · Deployment topologies</strong> (Section 12 — small, 4-up). Four mini
+topologies: SaaS (BlueWhale-hosted), BYOC (control plane inside customer cloud boundary),
+Sovereign (air-gapped box + in-region AI + "no call-home"), On-premise (DC rack + control
+plane). Consistent visual language. Light bg.</p>
+
+<h4>Photographic / ambient briefs</h4>
+<p><strong>H-1 · Hero ambient visual</strong> (Section 1). Abstract "command center / deep
+ocean" motif behind the headline. Default: keep current blurred brand/accent radial glows
+(cheap, on-brand). Richer option: the repo already includes <code>cobe</code> — a slow
+wireframe globe with node points = cloud regions. 16/9, dark, must not compete with white
+headline text.</p>
+<div class="callout good"><strong>Generation prompt (if using an image tool / designer):</strong>
+"Abstract dark navy command-center visual, deep-ocean blue (#002da1) with cyan (#2ad4d4)
+accent glows, faint wireframe globe with glowing network nodes representing global cloud
+regions, subtle data-grid, no text, cinematic, high contrast for white overlay text, 16:9."</div>
+<p class="meta"><strong>Asset destination:</strong> SVG diagrams → React components under
+<code>components/diagrams/</code>; raster/generated images → <code>public/showcase/</code>,
+referenced via <code>next/image</code>.</p>
+
+<h2>6 · Open questions before apply</h2>
+<ol>
+  <li><strong>Architecture metrics</strong> (−28% spend, 97% compliance) are stated as facts in current JSX. Reframe to "target / typical" per the honesty guardrail? <em>(Recommend: yes.)</em></li>
+  <li><strong>Optional diagrams</strong> (D-2, D-5, D-6, D-7) — which to actually build as SVG vs. keep as icon/card layouts?</li>
+  <li><strong>FAQ rendering</strong> — accordion (<code>&lt;details&gt;</code>) vs. always-open grid?</li>
+  <li><strong>Hero image (H-1)</strong> — keep CSS-glow default, or invest in the <code>cobe</code> globe / a generated raster?</li>
+</ol>
+
+<h2>7 · Apply checklist <span class="meta">(next pass — not now)</span></h2>
+<ul class="check">
+  <li>Add new keys to <code>content/platform.ts</code> (Section 4 list).</li>
+  <li>Build new sections into <code>app/platform/page.tsx</code> in the Section 2 order.</li>
+  <li>Build D-1 and D-4 SVG components (signature + under-the-hood) at minimum.</li>
+  <li>Wire module/edition links (<code>/modules/[slug]</code>, <code>/editions/[slug]</code>).</li>
+  <li>Apply honesty reframes (targets/typical; keep "in progress" compliance markers).</li>
+  <li><code>npm run lint</code> + <code>npm run typecheck</code> + visual QA at sm/md/lg.</li>
+</ul>
+
+<hr />
+<p class="meta">Companion to <code>content/pages/platform.md</code>. This HTML is a readable/printable
+export — open in any browser, then File → Print → Save as PDF for a PDF copy.</p>
+
+</div>
+</body>
+</html>

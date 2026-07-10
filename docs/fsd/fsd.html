@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>BlueWhale Stack — Website Functional Specification (FSD)</title>
+<style>
+  @page { size: A4; margin: 17mm 15mm 18mm 15mm; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { font-family: "Segoe UI","Helvetica Neue",Arial,sans-serif; color:#1e293b; font-size:10.3pt; line-height:1.55; margin:0; }
+
+  h1,h2,h3,h4 { font-family:"Segoe UI Semibold","Segoe UI",Arial,sans-serif; color:#00154b; line-height:1.25; }
+  h2 { font-size:17pt; margin:0 0 4px; padding-bottom:6px; border-bottom:3px solid #002da1; }
+  h3 { font-size:12.5pt; margin:18px 0 5px; color:#00237f; }
+  h4 { font-size:10.8pt; margin:13px 0 3px; color:#0b1020; }
+  p { margin:0 0 8px; }
+  ul,ol { margin:4px 0 10px; padding-left:18px; }
+  li { margin:2px 0; }
+  a { color:#002da1; text-decoration:none; }
+  strong { color:#0b1020; }
+  small,.muted { color:#64748b; }
+  code { background:#f1f5f9; border:1px solid #e2e8f0; border-radius:4px; padding:0 4px; font-size:9pt; }
+  .eyebrow { text-transform:uppercase; letter-spacing:.14em; font-size:8pt; font-weight:700; color:#06b6c4; margin:0 0 4px; }
+
+  /* Cover */
+  .cover { height:261mm; display:flex; flex-direction:column; justify-content:space-between;
+    background:linear-gradient(150deg,#00154b 0%,#002da1 55%,#00237f 100%); color:#fff;
+    margin:-17mm -15mm 0; padding:28mm 22mm; page-break-after:always; }
+  .cover h1 { color:#fff; font-size:36pt; line-height:1.08; margin:0 0 12px; max-width:15em; }
+  .cover .sub { font-size:13pt; color:#c9d6ff; max-width:30em; }
+  .cover .tag { display:inline-block; margin-bottom:18px; border:1px solid rgba(255,255,255,.35);
+    border-radius:999px; padding:5px 14px; font-size:9pt; letter-spacing:.08em; text-transform:uppercase; color:#dbe6ff; }
+  .cover .meta { display:flex; gap:34px; border-top:1px solid rgba(255,255,255,.25); padding-top:16px; font-size:9.5pt; }
+  .cover .meta div span { display:block; color:#9fb4ef; text-transform:uppercase; letter-spacing:.08em; font-size:7.5pt; margin-bottom:3px; }
+
+  .pagefoot { position:fixed; bottom:6mm; left:15mm; right:15mm; display:flex; justify-content:space-between;
+    font-size:7.6pt; color:#94a3b8; border-top:1px solid #e2e8f0; padding-top:3px; }
+
+  .section { page-break-before:always; padding-top:2mm; }
+
+  table { width:100%; border-collapse:collapse; font-size:9.1pt; margin:8px 0 12px; }
+  th { background:#00237f; color:#fff; font-weight:600; text-align:left; }
+  td,th { border:1px solid #cbd5e1; padding:6px 8px; vertical-align:top; }
+  tbody tr:nth-child(even) td { background:#f1f5f9; }
+  td.center,th.center { text-align:center; }
+  .frid { font-family:"Consolas",monospace; font-size:8.4pt; color:#002da1; white-space:nowrap; font-weight:600; }
+
+  .callout { border-left:4px solid #06b6c4; background:#ecfeff; padding:9px 13px; border-radius:0 8px 8px 0; margin:10px 0; font-size:9.6pt; }
+  .note { border-left:4px solid #f59e0b; background:#fffbeb; padding:9px 13px; border-radius:0 8px 8px 0; margin:10px 0; font-size:9.6pt; }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .grid3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
+  .card { border:1px solid #e2e8f0; border-radius:9px; padding:11px 13px; background:#fff; }
+  .card h4 { margin-top:0; }
+  .pill { display:inline-block; background:#eef3ff; color:#00237f; border:1px solid #dbe6ff; border-radius:999px; padding:2px 9px; font-size:8pt; margin:2px 3px 2px 0; }
+  .swatch { display:inline-block; width:100%; height:42px; border-radius:7px; border:1px solid rgba(0,0,0,.08); }
+  .avoid-break { page-break-inside:avoid; }
+
+  /* Wireframe / mockup blocks */
+  .wire { border:1.5px dashed #94a3b8; border-radius:8px; background:#f8fafc; padding:10px; margin:10px 0; }
+  .wire .wlabel { font-size:7.5pt; text-transform:uppercase; letter-spacing:.1em; color:#64748b; margin-bottom:6px; }
+  .wbox { background:#e2e8f0; border-radius:5px; color:#475569; font-size:8pt; text-align:center; padding:10px 6px; }
+  .wbar { background:#00237f; color:#fff; border-radius:5px; font-size:8pt; padding:8px 10px; display:flex; justify-content:space-between; align-items:center; }
+  .wbar .navitems span { margin-left:14px; opacity:.92; }
+  .mega { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; background:#fff; border:1px solid #cbd5e1; border-radius:6px; padding:10px; margin-top:6px; }
+  .mega .col h5 { margin:0 0 4px; font-size:8.5pt; color:#002da1; text-transform:uppercase; letter-spacing:.05em; }
+  .mega .col a { display:block; font-size:8.4pt; color:#334155; padding:1.5px 0; }
+
+  /* TOC */
+  .toc ol { list-style:none; padding-left:0; counter-reset:toc; }
+  .toc > ol > li { counter-increment:toc; padding:4px 0; border-bottom:1px dotted #e2e8f0; font-weight:600; color:#0b1020; }
+  .toc > ol > li::before { content:counter(toc) ".  "; color:#002da1; font-weight:700; }
+  .toc .subitem { font-weight:400; color:#475569; font-size:9.3pt; padding-left:18px; }
+</style>
+</head>
+<body>
+
+<div class="pagefoot">
+  <span>BlueWhale Stack &middot; Website Functional Specification (FSD)</span>
+  <span>Confidential &middot; v1.0</span>
+</div>
+
+<!-- ───────── COVER ───────── -->
+<div class="cover">
+  <div>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1278.334 333.336" style="width:320px;height:auto">
+      <g transform="translate(-9565.833 20011.168)"><g>
+        <path d="M-9432.5,20144.5v0h-96.971v-89.611c7.348,4.275,12.087,7.895,15.848,12.1a43.973,43.973,0,0,1,9.415,17.809c.629,2.156.563,5.223.5,8.188v.01a43.785,43.785,0,0,0,.073,5.205h-.055c-3.108,0-16.77,2.018-21.861,11.344a20.337,20.337,0,0,0-1.285,3.615c.017,0,.045-.014.083-.025.02-.008.043-.014.068-.021a18.706,18.706,0,0,1,5.867-1.057c.394,0,.784.02,1.161.057a14.049,14.049,0,0,1,4.555,1.93l.015.008c1.775.982,3.61,2,5.026,2,1.61-.037,5.986-.609,6.765-1.744.014.039,1.351,4.141,4.564,6.178a12.579,12.579,0,0,0,3.81,1.463l.02.006a19.221,19.221,0,0,1,8.437,4.24,41.647,41.647,0,0,1,6.771,7.908l0,.008.01.014c1.729,2.414,3.094,4.318,4.079,4.318a.742.742,0,0,0,.475-.172c.876-.7,1.149-3.746.7-7.76a45.98,45.98,0,0,0-3.632-13.322c-2.981-6.539-7.194-9.951-10.579-12.693a41.348,41.348,0,0,1-3.178-2.75c.864-4.045,1.846-7.842,2.795-11.516,3.149-12.184,5.869-22.705,3-36.18l-.465-2.75-.814-3.766h54.808v96.973Zm-103.029,0h-96.97v-48.482h96.972v48.482h0Zm0-54.545h-96.97V19944.5h96.972v39.295l-.012-.006-.012,0c-.075-.037-.15-.074-.225-.113l-3.413-1.947-3.271-1.967c-1.98-1.01-3.852-2.105-5.5-3.074l-.033-.02h0l-.006,0-.006,0-.013-.006c-4.986-2.914-9.7-5.666-15.714-5.666-.545,0-1.119.025-1.708.076a91.4,91.4,0,0,0-9.156-4.449l-.152-.066c-1.562-.686-3.5-1.541-5.282-2.4-2.613-1.275-5.269-2.8-8.08-4.424l-.034-.02-.01-.006c-7.752-4.49-15.768-9.135-24.06-9.135a20.582,20.582,0,0,0-3.625.32,5.007,5.007,0,0,0-3.641,2.359c-.893,1.508-1.122,3.719-.683,6.572a38.159,38.159,0,0,0,1.714,6.414,126.273,126.273,0,0,0,15.531,31.365,32.486,32.486,0,0,0,4.383,4.191l.015.012a18.731,18.731,0,0,1,2.842,2.693,28.269,28.269,0,0,0,6.021,8.6c.388.418.858.926,1.406,1.525a14.7,14.7,0,0,1,3.191,5.3l.014.033c.664,6.311,4.259,15.709,7.431,24,.931,2.432,1.894,4.949,2.676,7.137,3.028,8.482,7.091,17.961,14.267,23.953l.36.3.009.006c2.426,2.029,3.243,2.713,5.329,3.4a5.771,5.771,0,0,0,1.813.3,3.1,3.1,0,0,0,2.605-1.088c.53-.824.4-1.609.023-3.945v-.008l-.1-.613-.019-.115a19.135,19.135,0,0,0-1.845-5.742c-.951-2.016-1.374-5.012-1.864-8.482-.254-1.795-.516-3.648-.876-5.521a30.877,30.877,0,0,1-.69-5.5v-.012c-.047-.963-.105-2.16-.29-4.145,5.09,0,7.635,1.217,11.851,3.232l.319.152c.524.25,1.066.51,1.647.781l5.809,3.059,1.067.537v38.311h0Zm103.029-48.48v0h-56.431l-.352-1.068c-4.156-12.639-6.9-20.986-15.184-32.295.427.01.886.014,1.405.014a71.654,71.654,0,0,0,8.258-.525l.028,0,.036,0c1.922-.205,3.909-.416,6.485-.553.3-.016.643-.025,1.03-.025,3.143,0,7.943.566,10.813.9l.08.008.221.027c.135,0,.286.008.445.012l.063,0c.409.016.852.027,1.319.027,1.554,0,3.725-.133,4.632-1.289a2.365,2.365,0,0,0,.31-2.113c-1-4.105-6.111-7.8-9.868-10.219-10.755-6.9-25.072-8.344-35.188-8.344a118.241,118.241,0,0,0-12.719.7c-.272-.129-1.475-.508-2.355-.781V19944.5h96.971v96.975Z" transform="translate(19265 -39889)" fill="#ffffff"/>
+        <path d="M64.476-102.441c0-4.359-2.735-6.325-4.53-8.035,1.88-1.709,4.53-3.419,4.53-7.949v-12.308c0-8.547-5.983-13.59-14.274-13.59H13.02v66.67H50.2c8.291,0,14.274-4.359,14.274-12.907Zm-19.146-1.966c2.992,0,4.53,2.308,4.53,6.069v1.026c0,3.846-1.539,5.727-4.53,5.727H27.636v-12.821Zm0-25.984c2.992,0,4.53,1.88,4.53,5.641v.6c0,3.846-1.539,5.727-4.53,5.727H27.636v-11.966Zm47.1,52.738h31.54V-91.586H97.3c-2.992,0-4.53-1.88-4.53-5.727v-47.011H78.151V-90.56C78.151-82.012,84.135-77.653,92.426-77.653Zm55.131-66.67H132.94v52.054c0,8.12,4.53,14.616,13.249,14.616h25.984c8.718,0,12.65-6.5,12.65-14.616v-52.054H170.207v47.78c0,2.906-1.368,4.958-5.3,4.958H152.856c-3.846,0-5.3-2.051-5.3-4.958Zm96.073,40.258V-118H213.543v-6.752c0-3.761,1.539-5.641,4.53-5.641h26.412v-13.932H213.2c-8.291,0-14.274,5.043-14.274,13.59V-90.56c0,8.547,5.983,12.907,14.274,12.907h31.284V-91.586H218.073c-2.992,0-4.53-1.88-4.53-5.727v-6.752Zm55.815,19.659c1.282,5.812,6.069,6.654,10.684,6.654,5.47,0,10.342-1.611,11.283-6.654l11.71-59.917H318.163L309.7-101.159l-7.351-36.925c-1.111-5.385-4.872-6.063-9.488-6.063-4.445,0-8.376.592-9.488,6.063l-7.436,36.925-8.462-43.165H252.6l11.71,59.917c1.026,5.385,6.325,6.654,11.283,6.654,4.53,0,9.317-.842,10.6-6.654l6.582-30.942Zm95.3-59.917H380.132v27.01H357.994v-27.01H343.378v66.67h14.616v-25.984h22.138v25.984h14.616Zm24.7,66.67L423.3-89.107h21.027l3.846,11.454h15.3l-18.206-58.379c-2.137-6.838-6.753-8.114-11.283-8.114s-8.8,1.276-11.026,8.114l-18.8,58.379Zm20.77-25.471H427.4l6.411-20Zm45.643,25.471H517.4V-91.586H490.736c-2.992,0-4.53-1.88-4.53-5.727v-47.011H471.59V-90.56C471.59-82.012,477.573-77.653,485.864-77.653Zm84.79-26.412V-118H540.568v-6.752c0-3.761,1.539-5.641,4.53-5.641h26.412v-13.932H540.226c-8.291,0-14.274,5.043-14.274,13.59V-90.56c0,8.547,5.983,12.907,14.274,12.907h31.284V-91.586H545.1c-2.992,0-4.53-1.88-4.53-5.727v-6.752Zm63.166-14.36c-2.992,0-4.53-1.88-4.53-5.641v-.6c0-3.846,1.538-5.727,4.53-5.727h27.694v-13.932H628.948c-8.291,0-14.274,4.359-14.274,12.907V-118c0,8.547,5.983,13.59,14.274,13.59h14.274c2.991,0,4.53,1.88,4.53,5.641v1.453c0,3.846-1.539,5.727-4.53,5.727H615.529v13.932h32.566c8.291,0,14.274-4.359,14.274-12.907v-14.274c0-8.547-5.983-13.59-14.274-13.59Zm83.252-11.966v-13.932H670.061v13.932h16.411v52.738h14.616v-52.738Zm10.171,52.738,3.846-11.454h21.027l3.846,11.454h15.3l-18.206-58.379c-2.137-6.838-6.753-8.114-11.283-8.114s-8.8,1.276-11.026,8.114l-18.8,58.379Zm20.77-25.471H735.193l6.411-20Zm76.841-27.266v-13.932H793.23c-8.291,0-14.274,5.043-14.274,13.59V-90.56c0,8.547,5.983,12.907,14.274,12.907h31.625V-91.586H798.1c-2.991,0-4.53-1.88-4.53-5.727V-124.75c0-3.761,1.539-5.641,4.53-5.641Zm27.437-13.932H837.676v66.67h14.616v-32.053l22.394,32.053h16.582L868.02-110.9l23.334-33.42H874.772l-22.48,32.309Z" transform="translate(9886.146 -19733.512)" fill="#ffffff"/>
+      </g></g>
+    </svg>
+  </div>
+  <div>
+    <div class="tag">Functional Specification Document</div>
+    <h1>Corporate Website — FSD &amp; UI/UX Design</h1>
+    <p class="sub">Functional requirements, navigation architecture, and the complete UI/UX design system for the BlueWhale Stack website — aligned to the BlueWhale Stack Identity Guidelines v0.1101.</p>
+  </div>
+  <div class="meta">
+    <div><span>Document</span>Functional Spec (FSD)</div>
+    <div><span>Version</span>1.0</div>
+    <div><span>Date</span>14 June 2026</div>
+    <div><span>Companion to</span>Website Scope of Work v1.0</div>
+  </div>
+</div>
+
+<!-- ───────── DOC CONTROL + TOC ───────── -->
+<div class="section" style="page-break-before:avoid;">
+  <p class="eyebrow">Document Control</p>
+  <h2>About this document</h2>
+  <table>
+    <tbody>
+      <tr><th style="width:26%">Title</th><td>BlueWhale Stack — Website Functional Specification Document &amp; UI/UX Design</td></tr>
+      <tr><th>Version</th><td>1.0</td></tr>
+      <tr><th>Date</th><td>14 June 2026</td></tr>
+      <tr><th>Relationship</th><td>Companion to the Website <em>Scope of Work</em> v1.0 — the SOW defines <em>what</em> &amp; <em>why</em>; this FSD defines <em>how it behaves and looks</em>.</td></tr>
+      <tr><th>Brand basis</th><td>BlueWhale Stack Identity Guidelines v0.1101 (2025) — logomark, logotype &amp; primary blue applied throughout.</td></tr>
+      <tr><th>Audience</th><td>Design, front-end engineering, QA, and stakeholders approving the experience.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="toc">
+    <h3>Contents</h3>
+    <ol>
+      <li>Introduction, scope &amp; conventions</li>
+      <li>Users, roles &amp; key journeys</li>
+      <li>Information architecture &amp; sitemap</li>
+      <li><strong>Navigation &amp; header design</strong> — About&nbsp;Us &middot; Industry &middot; Solutions &middot; Products &middot; Partner
+        <div class="subitem">Primary nav, mega-menus, utility nav, mobile nav, footer</div></li>
+      <li>Functional requirements (per page, with FR IDs)</li>
+      <li>UI/UX design system &mdash; brand, color, typography, grid</li>
+      <li>Component library &amp; layout patterns</li>
+      <li>Interaction &amp; motion design</li>
+      <li>Responsive &amp; breakpoint behaviour</li>
+      <li>Forms, validation &amp; messaging</li>
+      <li>Non-functional requirements (SEO, accessibility, performance, security)</li>
+      <li>Acceptance criteria &amp; open brand items</li>
+    </ol>
+  </div>
+</div>
+
+<!-- ───────── 1. INTRODUCTION ───────── -->
+<div class="section">
+  <p class="eyebrow">Section 1</p>
+  <h2>Introduction, scope &amp; conventions</h2>
+  <h3>1.1 Purpose</h3>
+  <p>This Functional Specification defines, in implementable detail, the behaviour, structure, and visual design of the BlueWhale Stack corporate website. It is the contract between design and engineering: every page, navigation element, component, state, and interaction is specified so the build is unambiguous and testable.</p>
+  <h3>1.2 Scope</h3>
+  <p>In scope: the public marketing website — all pages, the global navigation (header, mega-menus, footer), the design system, responsive behaviour, forms, and non-functional standards. The Partner Portal application itself is a separate product; the website <em>links into</em> it and markets it, but does not re-implement it.</p>
+  <h3>1.3 Conventions</h3>
+  <ul>
+    <li><strong>FR-XXX</strong> &mdash; a numbered functional requirement (testable).</li>
+    <li><strong>Must / Should / May</strong> &mdash; priority per RFC&nbsp;2119 (Must = required for launch).</li>
+    <li>Spacing values use an 8&nbsp;px base scale; breakpoints are mobile-first.</li>
+  </ul>
+  <h3>1.4 Technology baseline</h3>
+  <p>Next.js&nbsp;15 (App Router) + TypeScript + Tailwind&nbsp;CSS&nbsp;v4, with a typed content layer and a CMS-ready seam (per the SOW). Server-rendered for SEO and speed.</p>
+  <div class="callout"><strong>Brand-aligned.</strong> All color, logo, and typographic direction in this FSD derive from the supplied BlueWhale Stack Identity Guidelines v0.1101. The horizontal logo, the whale-in-stacked-blocks logomark, and primary blue <code>#002da1</code> are the canonical identity; this document specifies how they are applied on the web.</div>
+</div>
+
+<!-- ───────── 2. USERS & ROLES ───────── -->
+<div class="section">
+  <p class="eyebrow">Section 2</p>
+  <h2>Users, roles &amp; key journeys</h2>
+  <p>The site is public (no authentication). "Roles" here are visitor intents the UX must serve. Authenticated experiences live in the product and Partner Portal, which the site links to.</p>
+  <table>
+    <thead><tr><th style="width:22%">Visitor type</th><th>Primary goal</th><th style="width:30%">Key journey</th></tr></thead>
+    <tbody>
+      <tr><td>Evaluator (CIO / architect)</td><td>Assess fit, depth, credibility.</td><td>Home &rarr; Products &rarr; Edition &rarr; Module &rarr; Book demo.</td></tr>
+      <tr><td>Economic buyer (FinOps/CFO)</td><td>Quantify value &amp; cost.</td><td>Solutions (FinOps) &rarr; Pricing &rarr; Contact.</td></tr>
+      <tr><td>Industry buyer (Gov/Telco/BFSI)</td><td>See sector &amp; compliance fit.</td><td>Industry &rarr; relevant Edition &rarr; Demo.</td></tr>
+      <tr><td>Prospective partner</td><td>Understand programme &amp; economics.</td><td>Partner &rarr; Portal showcase &rarr; Apply.</td></tr>
+      <tr><td>Talent</td><td>Evaluate company &amp; roles.</td><td>About Us &rarr; Careers &rarr; Apply.</td></tr>
+      <tr><td>Existing customer/partner</td><td>Reach login / docs / support.</td><td>Utility nav &rarr; Login / Docs.</td></tr>
+    </tbody>
+  </table>
+  <div class="callout">Every journey converges on one of three conversion endpoints: <strong>Book a demo</strong>, <strong>Become a partner</strong>, or <strong>Contact sales</strong>. These are the persistent CTAs the navigation and pages drive toward.</div>
+</div>
+
+<!-- ───────── 3. IA & SITEMAP ───────── -->
+<div class="section">
+  <p class="eyebrow">Section 3</p>
+  <h2>Information architecture &amp; sitemap</h2>
+  <p>The site is organised under <strong>five primary navigation buckets</strong> plus a utility tier. The five buckets are exactly the items requested — <strong>Products, Solutions, Industries, Partners, About&nbsp;Us</strong> — each mapping to a clear body of content.</p>
+
+  <table>
+    <thead><tr><th style="width:18%">Nav bucket</th><th>What lives under it</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Products</strong></td><td>Platform overview, the 5 Editions (Standard, Enterprise, Datacenter, Government, Telco), the Module catalog (17 modules), adjacent products (WhaleForge, Pandava OS, Fincore), and Pricing.</td></tr>
+      <tr><td><strong>Solutions</strong></td><td>The 6 outcome solutions (Migration, FinOps, Security &amp; Compliance, Automation, Data Center Management, Sovereign Cloud).</td></tr>
+      <tr><td><strong>Industries</strong></td><td>The 8 verticals (Government, Telco &amp; MSP, BFSI, Healthcare, Manufacturing, Energy, Media, Enterprise SaaS).</td></tr>
+      <tr><td><strong>Partners</strong></td><td>Partner programmes, the Partner Portal showcase, "Become a partner" apply flow, and partner login.</td></tr>
+      <tr><td><strong>About&nbsp;Us</strong></td><td>Company &amp; story, leadership, the product family, careers, newsroom, contact.</td></tr>
+      <tr><td>Utility (secondary)</td><td>Resources, Docs, Login, Region, Search, and the persistent "Book a demo" CTA.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>3.1 Recommended primary order</h3>
+  <p>Best-practice for a B2B platform leads with the offering and ends with the company. Recommended left&rarr;right order:</p>
+  <p style="text-align:center;font-size:11pt"><strong>Products&nbsp;&nbsp;·&nbsp;&nbsp;Solutions&nbsp;&nbsp;·&nbsp;&nbsp;Industries&nbsp;&nbsp;·&nbsp;&nbsp;Partners&nbsp;&nbsp;·&nbsp;&nbsp;About&nbsp;Us</strong></p>
+  <p class="muted">All five items you listed are present; only the order is optimised (Products first, About last). If you prefer your stated order it is a one-line change — see FR-NAV-002.</p>
+
+  <h3>3.2 Full sitemap</h3>
+  <table>
+    <thead><tr><th style="width:34%">Route</th><th>Page</th><th style="width:14%">Bucket</th></tr></thead>
+    <tbody>
+      <tr><td><code>/</code></td><td>Home</td><td>&mdash;</td></tr>
+      <tr><td><code>/platform</code></td><td>Platform overview</td><td>Products</td></tr>
+      <tr><td><code>/editions</code> + <code>/editions/{5}</code></td><td>Editions overview + 5 detail</td><td>Products</td></tr>
+      <tr><td><code>/modules</code> + <code>/modules/[slug]</code></td><td>Module catalog + 17 detail</td><td>Products</td></tr>
+      <tr><td><code>/products/whaleforge|pandava-os|fincore</code></td><td>Adjacent product pages</td><td>Products</td></tr>
+      <tr><td><code>/pricing</code></td><td>Pricing &amp; comparison</td><td>Products</td></tr>
+      <tr><td><code>/solutions</code> + <code>/solutions/[slug]</code></td><td>Solutions + 6 detail</td><td>Solutions</td></tr>
+      <tr><td><code>/industries</code> + <code>/industries/[slug]</code></td><td>Industries + 8 detail</td><td>Industries</td></tr>
+      <tr><td><code>/partners</code></td><td>Partner programmes</td><td>Partners</td></tr>
+      <tr><td><code>/partners/portal</code></td><td>Partner Portal showcase</td><td>Partners</td></tr>
+      <tr><td><code>/partners/apply</code></td><td>Become a partner (form)</td><td>Partners</td></tr>
+      <tr><td><code>/about</code></td><td>Company &amp; story</td><td>About</td></tr>
+      <tr><td><code>/about/leadership</code></td><td>Leadership &amp; team</td><td>About</td></tr>
+      <tr><td><code>/careers</code> + detail/apply</td><td>Careers</td><td>About</td></tr>
+      <tr><td><code>/newsroom</code></td><td>News &amp; press</td><td>About</td></tr>
+      <tr><td><code>/contact</code></td><td>Demo &amp; contact</td><td>About / global CTA</td></tr>
+      <tr><td><code>/resources</code> + <code>/resources/[slug]</code></td><td>Resource library</td><td>Utility</td></tr>
+      <tr><td><code>/docs</code></td><td>Documentation hub</td><td>Utility</td></tr>
+      <tr><td><code>/legal/privacy</code>, <code>/legal/terms</code></td><td>Legal</td><td>Footer</td></tr>
+    </tbody>
+  </table>
+  <p class="muted"><strong>URL rules:</strong> lower-case, hyphenated, no trailing slash; collection at <code>/x</code>, detail at <code>/x/[slug]</code>; stable slugs (used in sitemap &amp; analytics).</p>
+</div>
+
+<!-- ───────── 4. NAVIGATION & HEADER DESIGN ───────── -->
+<div class="section">
+  <p class="eyebrow">Section 4 &middot; Key request</p>
+  <h2>Navigation &amp; header design</h2>
+  <p>This section specifies the global header and how each of your five primary items is positioned and behaves.</p>
+
+  <h3>4.1 Header anatomy</h3>
+  <div class="wire">
+    <div class="wlabel">Desktop header — 72&nbsp;px tall, full-width, sticky</div>
+    <div class="wbar">
+      <span>&#x25A2;&#x25A2; BlueWhale Stack&nbsp;&nbsp;(logo, left)</span>
+      <span class="navitems"><span>Products&#9662;</span><span>Solutions&#9662;</span><span>Industries&#9662;</span><span>Partners&#9662;</span><span>About&#9662;</span></span>
+      <span>Search&nbsp;&nbsp;Login&nbsp;&nbsp;<strong style="background:#06b6c4;color:#04313a;padding:3px 8px;border-radius:4px">Book a demo</strong></span>
+    </div>
+    <p class="muted" style="margin:8px 0 0;font-size:8.3pt">Left: horizontal logo (links to Home). Centre/left-aligned: 5 primary items with caret = has mega-menu. Right: utility (Search, Login) + primary CTA button.</p>
+  </div>
+  <ul>
+    <li><span class="frid">FR-NAV-001</span> &nbsp;The header Must be sticky, reducing to 64&nbsp;px and gaining a solid white background + subtle shadow after 8&nbsp;px scroll.</li>
+    <li><span class="frid">FR-NAV-002</span> &nbsp;Primary items Must render in the configured order (default: Products, Solutions, Industries, Partners, About). Order is data-driven (one array).</li>
+    <li><span class="frid">FR-NAV-003</span> &nbsp;On dark hero pages the header May start transparent with the white logo, switching to solid on scroll.</li>
+    <li><span class="frid">FR-NAV-004</span> &nbsp;The "Book a demo" CTA Must be persistently visible at all breakpoints.</li>
+  </ul>
+
+  <h3>4.2 Logo usage (per Identity Guidelines)</h3>
+  <div class="grid3">
+    <div class="card"><h4>Header</h4><p class="muted">Horizontal lockup, ~150&nbsp;px wide. Primary blue on light header; white on transparent/dark.</p></div>
+    <div class="card"><h4>Footer / mobile</h4><p class="muted">Horizontal (white) in footer; logomark-only as the mobile tab/app icon &amp; favicon.</p></div>
+    <div class="card"><h4>Clear space</h4><p class="muted">Maintain the guideline clear space (x on all sides); never recolour, stretch, or place on low-contrast backgrounds.</p></div>
+  </div>
+
+  <h3>4.3 Mega-menu specifications</h3>
+  <p>Items with a caret open a <strong>mega-menu</strong> on hover (desktop) / tap, and via keyboard focus. Each opens a full-width panel under the header with columns + a promotional "feature" rail on the right.</p>
+
+  <h4>Products &mdash; mega-menu</h4>
+  <div class="mega">
+    <div class="col"><h5>Platform</h5><a>Platform overview</a><a>How it works</a><a>Whale AI</a><a>Security &amp; trust</a></div>
+    <div class="col"><h5>Editions</h5><a>Standard</a><a>Enterprise</a><a>Datacenter</a><a>Government</a><a>Telco &amp; MSP</a></div>
+    <div class="col"><h5>Modules</h5><a>Foundation</a><a>Operations</a><a>Builder</a><a>Datacenter</a><a>Whale AI</a></div>
+    <div class="col" style="background:#f1f5f9;border-radius:6px;padding:8px"><h5>Featured</h5><a><strong>Compare editions &rarr;</strong></a><a>WhaleForge (IaC)</a><a>Pandava OS</a><a>Fincore</a><a>Pricing</a></div>
+  </div>
+  <p class="muted" style="font-size:8.4pt"><span class="frid">FR-NAV-010</span> Modules column links to grouped catalog; "Featured" rail promotes the edition comparator and adjacent products.</p>
+
+  <h4>Solutions &mdash; mega-menu</h4>
+  <div class="mega">
+    <div class="col"><h5>By outcome</h5><a>Cloud Migration Factory</a><a>FinOps &amp; Cost Intelligence</a><a>Security &amp; Compliance</a></div>
+    <div class="col"><h5>&nbsp;</h5><a>Cloud Automation &amp; DevOps</a><a>Data Center Management</a><a>Sovereign Cloud</a></div>
+    <div class="col"><h5>By deployment</h5><a>SaaS</a><a>BYOC</a><a>Sovereign / air-gapped</a></div>
+    <div class="col" style="background:#f1f5f9;border-radius:6px;padding:8px"><h5>Featured</h5><a><strong>FinOps: 20–30% in 90 days &rarr;</strong></a><a>View all solutions</a></div>
+  </div>
+
+  <h4>Industries &mdash; mega-menu</h4>
+  <div class="mega">
+    <div class="col"><h5>Regulated</h5><a>Government</a><a>BFSI</a><a>Healthcare</a></div>
+    <div class="col"><h5>Operators</h5><a>Telco &amp; MSP</a><a>Energy &amp; Utilities</a><a>Manufacturing</a></div>
+    <div class="col"><h5>Digital</h5><a>Media &amp; Entertainment</a><a>Enterprise SaaS</a></div>
+    <div class="col" style="background:#f1f5f9;border-radius:6px;padding:8px"><h5>Featured</h5><a><strong>Sovereign cloud for govt &rarr;</strong></a><a>View all industries</a></div>
+  </div>
+
+  <h4>Partners &mdash; mega-menu</h4>
+  <div class="mega">
+    <div class="col"><h5>Programmes</h5><a>Technology partners</a><a>Channel &amp; resellers</a><a>Managed service providers</a></div>
+    <div class="col"><h5>Partner Portal</h5><a>Portal overview</a><a>Deal registration</a><a>Margins &amp; invoicing</a></div>
+    <div class="col"><h5>Get started</h5><a>Why partner</a><a>Become a partner</a><a>Partner login &#8599;</a></div>
+    <div class="col" style="background:#f1f5f9;border-radius:6px;padding:8px"><h5>Featured</h5><a><strong>Tiers: Silver / Gold / Platinum &rarr;</strong></a><a>Partner Portal tour</a></div>
+  </div>
+
+  <h4>About Us &mdash; dropdown (simple)</h4>
+  <div class="mega" style="grid-template-columns:repeat(3,1fr)">
+    <div class="col"><h5>Company</h5><a>Our story &amp; mission</a><a>Leadership &amp; team</a><a>The BlueWhale family</a></div>
+    <div class="col"><h5>Connect</h5><a>Careers</a><a>Newsroom</a><a>Contact</a></div>
+    <div class="col" style="background:#f1f5f9;border-radius:6px;padding:8px"><h5>Featured</h5><a><strong>We're hiring &rarr;</strong></a><a>Certifications &amp; trust</a></div>
+  </div>
+
+  <h3>4.4 Mega-menu behaviour</h3>
+  <ul>
+    <li><span class="frid">FR-NAV-011</span> Opens on hover after a 120&nbsp;ms intent delay; closes on mouse-leave after 200&nbsp;ms or on <kbd>Esc</kbd>.</li>
+    <li><span class="frid">FR-NAV-012</span> Fully keyboard operable: items are buttons with <code>aria-haspopup</code>/<code>aria-expanded</code>; arrow keys move within the panel; focus trap while open; <kbd>Esc</kbd> returns focus to the trigger.</li>
+    <li><span class="frid">FR-NAV-013</span> Only one mega-menu open at a time; opening another closes the previous.</li>
+    <li><span class="frid">FR-NAV-014</span> Panel animates with an 8&nbsp;px fade-slide (150&nbsp;ms); respects <code>prefers-reduced-motion</code>.</li>
+  </ul>
+
+  <h3>4.5 Utility navigation</h3>
+  <p>A secondary tier (right of header, and a thin top bar on wide screens) carries items outside the five buckets: <strong>Resources</strong>, <strong>Docs</strong>, <strong>Search</strong>, <strong>Login</strong> (to product / Partner Portal), and optional <strong>Region/Language</strong>. This keeps the five primary buckets clean while these high-intent links stay reachable.</p>
+
+  <h3>4.6 Mobile navigation (&lt; 1024&nbsp;px)</h3>
+  <ul>
+    <li><span class="frid">FR-NAV-020</span> A hamburger opens a full-height drawer; the five buckets render as <strong>accordions</strong> revealing the same links as the desktop mega-menus.</li>
+    <li><span class="frid">FR-NAV-021</span> Utility links (Resources, Docs, Login, Search) sit below the accordions; "Book a demo" is pinned to the drawer footer.</li>
+    <li><span class="frid">FR-NAV-022</span> Body scroll locks while the drawer is open; the drawer is keyboard- and screen-reader-accessible.</li>
+  </ul>
+
+  <h3>4.7 Footer</h3>
+  <div class="wire">
+    <div class="wlabel">Footer — dark (ink) background, 4 link columns + brand + newsletter</div>
+    <div class="grid3" style="gap:6px">
+      <div class="wbox">Products<br/><span style="font-size:7pt">Platform · Editions · Modules · Pricing</span></div>
+      <div class="wbox">Solutions / Industries<br/><span style="font-size:7pt">6 solutions · 8 industries</span></div>
+      <div class="wbox">Company<br/><span style="font-size:7pt">About · Careers · Partners · Contact</span></div>
+    </div>
+  </div>
+  <ul>
+    <li><span class="frid">FR-FOOT-001</span> Footer Must contain: brand + tagline, newsletter signup, four link columns (Products, Solutions/Industries, Resources, Company), a compliance badge row, social links, and legal links.</li>
+    <li><span class="frid">FR-FOOT-002</span> Footer is identical across all pages and uses the white horizontal logo on the ink background.</li>
+  </ul>
+</div>
+
+<!-- ───────── 5. FUNCTIONAL REQUIREMENTS ───────── -->
+<div class="section">
+  <p class="eyebrow">Section 5</p>
+  <h2>Functional requirements (per page)</h2>
+  <p>Each page's behaviour as testable requirements. Layout/visual detail is in &sect;6&ndash;9; this section is the functional contract.</p>
+
+  <h3>5.1 Home <code>/</code></h3>
+  <table>
+    <thead><tr><th style="width:16%">ID</th><th>Requirement</th></tr></thead>
+    <tbody>
+      <tr><td class="frid">FR-HOME-001</td><td>Hero Must present the value proposition, dual CTA (Book a demo / Explore platform), and a trust strip (clouds, regions, compliance).</td></tr>
+      <tr><td class="frid">FR-HOME-002</td><td>Must render sections in order: hero, cloud strip, problem&rarr;promise, capabilities (6), editions teaser (5), industries strip (8), how-it-works (4), outcomes stats, testimonials (3), resources teaser, closing CTA.</td></tr>
+      <tr><td class="frid">FR-HOME-003</td><td>Stat counters Should animate on scroll into view (reduced-motion: show final value).</td></tr>
+      <tr><td class="frid">FR-HOME-004</td><td>Every card linking to a sub-page Must be a single accessible link with a visible focus state.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>5.2 Products — Platform, Editions, Modules</h3>
+  <table>
+    <thead><tr><th style="width:16%">ID</th><th>Requirement</th></tr></thead>
+    <tbody>
+      <tr><td class="frid">FR-PROD-001</td><td>Platform page Must include an interactive module map (control plane over clouds), deployment models, and Whale AI tiers.</td></tr>
+      <tr><td class="frid">FR-EDN-001</td><td>Editions overview Must render the 5 editions and a <strong>module&times;edition comparison matrix</strong> sourced from content data.</td></tr>
+      <tr><td class="frid">FR-EDN-002</td><td>An <strong>edition comparator</strong> Must let users select/compare editions and filter the matrix.</td></tr>
+      <tr><td class="frid">FR-EDN-003</td><td>Each edition detail page Must show hero, positioning, included-modules checklist, architecture diagram, key specs (deploy/AI tier/price), and CTA.</td></tr>
+      <tr><td class="frid">FR-MOD-001</td><td>Modules overview Must group modules (Foundation/Operations/Builder/Datacenter/AI); each detail page shows description, features, "available in" editions, and a diagram.</td></tr>
+      <tr><td class="frid">FR-MOD-002</td><td>Unknown edition/module/industry/solution slugs Must return the 404 page.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>5.3 Solutions &amp; Industries</h3>
+  <table>
+    <thead><tr><th style="width:16%">ID</th><th>Requirement</th></tr></thead>
+    <tbody>
+      <tr><td class="frid">FR-SOL-001</td><td>Each solution detail Must present problem, approach, architecture diagram, measurable outcomes, who-it's-for, and related modules.</td></tr>
+      <tr><td class="frid">FR-IND-001</td><td>Each industry detail Must present challenges, why-BlueWhale, KPIs, compliance mapping, targets, and a relevant-edition CTA.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>5.4 Partners &amp; Partner Portal showcase</h3>
+  <table>
+    <thead><tr><th style="width:16%">ID</th><th>Requirement</th></tr></thead>
+    <tbody>
+      <tr><td class="frid">FR-PRT-001</td><td>Partners page Must present the 3 programmes (Technology, Channel/Reseller with tier margins, MSP) and "why partner" benefits.</td></tr>
+      <tr><td class="frid">FR-PRT-002</td><td>Partner Portal showcase Must walk through deal registration &rarr; two-sided invoicing &rarr; provisioning, with annotated visuals.</td></tr>
+      <tr><td class="frid">FR-PRT-003</td><td>"Become a partner" Must open an application form; "Partner login" Must deep-link to the Partner Portal (new tab).</td></tr>
+    </tbody>
+  </table>
+
+  <h3>5.5 About, Careers &amp; Contact</h3>
+  <table>
+    <thead><tr><th style="width:16%">ID</th><th>Requirement</th></tr></thead>
+    <tbody>
+      <tr><td class="frid">FR-ABT-001</td><td>About Must present story/mission, principles, the product family, by-the-numbers, global offices, leadership, and certifications.</td></tr>
+      <tr><td class="frid">FR-CAR-001</td><td>Careers Must list open roles (filter by department/location/remote) and provide an application form with résumé link.</td></tr>
+      <tr><td class="frid">FR-CON-001</td><td>Contact Must provide a demo-request form, contact channels, and offices; submission triggers FR-FORM-*.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>5.6 Resources, Docs, Pricing, Legal</h3>
+  <table>
+    <thead><tr><th style="width:16%">ID</th><th>Requirement</th></tr></thead>
+    <tbody>
+      <tr><td class="frid">FR-RES-001</td><td>Resources Must be filterable by type (whitepaper, case study, webinar, blog, video, guide); detail pages May gate downloads behind a short form.</td></tr>
+      <tr><td class="frid">FR-PRC-001</td><td>Pricing Must show edition tiers + comparison + FAQ; figures controlled by the "publish vs contact-sales" setting.</td></tr>
+      <tr><td class="frid">FR-DOC-001</td><td>Docs hub Must link out to product/API documentation.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>5.7 Global &amp; system pages</h3>
+  <table>
+    <thead><tr><th style="width:16%">ID</th><th>Requirement</th></tr></thead>
+    <tbody>
+      <tr><td class="frid">FR-GLB-001</td><td>Every page Must include header, footer, correct metadata/OG/JSON-LD, and exactly one primary CTA path.</td></tr>
+      <tr><td class="frid">FR-GLB-002</td><td>A persistent assistant widget Should help route visitors (editions, FinOps, demo).</td></tr>
+      <tr><td class="frid">FR-SYS-001</td><td>404 and 500 pages Must be branded and offer Home + Contact links; <code>sitemap.xml</code> &amp; <code>robots.txt</code> Must be generated.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ───────── 6. UI/UX DESIGN SYSTEM ───────── -->
+<div class="section">
+  <p class="eyebrow">Section 6</p>
+  <h2>UI/UX design system — brand foundations</h2>
+  <p>The visual language extends the BlueWhale Stack Identity Guidelines v0.1101 to the web: the same primary blue, the architectural logic of the stacked-blocks logomark, and bold, geometric typography — executed as a refined, modern-enterprise system.</p>
+
+  <h3>6.1 Colour</h3>
+  <p>Primary blue <code>#002da1</code> is canonical (from the identity). The web palette adds a tonal blue scale, a cyan accent for highlights/interaction, a neutral slate scale, and semantic colours.</p>
+  <table class="avoid-break">
+    <thead><tr><th>Role</th><th>Token</th><th>Hex</th><th style="width:24%">Sample</th></tr></thead>
+    <tbody>
+      <tr><td>Brand / primary</td><td>brand-600</td><td>#002da1</td><td><span class="swatch" style="background:#002da1"></span></td></tr>
+      <tr><td>Brand deep (hero/footer)</td><td>brand-900</td><td>#00154b</td><td><span class="swatch" style="background:#00154b"></span></td></tr>
+      <tr><td>Brand hover</td><td>brand-700</td><td>#00237f</td><td><span class="swatch" style="background:#00237f"></span></td></tr>
+      <tr><td>Accent (interaction)</td><td>accent-500</td><td>#06b6c4</td><td><span class="swatch" style="background:#06b6c4"></span></td></tr>
+      <tr><td>Ink (dark surface)</td><td>ink-950</td><td>#060a18</td><td><span class="swatch" style="background:#060a18"></span></td></tr>
+      <tr><td>Text</td><td>slate-900</td><td>#0f172a</td><td><span class="swatch" style="background:#0f172a"></span></td></tr>
+      <tr><td>Muted text</td><td>slate-500</td><td>#64748b</td><td><span class="swatch" style="background:#64748b"></span></td></tr>
+      <tr><td>Surface / line</td><td>slate-50 / 200</td><td>#f8fafc / #e2e8f0</td><td><span class="swatch" style="background:#e2e8f0"></span></td></tr>
+    </tbody>
+  </table>
+  <div class="note"><strong>Open brand item.</strong> The supplied guidelines excerpt covers the logo only. The <em>official</em> secondary palette and exact accent should be confirmed from the full brand guide; the cyan accent above is a recommendation and is trivially swappable to the brand's defined secondary.</div>
+
+  <h3>6.2 Typography</h3>
+  <p>The wordmark uses a <strong>bold, squared, geometric sans-serif</strong> (per the identity). The web type system mirrors that character for display while keeping body text highly legible.</p>
+  <table>
+    <thead><tr><th style="width:22%">Use</th><th>Typeface</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Logo / wordmark</td><td>Brand wordmark (supplied)</td><td>Used only as the logo asset, never re-typeset.</td></tr>
+      <tr><td>Display / headings</td><td>Geometric techno sans — recommend <strong>Chakra Petch</strong> or <strong>Space Grotesk</strong> (or the licensed brand font)</td><td>Echoes the squared logotype; used for H1–H3 &amp; stats.</td></tr>
+      <tr><td>Body / UI</td><td><strong>Inter</strong></td><td>Neutral, legible at all sizes; weights 400/500/600/700.</td></tr>
+      <tr><td>Mono (code/specs)</td><td>JetBrains Mono / system mono</td><td>Code snippets, API references.</td></tr>
+    </tbody>
+  </table>
+  <p class="muted"><span class="frid">FR-TYP-001</span> Type scale (fluid, <code>clamp()</code>): H1 36&ndash;60px · H2 28&ndash;40 · H3 20&ndash;26 · body 16&ndash;18 · small 13&ndash;14. Line-height 1.1–1.25 headings, 1.55 body. Max line length ~70ch.</p>
+  <div class="note"><strong>Open brand item.</strong> Confirm the licensed display/brand font from the full guidelines; the recommendations above are close geometric matches and a one-line swap.</div>
+
+  <h3>6.3 Grid, spacing &amp; radius</h3>
+  <div class="grid3">
+    <div class="card"><h4>Grid</h4><p class="muted">12-column, 1280px max content width, 24px gutters; 20px outer padding (mobile), generous section rhythm (80–96px desktop).</p></div>
+    <div class="card"><h4>Spacing</h4><p class="muted">8px base scale (4/8/12/16/24/32/48/64/96). Consistent vertical rhythm between sections.</p></div>
+    <div class="card"><h4>Radius &amp; elevation</h4><p class="muted">Cards 16px, buttons 8px, pills 999px. Two shadows: soft (cards), brand-glow (primary/hover). Echoes the rounded stacked-blocks.</p></div>
+  </div>
+
+  <h3>6.4 Logomark as a design motif</h3>
+  <p>The stacked-blocks-with-whale logomark is more than a logo: its <strong>2&times;2 block grid</strong> becomes a recurring visual device — section dividers, the "platform layers" diagram language, bento-style card grids, and loading states — tying the site visually to the identity.</p>
+</div>
+
+<!-- ───────── 7. COMPONENTS & LAYOUTS ───────── -->
+<div class="section">
+  <p class="eyebrow">Section 7</p>
+  <h2>Component library &amp; layout patterns</h2>
+  <h3>7.1 Core components</h3>
+  <table>
+    <thead><tr><th style="width:22%">Component</th><th>States / variants</th></tr></thead>
+    <tbody>
+      <tr><td>Button</td><td>Primary, secondary, ghost, white; sizes sm/md/lg; default, hover (lift), focus-ring, active, disabled, loading.</td></tr>
+      <tr><td>Card</td><td>Static &amp; interactive (hover lift + brand shadow); used for editions, modules, industries, resources.</td></tr>
+      <tr><td>Badge / Pill</td><td>Brand, accent, neutral tones; for tiers, tags, "new".</td></tr>
+      <tr><td>Stat</td><td>Value + label; light &amp; inverse; animated counter.</td></tr>
+      <tr><td>Tabs / Accordion</td><td>For module groups, FAQ, mobile nav; keyboard accessible.</td></tr>
+      <tr><td>Comparison table</td><td>Sticky header row, ✓/– cells, responsive horizontal scroll.</td></tr>
+      <tr><td>Mega-menu</td><td>Columns + featured rail (per &sect;4.3).</td></tr>
+      <tr><td>Form controls</td><td>Input, select, textarea, checkbox, consent; label, helper, error states.</td></tr>
+      <tr><td>CTA band</td><td>Gradient brand section with dual CTA (reused site-wide).</td></tr>
+      <tr><td>Diagram / Placeholder</td><td>Code-based SVG architecture diagrams; branded placeholder until assets land.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>7.2 Page layout patterns</h3>
+  <div class="wire">
+    <div class="wlabel">Detail page template (edition / module / industry / solution)</div>
+    <div class="wbar" style="background:#00154b">Hero — title, tagline, audience, CTA</div>
+    <div class="grid3" style="gap:6px;margin-top:6px">
+      <div class="wbox">Key specs strip</div><div class="wbox">Key specs strip</div><div class="wbox">Key specs strip</div>
+    </div>
+    <div class="grid2" style="gap:6px;margin-top:6px">
+      <div class="wbox" style="padding:24px 6px">What's included / features</div>
+      <div class="wbox" style="padding:24px 6px">Architecture diagram</div>
+    </div>
+    <div class="wbox" style="margin-top:6px">Related items grid</div>
+    <div class="wbar" style="background:#002da1;margin-top:6px;justify-content:center">CTA band</div>
+  </div>
+  <ul>
+    <li><strong>Hero patterns:</strong> dark "ink" hero for Home/edition/solution; light hero for overview/industry pages.</li>
+    <li><strong>Section rhythm:</strong> alternating white / slate-50 backgrounds to separate sections; one idea per section.</li>
+    <li><strong>Bento grids:</strong> capability &amp; module overviews use bento-style cards echoing the block motif.</li>
+  </ul>
+</div>
+
+<!-- ───────── 8. MOTION ───────── -->
+<div class="section">
+  <p class="eyebrow">Section 8</p>
+  <h2>Interaction &amp; motion design</h2>
+  <table>
+    <thead><tr><th style="width:24%">Pattern</th><th>Spec</th></tr></thead>
+    <tbody>
+      <tr><td>Entrance</td><td>Fade + 14px rise on scroll-into-view; 500&ndash;600ms; staggered ~60ms across a group.</td></tr>
+      <tr><td>Hover (cards/buttons)</td><td>2&ndash;4px lift + shadow; 150&ndash;200ms ease-out.</td></tr>
+      <tr><td>Mega-menu</td><td>8px fade-slide, 150ms (per FR-NAV-014).</td></tr>
+      <tr><td>Stat counters</td><td>Count up over ~1.2s when in view.</td></tr>
+      <tr><td>Interactive diagrams</td><td>Hover/tap reveals node detail; smooth path transitions.</td></tr>
+      <tr><td>Reduced motion</td><td>All of the above degrade to instant/no-motion under <code>prefers-reduced-motion</code>.</td></tr>
+    </tbody>
+  </table>
+  <div class="callout"><span class="frid">FR-MOT-001</span> Motion Must be purposeful and subtle — guiding attention, never blocking content or harming performance. No autoplaying carousels.</div>
+</div>
+
+<!-- ───────── 9. RESPONSIVE ───────── -->
+<div class="section">
+  <p class="eyebrow">Section 9</p>
+  <h2>Responsive &amp; breakpoint behaviour</h2>
+  <table>
+    <thead><tr><th>Breakpoint</th><th>Width</th><th>Key behaviour</th></tr></thead>
+    <tbody>
+      <tr><td>Mobile</td><td>&lt; 640px</td><td>Single column; hamburger drawer nav; stacked cards; full-width CTAs.</td></tr>
+      <tr><td>Tablet</td><td>640&ndash;1023px</td><td>2-column grids; still hamburger nav; comparison tables scroll horizontally.</td></tr>
+      <tr><td>Desktop</td><td>1024&ndash;1279px</td><td>Full mega-menu header; 3-column grids.</td></tr>
+      <tr><td>Wide</td><td>&ge; 1280px</td><td>Max 1280px content; optional top utility bar; 4–5 column grids.</td></tr>
+    </tbody>
+  </table>
+  <p class="muted"><span class="frid">FR-RES-010</span> All interactive targets Must be &ge;44&times;44px on touch. Content parity across breakpoints — nothing hidden on mobile that exists on desktop (except decorative).</p>
+</div>
+
+<!-- ───────── 10. FORMS ───────── -->
+<div class="section">
+  <p class="eyebrow">Section 10</p>
+  <h2>Forms, validation &amp; messaging</h2>
+  <table>
+    <thead><tr><th style="width:16%">ID</th><th>Requirement</th></tr></thead>
+    <tbody>
+      <tr><td class="frid">FR-FORM-001</td><td>Demo/contact form fields: first &amp; last name, work email, company, phone (opt), job title (opt), industry, edition interest, message, consent checkbox.</td></tr>
+      <tr><td class="frid">FR-FORM-002</td><td>Inline validation on blur + on submit; clear, specific error messages; email format &amp; required-field checks; consent required.</td></tr>
+      <tr><td class="frid">FR-FORM-003</td><td>Submit posts to a Next.js route handler; success shows a confirmation with reference; failure shows a retryable error. Notification email sent to sales.</td></tr>
+      <tr><td class="frid">FR-FORM-004</td><td>Spam protection (honeypot + rate limit). No secrets client-side.</td></tr>
+      <tr><td class="frid">FR-FORM-005</td><td>Careers &amp; partner-apply forms reuse the same control library &amp; validation patterns.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ───────── 11. NON-FUNCTIONAL + ACCEPTANCE ───────── -->
+<div class="section">
+  <p class="eyebrow">Section 11</p>
+  <h2>Non-functional requirements</h2>
+  <table>
+    <thead><tr><th style="width:20%">Area</th><th>Requirement</th></tr></thead>
+    <tbody>
+      <tr><td>Performance</td><td>Lighthouse &ge;90 all categories; LCP &lt;2.5s, CLS &lt;0.1, INP &lt;200ms on mobile 4G; images optimised; fonts <code>display:swap</code>.</td></tr>
+      <tr><td>Accessibility</td><td>WCAG 2.1 AA: semantic landmarks, alt text, keyboard operability, visible focus, AA contrast, reduced-motion, ARIA on nav/menus.</td></tr>
+      <tr><td>SEO</td><td>SSR/SSG, per-page title/description/OG, JSON-LD (Organization/Product/BreadcrumbList), canonical, sitemap &amp; robots.</td></tr>
+      <tr><td>Analytics</td><td>Privacy-respecting analytics; conversion events on every CTA &amp; form submit.</td></tr>
+      <tr><td>Security</td><td>Security headers/CSP, HTTPS, form spam protection, dependency hygiene.</td></tr>
+      <tr><td>Browser support</td><td>Latest 2 versions of Chrome, Edge, Safari, Firefox; iOS/Android.</td></tr>
+      <tr><td>Maintainability</td><td>Typed content layer + CMS-ready seam; documented component library.</td></tr>
+    </tbody>
+  </table>
+
+  <h2 style="margin-top:18px">Acceptance criteria &amp; open brand items</h2>
+  <h3>Acceptance (launch gate)</h3>
+  <ul>
+    <li>All FR-* "Must" requirements implemented and verified.</li>
+    <li>Navigation (header mega-menus, mobile drawer, footer) works per &sect;4, keyboard + screen-reader tested.</li>
+    <li>Design system applied consistently; brand logo &amp; colour per identity guidelines.</li>
+    <li>Lighthouse &ge;90, WCAG AA, cross-browser sign-off; forms submit &amp; notify.</li>
+  </ul>
+  <h3>Open brand items (need from you)</h3>
+  <ol>
+    <li><strong>Full brand guide pages</strong> beyond the logo — the official <em>secondary colour palette</em> and <em>typography system</em> (so we replace the recommended accent &amp; display font with the canonical ones).</li>
+    <li><strong>Licensed brand/display font files</strong> (or confirmation to use the recommended Chakra Petch / Space Grotesk).</li>
+    <li><strong>Final primary nav order</strong> — confirm recommended (Products-first) or your stated order.</li>
+    <li><strong>Imagery, leadership content, customer logos &amp; KPI confirmation</strong> (carried from the SOW).</li>
+  </ol>
+  <div class="callout" style="margin-top:14px"><strong>End of FSD v1.0.</strong> This specification, with the Scope of Work v1.0, is sufficient to begin building the world-class site. The logo and primary blue from your identity guidelines are already integrated into the project (<code>public/brand/</code>).</div>
+</div>
+
+</body>
+</html>

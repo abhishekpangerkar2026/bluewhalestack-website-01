@@ -1,0 +1,338 @@
+/**
+ * Company-level facts, navigation, and global content.
+ * Single source of truth — consumed by layout, footer, about, contact.
+ */
+
+export const company = {
+  name: "BlueWhale Stack",
+  tagline: "Every cloud. One control plane.",
+  metaDescription:
+    "BlueWhale Stack is a hyperscaler-neutral cloud management platform: unified inventory, AI-native provisioning, bundled observability, migration and governance across public cloud, on-prem and hybrid — one control plane, with BYOC and sovereign options.",
+  emails: {
+    sales: "sales@bluewhalestack.com",
+    careers: "careers@bluewhalestack.com",
+    partners: "partners@bluewhalestack.com",
+    contact: "contact@bluewhalestack.com",
+  },
+  phones: [
+    { region: "India", number: "+91 20 4660 1234", hours: "Mon–Fri, 9am–6pm IST" },
+    { region: "UAE", number: "+971 6 382 5678", hours: "Mon–Fri, 9am–6pm GST" },
+  ],
+  social: {
+    linkedin: "https://www.linkedin.com/company/bluewhalestack",
+    twitter: "https://twitter.com/bluewhalestack",
+  },
+} as const;
+
+export const offices = [
+  {
+    city: "Pune",
+    label: "India — Headquarters",
+    address:
+      "201, Baner Rd, near Sakal Nagar, Aundh, Pune, Maharashtra 411007, India",
+  },
+  {
+    city: "Ajman",
+    label: "UAE",
+    address:
+      "Office BC-892084, 26th Floor, Amber Gem Tower, Sheikh Khalifa Street, Ajman, United Arab Emirates",
+  },
+] as const;
+
+export const clouds = [
+  "AWS",
+  "Microsoft Azure",
+  "Google Cloud",
+  "Oracle Cloud",
+  "IBM Cloud",
+  "Alibaba Cloud",
+  "On-prem (VMware · Nutanix · Hyper-V)",
+] as const;
+
+export const regions = [
+  { code: "SIN", city: "Singapore" },
+  { code: "BOM", city: "Mumbai" },
+  { code: "FRA", city: "Frankfurt" },
+  { code: "LAX", city: "Los Angeles" },
+] as const;
+
+export const compliance = [
+  "ISO 27001:2022",
+  "ISO 27017 (cloud security)",
+  "ISO 27018 (PII in cloud)",
+  "ISO 27701 (privacy ISMS)",
+  "ISO 22301 (business continuity)",
+  "CSA STAR Level 2",
+  "SOC 2 Type II",
+  "GDPR",
+  "India DPDP Act 2023",
+] as const;
+
+/** Headline metrics shown on Home/About — grounded in shipped product facts. */
+export const headlineStats = [
+  { value: "6", label: "Public clouds + on-prem & hybrid" },
+  { value: "11", label: "Modules, one control plane" },
+  { value: "50+", label: "Whale AI use cases" },
+  { value: "4", label: "Deployment regions" },
+] as const;
+
+// ── Partner Portal (external app — partners.bluewhalestack.com) ─
+// The portal is a separate, already-built product. The website only links to it.
+export const partnerPortal = {
+  url: "https://partner.bluewhalestack.com",
+  login: "https://partner.bluewhalestack.com/login",
+  register: "https://partner.bluewhalestack.com/register",
+};
+
+// ── Primary navigation (mega-menu) ────────────────────────────
+export type NavLink = {
+  label: string;
+  href: string;
+  desc?: string;
+  external?: boolean;
+};
+export type NavColumn = { heading: string; links: NavLink[]; featured?: boolean };
+export type NavItem = { label: string; href: string; columns?: NavColumn[] };
+
+export const primaryNav: NavItem[] = [
+  {
+    label: "Products",
+    href: "/platform",
+    columns: [
+      {
+        heading: "Platform",
+        links: [
+          { label: "Platform overview", href: "/platform", desc: "Every cloud, one control plane" },
+          { label: "Whale AI", href: "/products/whale-ai", desc: "AI across every module" },
+          { label: "Cloud Connectors", href: "/modules/cloud-connectors", desc: "6 public clouds + on-prem" },
+        ],
+      },
+      {
+        heading: "Editions",
+        links: [
+          { label: "Standard", href: "/editions/standard" },
+          { label: "Enterprise", href: "/editions/enterprise" },
+          { label: "Telco", href: "/editions/telco" },
+          { label: "Government", href: "/editions/government" },
+          { label: "Datacenter", href: "/editions/datacenter" },
+        ],
+      },
+      {
+        heading: "Modules",
+        links: [
+          { label: "Inventory & Discovery", href: "/modules/inventory" },
+          { label: "Migration Engine", href: "/modules/migration" },
+          { label: "Observe", href: "/modules/observe" },
+          { label: "ITSM", href: "/modules/itsm" },
+          { label: "All modules", href: "/modules" },
+        ],
+      },
+      {
+        heading: "Featured",
+        featured: true,
+        links: [
+          { label: "Compare editions", href: "/editions", desc: "Standard → Datacenter matrix" },
+          { label: "All modules", href: "/modules" },
+          { label: "Pricing", href: "/pricing" },
+        ],
+      },
+    ],
+  },
+  {
+    label: "Solutions",
+    href: "/solutions",
+    columns: [
+      {
+        heading: "By outcome",
+        links: [
+          { label: "Unified Cloud Inventory", href: "/solutions/unified-cloud-inventory" },
+          { label: "AI-Native Provisioning", href: "/solutions/ai-native-provisioning" },
+          { label: "Bundled Observability", href: "/solutions/bundled-observability" },
+        ],
+      },
+      {
+        heading: "More outcomes",
+        links: [
+          { label: "Cloud Migration", href: "/solutions/cloud-migration" },
+          { label: "Security & Compliance", href: "/solutions/security-compliance" },
+          { label: "Sovereign Cloud", href: "/solutions/sovereign-cloud" },
+        ],
+      },
+      {
+        heading: "By deployment",
+        links: [
+          { label: "SaaS", href: "/platform" },
+          { label: "BYOC", href: "/platform" },
+          { label: "Sovereign / air-gapped", href: "/editions/government" },
+        ],
+      },
+      {
+        heading: "Featured",
+        featured: true,
+        links: [
+          { label: "Every cloud, one control plane", href: "/solutions/unified-cloud-inventory", desc: "See the whole estate" },
+          { label: "All solutions", href: "/solutions" },
+        ],
+      },
+    ],
+  },
+  {
+    label: "Industries",
+    href: "/industries",
+    columns: [
+      {
+        heading: "Regulated",
+        links: [
+          { label: "Government", href: "/industries/government" },
+          { label: "BFSI", href: "/industries/bfsi" },
+          { label: "Healthcare", href: "/industries/healthcare" },
+        ],
+      },
+      {
+        heading: "Operators",
+        links: [
+          { label: "Telco & MSP", href: "/industries/telco" },
+          { label: "Regulated Enterprise", href: "/industries/regulated-enterprise" },
+        ],
+      },
+      {
+        heading: "Deployment",
+        links: [
+          { label: "Sovereign / air-gapped", href: "/editions/government" },
+          { label: "All industries", href: "/industries" },
+        ],
+      },
+      {
+        heading: "Featured",
+        featured: true,
+        links: [
+          { label: "Government Edition — sovereign & air-gapped", href: "/editions/government", desc: "Air-gapped & in-region" },
+          { label: "All industries", href: "/industries" },
+        ],
+      },
+    ],
+  },
+  {
+    label: "Partners",
+    href: "/partners",
+    columns: [
+      {
+        heading: "Programmes",
+        links: [
+          { label: "Technology partners", href: "/partners" },
+          { label: "Channel & resellers", href: "/partners" },
+          { label: "Managed service providers", href: "/partners" },
+        ],
+      },
+      {
+        heading: "Partner Portal",
+        links: [
+          { label: "Deal registration", href: "/partners#portal" },
+          { label: "Two-sided invoicing", href: "/partners#portal" },
+          { label: "Margins & tiers", href: "/partners#portal" },
+        ],
+      },
+      {
+        heading: "Get started",
+        links: [
+          { label: "Why partner", href: "/partners" },
+          { label: "Become a partner", href: partnerPortal.register, external: true },
+          { label: "Partner login", href: partnerPortal.login, external: true },
+        ],
+      },
+      {
+        heading: "Featured",
+        featured: true,
+        links: [
+          { label: "Open Partner Portal", href: partnerPortal.login, external: true, desc: "partner.bluewhalestack.com" },
+          { label: "Partner programmes", href: "/partners" },
+        ],
+      },
+    ],
+  },
+  {
+    label: "About Us",
+    href: "/about",
+    columns: [
+      {
+        heading: "Company",
+        links: [
+          { label: "Our story & mission", href: "/about" },
+          { label: "The BlueWhale family", href: "/about" },
+        ],
+      },
+      {
+        heading: "Connect",
+        links: [
+          { label: "Careers", href: "/careers" },
+          { label: "Contact", href: "/contact" },
+        ],
+      },
+      {
+        heading: "Trust",
+        links: [
+          { label: "Trust Center", href: "/trust", desc: "Certifications & compliance" },
+          { label: "Privacy policy", href: "/legal/privacy" },
+          { label: "Terms of service", href: "/legal/terms" },
+        ],
+      },
+      {
+        heading: "Featured",
+        featured: true,
+        links: [
+          { label: "We're hiring", href: "/careers", desc: "Open roles across the team" },
+          { label: "Trust Center", href: "/trust", desc: "9 certifications — all current" },
+        ],
+      },
+    ],
+  },
+];
+
+export const utilityNav: NavLink[] = [
+  { label: "Resources", href: "/resources" },
+  { label: "Docs", href: "/docs" },
+];
+
+export const footerNav = [
+  {
+    heading: "Platform",
+    links: [
+      { label: "Overview", href: "/platform" },
+      { label: "Modules", href: "/modules" },
+      { label: "Editions", href: "/editions" },
+      { label: "Pricing", href: "/pricing" },
+      { label: "Solutions", href: "/solutions" },
+    ],
+  },
+  {
+    heading: "Editions",
+    links: [
+      { label: "Standard", href: "/editions/standard" },
+      { label: "Enterprise", href: "/editions/enterprise" },
+      { label: "Telco", href: "/editions/telco" },
+      { label: "Government", href: "/editions/government" },
+      { label: "Datacenter", href: "/editions/datacenter" },
+    ],
+  },
+  {
+    heading: "Industries",
+    links: [
+      { label: "Government", href: "/industries/government" },
+      { label: "Telco & MSP", href: "/industries/telco" },
+      { label: "BFSI", href: "/industries/bfsi" },
+      { label: "Healthcare", href: "/industries/healthcare" },
+      { label: "Regulated Enterprise", href: "/industries/regulated-enterprise" },
+    ],
+  },
+  {
+    heading: "Company",
+    links: [
+      { label: "About Us", href: "/about" },
+      { label: "Careers", href: "/careers" },
+      { label: "Partners", href: "/partners" },
+      { label: "Resources", href: "/resources" },
+      { label: "Contact", href: "/contact" },
+      { label: "Trust Center", href: "/trust" },
+    ],
+  },
+] as const;

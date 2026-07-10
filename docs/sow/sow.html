@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>BlueWhale Stack — Website Scope of Work</title>
+<style>
+  @page { size: A4; margin: 17mm 15mm 18mm 15mm; }
+
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    color: #1e293b; font-size: 10.3pt; line-height: 1.55; margin: 0;
+  }
+
+  h1, h2, h3, h4 { font-family: "Segoe UI Semibold", "Segoe UI", Arial, sans-serif; color: #00154b; line-height: 1.25; }
+  h2 { font-size: 17pt; margin: 0 0 4px; padding-bottom: 6px; border-bottom: 3px solid #002da1; }
+  h3 { font-size: 12.5pt; margin: 18px 0 5px; color: #00237f; }
+  h4 { font-size: 10.8pt; margin: 13px 0 3px; color: #0b1020; }
+  p { margin: 0 0 8px; }
+  ul, ol { margin: 4px 0 10px; padding-left: 18px; }
+  li { margin: 2px 0; }
+  a { color: #002da1; text-decoration: none; }
+  strong { color: #0b1020; }
+  small, .muted { color: #64748b; }
+
+  .eyebrow { text-transform: uppercase; letter-spacing: .14em; font-size: 8pt; font-weight: 700; color: #06b6c4; margin: 0 0 4px; }
+
+  /* Cover */
+  .cover { height: 261mm; display: flex; flex-direction: column; justify-content: space-between;
+           background: linear-gradient(150deg, #00154b 0%, #002da1 55%, #00237f 100%);
+           color: #fff; margin: -17mm -15mm 0; padding: 30mm 22mm; page-break-after: always; }
+  .cover .brandrow { display: flex; align-items: center; gap: 12px; }
+  .cover .mark { width: 46px; height: 46px; border-radius: 11px; background: rgba(255,255,255,.14);
+                 display: grid; place-items: center; font-weight: 800; font-size: 20px; }
+  .cover .brandname { font-size: 18pt; font-weight: 700; }
+  .cover .brandname span { color: #57e0e0; }
+  .cover h1 { color: #fff; font-size: 38pt; line-height: 1.08; margin: 0 0 12px; max-width: 16em; }
+  .cover .sub { font-size: 13pt; color: #c9d6ff; max-width: 30em; }
+  .cover .tag { display:inline-block; margin-bottom: 18px; border:1px solid rgba(255,255,255,.35);
+                border-radius: 999px; padding: 5px 14px; font-size: 9pt; letter-spacing:.08em; text-transform:uppercase; color:#dbe6ff; }
+  .cover .meta { display: flex; gap: 38px; border-top: 1px solid rgba(255,255,255,.25); padding-top: 16px; font-size: 9.5pt; }
+  .cover .meta div span { display:block; color:#9fb4ef; text-transform:uppercase; letter-spacing:.08em; font-size:7.5pt; margin-bottom:3px; }
+
+  /* Repeating footer on every printed page */
+  .pagefoot { position: fixed; bottom: 6mm; left: 15mm; right: 15mm;
+              display:flex; justify-content: space-between; font-size: 7.6pt; color: #94a3b8;
+              border-top: 1px solid #e2e8f0; padding-top: 3px; }
+
+  .section { page-break-before: always; padding-top: 2mm; }
+  .section:first-of-type { page-break-before: avoid; }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; font-size: 9.1pt; margin: 8px 0 12px; }
+  th { background: #00237f; color: #fff; font-weight: 600; text-align: left; }
+  td, th { border: 1px solid #cbd5e1; padding: 6px 8px; vertical-align: top; }
+  tbody tr:nth-child(even) td { background: #f1f5f9; }
+  td.center, th.center { text-align: center; }
+  .tick { color: #16a34a; font-weight: 700; }
+  .dash { color: #cbd5e1; }
+
+  /* Callouts & cards */
+  .callout { border-left: 4px solid #06b6c4; background: #ecfeff; padding: 9px 13px; border-radius: 0 8px 8px 0; margin: 10px 0; font-size: 9.6pt; }
+  .note { border-left: 4px solid #f59e0b; background: #fffbeb; padding: 9px 13px; border-radius: 0 8px 8px 0; margin: 10px 0; font-size: 9.6pt; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  .card { border: 1px solid #e2e8f0; border-radius: 9px; padding: 11px 13px; background: #fff; }
+  .card h4 { margin-top: 0; }
+  .pill { display:inline-block; background:#eef3ff; color:#00237f; border:1px solid #dbe6ff; border-radius:999px; padding:2px 9px; font-size:8pt; margin:2px 3px 2px 0; }
+  .kpi { font-size: 15pt; font-weight: 800; color: #002da1; }
+  .avoid-break { page-break-inside: avoid; }
+
+  /* TOC */
+  .toc ol { list-style: none; padding-left: 0; counter-reset: toc; }
+  .toc > ol > li { counter-increment: toc; padding: 4px 0; border-bottom: 1px dotted #e2e8f0; font-weight: 600; color:#0b1020; }
+  .toc > ol > li::before { content: counter(toc) ".  "; color: #002da1; font-weight: 700; }
+  .toc .subitem { font-weight: 400; color:#475569; font-size: 9.3pt; padding-left: 18px; }
+</style>
+</head>
+<body>
+
+<div class="pagefoot">
+  <span>BlueWhale Stack &middot; Website Scope of Work</span>
+  <span>Confidential &middot; v1.0</span>
+</div>
+
+<!-- ───────────────────────── COVER ───────────────────────── -->
+<div class="cover">
+  <div>
+    <div class="brandrow">
+      <div class="mark">B</div>
+      <div class="brandname">BlueWhale<span> Stack</span></div>
+    </div>
+  </div>
+  <div>
+    <div class="tag">Scope of Work</div>
+    <h1>Corporate Website &amp; Digital Platform</h1>
+    <p class="sub">A complete scope for a world-class web presence spanning the BlueWhale Stack platform, its five editions, the partner ecosystem, and the wider product family.</p>
+  </div>
+  <div class="meta">
+    <div><span>Document</span>Scope of Work (SOW)</div>
+    <div><span>Version</span>1.0</div>
+    <div><span>Date</span>14 June 2026</div>
+    <div><span>Status</span>For approval</div>
+  </div>
+</div>
+
+<!-- ───────────────────────── DOC CONTROL + TOC ───────────────────────── -->
+<div class="section" style="page-break-before: avoid;">
+  <p class="eyebrow">Document Control</p>
+  <h2>About this document</h2>
+  <table>
+    <tbody>
+      <tr><th style="width:26%">Title</th><td>BlueWhale Stack — Corporate Website &amp; Digital Platform: Scope of Work</td></tr>
+      <tr><th>Version</th><td>1.0 (for approval)</td></tr>
+      <tr><th>Date</th><td>14 June 2026</td></tr>
+      <tr><th>Prepared for</th><td>BlueWhale Stack — Leadership, Marketing &amp; Delivery teams</td></tr>
+      <tr><th>Audience</th><td>Leadership / client stakeholders, internal build team, and any external vendor or agency engaged to deliver the work</td></tr>
+      <tr><th>Purpose</th><td>Define the vision, scope, content, design direction, technical approach, and phased plan for the new BlueWhale Stack website</td></tr>
+      <tr><th>Scope boundary</th><td>This document defines the <em>website</em>. It documents the products, editions and Partner Portal only to the depth the website must present them; it is not a product engineering spec.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="toc">
+    <h3>Contents</h3>
+    <ol>
+      <li>Executive summary</li>
+      <li>Objectives &amp; success criteria</li>
+      <li>Current state &rarr; target state</li>
+      <li>Product &amp; ecosystem overview
+        <div class="subitem">Platform &middot; 5 editions &middot; module catalog &middot; Partner Portal &middot; adjacent products</div></li>
+      <li>Target audiences &amp; personas</li>
+      <li>Information architecture &amp; sitemap</li>
+      <li>Page-by-page scope</li>
+      <li>Design system &amp; brand</li>
+      <li>World-class experience layer</li>
+      <li>Content &amp; asset plan</li>
+      <li>Technical architecture</li>
+      <li>Quality standards (SEO, accessibility, performance)</li>
+      <li>Integrations</li>
+      <li>Build phases &amp; indicative timeline</li>
+      <li>Deliverables &amp; acceptance criteria</li>
+      <li>Assumptions, dependencies &amp; risks</li>
+      <li>Inputs required from BlueWhale Stack</li>
+      <li>Appendix — content inventory</li>
+    </ol>
+  </div>
+</div>
+
+<!-- ───────────────────────── 1. EXECUTIVE SUMMARY ───────────────────────── -->
+<div class="section">
+  <p class="eyebrow">Section 1</p>
+  <h2>Executive summary</h2>
+  <p>BlueWhale Stack is not a single product — it is a <strong>unified, hyperscaler-neutral cloud management platform</strong> delivered in five editions, surrounded by a multi-tenant <strong>Partner Portal</strong> and a family of adjacent products (WhaleForge, Pandava OS, BlueWhale Fincore). The current website does not yet convey that scale: it reads as a basic brochure site and undersells a platform that competes with the likes of Flexera, ServiceNow CMP, Datadog and Terraform — combined.</p>
+  <p>This Scope of Work defines a <strong>world-class corporate website</strong> that matches the ambition of the product: a fast, credible, conversion-focused experience that lets a CIO, a FinOps lead, a datacenter operator, a government buyer, or a reseller each find their story within seconds — backed by interactive architecture, a clear edition comparison, deep module detail, and a dedicated partner journey.</p>
+
+  <div class="grid3" style="margin-top:12px">
+    <div class="card"><div class="kpi">5</div><div class="muted">platform editions to present clearly and honestly</div></div>
+    <div class="card"><div class="kpi">17</div><div class="muted">platform modules across Foundation, Operations, Builder, Datacenter &amp; AI</div></div>
+    <div class="card"><div class="kpi">8</div><div class="muted">industry verticals with tailored regulatory narratives</div></div>
+  </div>
+
+  <h3>What this document delivers</h3>
+  <ul>
+    <li>A complete <strong>content inventory</strong> of the platform, the five editions, every module, the Partner Portal, and the adjacent products — the raw material the site must present.</li>
+    <li>A full <strong>information architecture</strong> and a <strong>page-by-page scope</strong> for every page of the site.</li>
+    <li>A <strong>design system</strong> and a defined <strong>"world-class experience layer"</strong> that lifts the site from basic to best-in-class.</li>
+    <li>A <strong>technical approach</strong>, <strong>quality standards</strong>, and a <strong>phased plan with an indicative timeline</strong> (no commercials).</li>
+  </ul>
+
+  <div class="callout"><strong>Foundation already in place.</strong> Phase&nbsp;1 is built: a Next.js 15 + TypeScript application with a design system, a typed content layer, and data-driven Editions, Modules, Industries and Solutions pages already run locally. This SOW scopes the journey from that foundation to a launched, world-class site.</div>
+</div>
+
+<!-- ───────────────────────── 2. OBJECTIVES ───────────────────────── -->
+<div class="section">
+  <p class="eyebrow">Section 2</p>
+  <h2>Objectives &amp; success criteria</h2>
+  <p>The website exists to do five jobs. Each has a measurable success criterion.</p>
+  <table>
+    <thead><tr><th style="width:22%">Objective</th><th>What it means</th><th style="width:30%">Success criterion</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Position the platform</strong></td><td>Establish BlueWhale Stack as a category-defining, hyperscaler-neutral CMP — not a point tool.</td><td>A first-time visitor can describe what BlueWhale Stack does within 10 seconds of landing.</td></tr>
+      <tr><td><strong>Generate qualified demand</strong></td><td>Convert visitors into demo requests and sales conversations.</td><td>Clear primary CTA on every page; demo form &lt; 60s to complete; tracked conversion funnel.</td></tr>
+      <tr><td><strong>Sell the right edition</strong></td><td>Help each buyer self-identify the edition (Standard / Enterprise / Datacenter / Government / Telco) that fits.</td><td>Interactive comparison + per-edition pages; "which edition" guidance.</td></tr>
+      <tr><td><strong>Recruit partners</strong></td><td>Attract resellers, MSPs and technology partners into the Partner Portal.</td><td>Dedicated partner journey + portal showcase + apply flow.</td></tr>
+      <tr><td><strong>Earn trust</strong></td><td>Prove credibility through architecture depth, compliance posture, and customer outcomes.</td><td>Compliance badges, security narrative, case studies, and real architecture diagrams.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Quality bar</h3>
+  <div class="grid2">
+    <div class="card"><h4>Performance</h4><p class="muted">Lighthouse 90+ across Performance, SEO, Best Practices, Accessibility. Core Web Vitals in the green on 4G mobile.</p></div>
+    <div class="card"><h4>Accessibility</h4><p class="muted">WCAG 2.1 AA: semantic structure, keyboard navigation, contrast, focus states, reduced-motion support.</p></div>
+    <div class="card"><h4>SEO</h4><p class="muted">Per-page metadata, OpenGraph, JSON-LD, sitemap &amp; robots, clean URLs, server-rendered content.</p></div>
+    <div class="card"><h4>Maintainability</h4><p class="muted">Typed content layer with a CMS-ready seam so non-technical editors can take over later.</p></div>
+  </div>
+</div>
+
+<!-- ───────────────────────── 3. CURRENT → TARGET ───────────────────────── -->
+<div class="section">
+  <p class="eyebrow">Section 3</p>
+  <h2>Current state &rarr; target state</h2>
+  <p>The brief is explicit: the current site "looks like a very basic website." The table below names the gap and the target for each dimension that separates a basic B2B site from a best-in-class platform site.</p>
+  <table>
+    <thead><tr><th style="width:20%">Dimension</th><th style="width:40%">Today (basic)</th><th>Target (world-class)</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Narrative</strong></td><td>Generic "cloud management" copy; product scale invisible.</td><td>Sharp category story; 5 editions, 17 modules, partner ecosystem all legible.</td></tr>
+      <tr><td><strong>Depth</strong></td><td>Flat marketing pages.</td><td>Per-edition, per-module, per-industry depth with real architecture.</td></tr>
+      <tr><td><strong>Visual craft</strong></td><td>Plain sections, placeholder feel.</td><td>Refined enterprise design, interactive diagrams, considered motion.</td></tr>
+      <tr><td><strong>Interactivity</strong></td><td>Static.</td><td>Edition comparator, module explorer, animated stats, scroll storytelling.</td></tr>
+      <tr><td><strong>Proof</strong></td><td>Thin trust signals.</td><td>Compliance posture, security narrative, case studies, named outcomes.</td></tr>
+      <tr><td><strong>Partner story</strong></td><td>Absent / a single page.</td><td>Full partner journey + Partner Portal showcase + apply flow.</td></tr>
+      <tr><td><strong>Conversion</strong></td><td>Weak CTAs.</td><td>Consistent demo/contact funnel, instrumented and optimised.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>What makes a "best-in-class" enterprise platform site</h3>
+  <p>The benchmark set (Stripe, Linear, Vercel, Datadog, ServiceNow) shares a recognisable pattern that this scope adopts:</p>
+  <ul>
+    <li><strong>Clarity over cleverness</strong> — a one-line value proposition the reader cannot misread.</li>
+    <li><strong>Show the product</strong> — real UI, real architecture, not stock abstractions.</li>
+    <li><strong>Layered depth</strong> — skimmers get the gist; evaluators can drill into module and architecture detail.</li>
+    <li><strong>Speed &amp; polish</strong> — instant loads, crisp typography, restrained motion that guides the eye.</li>
+    <li><strong>Trust everywhere</strong> — security, compliance and outcomes woven through, not buried in a footer.</li>
+  </ul>
+</div>
+
+<!-- ───────────────────────── 4. PRODUCT & ECOSYSTEM ───────────────────────── -->
+<div class="section">
+  <p class="eyebrow">Section 4</p>
+  <h2>Product &amp; ecosystem overview</h2>
+  <p>This section is the <strong>content the website must present</strong>. It is the single source of truth for the platform story, the five editions, the module catalog, the Partner Portal, and the adjacent products. The website's page copy derives from here.</p>
+
+  <h3>4.1 &nbsp;The platform</h3>
+  <p>BlueWhale Stack is a <strong>unified Cloud Management Platform (CMP)</strong> that consolidates inventory, provisioning, security &amp; compliance, ITSM, observability, FinOps, migration and AI-driven operations into a single, hyperscaler-neutral control plane — across public cloud, private cloud, hybrid and on-premise datacenters. It replaces a stack of point tools (Datadog + ServiceNow CMP + Flexera + Terraform) with one platform, with <strong>Whale AI</strong> (Claude-powered) across every module rather than bolted on.</p>
+  <div class="grid3">
+    <div class="card"><h4>Hyperscaler-neutral</h4><p class="muted">AWS, Azure, GCP, Oracle, IBM, Alibaba, plus VMware, Hyper-V, OpenStack &amp; bare-metal.</p></div>
+    <div class="card"><h4>Any operating model</h4><p class="muted">SaaS, BYOC (your cloud), and air-gapped Sovereign deployment.</p></div>
+    <div class="card"><h4>AI-native</h4><p class="muted">Whale AI tiers — Spark, Tide, Abyss, Predictive-Ops — across the platform.</p></div>
+  </div>
+
+  <h3>4.2 &nbsp;The five editions</h3>
+  <p>One platform, packaged for five distinct operating models. Standard, Enterprise and Datacenter are the core SKUs; Government and Telco are vertical configurations of the Enterprise + Sovereign platform, presented as full editions but described honestly.</p>
+  <table>
+    <thead><tr><th>Edition</th><th>Positioning</th><th>For</th><th>Deployment</th><th>Price anchor</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Standard</strong></td><td>See, secure &amp; govern your AWS/Azure/GCP estate — no AI tax, no sprawl.</td><td>SMB, single-region SaaS teams, departmental IT, OEM</td><td>SaaS only</td><td>~$24K / yr</td></tr>
+      <tr><td><strong>Enterprise</strong></td><td>Assess, migrate, govern, observe &amp; automate across every cloud, region &amp; regulation.</td><td>Large enterprise, BFSI, regulated industries</td><td>SaaS &middot; BYOC &middot; Sovereign</td><td>~$120K / yr+</td></tr>
+      <tr><td><strong>Datacenter</strong></td><td>Operator / fleet edition — DCIM, bare-metal, capacity &amp; cross-DC migration; resell white-label cloud.</td><td>DC operators, colocation, hyperscale AI DCs</td><td>BYOC &middot; Sovereign &middot; air-gap</td><td>Contact sales</td></tr>
+      <tr><td><strong>Government</strong></td><td>Sovereign, compliant, air-gapped cloud for national &amp; public sector.</td><td>Federal/state govt, ministries, defense</td><td>Sovereign &middot; on-prem</td><td>Contact sales</td></tr>
+      <tr><td><strong>Telco &amp; MSP</strong></td><td>Multi-tenant, white-label, monetizable managed cloud for operators &amp; MSPs.</td><td>Telecom operators, MSPs, CSPs</td><td>SaaS &middot; BYOC</td><td>Contact sales</td></tr>
+    </tbody>
+  </table>
+  <div class="note"><strong>Honesty guardrail.</strong> Government and Telco are configurations of the Enterprise/Sovereign platform. Website copy presents them as editions while staying truthful — no invented separate codebase. Pricing anchors are list/illustrative and can switch to "contact sales" everywhere on request.</div>
+
+  <h4>Per-edition detail</h4>
+  <div class="grid2">
+    <div class="card avoid-break"><h4>Standard</h4><p class="muted">Single-region SaaS (Singapore). Modules: Identity, Cloud Connectors, Inventory, Provisioning, Audit Logs, Security &amp; Compliance, Whale&nbsp;AI&nbsp;Spark. Limits: 1 tenant, 5 cloud accounts, 1,000 resources, 10 users.</p></div>
+    <div class="card avoid-break"><h4>Enterprise</h4><p class="muted">Everything in Standard + Migration, Observe, ITSM (advanced), Landing Zone, WhaleForge, FinOps, Whale&nbsp;AI Spark/Tide/Abyss. Regions: SIN, BOM, FRA, LAX. SaaS / BYOC / Sovereign.</p></div>
+    <div class="card avoid-break"><h4>Datacenter</h4><p class="muted">Enterprise + DCIM (site&rarr;room&rarr;row&rarr;rack&rarr;unit), Bare-Metal Lifecycle, Capacity Planning, Backup/DR, Predictive-Ops AI. Go edge agents (Redfish/IPMI/SNMP). Design partners include DataVolt, AdaniConneX, Reliance Jio.</p></div>
+    <div class="card avoid-break"><h4>Government &amp; Telco</h4><p class="muted">Government = Enterprise on air-gapped Sovereign deployment, in-region AI, no call-home. Telco&nbsp;&amp;&nbsp;MSP = multi-tenant Enterprise with white-label tenant portals and per-tenant billing.</p></div>
+  </div>
+
+  <h3>4.3 &nbsp;Module catalog</h3>
+  <p>A shared platform of <strong>17 modules</strong> gated per edition. The website dedicates a page to each module (problem, how it works, features, edition availability, architecture diagram).</p>
+  <table>
+    <thead><tr><th style="width:16%">Group</th><th style="width:20%">Module</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td rowspan="5"><strong>Foundation</strong></td><td>Identity &amp; Access</td><td>SSO/SCIM/OIDC federation, MFA, fine-grained RBAC, privileged-session recording.</td></tr>
+      <tr><td>Cloud Connectors</td><td>One control plane over 9+ clouds &amp; hypervisors, agentless onboarding.</td></tr>
+      <tr><td>Inventory / URM</td><td>Live unified resource map with dependency graphs and drift tracking.</td></tr>
+      <tr><td>Provisioning &amp; Catalog</td><td>Self-service catalog with policy guardrails and approval workflows.</td></tr>
+      <tr><td>Audit Logs</td><td>Tamper-evident, centralized audit trail for compliance evidence.</td></tr>
+      <tr><td rowspan="4"><strong>Operations</strong></td><td>ITSM</td><td>Incident/change/problem management, 30+ connectors, auto-ticket from alerts.</td></tr>
+      <tr><td>Observe</td><td>Logs, metrics &amp; traces (OpenTelemetry) with unified dashboards.</td></tr>
+      <tr><td>Migration Engine</td><td>Structured migrations with runbooks, wave planning, RPO&lt;1hr / RTO&lt;4hr.</td></tr>
+      <tr><td>Security &amp; Compliance</td><td>CSPM scanning + CIS/NIST/ISO/HIPAA monitoring and zero-trust access.</td></tr>
+      <tr><td rowspan="3"><strong>Builder</strong></td><td>Landing Zone Builder</td><td>Visual VPC/IAM/org design generating Terraform/CloudFormation with guardrails.</td></tr>
+      <tr><td>WhaleForge IaC</td><td>DSL + GitOps with Banking/Telco/Healthcare/Fintech industry packs.</td></tr>
+      <tr><td>FinOps &amp; Billing</td><td>Real-time forecasting, rightsizing, anomaly detection, department chargeback.</td></tr>
+      <tr><td rowspan="4"><strong>Datacenter</strong></td><td>DCIM</td><td>Physical hierarchy, power/thermal/space telemetry, PUE/WUE metrics.</td></tr>
+      <tr><td>Bare-Metal Lifecycle</td><td>Discover, provision-from-pool, reclaim, re-image physical servers.</td></tr>
+      <tr><td>Capacity Planning</td><td>ML-driven power/space/GPU headroom forecasts per rack/room/facility.</td></tr>
+      <tr><td>Backup &amp; DR</td><td>Snapshots, cross-region replication, DC failover runbooks.</td></tr>
+      <tr><td><strong>Intelligence</strong></td><td>Whale AI</td><td>Claude-powered tiers: Spark, Tide, Abyss, Predictive-Ops; in-region for sovereign.</td></tr>
+    </tbody>
+  </table>
+
+  <h4>Module &times; edition availability (default inclusion)</h4>
+  <table>
+    <thead><tr><th>Module</th><th class="center">Std</th><th class="center">Ent</th><th class="center">DC</th><th class="center">Gov</th><th class="center">Telco</th></tr></thead>
+    <tbody>
+      <tr><td>Identity, Connectors, Inventory, Provisioning, Audit</td><td class="center tick">&#10003;</td><td class="center tick">&#10003;</td><td class="center tick">&#10003;</td><td class="center tick">&#10003;</td><td class="center tick">&#10003;</td></tr>
+      <tr><td>Security &amp; Compliance</td><td class="center tick">&#10003;</td><td class="center tick">&#10003;</td><td class="center tick">&#10003;</td><td class="center tick">&#10003;</td><td class="center tick">&#10003;</td></tr>
+      <tr><td>ITSM, Observe</td><td class="center dash">&ndash;</td><td class="center tick">&#10003;</td><td class="center tick">&#10003;</td><td class="center tick">&#10003;</td><td class="center tick">&#10003;</td></tr>
+      <tr><td>Migration Engine</td><td class="center dash">&ndash;</td><td class="center tick">&#10003;</td><td class="center tick">&#10003;</td><td class="center tick">&#10003;</td><td class="center dash">&ndash;</td></tr>
+      <tr><td>Landing Zone, WhaleForge</td><td class="center dash">&ndash;</td><td class="center tick">&#10003;</td><td class="center tick">&#10003;*</td><td class="center tick">&#10003;</td><td class="center dash">&ndash;</td></tr>
+      <tr><td>FinOps &amp; Billing</td><td class="center dash">&ndash;</td><td class="center tick">&#10003;</td><td class="center tick">&#10003;</td><td class="center tick">&#10003;</td><td class="center tick">&#10003;</td></tr>
+      <tr><td>DCIM, Bare-Metal, Capacity, Backup/DR</td><td class="center dash">&ndash;</td><td class="center dash">&ndash;</td><td class="center tick">&#10003;</td><td class="center dash">&ndash;</td><td class="center dash">&ndash;</td></tr>
+      <tr><td>Whale AI</td><td class="center">Spark</td><td class="center">Tide</td><td class="center">Pred-Ops</td><td class="center">Abyss</td><td class="center">Tide</td></tr>
+    </tbody>
+  </table>
+  <p class="muted" style="font-size:8.5pt">* Datacenter includes Landing Zone; WhaleForge availability per deployment. Matrix mirrors <code>content/editions.ts</code> and is the source for the site's comparison table.</p>
+
+  <h3>4.4 &nbsp;Partner Portal</h3>
+  <p>The <strong>BlueWhale Stack Partner Portal</strong> is a separate, multi-tenant B2B SaaS — the <strong>sales &amp; fulfillment backbone</strong> of the ecosystem. The website must give it a first-class presence: a partner-program narrative, a portal feature showcase, and an apply/onboarding entry point.</p>
+  <p><strong>Who uses it:</strong> resellers (wholesale &rarr; resell), channel partners and MSPs (bundled solutions), tier-managed partners (Registered &rarr; Silver &rarr; Gold &rarr; Platinum), and BlueWhale internal staff (account managers, finance, partner managers, admins).</p>
+  <table>
+    <thead><tr><th style="width:26%">Capability</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td>Partner onboarding &amp; tiering</td><td>Register partners, capture legal/tax details, assign tier with margin ceilings &amp; SLA, track health score &amp; lifecycle (Active / At-risk / Churned).</td></tr>
+      <tr><td>Deal registration</td><td>Submit deals (BWS license / cloud service / consulting), workflow Submitted&rarr;Approved&rarr;Won/Lost, SLA-based approval deadlines &amp; escalation, deal protection.</td></tr>
+      <tr><td>Customer management</td><td>Onboard end customers, allocate to partner/internal, multi-region tax-ID registry (GSTIN / TRN / EIN) with verification.</td></tr>
+      <tr><td>Margin &amp; discount config</td><td>Per-partner/product/cloud margin %, tier-ceiling enforcement, discount-request approval workflow, live price waterfall (customer price &rarr; margin &rarr; cost &rarr; profit).</td></tr>
+      <tr><td>Two-sided invoicing + tax engine</td><td>BWS&rarr;Partner (wholesale) and Partner&rarr;Customer (retail) invoices; automatic tax by region (India IGST/CGST+SGST with HSN/SAC, UAE VAT, US sales tax); full invoice lifecycle.</td></tr>
+      <tr><td>Payments &amp; reconciliation</td><td>Razorpay (India), Stripe (UAE/US), manual bank transfer; payment links, webhook reconciliation, auto-mark paid.</td></tr>
+      <tr><td>Tenant provisioning</td><td>Provision Standard/Enterprise tenants on payment or voucher; lifecycle gates; onboarding kit (credentials + welcome) auto-emailed; suspend/resume/extend/revoke.</td></tr>
+      <tr><td>Internal operations</td><td>Financial planning dashboard, analytics, commission tracking with audit, centralized approval queue, immutable audit logging.</td></tr>
+    </tbody>
+  </table>
+  <p class="muted" style="font-size:8.5pt"><strong>Tech (for context):</strong> React + Vite + TypeScript, Fastify API, PostgreSQL 16 + Prisma, Clerk auth, Resend email, Razorpay/Stripe, Cloudflare R2. The marketing site links to the portal; it does not re-implement it.</p>
+
+  <h3>4.5 &nbsp;Adjacent products</h3>
+  <div class="grid3">
+    <div class="card"><h4>WhaleForge</h4><p class="muted">Declarative, templated Infrastructure-as-Code engine with industry landing-zone packs. Feeds automated provisioning across the platform. <span class="pill">Core motion</span></p></div>
+    <div class="card"><h4>Pandava OS</h4><p class="muted">Sovereign Indian Linux OS family (5 editions, "Make in India"), hardened by default, 22 Indian languages. Complements sovereign/air-gap deployments. <span class="pill">Adjacent venture</span></p></div>
+    <div class="card"><h4>BlueWhale Fincore</h4><p class="muted">UAE FTA e-invoicing SaaS (bluewhalefincore.ae) — vertical fintech product with its own GTM. <span class="pill">Adjacent venture</span></p></div>
+  </div>
+  <div class="callout">The website features <strong>WhaleForge</strong> within the platform story, and gives <strong>Pandava OS</strong> and <strong>Fincore</strong> concise "from the BlueWhale family" pages — present but clearly positioned as adjacent ventures, subject to your confirmation on how publicly to feature them.</div>
+</div>
+
+<!-- ───────────────────────── 5. AUDIENCES & PERSONAS ───────────────────────── -->
+<div class="section">
+  <p class="eyebrow">Section 5</p>
+  <h2>Target audiences &amp; personas</h2>
+  <p>The site must let each persona self-select quickly. Navigation, edition pages and industry pages are organised around these journeys.</p>
+  <table>
+    <thead><tr><th style="width:20%">Persona</th><th>Cares about</th><th style="width:26%">Primary destination</th></tr></thead>
+    <tbody>
+      <tr><td><strong>CIO / Head of Infrastructure</strong></td><td>Consolidation, migration off the data center, vendor-neutrality, risk.</td><td>Platform, Enterprise edition, Migration solution.</td></tr>
+      <tr><td><strong>FinOps lead / CFO office</strong></td><td>Cost visibility, chargeback, savings in a quarter.</td><td>FinOps module, FinOps solution.</td></tr>
+      <tr><td><strong>CISO / Compliance</strong></td><td>Zero-trust, CSPM, audit evidence, frameworks.</td><td>Security &amp; Compliance, industry pages.</td></tr>
+      <tr><td><strong>Datacenter operator</strong></td><td>DCIM, bare-metal, capacity, monetizing spare capacity.</td><td>Datacenter edition, DCIM module.</td></tr>
+      <tr><td><strong>Government buyer</strong></td><td>Sovereignty, air-gap, data residency, compliance.</td><td>Government edition, Government industry.</td></tr>
+      <tr><td><strong>Telco / MSP</strong></td><td>Multi-tenant, white-label, billing, monetization.</td><td>Telco edition, Telco industry, Partners.</td></tr>
+      <tr><td><strong>Reseller / channel partner</strong></td><td>Margins, deal registration, enablement, portal.</td><td>Partners + Partner Portal showcase.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ───────────────────────── 6. IA / SITEMAP ───────────────────────── -->
+<div class="section">
+  <p class="eyebrow">Section 6</p>
+  <h2>Information architecture &amp; sitemap</h2>
+  <p>The full route tree. Items marked <span class="pill">built</span> exist from Phase&nbsp;1; <span class="pill">new</span> are added by this scope.</p>
+  <table>
+    <thead><tr><th style="width:30%">Route</th><th>Page</th><th style="width:16%">Status</th></tr></thead>
+    <tbody>
+      <tr><td><code>/</code></td><td>Home</td><td>built</td></tr>
+      <tr><td><code>/platform</code></td><td>Platform overview + module map</td><td>build out</td></tr>
+      <tr><td><code>/editions</code> + <code>/editions/{5}</code></td><td>Editions overview + 5 edition pages</td><td>built</td></tr>
+      <tr><td><code>/modules</code> + <code>/modules/[slug]</code></td><td>Module catalog + 17 module pages</td><td>built</td></tr>
+      <tr><td><code>/industries</code> + <code>/industries/[slug]</code></td><td>Industries + 8 vertical pages</td><td>built</td></tr>
+      <tr><td><code>/solutions</code> + <code>/solutions/[slug]</code></td><td>Solutions + 6 outcome pages</td><td>built</td></tr>
+      <tr><td><code>/partners</code></td><td>Partner ecosystem &amp; programs</td><td>build out</td></tr>
+      <tr><td><code>/partners/portal</code></td><td><strong>Partner Portal showcase</strong> (features, screens, apply)</td><td>new</td></tr>
+      <tr><td><code>/products/whaleforge</code></td><td>WhaleForge (IaC)</td><td>new</td></tr>
+      <tr><td><code>/products/pandava-os</code></td><td>Pandava OS</td><td>new</td></tr>
+      <tr><td><code>/products/fincore</code></td><td>BlueWhale Fincore</td><td>new</td></tr>
+      <tr><td><code>/pricing</code></td><td>Pricing &amp; editions comparison</td><td>build out</td></tr>
+      <tr><td><code>/about</code></td><td>About / company</td><td>build out</td></tr>
+      <tr><td><code>/resources</code> + <code>/resources/[slug]</code></td><td>Resource library + detail</td><td>build out</td></tr>
+      <tr><td><code>/docs</code></td><td>Documentation hub</td><td>build out</td></tr>
+      <tr><td><code>/careers</code> + detail/apply</td><td>Careers + jobs</td><td>build out</td></tr>
+      <tr><td><code>/contact</code></td><td>Demo &amp; contact</td><td>build out</td></tr>
+      <tr><td><code>/legal/privacy</code>, <code>/legal/terms</code></td><td>Legal</td><td>build out</td></tr>
+    </tbody>
+  </table>
+  <p class="muted">Global: sticky header with mega-menu (Platform / Editions / Industries / Solutions / Resources / Company), footer with full link map + compliance row + newsletter, persistent demo CTA, and an assistant widget.</p>
+</div>
+
+<!-- ───────────────────────── 7. PAGE-BY-PAGE SCOPE ───────────────────────── -->
+<div class="section">
+  <p class="eyebrow">Section 7</p>
+  <h2>Page-by-page scope</h2>
+  <p>For every page: its purpose, the sections it contains (in order), and the assets it needs. This is the build checklist.</p>
+
+  <h3>Home <code>/</code></h3>
+  <p class="muted">Purpose: establish category, prove breadth, drive demo.</p>
+  <ol>
+    <li>Hero — value proposition, dual CTA, trust strip (clouds, regions, compliance).</li>
+    <li>Cloud/logo strip.</li>
+    <li>Problem &rarr; promise (sprawl, blind spend, compliance drag &rarr; one control plane).</li>
+    <li>Core capabilities — 6 module tiles.</li>
+    <li>Editions teaser — 5 cards.</li>
+    <li>Industries strip — 8 verticals.</li>
+    <li>How it works — 4 steps.</li>
+    <li>Outcomes band — headline stats.</li>
+    <li>Testimonials — 3 named.</li>
+    <li>Resources teaser + closing CTA.</li>
+  </ol>
+  <p class="muted"><strong>Assets:</strong> hero visual / product montage; client logos (with permission).</p>
+
+  <h3>Platform <code>/platform</code></h3>
+  <ol>
+    <li>Hero — "one platform, every cloud."</li>
+    <li>Unified-CMP narrative (replaces N point tools).</li>
+    <li><strong>Interactive module map</strong> — control plane over clouds/on-prem.</li>
+    <li>Capability deep-tiles by group.</li>
+    <li>Deployment models (SaaS / BYOC / Sovereign / On-prem).</li>
+    <li>Whale AI overview (4 tiers).</li>
+    <li>Security &amp; compliance posture.</li>
+    <li>CTA.</li>
+  </ol>
+  <p class="muted"><strong>Assets:</strong> platform architecture diagram (code-based SVG).</p>
+
+  <h3>Editions — overview + 5 detail pages</h3>
+  <p class="muted">Overview: hero, 5 cards, <strong>modules-by-edition comparison matrix</strong>, "which edition?" guide. Each detail page: hero (badge, headline, audience), positioning, what's-included checklist, <strong>architecture diagram</strong>, key specs (deploy / AI tier / price), modules grid, comparison strip, CTA.</p>
+
+  <h3>Modules — overview + 17 detail pages</h3>
+  <p class="muted">Overview: grouped catalog (Foundation/Operations/Builder/Datacenter/AI). Each detail page: header, description, key features, "available in" edition badges, <strong>architecture/flow diagram</strong>, CTA.</p>
+
+  <h3>Industries — overview + 8 detail pages</h3>
+  <p class="muted">Verticals: Government, Telco &amp; MSP, BFSI, Healthcare, Manufacturing, Energy &amp; Utilities, Media, Enterprise SaaS. Detail: hero (industry image), challenges, why BlueWhale, KPIs, compliance mapping (RBI/MAS/HIPAA/NCA&hellip;), targets, case-study teaser, CTA.</p>
+
+  <h3>Solutions — overview + 6 detail pages</h3>
+  <p class="muted">Outcomes: Migration Factory, FinOps &amp; Cost Intelligence, Security &amp; Compliance, Cloud Automation &amp; DevOps, Data Center Management, Sovereign Cloud. Detail: problem statement, approach (connected capabilities), architecture diagram, measurable outcomes, who-it's-for, related modules, CTA.</p>
+
+  <h3>Partners <code>/partners</code> + Partner Portal showcase <code>/partners/portal</code></h3>
+  <ol>
+    <li>Partners hero — "grow together, win together."</li>
+    <li>Why partner — revenue, differentiated portfolio, enablement.</li>
+    <li>Three programs — Technology, Channel/Reseller (Silver/Gold/Platinum margins), MSP.</li>
+    <li><strong>Partner Portal showcase</strong> — deal registration, two-sided invoicing, margins, provisioning, tiering, with annotated screens.</li>
+    <li>Onboarding steps + apply flow + CTA.</li>
+  </ol>
+  <p class="muted"><strong>Assets:</strong> portal UI captures / annotated mockups; partner journey diagram.</p>
+
+  <h3>Products — WhaleForge, Pandava OS, Fincore</h3>
+  <p class="muted">Concise product page each: positioning, key features, who it's for, how it relates to BlueWhale Stack, CTA. "From the BlueWhale family" framing.</p>
+
+  <h3>About <code>/about</code></h3>
+  <ol>
+    <li>Hero + mission.</li>
+    <li>Our story / why we exist (sprawl + sovereignty thesis).</li>
+    <li>Mission &amp; principles (Unified, AI-native, Open, Sovereign-ready).</li>
+    <li>What we build — the product family.</li>
+    <li>By the numbers.</li>
+    <li>Global presence — 4 offices.</li>
+    <li>Leadership / team.</li>
+    <li>Certifications &amp; trust.</li>
+    <li>Careers teaser + CTA.</li>
+  </ol>
+  <p class="muted"><strong>Inputs needed:</strong> leadership bios &amp; photos, mission wording, founding details.</p>
+
+  <h3>Pricing / Resources / Docs / Careers / Contact / Legal</h3>
+  <p class="muted"><strong>Pricing:</strong> edition tiers + comparison + FAQ. <strong>Resources:</strong> filterable library (whitepapers, case studies, webinars, blog) + gated detail. <strong>Docs:</strong> hub linking product docs. <strong>Careers:</strong> perks + roles + application form. <strong>Contact:</strong> demo form + channels + offices. <strong>Legal:</strong> privacy &amp; terms.</p>
+</div>
+
+<!-- ───────────────────────── 8. DESIGN SYSTEM ───────────────────────── -->
+<div class="section">
+  <p class="eyebrow">Section 8</p>
+  <h2>Design system &amp; brand</h2>
+  <p>Modern-enterprise, refined — the altitude of Stripe / Linear / Vercel. Mostly light surfaces with selective dark hero/CTA drama.</p>
+  <div class="grid2">
+    <div class="card"><h4>Color</h4><p class="muted">Brand blue <strong>#002da1</strong> (primary), cyan/teal accent, a refined slate neutral scale, semantic success/warn. Dark "ink" surfaces for heroes &amp; CTAs.</p></div>
+    <div class="card"><h4>Typography</h4><p class="muted">Display: Plus Jakarta Sans / Geist. Body: Inter / IBM Plex Sans. Fluid type scale via <code>clamp()</code>.</p></div>
+    <div class="card"><h4>Components</h4><p class="muted">Button, Card, Badge/Pill, Stat, Tabs, Accordion, comparison table, logo cloud, breadcrumb, section heading, CTA band, placeholder — a documented library.</p></div>
+    <div class="card"><h4>Layout &amp; motion</h4><p class="muted">12-column grid, generous whitespace, consistent section rhythm. Restrained motion: fade/slide on scroll, micro-interactions, reduced-motion honored.</p></div>
+  </div>
+  <p class="muted" style="margin-top:8px">Tokens are defined as Tailwind v4 <code>@theme</code> variables; the component library is reusable across every page for visual consistency.</p>
+</div>
+
+<!-- ───────────────────────── 9. WORLD-CLASS LAYER ───────────────────────── -->
+<div class="section">
+  <p class="eyebrow">Section 9</p>
+  <h2>World-class experience layer</h2>
+  <p>This is what moves the site from "basic" to best-in-class. Each item is a discrete, scoped enhancement.</p>
+  <table>
+    <thead><tr><th style="width:28%">Feature</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>Interactive architecture diagrams</td><td>Code-based SVG diagrams (platform, per-edition, per-module) with hover/tap detail — no stock images.</td></tr>
+      <tr><td>Edition comparator</td><td>Toggle/compare editions side-by-side; filter the module matrix by need.</td></tr>
+      <tr><td>Module explorer</td><td>Filterable, grouped module catalog with quick-look panels.</td></tr>
+      <tr><td>Animated stat counters</td><td>Headline metrics count up on scroll; subtle, performance-safe.</td></tr>
+      <tr><td>Scroll storytelling</td><td>"How it works" and migration flows revealed step-by-step on scroll.</td></tr>
+      <tr><td>Partner Portal walkthrough</td><td>Annotated, interactive tour of deal registration &rarr; invoicing &rarr; provisioning.</td></tr>
+      <tr><td>Hero drama</td><td>Dark gradient + grid + glow hero with a refined product/architecture visual.</td></tr>
+      <tr><td>Micro-interactions</td><td>Considered hover, focus, and transition states throughout.</td></tr>
+      <tr><td>Rich case studies</td><td>Long-form, outcome-led customer stories with metrics.</td></tr>
+      <tr><td>Assistant widget</td><td>Helpful in-page assistant for routing visitors to the right page / demo.</td></tr>
+    </tbody>
+  </table>
+  <div class="callout">These are <strong>prioritised, not all-or-nothing</strong>. Phase&nbsp;4 (§14) delivers the highest-impact items first — interactive diagrams, the edition comparator, and the Partner Portal walkthrough.</div>
+</div>
+
+<!-- ───────────────────────── 10. CONTENT & ASSET PLAN ───────────────────────── -->
+<div class="section">
+  <p class="eyebrow">Section 10</p>
+  <h2>Content &amp; asset plan</h2>
+  <table>
+    <thead><tr><th style="width:24%">Asset</th><th>Approach</th><th style="width:22%">Owner</th></tr></thead>
+    <tbody>
+      <tr><td>Page copy</td><td>Derived from this SOW &amp; the typed content modules; refined per page.</td><td>BlueWhale + delivery team</td></tr>
+      <tr><td>Architecture diagrams</td><td>Built as on-brand code-based SVG (platform, editions, modules) — editable, no licensing.</td><td>Delivery team</td></tr>
+      <tr><td>Industry &amp; hero imagery</td><td>Licensed stock or commissioned photography; placeholders until supplied.</td><td>BlueWhale to provide</td></tr>
+      <tr><td>Iconography</td><td>Consistent open-license icon set (lucide), mapped per module/industry.</td><td>Delivery team</td></tr>
+      <tr><td>Logos &amp; brand</td><td>Reuse existing BlueWhale logo SVGs; refine usage.</td><td>BlueWhale</td></tr>
+      <tr><td>Customer logos &amp; testimonials</td><td>Real names/logos with written permission; otherwise anonymised.</td><td>BlueWhale to confirm</td></tr>
+      <tr><td>Partner Portal screens</td><td>Annotated captures or clean mockups for the showcase.</td><td>BlueWhale + delivery team</td></tr>
+      <tr><td>Optional video</td><td>Short product/explainer video for the hero (later phase).</td><td>Optional</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ───────────────────────── 11. TECHNICAL ARCHITECTURE ───────────────────────── -->
+<div class="section">
+  <p class="eyebrow">Section 11</p>
+  <h2>Technical architecture</h2>
+  <div class="grid2">
+    <div class="card"><h4>Framework</h4><p class="muted">Next.js 15 (App Router) + TypeScript + React 19. Server-rendered for SEO &amp; speed; statically generated where possible.</p></div>
+    <div class="card"><h4>Styling</h4><p class="muted">Tailwind CSS v4 with <code>@theme</code> design tokens + a reusable component library (consistent with the product UI).</p></div>
+    <div class="card"><h4>Content layer</h4><p class="muted">Typed content in <code>content/*.ts</code> behind a single <code>lib/content.ts</code> access seam — a CMS (Directus or other) can replace the source later with zero component changes.</p></div>
+    <div class="card"><h4>Forms</h4><p class="muted">Next.js route handlers (<code>app/api/*</code>) for demo / contact / newsletter / careers; validation + email (Resend/SMTP); DB on deploy.</p></div>
+    <div class="card"><h4>SEO &amp; metadata</h4><p class="muted">Per-page metadata, OpenGraph, JSON-LD (Organization/Product), <code>sitemap.xml</code>, <code>robots.txt</code>.</p></div>
+    <div class="card"><h4>Hosting</h4><p class="muted">Vercel, Railway, or Azure — decided at deploy-prep. Containerizable (Docker) if required.</p></div>
+  </div>
+  <div class="callout"><strong>CMS-ready by design.</strong> Content is self-contained today so the site runs with no external services, but the seam means editors can move to a headless CMS without a rebuild — your earlier "decide later" choice, preserved.</div>
+</div>
+
+<!-- ───────────────────────── 12. QUALITY STANDARDS ───────────────────────── -->
+<div class="section">
+  <p class="eyebrow">Section 12</p>
+  <h2>Quality standards</h2>
+  <table>
+    <thead><tr><th style="width:22%">Area</th><th>Standard</th></tr></thead>
+    <tbody>
+      <tr><td>Performance</td><td>Lighthouse 90+; Core Web Vitals green on mobile 4G; image optimization; code-splitting; font display swap.</td></tr>
+      <tr><td>Accessibility</td><td>WCAG 2.1 AA — semantic landmarks, alt text, keyboard nav, visible focus, AA contrast, reduced-motion.</td></tr>
+      <tr><td>SEO</td><td>SSR/SSG content, clean URLs, canonical tags, structured data, XML sitemap, per-page meta &amp; OG.</td></tr>
+      <tr><td>Analytics</td><td>Privacy-respecting analytics + conversion events on every CTA &amp; form.</td></tr>
+      <tr><td>Browser support</td><td>Latest 2 versions of Chrome, Edge, Safari, Firefox; responsive 360px&rarr;wide desktop.</td></tr>
+      <tr><td>Security</td><td>Security headers/CSP, no secrets in client, spam protection on forms, rate limiting.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ───────────────────────── 13. INTEGRATIONS ───────────────────────── -->
+<div class="section">
+  <p class="eyebrow">Section 13</p>
+  <h2>Integrations</h2>
+  <ul>
+    <li><strong>Demo / lead capture</strong> — form &rarr; email notification + storage; optional CRM (HubSpot/Salesforce) hand-off.</li>
+    <li><strong>Partner Portal</strong> — deep links and "Become a partner / Partner login" entry points to the portal; optional shared SSO later.</li>
+    <li><strong>Email</strong> — transactional email (Resend or SMTP) for confirmations &amp; notifications.</li>
+    <li><strong>Analytics &amp; tag management</strong> — site analytics + conversion tracking.</li>
+    <li><strong>Documentation</strong> — links to product docs / API reference.</li>
+  </ul>
+</div>
+
+<!-- ───────────────────────── 14. PHASES & TIMELINE ───────────────────────── -->
+<div class="section">
+  <p class="eyebrow">Section 14</p>
+  <h2>Build phases &amp; indicative timeline</h2>
+  <p>A phased delivery. Durations are <strong>indicative working estimates</strong> for planning only — no commercial commitment. Phases can overlap; content readiness is the main dependency.</p>
+  <table>
+    <thead><tr><th style="width:6%">Phase</th><th style="width:24%">Focus</th><th>Key deliverables</th><th style="width:16%">Indicative</th></tr></thead>
+    <tbody>
+      <tr><td><strong>0</strong></td><td>Discovery &amp; content finalization</td><td>Confirm scope, copy, KPI sign-off, asset list, brand assets.</td><td>~1 week</td></tr>
+      <tr><td><strong>1</strong></td><td>Foundation &amp; design system <span class="pill">done</span></td><td>Next.js app, tokens, component library, content layer, layout, Home.</td><td>complete</td></tr>
+      <tr><td><strong>2</strong></td><td>Core product pages</td><td>Platform build-out; Editions, Modules, Industries, Solutions polished to final design.</td><td>~2 weeks</td></tr>
+      <tr><td><strong>3</strong></td><td>Marketing &amp; company pages + forms</td><td>About, Pricing, Partners, Partner-Portal showcase, Products, Resources, Docs, Careers, Contact; forms wired.</td><td>~2 weeks</td></tr>
+      <tr><td><strong>4</strong></td><td>World-class experience layer</td><td>Interactive architecture diagrams, edition comparator, module explorer, portal walkthrough, motion.</td><td>~2&ndash;3 weeks</td></tr>
+      <tr><td><strong>5</strong></td><td>Content, imagery, SEO &amp; QA</td><td>Final copy &amp; images, SEO/structured data, accessibility &amp; performance pass, cross-browser QA.</td><td>~1&ndash;2 weeks</td></tr>
+      <tr><td><strong>6</strong></td><td>CMS (optional), launch</td><td>Optional CMS integration, hosting setup, domain, analytics, go-live.</td><td>~1 week</td></tr>
+    </tbody>
+  </table>
+  <p class="muted">Indicative total: ~9&ndash;11 weeks of focused delivery from Phase&nbsp;2, excluding client review cycles and asset turnaround. The phasing front-loads a credible, content-rich site (Phases 2&ndash;3) before the differentiating experience layer (Phase&nbsp;4).</p>
+</div>
+
+<!-- ───────────────────────── 15. DELIVERABLES ───────────────────────── -->
+<div class="section">
+  <p class="eyebrow">Section 15</p>
+  <h2>Deliverables &amp; acceptance criteria</h2>
+  <table>
+    <thead><tr><th style="width:30%">Deliverable</th><th>Acceptance criterion</th></tr></thead>
+    <tbody>
+      <tr><td>Running website (all pages)</td><td>Every route in §6 renders, responsive, no console/type errors, build passes.</td></tr>
+      <tr><td>Design system &amp; components</td><td>Documented, reused consistently across pages.</td></tr>
+      <tr><td>Interactive experience layer</td><td>Prioritised features from §9 implemented &amp; performant.</td></tr>
+      <tr><td>Architecture diagrams</td><td>On-brand SVGs for platform, editions &amp; key modules.</td></tr>
+      <tr><td>Forms &amp; integrations</td><td>Demo/contact submit, validate, notify, and store; partner entry points live.</td></tr>
+      <tr><td>SEO &amp; analytics</td><td>Metadata, structured data, sitemap, analytics &amp; conversion events verified.</td></tr>
+      <tr><td>Quality pass</td><td>Lighthouse 90+, WCAG AA, cross-browser sign-off.</td></tr>
+      <tr><td>Handover</td><td>Source repo, README, content-edit guide, deploy runbook.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ───────────────────────── 16. RISKS ───────────────────────── -->
+<div class="section">
+  <p class="eyebrow">Section 16</p>
+  <h2>Assumptions, dependencies &amp; risks</h2>
+  <h3>Assumptions</h3>
+  <ul>
+    <li>Product positioning in §4 is accurate and approved for public use.</li>
+    <li>The Next.js + TypeScript stack and modern-enterprise design direction are confirmed.</li>
+    <li>BlueWhale provides brand assets, imagery, leadership content &amp; any customer permissions.</li>
+  </ul>
+  <h3>Dependencies</h3>
+  <ul>
+    <li>Timely content/asset sign-off (the primary schedule driver).</li>
+    <li>Decisions on published pricing vs "contact sales", and on featuring Pandava OS / Fincore.</li>
+    <li>Hosting, domain &amp; (optional) CMS decisions before launch.</li>
+  </ul>
+  <h3>Key risks &amp; mitigations</h3>
+  <table>
+    <thead><tr><th style="width:34%">Risk</th><th>Mitigation</th></tr></thead>
+    <tbody>
+      <tr><td>Unconfirmed KPI / metric figures</td><td>Label as "target/illustrative" until verified; swap on sign-off.</td></tr>
+      <tr><td>Asset/content delays</td><td>Placeholders + phased build keep momentum; content can land per page.</td></tr>
+      <tr><td>Scope creep on experience layer</td><td>§9 features prioritised; deliver highest-impact first.</td></tr>
+      <tr><td>Over-claiming on Government/Telco</td><td>Honest "vertical configuration" framing maintained.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ───────────────────────── 17. INPUTS REQUIRED ───────────────────────── -->
+<div class="section">
+  <p class="eyebrow">Section 17</p>
+  <h2>Inputs required from BlueWhale Stack</h2>
+  <ol>
+    <li><strong>KPI confirmation</strong> — which headline/industry metrics are real vs illustrative.</li>
+    <li><strong>Pricing decision</strong> — publish anchors ($24K / $120K) or "contact sales" throughout.</li>
+    <li><strong>Brand assets</strong> — final logos, color/type confirmation, any brand guidelines.</li>
+    <li><strong>Leadership content</strong> — names, titles, photos, bios; company mission &amp; founding details.</li>
+    <li><strong>Customer proof</strong> — logos &amp; testimonials with written permission.</li>
+    <li><strong>Imagery</strong> — industry/hero photography or budget to license.</li>
+    <li><strong>Partner Portal assets</strong> — screens/mockups for the showcase; partner entry URLs.</li>
+    <li><strong>Adjacent products</strong> — confirm whether/how to feature Pandava OS &amp; Fincore.</li>
+    <li><strong>Hosting, domain &amp; CMS</strong> — target platform &amp; whether a CMS is in scope now.</li>
+  </ol>
+</div>
+
+<!-- ───────────────────────── 18. APPENDIX ───────────────────────── -->
+<div class="section">
+  <p class="eyebrow">Section 18</p>
+  <h2>Appendix — content inventory</h2>
+
+  <h3>A. Industries (8)</h3>
+  <table>
+    <thead><tr><th>Industry</th><th>Angle</th><th>Key compliance</th></tr></thead>
+    <tbody>
+      <tr><td>Government</td><td>Sovereign, compliant, secure.</td><td>DPDP, GDPR, CERT-In, air-gapped</td></tr>
+      <tr><td>Telco &amp; MSP</td><td>Monetize, launch, scale.</td><td>NCA-ECC, CITC</td></tr>
+      <tr><td>BFSI</td><td>Compliant, secure, governed.</td><td>RBI 2024, MAS TRM, PCI-DSS, PDPA</td></tr>
+      <tr><td>Healthcare</td><td>Secure, private, compliant.</td><td>HIPAA, ADHICS v2, GDPR</td></tr>
+      <tr><td>Manufacturing</td><td>Hybrid cloud for plant operations.</td><td>ISO 27001, OT/IT segmentation</td></tr>
+      <tr><td>Energy &amp; Utilities</td><td>Govern critical infrastructure.</td><td>NERC-CIP, Zero Trust</td></tr>
+      <tr><td>Media &amp; Entertainment</td><td>Elastic, fast, cost-controlled.</td><td>Content security, DRM, GDPR</td></tr>
+      <tr><td>Enterprise SaaS</td><td>Govern, standardize, scale.</td><td>SOC 2, ISO 27001, GDPR</td></tr>
+    </tbody>
+  </table>
+
+  <h3>B. Solutions (6)</h3>
+  <table>
+    <thead><tr><th>Solution</th><th>Headline outcome</th></tr></thead>
+    <tbody>
+      <tr><td>Cloud Migration Factory</td><td>40&ndash;60% faster migrations; &lt;2% cut-over failures; RPO&lt;1hr.</td></tr>
+      <tr><td>FinOps &amp; Cost Intelligence</td><td>20&ndash;30% cost reduction in 90 days; 95%+ tag coverage.</td></tr>
+      <tr><td>Security &amp; Compliance</td><td>95%+ compliance in 90 days; critical vulns to zero.</td></tr>
+      <tr><td>Cloud Automation &amp; DevOps</td><td>147+ runs/day; 98.5% success; 248 hrs saved/month.</td></tr>
+      <tr><td>Data Center Management</td><td>99%+ inventory accuracy; PUE 1.42; zero capacity overruns.</td></tr>
+      <tr><td>Sovereign Cloud Management</td><td>100% provable residency; 5 sovereign regions; audit in minutes.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>C. Partner Portal — core entities</h3>
+  <p><span class="pill">Partner</span><span class="pill">Tier</span><span class="pill">Deal</span><span class="pill">Customer</span><span class="pill">Margin config</span><span class="pill">Discount request</span><span class="pill">Invoice (2-sided)</span><span class="pill">Payment</span><span class="pill">Provisioning</span><span class="pill">Voucher</span><span class="pill">Approval request</span><span class="pill">Commission</span><span class="pill">Audit log</span><span class="pill">User/role</span></p>
+
+  <h3>D. Reference</h3>
+  <p class="muted">Source content modules: <code>content/editions.ts</code>, <code>content/modules.ts</code>, <code>content/industries.ts</code>, <code>content/solutions.ts</code>, <code>content/company.ts</code>. Per-page docs in <code>content/pages/</code>. Diagram specs in <code>design/diagrams.md</code>.</p>
+
+  <div class="callout" style="margin-top:18px"><strong>End of Scope of Work v1.0.</strong> On approval, delivery begins at Phase&nbsp;2 (core product pages) with the inputs in §17 gathered in parallel.</div>
+</div>
+
+</body>
+</html>
