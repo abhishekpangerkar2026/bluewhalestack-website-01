@@ -250,6 +250,69 @@ export default async function EditionDetailPage({
         </Container>
       </section>
 
+      {/* ── Operator business model (Telco / Datacenter only) ── */}
+      {edition.operatorModel && (
+        <section className="border-t border-line bg-brand-900 py-20 text-white sm:py-28">
+          <Container>
+            <Reveal>
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-200">
+                For operators
+              </p>
+              <h2 className="mt-5 max-w-3xl text-3xl font-bold leading-[1.05] tracking-tight sm:text-4xl">
+                How operators build a business on {edition.name}
+              </h2>
+              <p className="mt-5 max-w-2xl text-lg leading-relaxed text-white/70">
+                {edition.operatorModel.proposition}
+              </p>
+            </Reveal>
+
+            <div className="mt-14 grid gap-px overflow-hidden rounded-lg border border-white/10 bg-white/10 md:grid-cols-2 lg:grid-cols-3">
+              {edition.operatorModel.revenueStreams.map((r, i) => (
+                <Reveal key={r.name} delay={(i % 3) * 70}>
+                  <div className="flex h-full flex-col bg-brand-900 p-7">
+                    <span className="text-xs font-semibold uppercase tracking-wider text-brand-200">
+                      {r.character}
+                    </span>
+                    <h3 className="mt-3 text-lg font-bold text-white">
+                      {r.name}
+                    </h3>
+                    <p className="mt-2 flex-1 text-sm leading-relaxed text-white/70">
+                      {r.body}
+                    </p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+
+            <Reveal delay={100}>
+              <p className="mt-16 text-xs font-semibold uppercase tracking-[0.18em] text-brand-200">
+                Phased delivery
+              </p>
+            </Reveal>
+            <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {edition.operatorModel.phases.map((p, i) => (
+                <Reveal key={p.name} delay={i * 70}>
+                  <div className="border-t-2 border-white/30 pt-5">
+                    <span className="num text-sm font-bold text-brand-200">
+                      0{i + 1}
+                    </span>
+                    <h3 className="mt-2 text-lg font-bold text-white">
+                      {p.name}
+                    </h3>
+                    <p className="text-xs font-semibold uppercase tracking-wide text-white/50">
+                      {p.timeframe}
+                    </p>
+                    <p className="mt-2 text-sm leading-relaxed text-white/70">
+                      {p.body}
+                    </p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </Container>
+        </section>
+      )}
+
       {/* ── Scale comparison strip on tinted band ── */}
       <section className="border-t border-line bg-sunken py-20 sm:py-28">
         <Container>

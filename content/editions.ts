@@ -29,6 +29,12 @@ export interface EditionDef {
   gaTarget?: string;
   diagram: string;
   architectureId?: string;
+  /** for operator-model editions (Telco, Datacenter): how the operator monetizes it */
+  operatorModel?: {
+    proposition: string;
+    revenueStreams: { name: string; body: string; character: string }[];
+    phases: { name: string; timeframe: string; body: string }[];
+  };
 }
 
 export const editions: EditionDef[] = [
@@ -42,8 +48,8 @@ export const editions: EditionDef[] = [
       "Entry-level single-tenant CMP for organisations running AWS, Azure and GCP. Includes cloud inventory, governed provisioning, security scanning, audit, basic ITSM, business connectors and Whale AI Spark — delivered as SaaS or BYOC.",
     audience: "SMB · Single-region teams · Departmental IT",
     deploy: ["SaaS", "BYOC"],
-    priceAnchor: "$12,000 – $24,000 / year",
-    priceSub: "Based on managed resources & accounts",
+    priceAnchor: "$24,000 / year",
+    priceSub: "Flat, published · 1/3/5-yr terms (2-yr −10%, 3-yr −15%)",
     aiTier: "Whale AI — Spark (1M tokens / month)",
     highlights: [
       "Cloud inventory & governed provisioning",
@@ -74,7 +80,7 @@ export const editions: EditionDef[] = [
     audience: "Large enterprise · BFSI · Regulated industries · Multi-cloud operators",
     deploy: ["SaaS", "BYOC", "Sovereign"],
     priceAnchor: "$120,000 / year",
-    priceSub: "From $75K with multi-year; BYOC +20%",
+    priceSub: "Flat, published · 1/3/5-yr terms (2-yr −10%, 3-yr −15%) · regional pricing on request",
     aiTier: "Whale AI — Spark · Tide · Abyss (100M tokens / month)",
     highlights: [
       "Everything in Standard, across all 6 public clouds + on-prem",
@@ -137,6 +143,23 @@ export const editions: EditionDef[] = [
     gaTarget: "Q4 2026",
     diagram: "Telco: carrier-grade control plane with NFV/5G/MEC and OSS-BSS connectors",
     architectureId: "edition-telco",
+    operatorModel: {
+      proposition:
+        "The operator already owns the enterprise relationship, the network and the SLA culture — what's missing is the platform layer that turns those assets into cloud products. The Telco Edition is that layer: deployed on the operator's own infrastructure, white-labelled under the operator's brand, with tenancy, metering, governance and BSS-ready billing native to the platform.",
+      revenueStreams: [
+        { name: "Managed enterprise cloud", body: "Fully managed, governed multi-cloud delivered to enterprise customers through the operator's platform.", character: "Recurring · flagship" },
+        { name: "Multi-tenant cloud platform", body: "Enterprise tenants on operator infrastructure with strict isolation and self-service.", character: "Recurring · metered" },
+        { name: "White-label cloud marketplace", body: "A branded catalog of the operator's own and partner services, self-provisioned under governance.", character: "Recurring · attach" },
+        { name: "Edge & hybrid services", body: "Tower, metro and premise edge sold as governed capacity for latency-sensitive workloads.", character: "Premium · metered" },
+        { name: "Migration & professional services", body: "Enterprise workload migration industrialized by the built-in Migration Engine.", character: "Per-project" },
+      ],
+      phases: [
+        { name: "Foundation", timeframe: "Weeks 1–6", body: "Platform live in the operator's core DC; BSS and identity integration; operator console and first catalog; two lighthouse enterprise tenants." },
+        { name: "Launch", timeframe: "Weeks 6–14", body: "White-label marketplace launched to the enterprise base; Migration Engine in production; per-tenant billing verified end-to-end." },
+        { name: "Scale", timeframe: "Weeks 14–26", body: "Edge sites federated; government and BFSI pursuits with the sovereign configuration; managed-services wrapper on the installed base." },
+        { name: "Expand", timeframe: "Quarter 3+", body: "Wholesale / partner tenancy opened; vertical solutions packaged; the operator's own service roadmap runs on the platform." },
+      ],
+    },
   },
   {
     slug: "government",
@@ -211,6 +234,23 @@ export const editions: EditionDef[] = [
     gaTarget: "Q4 2026",
     diagram: "Datacenter: physical + cloud control plane with DCIM and white-label portal",
     architectureId: "edition-datacenter",
+    operatorModel: {
+      proposition:
+        "The operator owns the assets, the trust and the customer — what's missing is the software layer that turns infrastructure into products. The Datacenter Edition is that layer: deployed in the operator's own facilities, white-labelled under the operator's brand, with tenancy, metering, governance and billing native to the platform rather than assembled around it.",
+      revenueStreams: [
+        { name: "Tenanted cloud services", body: "Compute, storage and network sold as governed services over the existing footprint — colocation customers converted to cloud customers.", character: "Recurring · metered" },
+        { name: "GPU & AI capacity services", body: "Tenancy, quota and cost governance over GPU estates — utilization visible, billable and sellable per customer.", character: "Premium · metered" },
+        { name: "Sovereign hosting", body: "Data-resident, locally governed cloud for government and regulated enterprise — the moat offering.", character: "Contracted · multi-year" },
+        { name: "Migration & onboarding services", body: "The built-in Migration Engine turns every tenant onboarding into a faster, repeatable professional-services event.", character: "Per-project" },
+        { name: "Managed services wrapper", body: "Operations, security and compliance services layered per tenant on the same console.", character: "Recurring · attach" },
+      ],
+      phases: [
+        { name: "Foundation", timeframe: "Weeks 1–6", body: "Platform deployed in the primary facility; operator console, identity and billing integration live; two pilot tenants onboarded." },
+        { name: "Monetize", timeframe: "Weeks 6–14", body: "White-label catalog launched; Migration Engine in production for onboarding; GPU governance live; per-tenant billing feeds verified." },
+        { name: "Scale", timeframe: "Weeks 14–26", body: "Second site federated; sovereign offering packaged for government pursuits; managed-services wrapper launched on the installed base." },
+        { name: "Expand", timeframe: "Quarter 3+", body: "Edge sites added; marketplace expanded; the operator's own service roadmap runs on the platform." },
+      ],
+    },
   },
 ];
 
@@ -238,7 +278,7 @@ export const editionSpecs: EditionSpecRow[] = [
     label: "Cloud accounts (included)",
     values: {
       standard: "5 accounts",
-      enterprise: "25 accounts",
+      enterprise: "100 accounts",
       telco: "Enterprise scale",
       government: "Per-contract",
       datacenter: "Enterprise scale",
@@ -248,7 +288,7 @@ export const editionSpecs: EditionSpecRow[] = [
     label: "Managed resources (MRU)",
     values: {
       standard: "1,000 MRU",
-      enterprise: "5,000 MRU",
+      enterprise: "1,000,000 resources",
       telco: "Network elements + MRU",
       government: "250 MRU included",
       datacenter: "Per-rack metered",
@@ -258,7 +298,7 @@ export const editionSpecs: EditionSpecRow[] = [
     label: "Users / seats",
     values: {
       standard: "10 users",
-      enterprise: "50 ITSM seats",
+      enterprise: "1,000 users",
       telco: "Carrier scale",
       government: "Per-contract",
       datacenter: "Operator scale",

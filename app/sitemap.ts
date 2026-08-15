@@ -14,6 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/modules",
     "/industries",
     "/solutions",
+    "/fabric",
     "/pricing",
     "/resources",
     "/docs",

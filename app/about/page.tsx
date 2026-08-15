@@ -241,7 +241,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── What we build: bold heading + product cards ── */}
-      <section className="bg-sunken py-24 sm:py-32">
+      <section id="family" className="scroll-mt-24 bg-sunken py-24 sm:py-32">
         <Container>
           <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
             <Reveal>

@@ -215,6 +215,10 @@ export const primaryNav: NavItem[] = [
     ],
   },
   {
+    label: "Fabric",
+    href: "/fabric",
+  },
+  {
     label: "Partners",
     href: "/partners",
     columns: [
@@ -261,13 +265,15 @@ export const primaryNav: NavItem[] = [
         heading: "Company",
         links: [
           { label: "Our story & mission", href: "/about" },
-          { label: "The BlueWhale family", href: "/about" },
+          { label: "Leadership & team", href: "/about/leadership" },
+          { label: "The BlueWhale family", href: "/about#family" },
         ],
       },
       {
         heading: "Connect",
         links: [
           { label: "Careers", href: "/careers" },
+          { label: "Newsroom", href: "/newsroom" },
           { label: "Contact", href: "/contact" },
         ],
       },
@@ -305,6 +311,7 @@ export const footerNav = [
       { label: "Editions", href: "/editions" },
       { label: "Pricing", href: "/pricing" },
       { label: "Solutions", href: "/solutions" },
+      { label: "BlueWhale Stack Fabric", href: "/fabric" },
     ],
   },
   {

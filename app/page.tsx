@@ -226,6 +226,36 @@ export default function HomePage() {
         </Container>
       </section>
 
+      {/* BlueWhale Stack Fabric teaser */}
+      <section className="relative overflow-hidden bg-brand-900 py-16 text-white sm:py-20">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-brand-500/30 blur-[110px]"
+        />
+        <Container className="relative">
+          <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-2xl">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-200">
+                BlueWhale Stack Fabric
+              </p>
+              <h2 className="mt-5 text-3xl font-bold leading-[1.05] tracking-tight sm:text-4xl">
+                All of India&apos;s datacenters.{" "}
+                <span className="text-brand-100">One fabric.</span>
+              </h2>
+              <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/70">
+                39 operators, 132 facilities, all three tiers — unified on one
+                platform and consumed as a single sovereign cloud. One
+                catalog, one identity, one bill.
+              </p>
+            </div>
+            <Button href="/fabric" size="lg" variant="white" className="shrink-0">
+              Explore the Fabric
+              <ArrowRight className="h-4 w-4" />
+            </Button>
+          </div>
+        </Container>
+      </section>
+
       {/* How it works */}
       <section className="bg-canvas py-20 sm:py-24">
         <Container>

@@ -33,6 +33,7 @@ const STATIC_ICONS: Record<string, string> = {
   "/products/whaleforge": "Boxes",
   "/partners": "Handshake",
   "/about": "Building2",
+  "/about#family": "Boxes",
   "/about/leadership": "Users",
   "/careers": "GraduationCap",
   "/newsroom": "ScrollText",
@@ -49,8 +50,7 @@ function iconForLink(l: NavLink): string {
   if (h.startsWith("/editions/")) return EDITION_ICONS[h.split("/")[2]] ?? "Layers";
   if (h.startsWith("/industries/")) return industriesBySlug[h.split("/")[2]]?.icon ?? "Building2";
   if (h.startsWith("/solutions/")) return solutionsBySlug[h.split("/")[2]]?.icon ?? "Workflow";
-  const base = h.split("#")[0];
-  return STATIC_ICONS[base] ?? "ArrowRight";
+  return STATIC_ICONS[h] ?? STATIC_ICONS[h.split("#")[0]] ?? "ArrowRight";
 }
 
 export function Header() {

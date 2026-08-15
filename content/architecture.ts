@@ -934,4 +934,57 @@ export const diagrams: Record<string, ArchDiagram> = {
       },
     ],
   },
+
+  // ── BlueWhale Stack Fabric ─────────────────────────────────────
+  fabric: {
+    kind: "stack",
+    caption:
+      "One catalog and one identity sit above India's datacenter capacity — placement by policy, per-customer metering, and uniform governance across every underlying facility.",
+    layers: [
+      {
+        title: "Demand — every kind of Indian customer",
+        tone: "source",
+        nodes: [
+          { label: "Enterprise & BFSI", icon: "Building2" },
+          { label: "Government & PSUs", icon: "Landmark" },
+          { label: "Manufacturing & health", icon: "Factory" },
+          { label: "AI / GPU consumers", icon: "Sparkles" },
+          { label: "Startups & SMEs", icon: "Rocket" },
+        ],
+      },
+      {
+        title: "The Fabric Plane — operated on BlueWhale Stack",
+        tone: "plane",
+        highlight: true,
+        nodes: [
+          { label: "Multi-DC Federation", icon: "Network" },
+          { label: "Placement Policy Engine", icon: "Workflow" },
+          { label: "Whalenomics · FinOps", icon: "Wallet" },
+          { label: "Tenant & Partner Program", icon: "Handshake" },
+          { label: "White-Label Marketplace", icon: "Layers" },
+          { label: "Cloud Audit", icon: "FileCheck" },
+        ],
+      },
+      {
+        title: "Indian datacenter capacity, all three tiers",
+        tone: "data",
+        nodes: [
+          { label: "Tier 1 — hyperscale anchors", icon: "Server" },
+          { label: "Tier 2 — national & regional", icon: "Building2" },
+          { label: "Tier 3 — the long tail", icon: "HardDrive" },
+          { label: "Public cloud, kept at the edge", icon: "Cloud" },
+        ],
+      },
+      {
+        title: "What the customer gets",
+        tone: "experience",
+        nodes: [
+          { label: "One bill, one contract", icon: "CreditCard" },
+          { label: "No lock-in — re-placement is a policy", icon: "RefreshCw" },
+          { label: "Sovereign DR across operators", icon: "ShieldCheck" },
+          { label: "In-India by construction", icon: "Globe" },
+        ],
+      },
+    ],
+  },
 };

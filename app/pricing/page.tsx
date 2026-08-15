@@ -26,7 +26,7 @@ const faqs = [
   },
   {
     q: "How does Managed Resource Unit (MRU) pricing work?",
-    a: "Standard includes 1,000 MRU at the base price, with overage bands available. Enterprise includes 5,000 MRU at $120K list, then tiered metering ($0.18→$0.01/MRU/month) as your estate scales. Telco and Datacenter have their own per-element and per-rack metrics respectively.",
+    a: "Standard includes 1,000 MRU at the base price, with overage bands available. Enterprise includes 100 cloud accounts and up to 1,000,000 managed resources at $120K list. Telco and Datacenter have their own per-element and per-rack metrics respectively.",
   },
   {
     q: "How is Whale AI priced?",
@@ -67,9 +67,10 @@ export default function PricingPage() {
             </Reveal>
             <Reveal delay={90}>
               <p className="text-lg leading-relaxed text-muted lg:pb-2">
-                Standard and Enterprise have published anchors. Telco, Government
-                and Datacenter are contact-sales — shaped around your scale,
-                region and regulatory requirements.
+                Standard and Enterprise have flat, published list prices —
+                $24,000 and $120,000 a year. Telco, Government and Datacenter
+                are contact-sales — shaped around your scale, region and
+                regulatory requirements.
               </p>
             </Reveal>
           </div>

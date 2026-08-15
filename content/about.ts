@@ -153,9 +153,6 @@ export const leadership: LeadershipMember[] = [
     image: "/team/parag-ware.jpg",
     bio: "Parag Ware brings over 25 years of experience in program and project management, consulting, and large-scale GIS implementation to BlueWhale Stack. He has led client relationships, pre-sales, and delivery for utility companies across the US, UK, and Middle East, government bodies including MHADA and CSPDCL, and defense and law-enforcement agencies such as DRDO and Maharashtra Police. Most recently Vice President – Operations at Replete Business Solutions, he brings deep expertise in full project lifecycle management, business process mapping, and building high-performance operations teams.",
   },
-  { role: "Chief Technology Officer" },
-  { role: "Chief Product Officer" },
-  { role: "VP, Engineering" },
 ];
 
 export const trustPoints = [
