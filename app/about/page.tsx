@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, Check, MapPin, User } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Check, MapPin } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Card } from "@/components/ui/Card";
@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/Button";
 import { Stat } from "@/components/ui/Stat";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
+import { LeadershipSpotlight, LeadershipTile } from "@/components/sections/LeadershipCard";
 import { clouds, regions, compliance, offices } from "@/content/company";
 import {
   aboutHero,
@@ -33,6 +34,9 @@ const numbers = [
   { value: "5", label: "Platform editions" },
   { value: "10+", label: "Compliance frameworks" },
 ];
+
+const announcedLeaders = leadership.filter((l) => l.name);
+const unannouncedRoles = leadership.filter((l) => !l.name);
 
 export default function AboutPage() {
   return (
@@ -339,25 +343,36 @@ export default function AboutPage() {
               title="The team behind the platform"
             />
           </Reveal>
-          <div className="mt-14 grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
-            {leadership.map((l, i) => (
-              <Reveal key={l.role} delay={(i % 4) * 70}>
-                <div className="h-full bg-surface p-7 text-center">
-                  <div className="mx-auto grid h-20 w-20 place-items-center rounded-full bg-brand-50 text-accent ring-1 ring-line">
-                    <User className="h-8 w-8" />
-                  </div>
-                  <div className="mt-4 font-bold text-ink">
-                    To be announced
-                  </div>
-                  <div className="mt-1 text-sm text-muted">{l.role}</div>
-                </div>
-              </Reveal>
-            ))}
+          <div className="mt-14">
+            {announcedLeaders.length > 0 && (
+              <div className="grid gap-5 sm:grid-cols-2">
+                {announcedLeaders.map((l, i) => (
+                  <Reveal key={l.name} delay={(i % 2) * 80}>
+                    <LeadershipSpotlight member={l} />
+                  </Reveal>
+                ))}
+              </div>
+            )}
+            {unannouncedRoles.length > 0 && (
+              <div
+                className={`grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4 ${
+                  announcedLeaders.length > 0 ? "mt-6" : ""
+                }`}
+              >
+                {unannouncedRoles.map((l, i) => (
+                  <Reveal key={l.role} delay={(i % 4) * 70}>
+                    <LeadershipTile member={l} />
+                  </Reveal>
+                ))}
+              </div>
+            )}
           </div>
-          <p className="mt-6 text-sm text-faint">
-            Leadership bios &amp; photos to be added — share them and we&apos;ll
-            drop them in.
-          </p>
+          {unannouncedRoles.length > 0 && (
+            <p className="mt-6 text-sm text-faint">
+              More leadership bios &amp; photos to be added — share them and
+              we&apos;ll drop them in.
+            </p>
+          )}
         </Container>
       </section>
 

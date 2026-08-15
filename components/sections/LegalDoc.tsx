@@ -23,18 +23,25 @@ export function LegalDoc({
 }) {
   return (
     <>
-      <section className="border-b border-line bg-sunken py-16 sm:py-20">
-        <Container>
-          <p className="text-sm font-semibold uppercase tracking-wider text-accent">
-            Legal
-          </p>
-          <h1 className="mt-3 text-4xl font-bold tracking-tight text-ink sm:text-5xl">
+      <section className="relative overflow-hidden bg-brand-900 py-16 text-white sm:py-20">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-brand-500/30 blur-[110px]"
+        />
+        <Container className="relative">
+          <div className="flex items-center gap-3">
+            <span aria-hidden className="h-px w-8 bg-white/40" />
+            <span className="text-xs font-semibold uppercase tracking-[0.18em] text-white/80">
+              Legal
+            </span>
+          </div>
+          <h1 className="mt-5 text-4xl font-bold tracking-tight text-white sm:text-5xl">
             {title}
           </h1>
-          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-muted">
+          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-white/70">
             {intro}
           </p>
-          <p className="mt-4 text-sm text-faint">Last updated: {lastUpdated}</p>
+          <p className="mt-4 text-sm text-white/50">Last updated: {lastUpdated}</p>
         </Container>
       </section>
 
@@ -48,9 +55,12 @@ export function LegalDoc({
                   <li key={s.heading}>
                     <a
                       href={`#section-${i + 1}`}
-                      className="text-muted transition-colors hover:text-accent"
+                      className="flex items-center gap-2.5 text-muted transition-colors hover:text-accent"
                     >
-                      {i + 1}. {s.heading}
+                      <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[var(--bg-active)] text-[10px] font-bold text-accent">
+                        {i + 1}
+                      </span>
+                      {s.heading}
                     </a>
                   </li>
                 ))}
@@ -61,9 +71,12 @@ export function LegalDoc({
             <div className="max-w-3xl">
               {sections.map((s, i) => (
                 <div key={s.heading} id={`section-${i + 1}`} className="scroll-mt-24">
-                  <h2 className="mt-10 text-2xl font-bold text-ink first:mt-0">
-                    {i + 1}. {s.heading}
-                  </h2>
+                  <div className="mt-10 flex items-center gap-3.5 first:mt-0">
+                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[var(--bg-active)] text-sm font-bold text-accent">
+                      {i + 1}
+                    </span>
+                    <h2 className="text-2xl font-bold text-ink">{s.heading}</h2>
+                  </div>
                   {s.body.map((block, j) =>
                     Array.isArray(block) ? (
                       <ul

@@ -25,6 +25,8 @@ export interface EditionDef {
   featured?: boolean;
   /** true = publicly visible but not yet generally available */
   comingSoon?: boolean;
+  /** GA target for editions in preview, e.g. "Q4 2026" */
+  gaTarget?: string;
   diagram: string;
   architectureId?: string;
 }
@@ -132,6 +134,7 @@ export const editions: EditionDef[] = [
       "whale-ai",
     ],
     comingSoon: true,
+    gaTarget: "Q4 2026",
     diagram: "Telco: carrier-grade control plane with NFV/5G/MEC and OSS-BSS connectors",
     architectureId: "edition-telco",
   },
@@ -205,6 +208,7 @@ export const editions: EditionDef[] = [
       "whale-ai",
     ],
     comingSoon: true,
+    gaTarget: "Q4 2026",
     diagram: "Datacenter: physical + cloud control plane with DCIM and white-label portal",
     architectureId: "edition-datacenter",
   },

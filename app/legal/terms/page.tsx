@@ -37,6 +37,7 @@ const sections: LegalSection[] = [
     heading: "Product information and demos",
     body: [
       "Information about our products, editions, and capabilities is provided for general informational purposes. Product features, availability, and specifications may change. Any forward-looking statements, design targets, or illustrative metrics do not constitute a binding commitment. Use of the platform itself is governed by a separate written agreement.",
+      "Statements about our security, privacy, and compliance posture — including certifications, audit status, and data handling practices — are governed by our Trust Center (bluewhalestack.com/trust) and Privacy Policy, which take precedence over any general marketing statement elsewhere on this website.",
     ],
   },
   {
@@ -88,7 +89,7 @@ export default function TermsPage() {
     <LegalDoc
       title="Terms of Use"
       intro="The terms governing your access to and use of the BlueWhale Stack website and services."
-      lastUpdated="21 June 2026"
+      lastUpdated="12 July 2026"
       sections={sections}
     />
   );

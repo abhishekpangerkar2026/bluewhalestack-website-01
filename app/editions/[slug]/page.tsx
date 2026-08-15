@@ -48,15 +48,16 @@ export default async function EditionDetailPage({
               <Clock className="h-4 w-4 shrink-0 text-muted" />
               <p className="text-sm text-muted">
                 <span className="font-semibold text-ink">
-                  {edition.name} Edition — Coming Soon.
+                  {edition.name} Edition is in preview
+                  {edition.gaTarget ? ` — general availability ${edition.gaTarget}` : ""}.
                 </span>{" "}
-                This edition is in active development. Register your interest and we'll notify you when it becomes available.
+                Join the preview program to get early access and shape the roadmap before launch.
               </p>
               <a
                 href="/contact"
                 className="ml-auto shrink-0 rounded-md border border-line bg-surface px-3 py-1.5 text-xs font-semibold text-ink hover:border-line-strong"
               >
-                Register interest
+                Join the preview
               </a>
             </div>
           </Container>
@@ -77,7 +78,7 @@ export default async function EditionDetailPage({
               </Badge>
               {edition.comingSoon && (
                 <Badge tone="neutral" className="bg-amber-500/20 text-amber-300">
-                  Coming Soon
+                  Preview{edition.gaTarget ? ` · GA ${edition.gaTarget}` : ""}
                 </Badge>
               )}
             </div>
@@ -98,7 +99,7 @@ export default async function EditionDetailPage({
               {edition.comingSoon ? (
                 <>
                   <Button href="/contact" size="lg" variant="white">
-                    Register interest
+                    Join the preview
                     <ArrowRight className="h-4 w-4" />
                   </Button>
                   <Button

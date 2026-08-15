@@ -6,12 +6,13 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
-import { getIndustries } from "@/lib/content";
+import { ArchitectureDiagram } from "@/components/diagrams/ArchitectureDiagram";
+import { getIndustries, getEdition } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Industries",
   description:
-    "Purpose-built cloud management for Government, BFSI, Telco, Healthcare, Manufacturing, Energy, Media, and Enterprise SaaS.",
+    "Purpose-built cloud management for Government, BFSI, Healthcare, Regulated Enterprise, SaaS & Digital Native, Telco & MSP, and Datacenter & Colocation.",
 };
 
 export default function IndustriesPage() {
@@ -33,7 +34,7 @@ export default function IndustriesPage() {
                     <span className="text-accent">your sector.</span>
                   </>
                 }
-                description="BlueWhale Stack adapts to the governance, regulatory, and commercial realities of every industry — the same platform, shaped to how each one runs."
+                description="BlueWhale Stack adapts to the governance, regulatory, and commercial realities of every industry — the same platform, shaped to how each one runs. Standard, Enterprise and Government editions are generally available today; Telco and Datacenter editions are in preview ahead of GA in Q4 2026."
               />
             </Reveal>
             <Reveal delay={90}>
@@ -47,6 +48,24 @@ export default function IndustriesPage() {
               </div>
             </Reveal>
           </div>
+        </Container>
+      </section>
+
+      {/* ── Cross-industry reference architecture ── */}
+      <section className="border-t border-line bg-canvas py-20 sm:py-28">
+        <Container>
+          <Reveal>
+            <SectionHeading
+              eyebrow="Reference architecture"
+              title="One control plane. Every industry."
+              description="Seven sectors, seven different regulatory realities — solved by the same shared control plane, and delivered back out as a compliant, audited, in-region outcome for each one."
+            />
+          </Reveal>
+          <Reveal delay={100}>
+            <div className="mt-12">
+              <ArchitectureDiagram id="industries-overview" />
+            </div>
+          </Reveal>
         </Container>
       </section>
 
@@ -103,7 +122,9 @@ export default function IndustriesPage() {
           )}
 
           <div className="mt-6 grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
-            {rest.map((i, idx) => (
+            {rest.map((i, idx) => {
+              const edition = getEdition(i.edition);
+              return (
               <Reveal key={i.slug} delay={(idx % 3) * 70}>
                 <Link
                   href={`/industries/${i.slug}`}
@@ -123,6 +144,12 @@ export default function IndustriesPage() {
                   <p className="mt-1 text-sm font-semibold text-accent">
                     {i.title}
                   </p>
+                  {edition?.comingSoon && (
+                    <span className="mt-2 inline-flex w-fit items-center rounded-full border border-amber-300 bg-amber-50 px-2.5 py-0.5 text-xs font-semibold text-amber-700">
+                      {edition.name} Edition preview
+                      {edition.gaTarget ? ` · GA ${edition.gaTarget}` : ""}
+                    </span>
+                  )}
                   <p className="mt-3 flex-1 text-sm leading-relaxed text-muted">
                     {i.description}
                   </p>
@@ -132,7 +159,8 @@ export default function IndustriesPage() {
                   </span>
                 </Link>
               </Reveal>
-            ))}
+              );
+            })}
           </div>
         </Container>
       </section>

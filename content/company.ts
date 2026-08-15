@@ -26,10 +26,10 @@ export const company = {
 
 export const offices = [
   {
-    city: "Pune",
+    city: "Mumbai",
     label: "India — Headquarters",
     address:
-      "201, Baner Rd, near Sakal Nagar, Aundh, Pune, Maharashtra 411007, India",
+      "Innov8 Ackruti Star, 3rd Floor, 301, Central Road, Marol MIDC, near Marol Telephone Exchange, Andheri (E), Mumbai, Maharashtra 400093, India",
   },
   {
     city: "Ajman",
@@ -62,8 +62,8 @@ export const compliance = [
   "ISO 27018 (PII in cloud)",
   "ISO 27701 (privacy ISMS)",
   "ISO 22301 (business continuity)",
-  "CSA STAR Level 2",
-  "SOC 2 Type II",
+  "CSA STAR Level 1",
+  "SOC 2 Type II (readiness)",
   "GDPR",
   "India DPDP Act 2023",
 ] as const;
@@ -192,7 +192,9 @@ export const primaryNav: NavItem[] = [
         heading: "Operators",
         links: [
           { label: "Telco & MSP", href: "/industries/telco" },
+          { label: "Datacenter & Colocation", href: "/industries/datacenter" },
           { label: "Regulated Enterprise", href: "/industries/regulated-enterprise" },
+          { label: "SaaS & Digital Native", href: "/industries/saas" },
         ],
       },
       {
@@ -217,11 +219,11 @@ export const primaryNav: NavItem[] = [
     href: "/partners",
     columns: [
       {
-        heading: "Programmes",
+        heading: "Partner tracks",
         links: [
-          { label: "Technology partners", href: "/partners" },
-          { label: "Channel & resellers", href: "/partners" },
-          { label: "Managed service providers", href: "/partners" },
+          { label: "License Service Provider", href: "/partners#tracks" },
+          { label: "System Implementation Partner", href: "/partners#tracks" },
+          { label: "Strategic Partner", href: "/partners#tracks" },
         ],
       },
       {
@@ -235,7 +237,8 @@ export const primaryNav: NavItem[] = [
       {
         heading: "Get started",
         links: [
-          { label: "Why partner", href: "/partners" },
+          { label: "The partner journey", href: "/partners#journey" },
+          { label: "Download program guides", href: "/partners#documents" },
           { label: "Become a partner", href: partnerPortal.register, external: true },
           { label: "Partner login", href: partnerPortal.login, external: true },
         ],
@@ -245,7 +248,7 @@ export const primaryNav: NavItem[] = [
         featured: true,
         links: [
           { label: "Open Partner Portal", href: partnerPortal.login, external: true, desc: "partner.bluewhalestack.com" },
-          { label: "Partner programmes", href: "/partners" },
+          { label: "Partner tracks", href: "/partners#tracks" },
         ],
       },
     ],
@@ -318,10 +321,12 @@ export const footerNav = [
     heading: "Industries",
     links: [
       { label: "Government", href: "/industries/government" },
-      { label: "Telco & MSP", href: "/industries/telco" },
       { label: "BFSI", href: "/industries/bfsi" },
       { label: "Healthcare", href: "/industries/healthcare" },
       { label: "Regulated Enterprise", href: "/industries/regulated-enterprise" },
+      { label: "SaaS & Digital Native", href: "/industries/saas" },
+      { label: "Telco & MSP", href: "/industries/telco" },
+      { label: "Datacenter & Colocation", href: "/industries/datacenter" },
     ],
   },
   {

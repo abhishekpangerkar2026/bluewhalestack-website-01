@@ -7,7 +7,8 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
-import { principles } from "@/content/about";
+import { LeadershipSpotlight, LeadershipTile } from "@/components/sections/LeadershipCard";
+import { leadership } from "@/content/about";
 
 export const metadata: Metadata = {
   title: "Leadership & Team",
@@ -55,7 +56,7 @@ const values = [
   {
     icon: "ShieldCheck",
     title: "Trust is earned, not claimed",
-    body: "We hold ISO 27001 and SOC 2 Type II. Our security posture is verifiable, not a marketing badge.",
+    body: "We hold ISO 27001 and completed a SOC 2 Type II readiness assessment. Our security posture is verifiable, not a marketing badge.",
   },
   {
     icon: "Sparkles",
@@ -68,6 +69,9 @@ const values = [
     body: "Air-gapped, in-region, and DPDP/GDPR-compliant from day one — because regulated customers can't retrofit these requirements.",
   },
 ];
+
+const announcedLeaders = leadership.filter((l) => l.name);
+const unannouncedRoles = leadership.filter((l) => !l.name);
 
 export default function LeadershipPage() {
   return (
@@ -95,7 +99,7 @@ export default function LeadershipPage() {
                 <p className="text-lg leading-relaxed text-muted">
                   Engineers, architects and product thinkers solving enterprise cloud management at scale —
                   for governments, telcos and the world&apos;s leading enterprises.
-                  Based across Pune and Ajman, working globally.
+                  Based across Mumbai and Ajman, working globally.
                 </p>
                 <div className="mt-8 flex flex-wrap gap-3">
                   <Button href="/careers" size="lg">
@@ -108,6 +112,43 @@ export default function LeadershipPage() {
                 </div>
               </div>
             </Reveal>
+          </div>
+        </Container>
+      </section>
+
+      {/* ── Leadership roster ── */}
+      <section className="py-24 sm:py-32">
+        <Container>
+          <Reveal>
+            <SectionHeading
+              eyebrow="Meet the team"
+              title="Leadership"
+              description="The people setting direction for the platform, the product, and the company."
+            />
+          </Reveal>
+          <div className="mt-14">
+            {announcedLeaders.length > 0 && (
+              <div className="grid gap-5 sm:grid-cols-2">
+                {announcedLeaders.map((l, i) => (
+                  <Reveal key={l.name} delay={(i % 2) * 80}>
+                    <LeadershipSpotlight member={l} />
+                  </Reveal>
+                ))}
+              </div>
+            )}
+            {unannouncedRoles.length > 0 && (
+              <div
+                className={`grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4 ${
+                  announcedLeaders.length > 0 ? "mt-6" : ""
+                }`}
+              >
+                {unannouncedRoles.map((l, i) => (
+                  <Reveal key={l.role} delay={(i % 4) * 70}>
+                    <LeadershipTile member={l} />
+                  </Reveal>
+                ))}
+              </div>
+            )}
           </div>
         </Container>
       </section>
@@ -182,16 +223,16 @@ export default function LeadershipPage() {
             <SectionHeading
               eyebrow="Where we are"
               title="Global team, two hubs"
-              description="Headquartered in Pune with a presence in Ajman, UAE — serving customers across Asia-Pacific, the Middle East and beyond."
+              description="Headquartered in Mumbai with a presence in Ajman, UAE — serving customers across Asia-Pacific, the Middle East and beyond."
             />
           </Reveal>
           <div className="mt-14 grid gap-5 sm:grid-cols-2">
             {[
               {
-                city: "Pune, India",
+                city: "Mumbai, India",
                 label: "Headquarters",
                 body: "Engineering, product, and operations. The core platform and Whale AI are built here.",
-                detail: "201, Baner Rd, near Sakal Nagar, Aundh, Pune, Maharashtra 411007",
+                detail: "Innov8 Ackruti Star, 3rd Floor, 301, Central Road, Marol MIDC, near Marol Telephone Exchange, Andheri (E), Mumbai, Maharashtra 400093",
               },
               {
                 city: "Ajman, UAE",

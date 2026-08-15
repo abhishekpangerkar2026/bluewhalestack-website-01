@@ -29,14 +29,14 @@ export const departments = [
 ];
 
 export const jobs: Job[] = [
-  { title: "Senior Backend Engineer (Platform)", department: "Engineering", location: "Pune, India", type: "Full-time", remote: "Hybrid" },
+  { title: "Senior Backend Engineer (Platform)", department: "Engineering", location: "Mumbai, India", type: "Full-time", remote: "Hybrid" },
   { title: "Frontend Engineer (React/Next.js)", department: "Engineering", location: "Remote", type: "Full-time", remote: "Remote" },
-  { title: "DevOps / SRE Engineer", department: "Engineering", location: "Pune, India", type: "Full-time", remote: "Hybrid" },
+  { title: "DevOps / SRE Engineer", department: "Engineering", location: "Mumbai, India", type: "Full-time", remote: "Hybrid" },
   { title: "Cloud Security Engineer", department: "Engineering", location: "Remote", type: "Full-time", remote: "Remote" },
-  { title: "Product Manager (FinOps)", department: "Product", location: "Pune, India", type: "Full-time", remote: "Hybrid" },
+  { title: "Product Manager (FinOps)", department: "Product", location: "Mumbai, India", type: "Full-time", remote: "Hybrid" },
   { title: "Enterprise Account Executive — Middle East", department: "Sales", location: "Ajman, UAE", type: "Full-time", remote: "Onsite" },
   { title: "Solutions Architect (Pre-sales)", department: "Sales", location: "Remote", type: "Full-time", remote: "Remote" },
-  { title: "Product Marketing Manager", department: "Marketing", location: "Pune, India", type: "Full-time", remote: "Hybrid" },
+  { title: "Product Marketing Manager", department: "Marketing", location: "Mumbai, India", type: "Full-time", remote: "Hybrid" },
   { title: "Customer Success Manager", department: "Customer Success", location: "Remote", type: "Full-time", remote: "Remote" },
   { title: "Partner Operations Lead", department: "Operations", location: "Ajman, UAE", type: "Full-time", remote: "Onsite" },
 ];

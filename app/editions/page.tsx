@@ -57,7 +57,9 @@ export default function EditionsPage() {
                 >
                   <div className="flex items-center justify-between">
                     {e.comingSoon ? (
-                      <Badge tone="neutral">Coming Soon</Badge>
+                      <Badge tone="neutral">
+                        Preview{e.gaTarget ? ` · GA ${e.gaTarget}` : ""}
+                      </Badge>
                     ) : e.featured ? (
                       <Badge>Most popular</Badge>
                     ) : (
@@ -95,7 +97,7 @@ export default function EditionsPage() {
                       href="/contact"
                       className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-muted hover:text-accent"
                     >
-                      Register interest <ArrowRight className="h-3.5 w-3.5" />
+                      Join the preview <ArrowRight className="h-3.5 w-3.5" />
                     </Link>
                   ) : (
                     <Link
@@ -137,7 +139,9 @@ export default function EditionsPage() {
                       >
                         <span className={e.comingSoon ? "text-faint" : ""}>{e.name}</span>
                         {e.comingSoon && (
-                          <span className="block text-[10px] font-medium text-faint mt-0.5">Coming Soon</span>
+                          <span className="block text-[10px] font-medium text-faint mt-0.5">
+                            Preview{e.gaTarget ? ` · GA ${e.gaTarget}` : ""}
+                          </span>
                         )}
                       </th>
                     ))}

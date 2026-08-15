@@ -27,6 +27,7 @@ import {
   Zap,
   Clapperboard,
   Building2,
+  Rocket,
   // home / misc
   Workflow,
   Network,
@@ -87,6 +88,7 @@ const REGISTRY: Record<string, React.ComponentType<LucideProps>> = {
   Zap,
   Clapperboard,
   Building2,
+  Rocket,
   Workflow,
   Network,
   TrendingUp,

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { LegalDoc, type LegalSection } from "@/components/sections/LegalDoc";
-import { company, offices } from "@/content/company";
+import { company, offices, regions } from "@/content/company";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -55,7 +55,7 @@ const sections: LegalSection[] = [
   {
     heading: "International data transfers",
     body: [
-      `We operate from offices in India and the UAE and may process data in multiple jurisdictions. Where personal data is transferred across borders, we apply appropriate safeguards such as standard contractual clauses or equivalent mechanisms required under applicable law.`,
+      `We operate from offices in India and the UAE and may process data in multiple jurisdictions. Customer data can be hosted in a region of your choosing — ${regions.map((r) => r.city).join(", ")} — including sovereign and air-gapped options for regulated workloads. Where personal data is transferred across borders, we apply appropriate safeguards such as standard contractual clauses or equivalent mechanisms required under applicable law. A Data Processing Agreement (DPA) covering GDPR Article 28 and India's DPDP Act is available for paid editions — request it at legal@bluewhalestack.com.`,
     ],
   },
   {
@@ -87,7 +87,8 @@ const sections: LegalSection[] = [
   {
     heading: "Data security",
     body: [
-      "We maintain administrative, technical, and physical safeguards designed to protect personal data against unauthorised access, loss, or misuse. No method of transmission or storage is completely secure, and we cannot guarantee absolute security.",
+      "We maintain administrative, technical, and physical safeguards designed to protect personal data against unauthorised access, loss, or misuse, including AES-256 encryption at rest and TLS 1.3 in transit. Our information security and privacy management systems are independently certified to ISO/IEC 27001:2022, ISO/IEC 27017:2015, ISO/IEC 27018:2019, ISO/IEC 27701:2019, and ISO 22301:2019, and independently assessed against the GDPR. We also hold a CSA STAR Level 1 self-assessment and have completed a SOC 2 Type II readiness assessment against the AICPA Trust Services Criteria — this is not yet a CPA-issued Type II audit opinion.",
+      "Signed certificates, our full compliance posture, and instructions for requesting audit reports are available at our Trust Center (bluewhalestack.com/trust). No method of transmission or storage is completely secure, and we cannot guarantee absolute security.",
     ],
   },
   {
@@ -110,7 +111,7 @@ export default function PrivacyPage() {
     <LegalDoc
       title="Privacy Policy"
       intro="How BlueWhale Stack collects, uses, shares, and protects your personal data — and the rights available to you."
-      lastUpdated="21 June 2026"
+      lastUpdated="12 July 2026"
       sections={sections}
     />
   );

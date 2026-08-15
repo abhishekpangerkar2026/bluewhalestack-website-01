@@ -164,7 +164,7 @@ export const solutions: SolutionDef[] = [
     outcomes: [
       { value: "9+", label: "IdP adapters" },
       { value: "DPDP/GDPR", label: "Residency" },
-      { value: "SOC 2 / ISO", label: "In progress" },
+      { value: "ISO 27001", label: "Certified" },
       { value: "Air-gap", label: "Sovereign option" },
     ],
     audience: "CISOs, Heads of Cloud Security and compliance officers in regulated industries.",

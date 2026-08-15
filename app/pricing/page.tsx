@@ -101,7 +101,9 @@ export default function PricingPage() {
                   <div className="relative flex flex-1 flex-col">
                     <div className="flex items-center justify-between">
                       {e.comingSoon ? (
-                        <Badge tone="neutral">Coming Soon</Badge>
+                        <Badge tone="neutral">
+                          Preview{e.gaTarget ? ` · GA ${e.gaTarget}` : ""}
+                        </Badge>
                       ) : e.featured ? (
                         <Badge tone="brand" className="self-start">
                           Most popular
@@ -139,7 +141,7 @@ export default function PricingPage() {
                       className="mt-5"
                     >
                       {e.comingSoon
-                        ? "Register interest"
+                        ? "Join the preview"
                         : ["standard", "enterprise"].includes(e.slug)
                         ? "Get started"
                         : "Contact sales"}
@@ -182,7 +184,9 @@ export default function PricingPage() {
                       >
                         <span className={e.comingSoon ? "text-faint" : "text-ink"}>{e.name}</span>
                         {e.comingSoon && (
-                          <span className="block text-[10px] font-normal text-faint">Coming Soon</span>
+                          <span className="block text-[10px] font-normal text-faint">
+                            Preview{e.gaTarget ? ` · GA ${e.gaTarget}` : ""}
+                          </span>
                         )}
                       </th>
                     ))}

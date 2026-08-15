@@ -2,22 +2,19 @@ import type { Metadata } from "next";
 import { ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
+import { PartnerTracks } from "@/components/sections/PartnerTracks";
+import { PartnerJourney } from "@/components/sections/PartnerJourney";
+import { PartnerDocuments } from "@/components/sections/PartnerDocuments";
 import { partnerPortal } from "@/content/company";
-import {
-  programmes,
-  portalFeatures,
-  tiers,
-  whyPartner,
-} from "@/content/partners";
+import { portalFeatures, tiers, tiersNote, whyPartner } from "@/content/partners";
 
 export const metadata: Metadata = {
   title: "Partners",
   description:
-    "Join the BlueWhale Stack partner ecosystem — resell, register deals, invoice and provision through the Partner Portal at partners.bluewhalestack.com.",
+    "Three ways to partner with BlueWhale Stack — License Service Provider, System Implementation Partner, or Strategic (country) Partner. Apply and run your business through the Partner Portal at partner.bluewhalestack.com.",
 };
 
 export default function PartnersPage() {
@@ -42,8 +39,9 @@ export default function PartnersPage() {
               <span className="text-accent">Win together.</span>
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
-              Resell, register deals, invoice your customers and provision
-              BlueWhale Stack — all from the Partner Portal. Apply in minutes and
+              Three ways to partner with BlueWhale Stack — resell licenses,
+              implement and support the platform for end customers, or operate
+              as the official partner for your country. Apply in minutes and
               go live after approval.
             </p>
             <div className="mt-9 flex flex-wrap gap-3">
@@ -107,51 +105,27 @@ export default function PartnersPage() {
         </Container>
       </section>
 
-      {/* ── Programmes: bold heading + benefit lists ── */}
-      <section id="programmes" className="scroll-mt-24 bg-sunken py-24 sm:py-32">
+      {/* ── Partner tracks: alternating detail + code-rendered visual ── */}
+      <PartnerTracks />
+
+      {/* ── Partner journey: tabbed onboarding path per track ── */}
+      <section id="journey" className="scroll-mt-24 bg-canvas py-24 sm:py-32">
         <Container>
           <Reveal>
             <SectionHeading
-              eyebrow="Programmes"
-              title="Three ways to partner"
-              description="Whether you integrate, resell, or operate managed services — there's a track shaped to your model."
+              eyebrow="The journey"
+              title="From application to launch"
+              description="Every track runs through the Partner Portal, but the enablement steps differ. Pick a track to see its path."
             />
           </Reveal>
-          <div className="mt-14 grid gap-5 md:grid-cols-3">
-            {programmes.map((p, i) => (
-              <Reveal key={p.name} delay={i * 80}>
-                <Card className="flex h-full flex-col">
-                  <div className="flex items-center justify-between">
-                    <span className="grid h-11 w-11 place-items-center rounded-lg bg-primary text-primary-fg">
-                      <Icon name={p.icon} className="h-5 w-5" />
-                    </span>
-                    <span className="num text-sm font-bold text-faint">
-                      0{i + 1}
-                    </span>
-                  </div>
-                  <h3 className="mt-5 text-lg font-bold text-ink">
-                    {p.name}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted">
-                    {p.description}
-                  </p>
-                  <ul className="mt-5 space-y-2 border-t border-line pt-5">
-                    {p.benefits.map((b) => (
-                      <li
-                        key={b}
-                        className="flex items-start gap-2.5 text-sm text-muted"
-                      >
-                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
-                        {b}
-                      </li>
-                    ))}
-                  </ul>
-                </Card>
-              </Reveal>
-            ))}
+          <div className="mt-14">
+            <PartnerJourney />
           </div>
         </Container>
       </section>
+
+      {/* ── Program guides: gated PDF download per track ── */}
+      <PartnerDocuments />
 
       {/* ── Partner Portal: asymmetric feature grid + tiers ── */}
       <section id="portal" className="scroll-mt-24 bg-canvas py-24 sm:py-32">
@@ -200,7 +174,12 @@ export default function PartnersPage() {
             <div className="relative mt-12 overflow-hidden rounded-lg border border-line bg-surface p-8 shadow-sm">
               <div className="relative">
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
-                  Partner tiers
+                  LSP margin tiers
+                </p>
+                <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted">
+                  Tiers apply to License Service Providers and grow with
+                  committed volume. Strategic Partners operate above Platinum
+                  under a bespoke territory agreement.
                 </p>
                 <div className="mt-6 grid gap-px overflow-hidden rounded-lg bg-line sm:grid-cols-2 lg:grid-cols-4">
                   {tiers.map((t, i) => (
@@ -216,9 +195,20 @@ export default function PartnersPage() {
                       <p className="mt-2 text-xs leading-relaxed text-muted">
                         {t.note}
                       </p>
+                      <dl className="mt-4 space-y-1.5 border-t border-line pt-3 text-xs">
+                        <div className="flex justify-between gap-2">
+                          <dt className="text-faint">Margin</dt>
+                          <dd className="text-right font-semibold text-ink">{t.margin}</dd>
+                        </div>
+                        <div className="flex justify-between gap-2">
+                          <dt className="text-faint">Commitment</dt>
+                          <dd className="text-right font-semibold text-ink">{t.commitment}</dd>
+                        </div>
+                      </dl>
                     </div>
                   ))}
                 </div>
+                <p className="mt-4 text-xs italic text-faint">{tiersNote}</p>
               </div>
             </div>
           </Reveal>

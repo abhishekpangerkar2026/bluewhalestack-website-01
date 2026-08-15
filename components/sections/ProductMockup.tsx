@@ -297,11 +297,11 @@ function WhaleAIView() {
 /* ── Security view ── */
 function SecurityView() {
   const frameworks = [
-    { name: "SOC 2 Type II", status: "pass" },
+    { name: "SOC 2 Type II (readiness)", status: "pass" },
     { name: "ISO 27001:2022", status: "pass" },
     { name: "GDPR", status: "pass" },
     { name: "DPDP Act", status: "pass" },
-    { name: "CSA STAR L2", status: "pass" },
+    { name: "CSA STAR L1", status: "pass" },
     { name: "CIS Benchmarks", status: "warn" },
   ];
   const findings = [

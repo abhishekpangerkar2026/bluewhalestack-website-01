@@ -7,6 +7,9 @@
  *  - "flow"  — left→right steps (a data/process flow)
  */
 
+import { industries } from "./industries";
+import { modulesBySlug } from "./modules";
+
 export type ArchTone =
   | "source"
   | "plane"
@@ -500,6 +503,53 @@ export const diagrams: Record<string, ArchDiagram> = {
           { label: "In-region AI models", icon: "Sparkles" },
           { label: "Sovereign audit trail", icon: "ScrollText" },
         ],
+      },
+    ],
+  },
+
+  // ── Cross-industry overview ────────────────────────────────────
+  // Seven different regulatory realities, one control plane, seven
+  // governed outcomes. Nodes are generated from content/industries.ts
+  // and content/modules.ts so this stays in sync automatically.
+  "industries-overview": {
+    kind: "stack",
+    caption:
+      "Every sector brings a different regulatory reality — the same BlueWhale Stack control plane governs all of them, and each comes out the other side compliant, audited and in-region.",
+    layers: [
+      {
+        title: "Seven industries, seven realities",
+        tone: "source",
+        nodes: industries.map((i) => ({
+          label: i.name,
+          sub: i.kpis[0]?.value,
+          icon: i.icon,
+        })),
+      },
+      {
+        title: "One BlueWhale Stack control plane",
+        tone: "plane",
+        highlight: true,
+        nodes: [
+          "inventory",
+          "identity",
+          "provisioning",
+          "itsm",
+          "observe",
+          "finops",
+          "whale-ai",
+        ].map((slug) => ({
+          label: modulesBySlug[slug].name,
+          icon: modulesBySlug[slug].icon,
+        })),
+      },
+      {
+        title: "Governed outcomes, per industry",
+        tone: "experience",
+        nodes: industries.map((i) => ({
+          label: i.name,
+          sub: i.outcome,
+          icon: i.icon,
+        })),
       },
     ],
   },

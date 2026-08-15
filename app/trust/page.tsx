@@ -3,84 +3,81 @@ import Link from "next/link";
 import { Check, ChevronDown, ExternalLink, ShieldCheck } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Card } from "@/components/ui/Card";
-import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
-import { CertBadge, CertBadgeGrid } from "@/components/brand/CertBadge";
-import {
-  certifications,
-  certCategories,
-  trustPillars,
-  trustFaq,
-  type CertCategory,
-} from "@/content/trust";
+import { Button } from "@/components/ui/Button";
+import { CertBadgeGrid } from "@/components/brand/CertBadge";
+import { CertificateVault } from "@/components/trust/CertificateVault";
+import { certifications, trustPillars, trustFaq } from "@/content/trust";
 
 export const metadata: Metadata = {
   title: "Trust Center — BlueWhale Stack",
   description:
-    "BlueWhale Stack's security certifications, compliance posture, and privacy programme. ISO 27001, ISO 27017, ISO 27018, ISO 27701, ISO 22301, CSA STAR Level 2, SOC 2 Type II, GDPR, and India DPDP Act 2023.",
+    "BlueWhale Stack's security certifications, compliance posture, and privacy programme. ISO 27001, ISO 27017, ISO 27018, ISO 27701, ISO 22301, CSA STAR Level 1, SOC 2 Type II readiness assessment, GDPR, and India DPDP Act 2023.",
 };
 
-const CATEGORY_ORDER: CertCategory[] = [
-  "information-security",
-  "cloud-security",
-  "privacy",
-  "business-continuity",
-  "compliance",
-];
-
-
 export default function TrustPage() {
-  const grouped = CATEGORY_ORDER.map((cat) => ({
-    cat,
-    meta: certCategories[cat],
-    items: certifications.filter((c) => c.category === cat),
-  }));
-
   return (
     <>
       {/* ── Hero ── */}
-      <section className="relative overflow-hidden border-b border-line bg-canvas">
+      <section className="relative overflow-hidden bg-brand-900 py-20 text-white sm:py-28">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 bg-dot-grid opacity-50 [mask-image:radial-gradient(ellipse_70%_50%_at_60%_0%,black,transparent_80%)]"
+          className="pointer-events-none absolute -left-24 -top-24 h-96 w-96 rounded-full bg-brand-500/30 blur-[120px]"
         />
-        <Container className="relative py-20 sm:py-28">
+        <Container className="relative">
           <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
             <Reveal>
               <div>
                 <div className="mb-5 flex items-center gap-3">
-                  <ShieldCheck className="h-5 w-5 text-accent" />
-                  <span className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+                  <ShieldCheck className="h-5 w-5 text-brand-200" />
+                  <span className="text-xs font-semibold uppercase tracking-[0.18em] text-white/80">
                     Trust Center
                   </span>
                 </div>
-                <h1 className="text-[2.6rem] font-bold leading-[1.03] tracking-tight text-ink sm:text-5xl lg:text-6xl">
+                <h1 className="text-[2.6rem] font-bold leading-[1.03] tracking-tight text-white sm:text-5xl lg:text-6xl">
                   Security and compliance,{" "}
-                  <span className="text-accent">independently verified.</span>
+                  <span className="text-brand-200">independently verified.</span>
                 </h1>
-                <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">
-                  BlueWhale Stack holds nine international certifications across
-                  information security, privacy, cloud security, and business
-                  continuity — all third-party audited and current.
+                <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/70">
+                  BlueWhale Stack holds nine certifications and compliance
+                  attestations across information security, privacy, cloud
+                  security, and business continuity — independently audited
+                  ISO certifications, a CSA STAR self-assessment, and a SOC 2
+                  Type II readiness assessment, all current and downloadable
+                  below.
                 </p>
                 <div className="mt-8 flex flex-wrap gap-3">
-                  <Button href="/contact" size="lg">
-                    Request audit reports
+                  <Button href="#certifications" size="lg">
+                    Download certificates
                   </Button>
-                  <Button href="/legal/privacy" variant="outline" size="lg">
+                  <Button
+                    href="/legal/privacy"
+                    variant="outline"
+                    size="lg"
+                    className="border-white/30 text-white hover:border-white hover:bg-white/10 hover:text-white"
+                  >
                     Privacy policy
+                    <ExternalLink className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    href="/legal/terms"
+                    variant="outline"
+                    size="lg"
+                    className="border-white/30 text-white hover:border-white hover:bg-white/10 hover:text-white"
+                  >
+                    Terms of service
                     <ExternalLink className="h-4 w-4" />
                   </Button>
                 </div>
               </div>
             </Reveal>
 
-            {/* Cert badge cloud — real SVG badges */}
+            {/* Cert badge cloud — floats on a light card so the dark badge tiles keep contrast */}
             <Reveal delay={100}>
-              <CertBadgeGrid />
+              <div className="rounded-2xl border border-white/10 bg-surface p-6 shadow-lg sm:p-7">
+                <CertBadgeGrid />
+              </div>
             </Reveal>
           </div>
         </Container>
@@ -108,76 +105,18 @@ export default function TrustPage() {
       </section>
 
       {/* ── Certifications by category ── */}
-      <section className="bg-canvas py-20 sm:py-24">
+      <section id="certifications" className="scroll-mt-20 bg-canvas py-20 sm:py-24">
         <Container>
           <Reveal>
             <SectionHeading
               eyebrow="Certifications"
               title="Nine certifications. All current."
-              description="Every certification is independently audited by an accredited third party. Audit reports and attestation letters are available to Enterprise customers under NDA."
+              description="ISO certifications are independently audited by accredited third-party bodies. CSA STAR Level 1 is a self-assessment and SOC 2 Type II is a readiness assessment — not a CPA-issued audit opinion. Signed certificate PDFs are available for download below; full audit reports and attestation letters are available to Enterprise customers under NDA."
             />
           </Reveal>
 
-          <div className="mt-14 space-y-16">
-            {grouped.map(({ cat, meta, items }) =>
-              items.length === 0 ? null : (
-                <Reveal key={cat}>
-                  <div>
-                    {/* Category header */}
-                    <div className="mb-6 flex items-center gap-4">
-                      <h2 className="text-lg font-bold text-ink">{meta.label}</h2>
-                      <span className="h-px flex-1 bg-line" />
-                      <Badge tone="neutral">{items.length}</Badge>
-                    </div>
-
-                    {/* Cert cards */}
-                    <div className="grid gap-5 md:grid-cols-2">
-                      {items.map((cert, i) => (
-                        <Reveal key={cert.id} delay={i * 70}>
-                          <Card className="h-full">
-                            <div className="flex items-start gap-4">
-                              {/* SVG certification badge */}
-                              <div className="w-16 shrink-0">
-                                <CertBadge certId={cert.id} />
-                              </div>
-                              <div className="flex-1 min-w-0">
-                                <div className="flex flex-wrap items-center gap-2">
-                                  <h3 className="text-base font-bold text-ink">
-                                    {cert.name}
-                                  </h3>
-                                  <span className="inline-flex items-center gap-1 rounded-full bg-[var(--success-bg)] px-2.5 py-0.5 text-xs font-semibold text-[var(--success-fg)]">
-                                    <Check className="h-3 w-3" />
-                                    Certified
-                                  </span>
-                                </div>
-                                <p className="mt-0.5 text-xs text-faint">
-                                  {cert.fullName}
-                                </p>
-                              </div>
-                            </div>
-
-                            <p className="mt-4 text-sm leading-relaxed text-muted">
-                              {cert.description}
-                            </p>
-
-                            <dl className="mt-5 grid gap-3 border-t border-line pt-4 text-xs sm:grid-cols-2">
-                              <div>
-                                <dt className="font-semibold text-ink">Scope</dt>
-                                <dd className="mt-1 text-muted">{cert.scope}</dd>
-                              </div>
-                              <div>
-                                <dt className="font-semibold text-ink">Audit cycle</dt>
-                                <dd className="mt-1 text-muted">{cert.cycle}</dd>
-                              </div>
-                            </dl>
-                          </Card>
-                        </Reveal>
-                      ))}
-                    </div>
-                  </div>
-                </Reveal>
-              ),
-            )}
+          <div className="mt-14">
+            <CertificateVault certifications={certifications} />
           </div>
         </Container>
       </section>
@@ -272,8 +211,9 @@ export default function TrustPage() {
                   Need the full audit package?
                 </h2>
                 <p className="mt-2 text-white/70">
-                  SOC 2 Type II report, ISO certificates, and DPA templates are
-                  available to Enterprise customers under NDA.
+                  Signed ISO certificates are downloadable above. SOC 2
+                  readiness reports, underlying audit evidence, and DPA
+                  templates are available to Enterprise customers under NDA.
                 </p>
               </div>
               <div className="flex shrink-0 flex-col gap-3 sm:flex-row">

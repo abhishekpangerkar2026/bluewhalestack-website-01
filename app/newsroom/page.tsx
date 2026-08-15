@@ -25,8 +25,8 @@ const announcements = [
   {
     date: "May 2026",
     category: "Certification",
-    title: "BlueWhale Stack achieves ISO 27001:2022 and SOC 2 Type II",
-    body: "Both certifications are now current. Customers in regulated industries can request audit reports through the Trust Center.",
+    title: "BlueWhale Stack achieves ISO 27001:2022 and completes SOC 2 Type II readiness",
+    body: "ISO 27001:2022 is now certified, alongside a SOC 2 Type II readiness assessment against the AICPA Trust Services Criteria. Signed certificates are downloadable from the Trust Center.",
     badge: "Trust & compliance",
   },
   {

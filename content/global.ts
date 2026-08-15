@@ -40,7 +40,7 @@ export const globalRegions: RegionNode[] = [
     city: "Los Angeles",
     country: "United States",
     coords: [34.05, -118.24],
-    compliance: ["SOC 2 (in progress)", "Data residency"],
+    compliance: ["SOC 2 (readiness)", "Data residency"],
     serves: "Americas",
   },
 ];

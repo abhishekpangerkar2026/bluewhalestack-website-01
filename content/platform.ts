@@ -149,6 +149,6 @@ export const securityPosture = [
   "Role-based access across every connected cloud",
   "Full audit trail of platform activity",
   "Data residency by region (DPDP — Mumbai, GDPR — Frankfurt)",
-  "SOC 2 Type II & ISO 27001 certified",
+  "ISO 27001 certified; SOC 2 Type II readiness complete",
   "Air-gapped & in-region deployment for sovereign customers",
 ];

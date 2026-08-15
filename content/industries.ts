@@ -1,4 +1,12 @@
-/** Industry verticals — the real targets, grounded in shipped capability. */
+/**
+ * Industry verticals — the real targets, grounded in shipped capability.
+ *
+ * Edition availability (mirrors content/editions.ts):
+ *   Standard · Enterprise · Government — generally available today.
+ *   Telco · Datacenter — in preview, GA Q4 2026 (comingSoon + gaTarget).
+ * Pages derive preview badges from the tied edition, so keep `edition`
+ * slugs in sync with editions.ts.
+ */
 
 export interface IndustryDef {
   slug: string;
@@ -15,6 +23,8 @@ export interface IndustryDef {
   architectureId?: string;
   /** concrete industry use cases (grounded in real product modules) */
   useCases?: { title: string; body: string; modules?: string[] }[];
+  /** one-line outcome statement — used in the cross-industry architecture diagram */
+  outcome: string;
 }
 
 export const industries: IndustryDef[] = [
@@ -24,91 +34,46 @@ export const industries: IndustryDef[] = [
     icon: "Landmark",
     title: "Sovereign. Air-gapped. In-region.",
     description:
-      "BlueWhale Stack lets national and state governments govern cloud, on-prem and hybrid estates from one control plane — with air-gapped Sovereign deployment, in-region AI, and provable data residency for public-sector workloads.",
+      "BlueWhale Stack lets national and state governments govern cloud, on-prem and hybrid estates from one control plane. The Government Edition — generally available today — deploys fully air-gapped with FIPS-validated crypto, an immutable WORM-backed audit log, in-region AI, and provable data residency for public-sector workloads.",
     kpis: [
-      { value: "Air-gapped", label: "Sovereign deployment" },
+      { value: "Air-gapped", label: "Sovereign deployment, no call-home" },
+      { value: "FIPS", label: "Validated cryptography" },
+      { value: "WORM", label: "Immutable audit log" },
       { value: "In-region", label: "AI / LLMs only" },
-      { value: "DPDP", label: "In-country residency" },
-      { value: "6", label: "Clouds + on-prem" },
     ],
     why: [
-      "Deploy fully air-gapped with no call-home",
-      "Keep data in-country with provable residency",
-      "Govern multiple agencies from one control plane",
-      "Run Whale AI with in-region models only",
-      "Reduce hyperscaler lock-in",
+      "Deploy fully air-gapped with an offline update channel and no call-home",
+      "Keep data in-country with residency enforcement and provable audit evidence",
+      "Harden access with always-on PAM, session recording and mandatory MFA",
+      "Run Whale AI with in-region models only — intelligence never leaves the jurisdiction",
+      "Connect sovereign clouds: AWS GovCloud, Azure Government, Google Distributed Cloud and national clouds",
+      "Export compliance packs for FedRAMP / IRAP / StateRAMP-style accreditation",
     ],
     targets: ["Federal Government", "State Authorities", "Ministries", "Defense", "Public Sector"],
-    edition: "sovereign",
-    compliance: ["DPDP Act", "GDPR", "Air-gapped", "Data residency"],
+    edition: "government",
+    outcome: "Sovereign & audited",
+    compliance: ["Air-gapped", "FIPS crypto", "WORM audit log", "DPDP Act", "GDPR", "Data residency"],
     architectureId: "industry-government",
     useCases: [
       {
         title: "Sovereign, air-gapped governance across agencies",
-        body: "Run an air-gapped Sovereign deployment with no outbound connectivity, unifying inventory, identity and governance across agencies through a single control plane — with every action recorded in a full audit trail.",
+        body: "Run an air-gapped Government Edition deployment with no outbound connectivity and an offline update channel, unifying inventory, identity and governance across agencies through a single control plane.",
         modules: ["identity", "inventory"],
       },
       {
-        title: "In-country data residency",
-        body: "Pin workloads, inventory and audit records to an in-country region (e.g. Mumbai for DPDP), with in-region AI models so intelligence never leaves the jurisdiction.",
+        title: "In-country data residency with in-region AI",
+        body: "Pin workloads, inventory and audit records to an in-country region (e.g. Mumbai for DPDP), with in-region AI models and no call-home — so intelligence never leaves the jurisdiction.",
         modules: ["inventory", "whale-ai"],
       },
       {
-        title: "Hybrid on-prem discovery without inbound firewall changes",
-        body: "The Edge Agent discovers on-prem estates (VMware, Nutanix, Hyper-V) over outbound-only HTTPS — credentials never leave the premises — unifying on-prem and cloud in one inventory.",
-        modules: ["inventory", "cloud-connectors"],
+        title: "Hardened privileged access",
+        body: "PAM is always-on with session recording, MFA is mandatory on every role, and identity federation maps your directory to platform roles — so privileged access is provably controlled.",
+        modules: ["identity", "itsm"],
       },
       {
-        title: "Change control with a full audit trail",
-        body: "ITSM tracks every change with P0–P4 SLAs and breach detection, while identity federation maps your directory to platform roles — each change logged for evidence.",
-        modules: ["itsm", "identity"],
-      },
-    ],
-  },
-  {
-    slug: "telco",
-    name: "Telco & MSP",
-    icon: "RadioTower",
-    title: "Multi-tenant. White-label. Governed.",
-    description:
-      "BlueWhale Stack lets telecom operators and managed service providers run multi-tenant cloud platforms — delivering governed, white-label managed services across six public clouds plus on-prem from one control plane.",
-    kpis: [
-      { value: "Multi-tenant", label: "Per-tenant isolation" },
-      { value: "6", label: "Public clouds + on-prem" },
-      { value: "100+", label: "Catalog items" },
-      { value: "Partner Portal", label: "White-label resale" },
-    ],
-    why: [
-      "Run multi-tenant cloud platforms securely",
-      "Deliver governed, white-label managed services",
-      "Provision from a catalog across multiple clouds",
-      "Unify cloud and on-prem in one inventory",
-      "Hand off cloud ops with ITSM connectors",
-    ],
-    targets: ["Telecom Operators", "MSPs", "CSPs", "DC Providers", "Colocation"],
-    edition: "enterprise",
-    compliance: ["Tenant isolation", "Audit trail", "Data residency"],
-    architectureId: "industry-telco",
-    useCases: [
-      {
-        title: "White-label resale via Partner Portal",
-        body: "Give MSP and SI partners a branded experience with end-customer management and consolidated billing through the separate Partner Portal product, while each end-customer runs on the same governed platform.",
-        modules: ["identity", "provisioning"],
-      },
-      {
-        title: "Multi-tenant scale with per-tenant isolation",
-        body: "Each tenant is isolated and governed; the unified inventory spans six public clouds plus on-prem, and identity federation maps each tenant's directory to platform roles.",
-        modules: ["inventory", "identity"],
-      },
-      {
-        title: "Provisioning-as-a-service from a governed catalog",
-        body: "Resell self-service provisioning: AWS resources live (EC2/S3/RDS/VPC/EFS) plus Azure and GCP catalog items, all gated by approval workflows.",
-        modules: ["provisioning"],
-      },
-      {
-        title: "ITSM handoff with bidirectional connectors",
-        body: "When something fails, an incident is auto-created with P0–P4 SLAs; business / ITSM connectors sync incidents both ways with the tools you already run.",
-        modules: ["itsm"],
+        title: "Accreditation evidence on demand",
+        body: "Every action lands in an immutable, WORM-backed audit log, and compliance pack export assembles the evidence for FedRAMP / IRAP / StateRAMP-style accreditation — with ITSM change control (P0–P4 SLAs) behind it.",
+        modules: ["itsm", "inventory"],
       },
     ],
   },
@@ -118,22 +83,24 @@ export const industries: IndustryDef[] = [
     icon: "Banknote",
     title: "Compliant. Governed. Audited.",
     description:
-      "BlueWhale Stack lets banks, insurers and financial institutions run secure, compliant hybrid and multi-cloud operations — with federated identity, a full audit trail, bundled observability and data residency across regulated workloads.",
+      "BlueWhale Stack lets banks, insurers and financial institutions run secure, compliant hybrid and multi-cloud operations on the Enterprise Edition — with federated identity, a full audit trail, bundled observability, FinOps chargeback and data residency across regulated workloads. Available today.",
     kpis: [
       { value: "9+", label: "IdP adapters" },
       { value: "Audit trail", label: "Every action" },
-      { value: "Bundled", label: "Observability" },
+      { value: "Bundled", label: "Observability + FinOps" },
       { value: "In-region", label: "Data residency" },
     ],
     why: [
       "Federate identity and govern access centrally",
       "Keep a full audit trail of every action",
       "Run bundled observability without extra contracts",
+      "Show cost per business line with FinOps chargeback",
       "Assess legacy workloads for migration (6R)",
       "Enforce data residency for regulated workloads",
     ],
     targets: ["Retail Banks", "Investment Banks", "Insurance", "Asset Managers", "Fintech"],
     edition: "enterprise",
+    outcome: "Compliant & audited",
     compliance: ["DPDP Act", "GDPR", "Audit trail", "Data residency"],
     architectureId: "industry-bfsi",
     useCases: [
@@ -148,14 +115,14 @@ export const industries: IndustryDef[] = [
         modules: ["observe", "itsm"],
       },
       {
+        title: "Cost governance with FinOps chargeback",
+        body: "Whale Nomics attributes spend to business lines and departments, so cloud cost is governed with the same rigor as access and change.",
+        modules: ["finops", "inventory"],
+      },
+      {
         title: "Assessed migration from legacy systems",
         body: "The Migration Engine auto-classifies on-prem workloads and runs a 6R assessment with cost, effort and blocker analysis, with on-prem sources discovered via the Edge Agent.",
         modules: ["migration", "inventory"],
-      },
-      {
-        title: "Governed provisioning with approvals",
-        body: "Provision approved resources from a governed catalog (AWS live) with approval workflows and Whale AI sizing — no console access required.",
-        modules: ["provisioning", "whale-ai"],
       },
     ],
   },
@@ -165,7 +132,7 @@ export const industries: IndustryDef[] = [
     icon: "HeartPulse",
     title: "Secure. Private. In-region.",
     description:
-      "BlueWhale Stack lets healthcare providers operate secure hybrid cloud for clinical systems, research and digital health — with federated access, data residency, and air-gapped Sovereign deployment for sensitive workloads.",
+      "BlueWhale Stack lets healthcare providers operate secure hybrid cloud for clinical systems, research and digital health on the Enterprise Edition — with federated access, data residency, and air-gapped Sovereign deployment for sensitive workloads. Available today.",
     kpis: [
       { value: "In-region", label: "Data residency" },
       { value: "Air-gap", label: "Sovereign option" },
@@ -181,6 +148,7 @@ export const industries: IndustryDef[] = [
     ],
     targets: ["Hospitals", "CROs", "Pharma", "Health Insurance", "Digital Health"],
     edition: "enterprise",
+    outcome: "Private & in-region",
     compliance: ["GDPR", "DPDP Act", "Data residency", "Air-gapped"],
     architectureId: "industry-healthcare",
     useCases: [
@@ -212,7 +180,7 @@ export const industries: IndustryDef[] = [
     icon: "Building2",
     title: "Govern. Standardize. Scale.",
     description:
-      "BlueWhale Stack gives large, regulated enterprises one control plane for every cloud — unifying inventory, governed provisioning, bundled observability and migration across public cloud, on-prem and hybrid.",
+      "BlueWhale Stack gives large, regulated enterprises one control plane for every cloud on the Enterprise Edition — unifying inventory, governed provisioning, bundled observability and migration across public cloud, on-prem and hybrid. Available today as SaaS, BYOC or fully Sovereign.",
     kpis: [
       { value: "11", label: "Modules, one platform" },
       { value: "6", label: "Public clouds + on-prem" },
@@ -228,7 +196,8 @@ export const industries: IndustryDef[] = [
     ],
     targets: ["Large Enterprises", "IT Teams", "Platform Engineering", "Financial Services", "Retail"],
     edition: "enterprise",
-    compliance: ["GDPR", "DPDP Act", "Audit trail", "SOC 2 Type II"],
+    outcome: "Standardized at scale",
+    compliance: ["GDPR", "DPDP Act", "Audit trail", "SOC 2 Type II (readiness)"],
     architectureId: "industry-enterprise-saas",
     useCases: [
       {
@@ -250,6 +219,151 @@ export const industries: IndustryDef[] = [
         title: "Bundled observability & migration assessment",
         body: "Get logs, metrics, traces and SLOs bundled in, and assess on-prem workloads for migration with a 6R analysis when you're ready to move.",
         modules: ["observe", "migration"],
+      },
+    ],
+  },
+  {
+    slug: "saas",
+    name: "SaaS & Digital Native",
+    icon: "Rocket",
+    title: "Start governed. Scale fast.",
+    description:
+      "BlueWhale Stack gives SaaS companies and digital-native teams governed cloud from day one on the Standard Edition — cloud inventory, governed provisioning, security scanning, audit and Whale AI Spark across AWS, Azure and GCP, with a clean upgrade path to Enterprise as you grow. Available today.",
+    kpis: [
+      { value: "3", label: "Clouds: AWS · Azure · GCP" },
+      { value: "SaaS / BYOC", label: "Deployment models" },
+      { value: "1M", label: "Whale AI tokens / month" },
+      { value: "99.5%", label: "Platform SLA" },
+    ],
+    why: [
+      "See every resource across AWS, Azure and GCP in one inventory",
+      "Provision from a governed catalog instead of shared console access",
+      "Catch misconfigurations with security scanning and audit reports",
+      "Connect the CRM, ERP and ITSM tools you already run",
+      "Grow into Enterprise — same platform, more clouds, more modules",
+    ],
+    targets: ["SaaS Companies", "Startups", "Scale-ups", "Digital Natives", "Departmental IT"],
+    edition: "standard",
+    outcome: "Governed from day one",
+    compliance: ["Security scanning", "Audit reports", "IdP federation", "GDPR"],
+    architectureId: "edition-standard",
+    useCases: [
+      {
+        title: "One inventory from the first account",
+        body: "Connect AWS, Azure and GCP accounts and get a single, searchable inventory of everything you run — before sprawl sets in.",
+        modules: ["inventory", "cloud-connectors"],
+      },
+      {
+        title: "Self-service provisioning with guardrails",
+        body: "Engineers provision from a governed catalog (AWS live) with approval workflows and Whale AI sizing — no shared console credentials, no surprise resources.",
+        modules: ["provisioning", "whale-ai"],
+      },
+      {
+        title: "SSO and role mapping from your IdP",
+        body: "Federate the IdP you already use; groups map to platform roles automatically, so access follows your directory instead of a spreadsheet.",
+        modules: ["identity"],
+      },
+      {
+        title: "Lightweight ITSM with business connectors",
+        body: "Track incidents and changes with basic ITSM, and sync with the CRM, ERP or ITSM tools you already run through business connectors.",
+        modules: ["itsm", "cloud-connectors"],
+      },
+    ],
+  },
+  {
+    slug: "telco",
+    name: "Telco & MSP",
+    icon: "RadioTower",
+    title: "Carrier-grade. Multi-tenant. Network-native.",
+    description:
+      "BlueWhale Stack lets telecom operators and MSPs run multi-tenant, white-label managed services today. The Telco Edition — now in preview, GA Q4 2026 — extends the same control plane to the network itself: VNF/CNF discovery, 5G core awareness, MEC site fleets, OSS/BSS integration and a five-nines control plane.",
+    kpis: [
+      { value: "99.999%", label: "Telco Edition control-plane SLA" },
+      { value: "5G-aware", label: "AMF · SMF · UPF · slices" },
+      { value: "MEC", label: "Edge site fleets at scale" },
+      { value: "Q4 2026", label: "Telco Edition GA" },
+    ],
+    why: [
+      "Run multi-tenant, white-label managed services on the platform today",
+      "Provision from a governed catalog across multiple clouds",
+      "Discover and manage VNFs, CNFs and NFVI/VIM alongside cloud (Telco Edition preview)",
+      "Operate 5G core functions and network slices from the same plane (preview)",
+      "Integrate OSS/BSS: Amdocs, Netcracker, Ericsson, Nokia, TM Forum (preview)",
+      "Carrier-grade service assurance on a five-nines control plane (preview)",
+    ],
+    targets: ["Telecom Operators", "MVNOs", "MSPs", "CSPs", "Carrier-grade MSPs"],
+    edition: "telco",
+    outcome: "Carrier-grade (preview)",
+    compliance: ["Tenant isolation", "Audit trail", "Carrier SLAs", "Data residency"],
+    architectureId: "industry-telco",
+    useCases: [
+      {
+        title: "White-label resale via Partner Portal — today",
+        body: "Give MSP and SI partners a branded experience with end-customer management and consolidated billing through the separate Partner Portal product, while each end-customer runs on the same governed platform.",
+        modules: ["identity", "provisioning"],
+      },
+      {
+        title: "Multi-tenant scale with per-tenant isolation — today",
+        body: "Each tenant is isolated and governed; the unified inventory spans six public clouds plus on-prem, and identity federation maps each tenant's directory to platform roles.",
+        modules: ["inventory", "identity"],
+      },
+      {
+        title: "Network estate in the same inventory — preview",
+        body: "The Telco Edition discovers VNFs, CNFs and NFVI/VIM alongside your cloud estate, with 5G core awareness (AMF, SMF, UPF, slices) — one inventory from RAN edge to public cloud. GA Q4 2026.",
+        modules: ["inventory", "cloud-connectors"],
+      },
+      {
+        title: "MEC fleets & service assurance — preview",
+        body: "Manage MEC sites as a fleet with service assurance and carrier-grade SLA tracking feeding ITSM, on a control plane engineered for five-nines. GA Q4 2026.",
+        modules: ["observe", "itsm"],
+      },
+    ],
+  },
+  {
+    slug: "datacenter",
+    name: "Datacenter & Colocation",
+    icon: "Server",
+    title: "Racks to clouds. One plane.",
+    description:
+      "BlueWhale Stack's Datacenter Edition — now in preview, GA Q4 2026 — extends the platform to the physical facility: rack, row and cage inventory at U-position level, power and cooling management, space and capacity planning, metered colo tenant billing and a white-label portal under your own brand.",
+    kpis: [
+      { value: "U-level", label: "Rack · row · cage inventory" },
+      { value: "A/B", label: "Power feeds · PDU · kW" },
+      { value: "White-label", label: "Your brand, your domain" },
+      { value: "Q4 2026", label: "Datacenter Edition GA" },
+    ],
+    why: [
+      "Track racks, rows and cages to the U position — next to the clouds you already govern",
+      "Manage power (PDU, kW, A/B feeds) and cooling (CRAC/CRAH) with environmental telemetry",
+      "Plan space, capacity, cross-connects and access control in one system",
+      "Bill colo tenants on metered usage through the Partner Portal",
+      "White-label the portal with your logo, colours and domain",
+    ],
+    targets: ["Colocation Operators", "DC Operators", "Managed DC Providers", "Edge DC Operators", "Hosting Providers"],
+    edition: "datacenter",
+    outcome: "One plane, every rack (preview)",
+    compliance: ["Tenant isolation", "Access control", "Audit trail", "Metered billing"],
+    architectureId: "edition-datacenter",
+    useCases: [
+      {
+        title: "Physical + cloud inventory in one plane",
+        body: "DCIM inventory at U-position level — sites, racks, servers — sits in the same control plane as your public-cloud estate, so 'where does this workload run' has one answer.",
+        modules: ["inventory", "cloud-connectors"],
+      },
+      {
+        title: "Power, cooling & capacity telemetry",
+        body: "PDU, kW and A/B feed data plus CRAC/CRAH environmental telemetry flow into Observe, with capacity planning across space, power and cooling.",
+        modules: ["observe", "inventory"],
+      },
+      {
+        title: "Metered colo billing, white-labeled",
+        body: "Meter tenant usage and bill it through the Partner Portal under your own brand — logo, colours and domain — with Whale Nomics behind the numbers.",
+        modules: ["finops", "identity"],
+      },
+      {
+        title: "Operator-grade change & incident management",
+        body: "Access control and badging events, cross-connect changes and facility incidents run through ITSM with P0–P4 SLAs and a full audit trail.",
+        modules: ["itsm", "identity"],
       },
     ],
   },

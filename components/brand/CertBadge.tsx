@@ -112,7 +112,7 @@ function IsoBadge({
   );
 }
 
-// ─── CSA STAR Level 2 ────────────────────────────────────────────────────────
+// ─── CSA STAR Level 1 ────────────────────────────────────────────────────────
 
 function CsaStarBadge() {
   // 5-point star polygon centered at (48, 30), outer r=16, inner r=7
@@ -124,7 +124,7 @@ function CsaStarBadge() {
       viewBox="0 0 96 96"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      aria-label="CSA STAR Level 2"
+      aria-label="CSA STAR Level 1"
       role="img"
     >
       <rect width="96" height="96" rx="10" fill="#1A0A3D" />
@@ -136,7 +136,7 @@ function CsaStarBadge() {
       {/* Star */}
       <polygon points="48,14 52.1,26.3 63.2,27.1 54.7,34.2 57.4,44.9 48,39 38.6,44.9 41.3,34.2 32.8,27.1 43.9,26.3" fill="#F5A623" />
 
-      {/* Level 2 badge ring */}
+      {/* Level 1 badge ring */}
       <circle cx="70" cy="22" r="9" fill="#F5A623" fillOpacity="0.2" stroke="#F5A623" strokeWidth="1.2" />
       <text
         x="70"
@@ -147,7 +147,7 @@ function CsaStarBadge() {
         fontWeight="700"
         fontFamily="Arial, Helvetica, sans-serif"
       >
-        L2
+        L1
       </text>
 
       <text
@@ -170,7 +170,7 @@ function CsaStarBadge() {
         fontSize="9"
         fontFamily="Arial, Helvetica, sans-serif"
       >
-        Level 2
+        Level 1
       </text>
 
       <rect x="18" y="82" width="60" height="8" rx="4" fill="white" fillOpacity="0.1" />

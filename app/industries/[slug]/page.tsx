@@ -45,11 +45,29 @@ export default async function IndustryDetailPage({
         <Container>
           <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
             <div>
-              <div className="flex items-center gap-3">
+              <div className="flex flex-wrap items-center gap-3">
                 <span className="grid h-12 w-12 place-items-center rounded-lg bg-primary text-primary-fg">
                   <Icon name={industry.icon} className="h-6 w-6" />
                 </span>
                 <Badge tone="neutral">{industry.name}</Badge>
+                {edition?.comingSoon ? (
+                  <Badge
+                    tone="neutral"
+                    className="border-amber-300 bg-amber-50 text-amber-700"
+                  >
+                    {edition.name} Edition in preview
+                    {edition.gaTarget ? ` · GA ${edition.gaTarget}` : ""}
+                  </Badge>
+                ) : (
+                  edition && (
+                    <Badge
+                      tone="neutral"
+                      className="border-emerald-300 bg-emerald-50 text-emerald-700"
+                    >
+                      Available now on {edition.name} Edition
+                    </Badge>
+                  )
+                )}
               </div>
               <h1 className="mt-6 text-[2.4rem] font-bold leading-[1.03] tracking-tight text-ink sm:text-5xl lg:text-6xl">
                 {industry.title}
@@ -59,7 +77,7 @@ export default async function IndustryDetailPage({
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Button href="/contact" size="lg">
-                  Book a demo
+                  {edition?.comingSoon ? "Join the preview" : "Book a demo"}
                   <ArrowRight className="h-4 w-4" />
                 </Button>
                 {edition && (
@@ -228,7 +246,9 @@ export default async function IndustryDetailPage({
             <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
               <div className="max-w-2xl">
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-200">
-                  Ready when you are
+                  {edition?.comingSoon
+                    ? `In preview${edition.gaTarget ? ` — GA ${edition.gaTarget}` : ""}`
+                    : "Ready when you are"}
                 </p>
                 <h2 className="mt-5 text-3xl font-bold leading-[1.05] tracking-tight text-white sm:text-4xl">
                   Run {industry.name} on{" "}
@@ -237,7 +257,7 @@ export default async function IndustryDetailPage({
               </div>
               <div className="flex flex-wrap gap-3">
                 <Button href="/contact" size="lg" variant="white">
-                  Book a demo
+                  {edition?.comingSoon ? "Join the preview" : "Book a demo"}
                   <ArrowRight className="h-4 w-4" />
                 </Button>
                 {edition && (
