@@ -99,7 +99,7 @@ export default function LeadershipPage() {
                 <p className="text-lg leading-relaxed text-muted">
                   Engineers, architects and product thinkers solving enterprise cloud management at scale —
                   for governments, telcos and the world&apos;s leading enterprises.
-                  Based across Mumbai and Ajman, working globally.
+                  Based across Mumbai, Ajman and Wilmington, working globally.
                 </p>
                 <div className="mt-8 flex flex-wrap gap-3">
                   <Button href="/careers" size="lg">
@@ -160,7 +160,7 @@ export default function LeadershipPage() {
             <SectionHeading
               eyebrow="How we're organised"
               title="Four disciplines, one platform"
-              description="We build, ship, sell and support the platform as one team across India and the UAE."
+              description="We build, ship, sell and support the platform as one team across India, the UAE and the United States."
             />
           </Reveal>
           <div className="mt-14 grid gap-5 sm:grid-cols-2">
@@ -222,23 +222,29 @@ export default function LeadershipPage() {
           <Reveal>
             <SectionHeading
               eyebrow="Where we are"
-              title="Global team, two hubs"
-              description="Headquartered in Mumbai with a presence in Ajman, UAE — serving customers across Asia-Pacific, the Middle East and beyond."
+              title="Global team, three hubs"
+              description="Headquartered in Mumbai, with offices in Ajman and Wilmington — serving customers across Asia-Pacific, the Middle East and the Americas."
             />
           </Reveal>
-          <div className="mt-14 grid gap-5 sm:grid-cols-2">
+          <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {[
               {
                 city: "Mumbai, India",
                 label: "Headquarters",
                 body: "Engineering, product, and operations. The core platform and Whale AI are built here.",
-                detail: "Innov8 Ackruti Star, 3rd Floor, 301, Central Road, Marol MIDC, near Marol Telephone Exchange, Andheri (E), Mumbai, Maharashtra 400093",
+                detail: "Innov8 Ackruti Star, 3rd Floor, 301, Ackruti Star, Central Road, Marol MIDC, near Marol Telephone Exchange, Andheri (E), Mumbai, Maharashtra 400093",
               },
               {
                 city: "Ajman, UAE",
                 label: "Middle East",
                 body: "Government, Telco and Enterprise customers across the GCC region.",
-                detail: "Office BC-892084, 26th Floor, Amber Gem Tower, Sheikh Khalifa Street",
+                detail: "BC 892084, 26th Floor, Amber Gem Tower, Ajman",
+              },
+              {
+                city: "Wilmington, USA",
+                label: "Americas",
+                body: "Corporate entity and customers across the United States.",
+                detail: "221 W 9th St, PMB 1099, Wilmington, Delaware 19801, New Castle County",
               },
             ].map((loc, i) => (
               <Reveal key={loc.city} delay={i * 80}>

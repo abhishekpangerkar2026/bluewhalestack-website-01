@@ -55,7 +55,7 @@ const sections: LegalSection[] = [
   {
     heading: "International data transfers",
     body: [
-      `We operate from offices in India and the UAE and may process data in multiple jurisdictions. Customer data can be hosted in a region of your choosing — ${regions.map((r) => r.city).join(", ")} — including sovereign and air-gapped options for regulated workloads. Where personal data is transferred across borders, we apply appropriate safeguards such as standard contractual clauses or equivalent mechanisms required under applicable law. A Data Processing Agreement (DPA) covering GDPR Article 28 and India's DPDP Act is available for paid editions — request it at legal@bluewhalestack.com.`,
+      `We operate from offices in India, the UAE and the United States and may process data in multiple jurisdictions. Customer data can be hosted in a region of your choosing — ${regions.map((r) => r.city).join(", ")} — including sovereign and air-gapped options for regulated workloads. Where personal data is transferred across borders, we apply appropriate safeguards such as standard contractual clauses or equivalent mechanisms required under applicable law. A Data Processing Agreement (DPA) covering GDPR Article 28 and India's DPDP Act is available for paid editions — request it at legal@bluewhalestack.com.`,
     ],
   },
   {
@@ -101,7 +101,7 @@ const sections: LegalSection[] = [
     heading: "Contact us",
     body: [
       `If you have questions about this Privacy Policy or our data practices, contact us at ${company.emails.contact}.`,
-      `${company.name} — ${offices.map((o) => `${o.label}: ${o.address}`).join(" · ")}`,
+      `${company.name} — ${offices.map((o) => `${o.entity} (${o.label}): ${o.address}`).join(" · ")}`,
     ],
   },
 ];

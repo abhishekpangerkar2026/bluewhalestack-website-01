@@ -116,6 +116,7 @@ export default async function ContactPage({
                             {o.city} · {o.label}
                           </div>
                           <div className="text-sm text-white/70">{o.address}</div>
+                          <div className="mt-0.5 text-xs text-white/40">{o.entity}</div>
                         </div>
                       </li>
                     ))}

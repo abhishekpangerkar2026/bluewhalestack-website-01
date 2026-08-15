@@ -28,14 +28,23 @@ export const offices = [
   {
     city: "Mumbai",
     label: "India — Headquarters",
+    entity: "BlueWhale Stack Consulting and Technologies Pvt Ltd",
     address:
-      "Innov8 Ackruti Star, 3rd Floor, 301, Central Road, Marol MIDC, near Marol Telephone Exchange, Andheri (E), Mumbai, Maharashtra 400093, India",
+      "Innov8 Ackruti Star, 3rd Floor, 301, Ackruti Star, Central Road, Marol MIDC, near Marol Telephone Exchange, Andheri (E), Mumbai, Maharashtra 400093, India",
   },
   {
     city: "Ajman",
     label: "UAE",
+    entity: "BlueWhale Stack Consulting and Technologies FZE LLC",
     address:
-      "Office BC-892084, 26th Floor, Amber Gem Tower, Sheikh Khalifa Street, Ajman, United Arab Emirates",
+      "BC 892084, 26th Floor, Amber Gem Tower, Ajman, United Arab Emirates",
+  },
+  {
+    city: "Wilmington",
+    label: "USA",
+    entity: "BlueWhale Stack Consulting and Technologies Inc",
+    address:
+      "221 W 9th St, PMB 1099, Wilmington, Delaware 19801, New Castle County, USA",
   },
 ] as const;
 

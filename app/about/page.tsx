@@ -307,10 +307,10 @@ export default function AboutPage() {
               <SectionHeading
                 eyebrow="Global presence"
                 title="Where we are"
-                description="Headquartered in India, with a presence in the UAE — serving customers across the globe."
+                description="Headquartered in India, with offices in the UAE and the United States — serving customers across the globe."
               />
             </Reveal>
-            <div className="grid gap-5 sm:grid-cols-2">
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {offices.map((o, i) => (
                 <Reveal key={o.city} delay={i * 90}>
                   <Card className="h-full">
@@ -325,6 +325,9 @@ export default function AboutPage() {
                     </p>
                     <p className="mt-3 text-sm leading-relaxed text-muted">
                       {o.address}
+                    </p>
+                    <p className="mt-3 border-t border-line pt-3 text-xs text-faint">
+                      {o.entity}
                     </p>
                   </Card>
                 </Reveal>
