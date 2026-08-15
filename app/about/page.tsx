@@ -32,7 +32,7 @@ const numbers = [
   { value: `${clouds.length}+`, label: "Clouds & hypervisors" },
   { value: `${regions.length}`, label: "Global regions" },
   { value: "5", label: "Platform editions" },
-  { value: "10+", label: "Compliance frameworks" },
+  { value: `${compliance.length}`, label: "Compliance frameworks" },
 ];
 
 const announcedLeaders = leadership.filter((l) => l.name);
@@ -82,7 +82,7 @@ export default function AboutPage() {
       {/* At a glance — quiet fact strip */}
       <section className="border-b border-line bg-sunken py-10">
         <Container>
-          <dl className="grid grid-cols-2 gap-x-6 gap-y-7 sm:grid-cols-3 lg:grid-cols-5">
+          <dl className="grid grid-cols-2 gap-x-6 gap-y-7 sm:grid-cols-3">
             {companyFacts.map((f) => (
               <div
                 key={f.label}

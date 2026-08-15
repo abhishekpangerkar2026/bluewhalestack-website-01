@@ -1,12 +1,14 @@
 /**
  * About / company page content.
  *
- * NOTE: aboutHero.mission, missionVision, and story are sourced from the
- * "BlueWhale Stack - Generic" platform deck (v1.1, BlueWhale Stack Industry
- * Team). companyFacts and milestones below are still **reference/draft
- * copy** — the deck's founding dates (2018 consulting founding, 2026
- * BlueWhale Stack creation) conflict with the current "Founded 2024" fact
- * and the 2025-dated milestones, so those are left as-is pending sign-off.
+ * Founding dates and milestones are grounded in the "About BlueWhale
+ * Stack" section repeated verbatim across every 2026 solution document
+ * (BFSI, Fabric, Telco Edition, Datacenter Edition — business/technical
+ * solutions and whitepapers): founded 2018 as a cloud consulting firm,
+ * platform launched 2026 after eight years of field experience across
+ * telecom, banking, government, healthcare, manufacturing and datacenter
+ * modernization. This superseded an earlier draft "Founded 2024" fact
+ * that conflicted with the story section below — now reconciled.
  */
 
 export const aboutHero = {
@@ -16,11 +18,12 @@ export const aboutHero = {
     "We help organizations and digital infrastructure providers cut through the complexity of modern cloud environments. BlueWhale Stack gives them one platform to accelerate cloud adoption, optimize infrastructure operations, and unlock the full potential of the cloud.",
 };
 
-/** Compact "at a glance" facts shown under the hero. (Reference data.) */
+/** Compact "at a glance" facts shown under the hero. */
 export const companyFacts = [
-  { label: "Founded", value: "2024" },
+  { label: "Founded", value: "2018" },
+  { label: "Platform launched", value: "2026" },
   { label: "Headquarters", value: "Mumbai, India" },
-  { label: "Presence", value: "India · UAE" },
+  { label: "Presence", value: "India · UAE · USA" },
   { label: "Category", value: "Cloud Management Platform" },
   { label: "Delivery", value: "SaaS · BYOC · Sovereign" },
 ];
@@ -36,15 +39,15 @@ export const missionVision = {
 export const story = [
   {
     heading: "Where we started",
-    body: "BlueWhale Consulting and Technologies was founded in 2018 with a focus on cloud consulting — helping organizations with cloud strategy, infrastructure transformation, cloud migration, and hybrid cloud operations.",
+    body: "BlueWhale Stack Consulting and Technologies was founded in 2018 with a focus on cloud consulting — helping organizations with cloud strategy, infrastructure transformation, cloud migration, and hybrid cloud operations, alongside consulting practices in Application, Data & AI, and Infrastructure Modernization.",
   },
   {
     heading: "What we learned",
-    body: "Across multiple enterprise consulting engagements, we saw the same problem surface again and again: organizations struggling to manage complex hybrid and multi-cloud environments, with no single view of visibility, governance, cost control, or operational complexity across platforms.",
+    body: "Across eight years of engagements — spanning telecom, banking and financial services, government, healthcare, manufacturing and datacenter modernization in India and the GCC — we saw the same problem surface again and again: organizations struggling to manage complex hybrid and multi-cloud environments, with no single view of visibility, governance, cost control, or operational complexity across platforms.",
   },
   {
     heading: "What we built",
-    body: "Inspired by these industry challenges, we created BlueWhale Stack — a single unified platform that lets enterprises and digital infrastructure providers discover, migrate, manage, and optimize workloads across hybrid and multi-cloud environments, reducing complexity while accelerating cloud adoption and operational efficiency.",
+    body: "Inspired by these industry challenges, we productized that field experience into BlueWhale Stack — a single unified platform that lets enterprises and digital infrastructure providers discover, migrate, manage, and optimize workloads across hybrid and multi-cloud environments, launched in 2026 alongside the ongoing consulting practice.",
   },
 ];
 
@@ -76,7 +79,7 @@ export const productFamily = [
     name: "BlueWhale Stack CMP",
     badge: "Core",
     href: "/editions",
-    body: "The unified cloud management platform — five editions from Community to Sovereign, all on one control plane.",
+    body: "The unified cloud management platform — five editions from Standard to Datacenter, all on one control plane.",
   },
   {
     name: "WhaleForge",
@@ -92,30 +95,27 @@ export const productFamily = [
   },
 ];
 
-/**
- * Company journey / milestones. (Reference timeline — indicative, to be
- * confirmed with approved dates and details.)
- */
+/** Company journey / milestones — grounded in the "About BlueWhale Stack" facts repeated across every 2026 solution document. */
 export const milestones = [
   {
-    year: "2024",
-    title: "BlueWhale Stack founded",
-    body: "Started with a simple conviction: cloud got complex faster than the tools to govern it. The platform architecture and hyperscaler-neutral control plane were defined.",
+    year: "2018",
+    title: "BlueWhale Stack Consulting founded",
+    body: "Started as a cloud consulting firm — cloud strategy, infrastructure transformation, migration and hybrid cloud operations for enterprise and government clients, alongside Application, Data & AI, and Infrastructure Modernization practices.",
   },
   {
-    year: "2025",
-    title: "Core platform ships",
-    body: "Standard and Enterprise editions go live — unified inventory, provisioning, ITSM and observability across AWS, Azure, GCP and on-prem, with the first design partners onboarded.",
-  },
-  {
-    year: "2025",
-    title: "Editions & global regions",
-    body: "Community, Enterprise Plus and Sovereign editions round out the lineup; deployment regions span Singapore, Mumbai, Frankfurt and Los Angeles, with air-gapped sovereign delivery.",
+    year: "2018–2025",
+    title: "Eight years in the field",
+    body: "Engagements across telecom, banking and financial services, government, healthcare, manufacturing and datacenter modernization in India and the GCC — the field experience the platform is built from, not designed in the abstract.",
   },
   {
     year: "2026",
-    title: "AI-native & sovereign-ready",
-    body: "Whale AI ships across every module in Spark/Tide/Abyss tiers with 50+ use cases, ISO 27001:2022 certification is achieved, and a SOC 2 Type II readiness assessment is complete — extending the platform to the most regulated environments.",
+    title: "The platform launches",
+    body: "BlueWhale Stack ships: Standard, Enterprise and Government editions generally available, a unified control plane across six public clouds plus on-prem, and the full Whale AI stack across every module.",
+  },
+  {
+    year: "2026 · Q4",
+    title: "Extending the platform",
+    body: "Telco and Datacenter editions move from preview to general availability, and BlueWhale Stack Fabric — unifying India's datacenter capacity into one sovereign cloud — launches.",
   },
 ];
 
