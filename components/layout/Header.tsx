@@ -106,7 +106,7 @@ export function Header() {
                 <Link
                   href={item.href}
                   className={cn(
-                    "inline-flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                    "inline-flex items-center gap-1 whitespace-nowrap rounded-md px-2.5 py-2 text-sm font-medium transition-colors xl:px-3",
                     open === item.label
                       ? "bg-sunken text-ink"
                       : "text-muted hover:bg-sunken hover:text-ink",

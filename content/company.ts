@@ -267,7 +267,7 @@ export const primaryNav: NavItem[] = [
     ],
   },
   {
-    label: "About Us",
+    label: "About",
     href: "/about",
     columns: [
       {
