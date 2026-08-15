@@ -310,12 +310,12 @@ export default function AboutPage() {
                 description="Headquartered in India, with offices in the UAE and the United States — serving customers across the globe."
               />
             </Reveal>
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {offices.map((o, i) => (
-                <Reveal key={o.city} delay={i * 90}>
-                  <Card className="h-full">
+                <Reveal key={o.city} delay={i * 90} className="h-full">
+                  <Card className="flex h-full flex-col">
                     <div className="flex items-center gap-2">
-                      <MapPin className="h-5 w-5 text-accent" />
+                      <MapPin className="h-5 w-5 shrink-0 text-accent" />
                       <h3 className="text-lg font-bold text-ink">
                         {o.city}
                       </h3>
@@ -326,7 +326,7 @@ export default function AboutPage() {
                     <p className="mt-3 text-sm leading-relaxed text-muted">
                       {o.address}
                     </p>
-                    <p className="mt-3 border-t border-line pt-3 text-xs text-faint">
+                    <p className="mt-auto border-t border-line pt-3 text-xs text-faint">
                       {o.entity}
                     </p>
                   </Card>

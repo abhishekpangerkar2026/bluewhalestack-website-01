@@ -226,7 +226,7 @@ export default function LeadershipPage() {
               description="Headquartered in Mumbai, with offices in Ajman and Wilmington — serving customers across Asia-Pacific, the Middle East and the Americas."
             />
           </Reveal>
-          <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-14 grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {[
               {
                 city: "Mumbai, India",
@@ -247,8 +247,8 @@ export default function LeadershipPage() {
                 detail: "221 W 9th St, PMB 1099, Wilmington, Delaware 19801, New Castle County",
               },
             ].map((loc, i) => (
-              <Reveal key={loc.city} delay={i * 80}>
-                <Card className="flex flex-col gap-3 p-6">
+              <Reveal key={loc.city} delay={i * 80} className="h-full">
+                <Card className="flex h-full flex-col gap-3 p-6">
                   <div className="flex items-center justify-between">
                     <h3 className="text-lg font-bold text-ink">{loc.city}</h3>
                     <span className="rounded-full bg-[var(--bg-active)] px-3 py-1 text-xs font-semibold text-accent">
