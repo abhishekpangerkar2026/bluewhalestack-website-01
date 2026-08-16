@@ -114,6 +114,7 @@ export const primaryNav: NavItem[] = [
           { label: "Platform overview", href: "/platform", desc: "Every cloud, one control plane" },
           { label: "Whale AI", href: "/products/whale-ai", desc: "AI across every module" },
           { label: "Cloud Connectors", href: "/modules/cloud-connectors", desc: "6 public clouds + on-prem" },
+          { label: "BlueWhale Stack Fabric", href: "/fabric", desc: "All of India's datacenters, one fabric" },
         ],
       },
       {
@@ -222,10 +223,6 @@ export const primaryNav: NavItem[] = [
         ],
       },
     ],
-  },
-  {
-    label: "Fabric",
-    href: "/fabric",
   },
   {
     label: "Partners",
