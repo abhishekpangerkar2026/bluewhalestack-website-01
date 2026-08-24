@@ -122,9 +122,8 @@ export const primaryNav: NavItem[] = [
         links: [
           { label: "Standard", href: "/editions/standard" },
           { label: "Enterprise", href: "/editions/enterprise" },
-          { label: "Telco", href: "/editions/telco" },
+          { label: "Telco & Datacenter", href: "/editions/telco-datacenter" },
           { label: "Government", href: "/editions/government" },
-          { label: "Datacenter", href: "/editions/datacenter" },
         ],
       },
       {
@@ -141,7 +140,7 @@ export const primaryNav: NavItem[] = [
         heading: "Featured",
         featured: true,
         links: [
-          { label: "Compare editions", href: "/editions", desc: "Standard → Datacenter matrix" },
+          { label: "Compare editions", href: "/editions", desc: "Standard → Government matrix" },
           { label: "All modules", href: "/modules" },
           { label: "Pricing", href: "/pricing" },
         ],
@@ -325,9 +324,8 @@ export const footerNav = [
     links: [
       { label: "Standard", href: "/editions/standard" },
       { label: "Enterprise", href: "/editions/enterprise" },
-      { label: "Telco", href: "/editions/telco" },
+      { label: "Telco & Datacenter", href: "/editions/telco-datacenter" },
       { label: "Government", href: "/editions/government" },
-      { label: "Datacenter", href: "/editions/datacenter" },
     ],
   },
   {

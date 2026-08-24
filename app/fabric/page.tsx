@@ -52,7 +52,7 @@ export default function FabricPage() {
                 <ArrowRight className="h-4 w-4" />
               </Button>
               <Button
-                href="/editions/telco"
+                href="/editions/telco-datacenter"
                 size="lg"
                 variant="ghost"
                 className="text-white hover:bg-white/10"

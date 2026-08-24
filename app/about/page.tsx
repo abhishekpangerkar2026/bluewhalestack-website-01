@@ -31,7 +31,7 @@ export const metadata: Metadata = {
 const numbers = [
   { value: `${clouds.length}+`, label: "Clouds & hypervisors" },
   { value: `${regions.length}`, label: "Global regions" },
-  { value: "5", label: "Platform editions" },
+  { value: "4", label: "Platform editions" },
   { value: `${compliance.length}`, label: "Compliance frameworks" },
 ];
 

@@ -29,9 +29,9 @@ export const heroSlides = [
     key: "editions",
     tab: "Editions",
     headlinePre: "One platform, ",
-    highlight: "five editions",
+    highlight: "four editions",
     blurb:
-      "Community, Standard, Enterprise, Enterprise Plus and Sovereign — the same platform, shaped to exactly how you operate.",
+      "Standard, Enterprise, Telco & Datacenter and Government — the same platform, shaped to exactly how you operate.",
     visual: "editions",
   },
   {

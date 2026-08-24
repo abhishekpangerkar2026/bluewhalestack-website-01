@@ -10,7 +10,7 @@ const INTENTS: { keys: string[]; reply: string }[] = [
   {
     keys: ["price", "pricing", "cost", "edition"],
     reply:
-      "We offer 5 editions — Community (free), Standard (from ~$24K/yr), Enterprise (from ~$120K/yr), Enterprise Plus, and Sovereign. See /pricing for the full comparison.",
+      "We offer 4 editions — Standard ($24K/yr), Enterprise ($120K/yr), Telco & Datacenter (contact sales), and Government (contact sales). See /pricing for the full comparison.",
   },
   {
     keys: ["finops", "saving", "spend", "chargeback"],
@@ -20,7 +20,7 @@ const INTENTS: { keys: string[]; reply: string }[] = [
   {
     keys: ["government", "sovereign", "air-gap", "compliance"],
     reply:
-      "The Sovereign edition runs air-gapped with in-region AI and centralised governance — designed for regulated and government workloads. See /editions/sovereign.",
+      "The Government edition runs air-gapped with in-region AI and centralised governance — designed for regulated and government workloads. See /editions/government.",
   },
   {
     keys: ["migration", "migrate"],

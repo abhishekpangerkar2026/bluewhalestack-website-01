@@ -265,7 +265,7 @@ export const whyPartner = [
   {
     icon: "Layers",
     title: "Differentiated portfolio",
-    body: "Resell five editions from Community to Sovereign — with unified inventory, bundled observability, migration and Whale AI built in.",
+    body: "Resell four editions from Standard to Government — with unified inventory, bundled observability, migration and Whale AI built in.",
   },
   {
     icon: "GraduationCap",

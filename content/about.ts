@@ -79,7 +79,7 @@ export const productFamily = [
     name: "BlueWhale Stack CMP",
     badge: "Core",
     href: "/editions",
-    body: "The unified cloud management platform — five editions from Standard to Datacenter, all on one control plane.",
+    body: "The unified cloud management platform — four editions from Standard to Government, all on one control plane.",
   },
   {
     name: "WhaleForge",

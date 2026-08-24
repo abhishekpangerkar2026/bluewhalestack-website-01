@@ -322,53 +322,6 @@ export const diagrams: Record<string, ArchDiagram> = {
     ],
   },
 
-  // ── Edition: Datacenter (operator fleet) ──────────────────────
-  "edition-datacenter": {
-    kind: "stack",
-    caption:
-      "An operator control plane over a multi-facility fleet — DCIM and bare metal on the floor, white-label managed cloud and per-tenant billing on top.",
-    layers: [
-      {
-        title: "Multi-facility fleet",
-        tone: "source",
-        nodes: [
-          { label: "Sites · racks · servers", icon: "Building2" },
-          { label: "Bare metal pool", icon: "HardDrive" },
-          { label: "Public clouds", icon: "Cloud" },
-        ],
-      },
-      {
-        title: "Edge collection (mTLS)",
-        tone: "data",
-        nodes: [
-          { label: "Redfish · IPMI · SNMP agents", icon: "Plug" },
-          { label: "Power & thermal telemetry", icon: "Gauge" },
-        ],
-      },
-      {
-        title: "Operator control plane",
-        tone: "plane",
-        highlight: true,
-        nodes: [
-          { label: "DCIM", icon: "Server" },
-          { label: "Bare-metal lifecycle", icon: "HardDrive" },
-          { label: "Capacity planning", icon: "Gauge" },
-          { label: "Cross-DC migration", icon: "MoveRight" },
-          { label: "Per-tenant billing", icon: "CreditCard" },
-          { label: "Predictive Ops", icon: "Sparkles" },
-        ],
-      },
-      {
-        title: "Experience",
-        tone: "experience",
-        nodes: [
-          { label: "Operator portal", icon: "LayoutTemplate" },
-          { label: "White-label tenant portals", icon: "Users" },
-        ],
-      },
-    ],
-  },
-
   // ── Edition: Government (sovereign, air-gapped) ───────────────
   "edition-government": {
     kind: "stack",
@@ -416,45 +369,48 @@ export const diagrams: Record<string, ArchDiagram> = {
     ],
   },
 
-  // ── Edition: Telco & MSP (multi-tenant) ───────────────────────
-  "edition-telco": {
+  // ── Edition: Telco & Datacenter (operator, multi-tenant) ──────
+  "edition-telco-datacenter": {
     kind: "stack",
     caption:
-      "A multi-tenant control plane with enterprise isolation — launch branded, white-label cloud services with tenant-level billing and governance.",
+      "One multi-tenant control plane for two operator personas — network fabric and NFV/5G for telcos, DCIM and bare metal for datacenter operators — white-labeled with per-tenant billing on top.",
     layers: [
       {
         title: "Underlying infrastructure",
         tone: "source",
         nodes: [
           { label: "Public clouds", icon: "Cloud" },
-          { label: "Operator infrastructure", icon: "Server" },
+          { label: "Operator network infrastructure", icon: "Server" },
+          { label: "Sites · racks · bare metal pool", icon: "HardDrive" },
         ],
       },
       {
-        title: "Multi-tenant control plane",
+        title: "Edge & telemetry collection",
+        tone: "data",
+        nodes: [
+          { label: "Redfish · IPMI · SNMP agents", icon: "Plug" },
+          { label: "Power & thermal telemetry", icon: "Gauge" },
+          { label: "Postgres (RLS per tenant)", icon: "Boxes" },
+        ],
+      },
+      {
+        title: "Multi-tenant operator control plane",
         tone: "plane",
         highlight: true,
         nodes: [
           { label: "Tenant isolation", icon: "Layers" },
           { label: "Provisioning & catalog", icon: "PackagePlus" },
-          { label: "FinOps & billing", icon: "Wallet" },
-          { label: "Security & Compliance", icon: "ShieldCheck" },
-          { label: "Whale AI · Tide", icon: "Sparkles" },
-        ],
-      },
-      {
-        title: "Data tier (per-tenant RLS)",
-        tone: "data",
-        nodes: [
-          { label: "Postgres (RLS per tenant)", icon: "Boxes" },
-          { label: "Meilisearch (faceted search)", icon: "Eye" },
+          { label: "DCIM & bare-metal lifecycle", icon: "Server" },
+          { label: "FinOps & per-tenant billing", icon: "Wallet" },
+          { label: "Capacity planning", icon: "Gauge" },
+          { label: "Whale AI · Tide / Predictive Ops", icon: "Sparkles" },
         ],
       },
       {
         title: "Experience",
         tone: "experience",
         nodes: [
-          { label: "White-label portals", icon: "LayoutTemplate" },
+          { label: "White-label operator portals", icon: "LayoutTemplate" },
           { label: "Branded catalogs", icon: "Users" },
           { label: "Tenant billing & invoicing", icon: "CreditCard" },
         ],

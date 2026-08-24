@@ -278,23 +278,23 @@ export const industries: IndustryDef[] = [
     icon: "RadioTower",
     title: "Carrier-grade. Multi-tenant. Network-native.",
     description:
-      "BlueWhale Stack lets telecom operators and MSPs run multi-tenant, white-label managed services today. The Telco Edition — now in preview, GA Q4 2026 — extends the same control plane to the network itself: VNF/CNF discovery, 5G core awareness, MEC site fleets, OSS/BSS integration and a five-nines control plane.",
+      "BlueWhale Stack lets telecom operators and MSPs run multi-tenant, white-label managed services today. The Telco & Datacenter Edition — now in preview, GA Q4 2026 — extends the same control plane to the network itself: VNF/CNF discovery, 5G core awareness, MEC site fleets, OSS/BSS integration and a five-nines control plane.",
     kpis: [
-      { value: "99.999%", label: "Telco Edition control-plane SLA" },
+      { value: "99.999%", label: "Telco & Datacenter Edition control-plane SLA" },
       { value: "5G-aware", label: "AMF · SMF · UPF · slices" },
       { value: "MEC", label: "Edge site fleets at scale" },
-      { value: "Q4 2026", label: "Telco Edition GA" },
+      { value: "Q4 2026", label: "Telco & Datacenter Edition GA" },
     ],
     why: [
       "Run multi-tenant, white-label managed services on the platform today",
       "Provision from a governed catalog across multiple clouds",
-      "Discover and manage VNFs, CNFs and NFVI/VIM alongside cloud (Telco Edition preview)",
+      "Discover and manage VNFs, CNFs and NFVI/VIM alongside cloud (preview)",
       "Operate 5G core functions and network slices from the same plane (preview)",
       "Integrate OSS/BSS: Amdocs, Netcracker, Ericsson, Nokia, TM Forum (preview)",
       "Carrier-grade service assurance on a five-nines control plane (preview)",
     ],
     targets: ["Telecom Operators", "MVNOs", "MSPs", "CSPs", "Carrier-grade MSPs"],
-    edition: "telco",
+    edition: "telco-datacenter",
     outcome: "Carrier-grade (preview)",
     compliance: ["Tenant isolation", "Audit trail", "Carrier SLAs", "Data residency"],
     architectureId: "industry-telco",
@@ -311,7 +311,7 @@ export const industries: IndustryDef[] = [
       },
       {
         title: "Network estate in the same inventory — preview",
-        body: "The Telco Edition discovers VNFs, CNFs and NFVI/VIM alongside your cloud estate, with 5G core awareness (AMF, SMF, UPF, slices) — one inventory from RAN edge to public cloud. GA Q4 2026.",
+        body: "The Telco & Datacenter Edition discovers VNFs, CNFs and NFVI/VIM alongside your cloud estate, with 5G core awareness (AMF, SMF, UPF, slices) — one inventory from RAN edge to public cloud. GA Q4 2026.",
         modules: ["inventory", "cloud-connectors"],
       },
       {
@@ -327,12 +327,12 @@ export const industries: IndustryDef[] = [
     icon: "Server",
     title: "Racks to clouds. One plane.",
     description:
-      "BlueWhale Stack's Datacenter Edition — now in preview, GA Q4 2026 — extends the platform to the physical facility: rack, row and cage inventory at U-position level, power and cooling management, space and capacity planning, metered colo tenant billing and a white-label portal under your own brand.",
+      "BlueWhale Stack's Telco & Datacenter Edition — now in preview, GA Q4 2026 — extends the platform to the physical facility: rack, row and cage inventory at U-position level, power and cooling management, space and capacity planning, metered colo tenant billing and a white-label portal under your own brand.",
     kpis: [
       { value: "U-level", label: "Rack · row · cage inventory" },
       { value: "A/B", label: "Power feeds · PDU · kW" },
       { value: "White-label", label: "Your brand, your domain" },
-      { value: "Q4 2026", label: "Datacenter Edition GA" },
+      { value: "Q4 2026", label: "Telco & Datacenter Edition GA" },
     ],
     why: [
       "Track racks, rows and cages to the U position — next to the clouds you already govern",
@@ -342,10 +342,10 @@ export const industries: IndustryDef[] = [
       "White-label the portal with your logo, colours and domain",
     ],
     targets: ["Colocation Operators", "DC Operators", "Managed DC Providers", "Edge DC Operators", "Hosting Providers"],
-    edition: "datacenter",
+    edition: "telco-datacenter",
     outcome: "One plane, every rack (preview)",
     compliance: ["Tenant isolation", "Access control", "Audit trail", "Metered billing"],
-    architectureId: "edition-datacenter",
+    architectureId: "edition-telco-datacenter",
     useCases: [
       {
         title: "Physical + cloud inventory in one plane",

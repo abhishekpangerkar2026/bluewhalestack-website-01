@@ -12,17 +12,17 @@ import { modules } from "@/content/modules";
 export const metadata: Metadata = {
   title: "Pricing",
   description:
-    "BlueWhale Stack pricing — five editions from Standard to fully sovereign, with a feature-by-edition comparison.",
+    "BlueWhale Stack pricing — four editions from Standard to Government, with a feature-by-edition comparison.",
 };
 
 const faqs = [
   {
     q: "What's included in each edition?",
-    a: "Every edition runs the same control plane. Standard is scoped to three public clouds (AWS/Azure/GCP) and a single tenant. Enterprise unlocks all six public clouds, on-prem via Edge Agent, and multi-tenancy. Telco, Government, and Datacenter are full Enterprise plus domain-specific layers. See the comparison table below.",
+    a: "Every edition runs the same control plane. Standard is scoped to three public clouds (AWS/Azure/GCP) and a single tenant. Enterprise unlocks all six public clouds, on-prem via Edge Agent, and multi-tenancy. Telco & Datacenter and Government are full Enterprise plus domain-specific layers. See the comparison table below.",
   },
   {
     q: "Can I upgrade to a higher edition later?",
-    a: "Yes — editions are licensing configurations of one platform, not separate products. Upgrading from Standard to Enterprise (or from Enterprise to Telco/Government/Datacenter) is a licensing change, not a migration or re-deployment.",
+    a: "Yes — editions are licensing configurations of one platform, not separate products. Upgrading from Standard to Enterprise (or from Enterprise to Telco & Datacenter or Government) is a licensing change, not a migration or re-deployment.",
   },
   {
     q: "How does Managed Resource Unit (MRU) pricing work?",
@@ -38,7 +38,7 @@ const faqs = [
   },
   {
     q: "Is there a proof-of-concept option?",
-    a: "We run structured POCs (30–60 days, fixed scope, pre-agreed conversion price) for Enterprise, Telco, Government, and Datacenter evaluations. Book a demo and we'll scope one with you.",
+    a: "We run structured POCs (30–60 days, fixed scope, pre-agreed conversion price) for Enterprise, Telco & Datacenter, and Government evaluations. Book a demo and we'll scope one with you.",
   },
 ];
 
@@ -68,9 +68,9 @@ export default function PricingPage() {
             <Reveal delay={90}>
               <p className="text-lg leading-relaxed text-muted lg:pb-2">
                 Standard and Enterprise have flat, published list prices —
-                $24,000 and $120,000 a year. Telco, Government and Datacenter
-                are contact-sales — shaped around your scale, region and
-                regulatory requirements.
+                $24,000 and $120,000 a year. Telco & Datacenter and
+                Government are contact-sales — shaped around your scale,
+                region and regulatory requirements.
               </p>
             </Reveal>
           </div>
