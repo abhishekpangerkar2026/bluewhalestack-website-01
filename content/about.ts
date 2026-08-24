@@ -39,7 +39,7 @@ export const missionVision = {
 export const story = [
   {
     heading: "Where we started",
-    body: "BlueWhale Stack Consulting and Technologies was founded in 2018 with a focus on cloud consulting — helping organizations with cloud strategy, infrastructure transformation, cloud migration, and hybrid cloud operations, alongside consulting practices in Application, Data & AI, and Infrastructure Modernization.",
+    body: "BlueWhale Stack Consulting and Technologies was founded in 2018 with a focus on cloud consulting — helping organizations with cloud strategy, infrastructure transformation, cloud migration, and hybrid cloud operations, alongside consulting practices in App Modernization, Infra Modernization, Data Modernization, and AI Design & Modernization.",
   },
   {
     heading: "What we learned",
@@ -100,7 +100,7 @@ export const milestones = [
   {
     year: "2018",
     title: "BlueWhale Stack Consulting founded",
-    body: "Started as a cloud consulting firm — cloud strategy, infrastructure transformation, migration and hybrid cloud operations for enterprise and government clients, alongside Application, Data & AI, and Infrastructure Modernization practices.",
+    body: "Started as a cloud consulting firm — cloud strategy, infrastructure transformation, migration and hybrid cloud operations for enterprise and government clients, alongside App, Infra, Data and AI Design & Modernization practices.",
   },
   {
     year: "2018–2025",
@@ -129,6 +129,12 @@ export type LeadershipMember = {
 };
 
 export const leadership: LeadershipMember[] = [
+  {
+    name: "Abhishek Pangerkar",
+    role: "Founder & CEO",
+    image: "/team/abhishek-pangerkar.jpg",
+    bio: "Abhishek Pangerkar founded BlueWhale Stack in 2018 as a cloud consulting firm and leads the company today as Founder & CEO. His vision — to simplify how organizations manage the complexity of modern cloud environments — became the platform: eight years of field experience across telecom, banking, government, healthcare, manufacturing and datacenter modernization, productized in 2026 into a single unified control plane for hybrid and multi-cloud operations.",
+  },
   {
     name: "Anil Pakale",
     role: "General Manager — Middle East, US & Asia",
