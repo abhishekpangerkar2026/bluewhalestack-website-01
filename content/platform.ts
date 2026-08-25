@@ -4,7 +4,7 @@ export const platformHero = {
   eyebrow: "Unified Cloud Management Platform",
   title: "Every cloud. One control plane.",
   description:
-    "See, run, and optimize your entire cloud estate — across AWS, Azure, GCP and on-prem — from a single AI-powered platform. Replace 6–12 disconnected tools with one control plane.",
+    "See, run, and optimize your entire cloud estate — across six public clouds and on-prem — from a single AI-powered platform. Replace 6–12 disconnected tools with one control plane.",
 };
 
 /** Hero stats strip — four value propositions. */
@@ -64,17 +64,17 @@ export const capabilities = [
   {
     icon: "TrendingDown",
     title: "Optimize",
-    chips: ["Whale Nomics", "Cost intel", "Anomalies", "Budgets", "Chargeback", "Carbon"],
+    chips: ["FinOps (Whale Nomics)", "Cost intel", "Anomalies", "Budgets", "Chargeback", "Carbon"],
   },
   {
     icon: "Activity",
     title: "Operate",
-    chips: ["Whale Observe", "Whale Helm (ITSM)", "Incidents", "Changes"],
+    chips: ["Observe", "ITSM", "Incidents", "Changes"],
   },
   {
     icon: "ShieldCheck",
     title: "Secure & Govern",
-    chips: ["Whale Security", "IAM-PAM", "Compliance", "Audit"],
+    chips: ["Identity & Access", "Security scanning", "Compliance", "Audit"],
   },
 ];
 
@@ -92,30 +92,25 @@ export const deploymentModels = [
   {
     name: "Sovereign",
     badge: "Air-gapped",
-    body: "On-prem, isolated deployment with in-region AI models and no call-home.",
-  },
-  {
-    name: "On-premise",
-    badge: "Max control",
-    body: "Full installation in your data center, with dedicated support and custom SLAs.",
+    body: "Installed in your own data center, fully isolated — in-region AI models, no call-home, dedicated support and custom SLAs.",
   },
 ];
 
 /** Whale AI tiers — Spark · Tide · Abyss. */
 export const whaleTiers = [
   {
-    name: "Whale-Spark",
+    name: "Spark",
     edition: "Standard & up",
     body: "Entry, fast — summaries, inventory Q&A and sizing recommendations in natural language.",
   },
   {
-    name: "Whale-Tide",
-    edition: "Enterprise",
+    name: "Tide",
+    edition: "Enterprise & up",
     body: "Deep reasoning for migration planning, IaC drafting and multi-cloud analysis.",
   },
   {
-    name: "Whale-Abyss",
-    edition: "Enterprise",
+    name: "Abyss",
+    edition: "Enterprise · Government (in-region)",
     body: "Premium multi-step agents for the most complex, cross-module workflows — including sovereign in-region.",
   },
 ];
@@ -130,7 +125,7 @@ export const trustPillars = [
   {
     icon: "Network",
     title: "Data residency",
-    body: "Keep data in-region — India · EU · Singapore · Gulf — with enforceable residency controls.",
+    body: "Keep data in-region — Singapore, Mumbai, Frankfurt or Los Angeles — with enforceable residency controls.",
   },
   {
     icon: "Landmark",

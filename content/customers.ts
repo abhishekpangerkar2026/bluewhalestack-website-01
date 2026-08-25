@@ -19,6 +19,8 @@ export interface CustomerStory {
   image?: string;
   /** alt + AI prompt subject for the image slot */
   imageAlt: string;
+  /** small caption under the org name, e.g. confidentiality note */
+  note?: string;
   headline: string;
   challenge: string;
   solution: string;
@@ -30,9 +32,11 @@ export interface CustomerStory {
 export const customerStories: CustomerStory[] = [
   {
     slug: "bfsi-singapore-qatar",
-    org: "leading banks in Singapore and Qatar (anonymized, delivered engagements)",
+    org: "Two leading banks, Singapore & Qatar",
+    note: "Anonymized — delivered engagements",
     industry: "BFSI",
     edition: "Enterprise Edition",
+    image: "/customers/bfsi-banner.png",
     imageAlt:
       "Bank compliance and IT teams reviewing multi-jurisdiction audit dashboards",
     headline: "Audit-ready across two regulatory regimes",
@@ -51,9 +55,11 @@ export const customerStories: CustomerStory[] = [
   },
   {
     slug: "government-middle-east-defence",
-    org: "a Ministry of Defence and Ministry of Interior, Middle East (anonymized, delivered engagements)",
+    org: "Defence & Interior ministries, Middle East",
+    note: "Anonymized — delivered engagements",
     industry: "Government",
     edition: "Government Edition",
+    image: "/customers/government-banner.png",
     imageAlt:
       "Government security operations center with sovereign, air-gapped infrastructure",
     headline: "Sovereign, air-gapped — with AI that never leaves the perimeter",
@@ -72,9 +78,11 @@ export const customerStories: CustomerStory[] = [
   },
   {
     slug: "telco-datacenter-qatar-ksa-safrica",
-    org: "a Qatar telecom operator, a Saudi datacenter group, and a South African telecom (anonymized, delivered engagements)",
+    org: "Telco & DC operators — Qatar, KSA, South Africa",
+    note: "Anonymized — delivered engagements",
     industry: "Telco & Datacenter",
     edition: "Telco & Datacenter Edition",
+    image: "/customers/telco-datacenter-banner.png",
     imageAlt:
       "Telecom and datacenter operator facilities being converted into a white-label cloud platform",
     headline: "Rent per megawatt became revenue per tenant",
@@ -93,9 +101,11 @@ export const customerStories: CustomerStory[] = [
   },
   {
     slug: "media-qatar-network",
-    org: "a Doha-headquartered global media network (anonymized, delivered engagement)",
+    org: "Global media network, Doha",
+    note: "Anonymized — delivered engagement",
     industry: "Media",
     edition: "Enterprise Edition",
+    image: "/customers/media-banner.png",
     imageAlt:
       "Global newsroom and broadcast operations center governed under one security policy",
     headline: "A global newsroom governed as one estate",

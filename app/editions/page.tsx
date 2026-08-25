@@ -12,7 +12,7 @@ import { modules } from "@/content/modules";
 export const metadata: Metadata = {
   title: "Editions",
   description:
-    "Compare BlueWhale Stack editions — Standard, Enterprise, Datacenter, Government, and Telco & MSP.",
+    "Compare BlueWhale Stack editions — Standard, Enterprise, Telco & Datacenter, and Government — with a module-by-edition matrix.",
 };
 
 export default function EditionsPage() {
@@ -25,35 +25,40 @@ export default function EditionsPage() {
         <Container>
           <div className="grid gap-x-16 gap-y-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
             <Reveal>
-              <SectionHeading
-                eyebrow="Editions"
-                title={
-                  <>
-                    One platform.{" "}
-                    <span className="text-faint">Five editions.</span>
-                  </>
-                }
-                description="The same hyperscaler-neutral platform, shaped for how you operate — from a single-region SaaS team to a sovereign government cloud or a datacenter operator."
-              />
+              <div className="max-w-2xl">
+                <div className="mb-5 flex items-center gap-3">
+                  <span aria-hidden className="h-px w-8 bg-accent/50" />
+                  <span className="eyebrow text-accent">Editions</span>
+                </div>
+                <h1 className="display-1 text-ink">
+                  One platform.{" "}
+                  <span className="text-faint">Four editions.</span>
+                </h1>
+                <p className="mt-6 text-lg leading-relaxed text-muted">
+                  The same hyperscaler-neutral platform, shaped for how you
+                  operate — from a single-region SaaS team to a sovereign
+                  government cloud or a datacenter operator.
+                </p>
+              </div>
             </Reveal>
             <Reveal delay={90}>
               <div className="lg:text-right">
                 <span className="block text-6xl font-bold tracking-tight text-faint num sm:text-7xl">
                   {String(editions.length).padStart(2, "0")}
                 </span>
-                <p className="mt-1 text-sm font-semibold uppercase tracking-[0.18em] text-faint">
-                  Ways to deploy
+                <p className="eyebrow mt-1 text-faint">
+                  Editions
                 </p>
               </div>
             </Reveal>
           </div>
 
-          <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
             {editions.map((e, i) => (
-              <Reveal key={e.slug} delay={(i % 3) * 70}>
+              <Reveal key={e.slug} delay={(i % 4) * 70}>
                 <Card
-                  interactive={!e.comingSoon}
-                  className={`flex h-full flex-col ${e.featured ? "ring-1 ring-accent" : ""} ${e.comingSoon ? "opacity-75" : ""}`}
+                  interactive
+                  className={`flex h-full flex-col ${e.featured ? "ring-1 ring-accent" : ""} ${e.comingSoon ? "bg-sunken" : ""}`}
                 >
                   <div className="flex items-center justify-between">
                     {e.comingSoon ? (
@@ -76,7 +81,7 @@ export default function EditionsPage() {
                     {e.tagline}
                   </p>
                   <p className="mt-3 flex-1 text-sm leading-relaxed text-muted">
-                    {e.positioning}
+                    {e.summary}
                   </p>
                   <dl className="mt-5 space-y-1.5 border-t border-line pt-5 text-sm">
                     <div className="flex justify-between gap-3">
@@ -92,21 +97,12 @@ export default function EditionsPage() {
                       </dd>
                     </div>
                   </dl>
-                  {e.comingSoon ? (
-                    <Link
-                      href="/contact"
-                      className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-muted hover:text-accent"
-                    >
-                      Join the preview <ArrowRight className="h-3.5 w-3.5" />
-                    </Link>
-                  ) : (
-                    <Link
-                      href={`/editions/${e.slug}`}
-                      className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-accent hover:gap-2.5"
-                    >
-                      Explore {e.name} <ArrowRight className="h-3.5 w-3.5" />
-                    </Link>
-                  )}
+                  <Link
+                    href={`/editions/${e.slug}`}
+                    className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-accent hover:gap-2.5"
+                  >
+                    Explore {e.name} <ArrowRight className="h-3.5 w-3.5" />
+                  </Link>
                 </Card>
               </Reveal>
             ))}
@@ -139,7 +135,7 @@ export default function EditionsPage() {
                       >
                         <span className={e.comingSoon ? "text-faint" : ""}>{e.name}</span>
                         {e.comingSoon && (
-                          <span className="block text-[10px] font-medium text-faint mt-0.5">
+                          <span className="mt-0.5 block text-xs font-medium text-faint">
                             Preview{e.gaTarget ? ` · GA ${e.gaTarget}` : ""}
                           </span>
                         )}

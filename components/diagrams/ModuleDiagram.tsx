@@ -65,7 +65,7 @@ export function ModuleDiagram({ module }: { module: ModuleDef }) {
               <span className="block text-[9px] font-semibold uppercase tracking-wider text-primary-fg/70">
                 {moduleGroups[module.group]}
               </span>
-              <span className="block truncate font-display text-sm font-bold leading-tight text-primary-fg">
+              <span className="block truncate text-sm font-bold leading-tight text-primary-fg">
                 {module.name}
               </span>
             </span>

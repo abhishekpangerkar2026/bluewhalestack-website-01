@@ -32,7 +32,7 @@ export const industries: IndustryDef[] = [
     slug: "government",
     name: "Government",
     icon: "Landmark",
-    title: "Sovereign. Air-gapped. In-region.",
+    title: "Sovereign. Air‑gapped. In‑region.",
     description:
       "BlueWhale Stack lets national and state governments govern cloud, on-prem and hybrid estates from one control plane. The Government Edition — generally available today — deploys fully air-gapped with FIPS-validated crypto, an immutable WORM-backed audit log, in-region AI, and provable data residency for public-sector workloads.",
     kpis: [
@@ -83,10 +83,10 @@ export const industries: IndustryDef[] = [
     icon: "Banknote",
     title: "Compliant. Governed. Audited.",
     description:
-      "BlueWhale Stack lets banks, insurers and financial institutions run secure, compliant hybrid and multi-cloud operations on the Enterprise Edition — with federated identity, a full audit trail, bundled observability, FinOps chargeback and data residency across regulated workloads. For Indian banks and NBFCs, the same control plane carries RBI, CERT-In, DPDP and SEBI obligations at the platform layer: a control proven once is evidenced identically to every regulator. Available today.",
+      "BlueWhale Stack lets banks, insurers and financial institutions run secure, compliant hybrid and multi-cloud operations on the Enterprise Edition — federated identity, a full audit trail, bundled observability, FinOps chargeback and data residency across regulated workloads. For Indian banks and NBFCs, RBI, CERT-In, SEBI and DPDP obligations are carried at the platform layer. Available today.",
     kpis: [
       { value: "9+", label: "IdP adapters" },
-      { value: "6", label: "Regimes on one control plane" },
+      { value: "4", label: "Regimes: RBI · CERT-In · SEBI · DPDP" },
       { value: "Bundled", label: "Observability + FinOps" },
       { value: "In-region", label: "Data residency" },
     ],
@@ -187,10 +187,10 @@ export const industries: IndustryDef[] = [
       { value: "11", label: "Modules, one platform" },
       { value: "6", label: "Public clouds + on-prem" },
       { value: "50+", label: "Whale AI use cases" },
-      { value: "SaaS/BYOC/Sovereign", label: "Deployment models" },
+      { value: "3", label: "Deployment models: SaaS · BYOC · Sovereign" },
     ],
     why: [
-      "Manage AWS, Azure, GCP, Oracle & on-prem in one place",
+      "Manage AWS, Azure, GCP, Oracle, IBM, Alibaba & on-prem in one place",
       "Standardize provisioning with governed catalogs",
       "Run bundled observability without extra contracts",
       "Assess workloads for migration with 6R analysis",

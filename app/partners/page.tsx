@@ -30,13 +30,13 @@ export default function PartnersPage() {
           <div className="max-w-3xl py-20 sm:py-28">
             <div className="mb-5 flex items-center gap-3">
               <span aria-hidden className="h-px w-8 bg-accent/50" />
-              <span className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+              <span className="eyebrow text-accent">
                 Partner Ecosystem
               </span>
             </div>
-            <h1 className="text-[2.6rem] font-bold leading-[1.02] tracking-tight text-ink sm:text-6xl">
+            <h1 className="display-1 text-ink">
               Grow together.{" "}
-              <span className="text-accent">Win together.</span>
+              <span className="whitespace-nowrap text-accent">Win together.</span>
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
               Three ways to partner with BlueWhale Stack — resell licenses,
@@ -60,7 +60,9 @@ export default function PartnersPage() {
             </div>
             <p className="mt-5 text-sm text-faint">
               Portal:{" "}
-              <span className="text-accent">partners.bluewhalestack.com</span>
+              <a href={partnerPortal.url} className="text-accent hover:underline">
+                {partnerPortal.url.replace(/^https?:\/\//, "")}
+              </a>
             </p>
           </div>
         </Container>
@@ -135,7 +137,7 @@ export default function PartnersPage() {
               <SectionHeading
                 eyebrow="Partner Portal"
                 title="Run your reselling business in one place"
-                description="Deal registration, two-sided invoicing, margins, payments and provisioning — live at partners.bluewhalestack.com."
+                description="Deal registration, two-sided invoicing, margins, payments and provisioning — live at partner.bluewhalestack.com."
               />
             </Reveal>
             <Reveal delay={80}>
@@ -173,7 +175,7 @@ export default function PartnersPage() {
           <Reveal delay={120}>
             <div className="relative mt-12 overflow-hidden rounded-lg border border-line bg-surface p-8 shadow-sm">
               <div className="relative">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+                <p className="eyebrow text-accent">
                   LSP margin tiers
                 </p>
                 <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted">
@@ -183,7 +185,7 @@ export default function PartnersPage() {
                 </p>
                 <div className="mt-6 grid gap-px overflow-hidden rounded-lg bg-line sm:grid-cols-2 lg:grid-cols-4">
                   {tiers.map((t, i) => (
-                    <div key={t.name} className="h-full bg-surface p-5">
+                    <div key={t.name} className="flex h-full flex-col bg-surface p-5">
                       <div className="flex items-baseline gap-2">
                         <span className="num text-sm font-bold text-accent">
                           0{i + 1}
@@ -192,7 +194,7 @@ export default function PartnersPage() {
                           {t.name}
                         </div>
                       </div>
-                      <p className="mt-2 text-xs leading-relaxed text-muted">
+                      <p className="mt-2 flex-1 text-xs leading-relaxed text-muted">
                         {t.note}
                       </p>
                       <dl className="mt-4 space-y-1.5 border-t border-line pt-3 text-xs">

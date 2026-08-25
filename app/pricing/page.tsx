@@ -26,7 +26,7 @@ const faqs = [
   },
   {
     q: "How does Managed Resource Unit (MRU) pricing work?",
-    a: "Standard includes 1,000 MRU at the base price, with overage bands available. Enterprise includes 100 cloud accounts and up to 1,000,000 managed resources at $120K list. Telco and Datacenter have their own per-element and per-rack metrics respectively.",
+    a: "Standard includes 1,000 MRU at the base price, with overage bands available. Enterprise includes 100 cloud accounts and up to 1,000,000 managed resources at $120K list. The Telco & Datacenter Edition is metered per network element (telecom operators) or per rack (datacenter operators).",
   },
   {
     q: "How is Whale AI priced?",
@@ -54,11 +54,11 @@ export default function PricingPage() {
               <div>
                 <div className="mb-5 flex items-center gap-3">
                   <span aria-hidden className="h-px w-8 bg-accent/50" />
-                  <span className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+                  <span className="eyebrow text-accent">
                     Pricing
                   </span>
                 </div>
-                <h1 className="text-[2.6rem] font-bold leading-[1.02] tracking-tight text-ink sm:text-6xl">
+                <h1 className="display-1 text-ink">
                   Priced to how you{" "}
                   <span className="text-accent">operate</span>, not how
                   big you are.
@@ -87,13 +87,13 @@ export default function PricingPage() {
               description="Every edition runs the same control plane. The featured plan is where most teams begin."
             />
           </Reveal>
-          <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+          <div className="mt-14 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
             {editions.map((e, i) => (
-              <Reveal key={e.slug} delay={(i % 5) * 60}>
+              <Reveal key={e.slug} delay={(i % 4) * 60}>
                 <div
                   className={`group relative flex h-full flex-col overflow-hidden rounded-lg p-6 transition-all duration-200 ${
                     e.comingSoon
-                      ? "border border-line bg-surface opacity-70"
+                      ? "border border-line bg-sunken"
                       : e.featured
                       ? "bg-surface shadow-md ring-2 ring-primary hover:-translate-y-0.5"
                       : "border border-line bg-surface shadow-sm hover:-translate-y-0.5 hover:border-line-strong hover:shadow-md"
@@ -125,7 +125,7 @@ export default function PricingPage() {
                       {e.priceAnchor}
                     </div>
                     {e.priceSub && (
-                      <p className="mt-1 text-[11px] leading-snug text-faint">
+                      <p className="mt-1 text-xs leading-snug text-faint">
                         {e.priceSub}
                       </p>
                     )}
@@ -185,7 +185,7 @@ export default function PricingPage() {
                       >
                         <span className={e.comingSoon ? "text-faint" : "text-ink"}>{e.name}</span>
                         {e.comingSoon && (
-                          <span className="block text-[10px] font-normal text-faint">
+                          <span className="mt-0.5 block text-xs font-medium text-faint">
                             Preview{e.gaTarget ? ` · GA ${e.gaTarget}` : ""}
                           </span>
                         )}

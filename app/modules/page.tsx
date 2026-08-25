@@ -12,16 +12,13 @@ import { modules, moduleGroups, type ModuleGroup } from "@/content/modules";
 export const metadata: Metadata = {
   title: "Modules",
   description:
-    "The BlueWhale Stack module catalog — foundation, operations, builder, datacenter, and AI capabilities.",
+    "The BlueWhale Stack module catalog — 11 modules across Foundation, Operate, Build and Intelligence, gated per edition.",
 };
 
-const ORDER: ModuleGroup[] = [
-  "foundation",
-  "operations",
-  "builder",
-  "datacenter",
-  "ai",
-];
+// Only groups that actually contain modules — an empty section is worse than none.
+const ORDER: ModuleGroup[] = (
+  ["foundation", "operations", "builder", "datacenter", "ai"] as ModuleGroup[]
+).filter((g) => modules.some((m) => m.group === g));
 
 const GROUP_BLURB: Record<ModuleGroup, string> = {
   foundation: "Identity, connectors, inventory and the audit spine the whole platform stands on.",
@@ -35,29 +32,34 @@ export default function ModulesPage() {
   return (
     <>
       {/* ── Editorial intro ── */}
-      <section className="bg-canvas py-24 sm:py-32">
+      <section className="border-b border-line bg-canvas pb-16 pt-20 sm:pt-28">
         <Container>
           <div className="grid items-end gap-x-16 gap-y-10 lg:grid-cols-[1.25fr_0.75fr]">
             <Reveal>
-              <SectionHeading
-                eyebrow="Modules"
-                title={
-                  <>
-                    Every capability,{" "}
-                    <span className="text-accent">one platform.</span>
-                  </>
-                }
-                description="A shared platform gated per edition. Compose the modules you need — from cloud connectors to DCIM to Whale AI — under one governance model."
-              />
+              <div>
+                <div className="mb-5 flex items-center gap-3">
+                  <span aria-hidden className="h-px w-8 bg-accent/50" />
+                  <span className="eyebrow text-accent">Modules</span>
+                </div>
+                <h1 className="display-1 text-ink">
+                  Every capability,{" "}
+                  <span className="text-accent">one platform.</span>
+                </h1>
+                <p className="mt-7 max-w-2xl text-lg leading-relaxed text-muted sm:text-xl">
+                  A shared platform gated per edition. Compose the modules you
+                  need — from cloud connectors to migration to Whale AI — under
+                  one governance model.
+                </p>
+              </div>
             </Reveal>
             <Reveal delay={90}>
               <div className="flex items-center gap-8 lg:justify-end">
-                <div>
-                  <div className="font-display text-6xl font-bold tracking-tight text-accent num">
+                <div className="lg:text-right">
+                  <div className="text-6xl font-bold tracking-tight text-accent num sm:text-7xl">
                     {modules.length}
                   </div>
-                  <p className="mt-1 text-sm font-medium text-muted">
-                    modules across {ORDER.length} groups
+                  <p className="eyebrow mt-1 text-faint">
+                    modules · {ORDER.length} groups
                   </p>
                 </div>
               </div>
@@ -82,13 +84,13 @@ export default function ModulesPage() {
                 <Reveal>
                   <div className="lg:sticky lg:top-28 lg:self-start">
                     <div className="mb-3 flex items-center gap-3">
-                      <span className="font-display text-sm font-bold text-faint num">
+                      <span className="text-sm font-bold text-faint num">
                         {`0${gi + 1}`}
                       </span>
                       <span aria-hidden className="h-px w-8 bg-line-strong" />
                     </div>
                     <SectionHeading
-                      eyebrow={moduleGroups[group]}
+                      eyebrow={`${groupMods.length} ${groupMods.length === 1 ? "module" : "modules"}`}
                       title={moduleGroups[group]}
                       description={GROUP_BLURB[group]}
                     />
@@ -97,18 +99,22 @@ export default function ModulesPage() {
 
                 <div className="grid gap-5 sm:grid-cols-2">
                   {groupMods.map((m, i) => (
-                    <Reveal key={m.slug} delay={(i % 2) * 80}>
+                    <Reveal
+                      key={m.slug}
+                      delay={(i % 2) * 80}
+                      className={groupMods.length === 1 ? "sm:col-span-2" : undefined}
+                    >
                       <Link href={`/modules/${m.slug}`} className="group/card block h-full">
                         <Card interactive className="flex h-full flex-col">
                           <div className="flex items-center justify-between">
                             <span className="grid h-11 w-11 place-items-center rounded-lg bg-primary text-primary-fg">
                               <Icon name={m.icon} className="h-5 w-5" />
                             </span>
-                            <span className="font-display text-sm font-bold text-faint num">
+                            <span className="text-sm font-bold text-faint num">
                               {String(i + 1).padStart(2, "0")}
                             </span>
                           </div>
-                          <h3 className="mt-5 font-display text-lg font-bold text-ink">
+                          <h3 className="mt-5 text-lg font-bold text-ink">
                             {m.name}
                           </h3>
                           <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">

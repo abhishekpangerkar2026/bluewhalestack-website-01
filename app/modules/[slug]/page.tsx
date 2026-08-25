@@ -43,7 +43,7 @@ export default async function ModuleDetailPage({
       <section className="border-b border-line bg-sunken py-20 sm:py-24">
         <Container>
           <div className="flex items-center gap-3">
-            <span className="font-display text-sm font-bold text-accent num">
+            <span className="text-sm font-bold text-accent num">
               {moduleGroups[mod.group]}
             </span>
             <span aria-hidden className="h-px w-8 bg-line-strong" />
@@ -53,7 +53,7 @@ export default async function ModuleDetailPage({
               <Icon name={mod.icon} className="h-8 w-8" />
             </div>
             <div>
-              <h1 className="font-display text-4xl font-bold leading-[1.03] tracking-tight text-ink sm:text-5xl lg:text-6xl">
+              <h1 className="text-4xl font-bold leading-[1.03] tracking-tight text-ink sm:text-5xl lg:text-6xl">
                 {mod.name}
               </h1>
               <p className="mt-3 max-w-2xl text-lg leading-relaxed text-muted">
@@ -70,16 +70,16 @@ export default async function ModuleDetailPage({
           <div className="grid items-start gap-x-16 gap-y-12 lg:grid-cols-[1.05fr_0.95fr]">
             <Reveal>
               <div>
-                <p className="font-display text-xl leading-relaxed text-ink sm:text-2xl sm:leading-relaxed">
+                <p className="text-xl leading-relaxed text-ink sm:text-2xl sm:leading-relaxed">
                   {mod.description}
                 </p>
 
                 <div className="mt-12 flex items-center gap-3">
-                  <span className="font-display text-sm font-bold text-accent num">
+                  <span className="text-sm font-bold text-accent num">
                     01
                   </span>
                   <span aria-hidden className="h-px w-8 bg-line-strong" />
-                  <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+                  <h2 className="eyebrow text-accent">
                     Key features
                   </h2>
                 </div>
@@ -100,11 +100,11 @@ export default async function ModuleDetailPage({
                 </ul>
 
                 <div className="mt-12 flex items-center gap-3">
-                  <span className="font-display text-sm font-bold text-accent num">
+                  <span className="text-sm font-bold text-accent num">
                     02
                   </span>
                   <span aria-hidden className="h-px w-8 bg-line-strong" />
-                  <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+                  <h2 className="eyebrow text-accent">
                     Available in
                   </h2>
                 </div>

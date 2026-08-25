@@ -51,7 +51,7 @@ const announcements = [
     badge: "GA",
   },
   {
-    date: "December 2025",
+    date: "February 2026",
     category: "Platform",
     title: "Oracle Cloud, IBM Cloud and Alibaba Cloud connectors live",
     body: "The Cloud Connectors module now covers all six major public clouds — AWS, Azure, GCP, Oracle Cloud, IBM Cloud and Alibaba Cloud — plus on-prem via the Edge Agent.",
@@ -91,11 +91,11 @@ export default function NewsroomPage() {
               <div>
                 <div className="mb-5 flex items-center gap-3">
                   <span aria-hidden className="h-px w-8 bg-accent/50" />
-                  <span className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+                  <span className="eyebrow text-accent">
                     Newsroom
                   </span>
                 </div>
-                <h1 className="text-[2.6rem] font-bold leading-[1.02] tracking-tight text-ink sm:text-6xl">
+                <h1 className="display-1 text-ink">
                   News &amp; announcements from{" "}
                   <span className="text-accent">BlueWhale Stack</span>.
                 </h1>
@@ -177,7 +177,7 @@ export default function NewsroomPage() {
             {pressContacts.map((c, i) => (
               <Reveal key={c.type} delay={i * 70}>
                 <Card className="flex flex-col gap-3 p-6">
-                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-faint">
+                  <p className="eyebrow text-faint">
                     {c.type}
                   </p>
                   <a
@@ -201,7 +201,7 @@ export default function NewsroomPage() {
           <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
             <Reveal>
               <div className="max-w-2xl">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/80">
+                <p className="eyebrow text-white/80">
                   See it live
                 </p>
                 <h2 className="mt-5 text-3xl font-bold leading-[1.1] tracking-tight text-white sm:text-4xl">

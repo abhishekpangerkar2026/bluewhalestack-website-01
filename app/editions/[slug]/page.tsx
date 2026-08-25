@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight, Check, Clock } from "lucide-react";
 import { Container } from "@/components/ui/Container";
@@ -65,7 +66,7 @@ export default async function EditionDetailPage({
       )}
 
       {/* ── Hero: dark, oversized, asymmetric ── */}
-      <section className={`relative overflow-hidden bg-brand-900 text-white ${edition.comingSoon ? "opacity-90" : ""}`}>
+      <section className="relative overflow-hidden bg-brand-900 text-white">
         <div
           aria-hidden
           className="pointer-events-none absolute -left-20 top-0 h-80 w-80 rounded-full bg-brand-500/30 blur-[110px]"
@@ -82,7 +83,7 @@ export default async function EditionDetailPage({
                 </Badge>
               )}
             </div>
-            <h1 className="mt-6 text-[2.6rem] font-bold leading-[1.02] tracking-tight sm:text-5xl lg:text-6xl">
+            <h1 className="display-1 mt-6 text-white">
               {edition.headline}
             </h1>
             <p className="mt-4 text-lg font-semibold text-brand-100">
@@ -105,8 +106,8 @@ export default async function EditionDetailPage({
                   <Button
                     href="/editions"
                     size="lg"
-                    variant="ghost"
-                    className="text-white hover:bg-white/10"
+                    variant="outline"
+                    className="border-white/30 text-white hover:border-white hover:bg-white/10 hover:text-white"
                   >
                     See available editions
                   </Button>
@@ -120,8 +121,8 @@ export default async function EditionDetailPage({
                   <Button
                     href="/editions"
                     size="lg"
-                    variant="ghost"
-                    className="text-white hover:bg-white/10"
+                    variant="outline"
+                    className="border-white/30 text-white hover:border-white hover:bg-white/10 hover:text-white"
                   >
                     Compare editions
                   </Button>
@@ -135,11 +136,11 @@ export default async function EditionDetailPage({
       {/* ── Key specs: hairline-divided strip ── */}
       <section className="border-b border-line bg-sunken py-12">
         <Container>
-          <div className="grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-3">
+          <dl className="grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-3">
             <Spec label="Deployment" value={edition.deploy.join(" · ")} />
             <Spec label="AI tier" value={edition.aiTier} />
             <Spec label="Price" value={edition.priceAnchor} />
-          </div>
+          </dl>
         </Container>
       </section>
 
@@ -197,7 +198,7 @@ export default async function EditionDetailPage({
             <Reveal delay={120}>
               <div className="lg:sticky lg:top-28 lg:self-start">
                 <div className="rounded-lg border border-line bg-surface p-8 shadow-sm">
-                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+                  <p className="eyebrow text-accent">
                     Specs &amp; quotas
                   </p>
                   <dl className="mt-5 divide-y divide-line">
@@ -246,6 +247,21 @@ export default async function EditionDetailPage({
                 </div>
               </Reveal>
             ))}
+            {/* filler so the hairline grid never ends on a blank grey cell */}
+            {mods.length % 3 !== 0 && (
+              <Link
+                href="/modules"
+                className="group flex h-full flex-col justify-center bg-sunken p-7 transition-colors hover:bg-hover lg:col-span-1"
+              >
+                <p className="text-lg font-bold text-ink">
+                  See all {mods.length} modules
+                </p>
+                <span className="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-accent">
+                  Module catalog
+                  <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+                </span>
+              </Link>
+            )}
           </div>
         </Container>
       </section>
@@ -255,16 +271,17 @@ export default async function EditionDetailPage({
         <section className="border-t border-line bg-brand-900 py-20 text-white sm:py-28">
           <Container>
             <Reveal>
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-200">
-                For operators
-              </p>
-              <h2 className="mt-5 max-w-3xl text-3xl font-bold leading-[1.05] tracking-tight sm:text-4xl">
-                How operators build a business on {edition.name}
-              </h2>
-              <p className="mt-5 max-w-2xl text-lg leading-relaxed text-white/70">
-                One licensed edition, two operator personas — the revenue
-                model and rollout differ by the infrastructure each one runs.
-              </p>
+              <SectionHeading
+                inverse
+                eyebrow="For operators"
+                title={
+                  <>
+                    How operators build a business on{" "}
+                    <span className="whitespace-nowrap">{edition.name}</span>
+                  </>
+                }
+                description="One licensed edition, two operator personas — the revenue model and rollout differ by the infrastructure each one runs."
+              />
             </Reveal>
 
             <div className="mt-16 flex flex-col gap-16">
@@ -279,14 +296,14 @@ export default async function EditionDetailPage({
                     </p>
                   </Reveal>
 
-                  <div className="mt-8 grid gap-px overflow-hidden rounded-lg border border-white/10 bg-white/10 md:grid-cols-2 lg:grid-cols-3">
+                  <div className="mt-8 grid gap-px overflow-hidden rounded-lg border border-white/10 bg-white/10 md:grid-cols-2 lg:grid-cols-5">
                     {profile.revenueStreams.map((r, i) => (
-                      <Reveal key={r.name} delay={(i % 3) * 70}>
-                        <div className="flex h-full flex-col bg-brand-900 p-7">
-                          <span className="text-xs font-semibold uppercase tracking-wider text-brand-200">
+                      <Reveal key={r.name} delay={(i % 5) * 60}>
+                        <div className="flex h-full flex-col bg-brand-900 p-6">
+                          <span className="eyebrow text-brand-200">
                             {r.character}
                           </span>
-                          <h4 className="mt-3 text-lg font-bold text-white">
+                          <h4 className="mt-3 text-base font-bold text-white">
                             {r.name}
                           </h4>
                           <p className="mt-2 flex-1 text-sm leading-relaxed text-white/70">
@@ -298,7 +315,7 @@ export default async function EditionDetailPage({
                   </div>
 
                   <Reveal delay={100}>
-                    <p className="mt-10 text-xs font-semibold uppercase tracking-[0.18em] text-brand-200">
+                    <p className="mt-10 eyebrow text-brand-200">
                       Phased delivery
                     </p>
                   </Reveal>
@@ -400,7 +417,7 @@ export default async function EditionDetailPage({
 function Spec({ label, value }: { label: string; value: string }) {
   return (
     <div className="bg-surface p-6">
-      <dt className="text-xs font-semibold uppercase tracking-[0.18em] text-faint">
+      <dt className="eyebrow text-faint">
         {label}
       </dt>
       <dd className="mt-2 text-lg font-bold text-ink">{value}</dd>

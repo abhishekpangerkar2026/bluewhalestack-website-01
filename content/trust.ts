@@ -216,6 +216,8 @@ export const certifications: Certification[] = [
       "BlueWhale Stack is compliant with India's DPDP Act 2023, covering consent frameworks, data localisation (Mumbai region), Data Fiduciary obligations, and breach notification procedures. Built-in controls support SDF readiness requirements.",
     issuedBy: "Regulatory — Government of India",
     cycle: "Ongoing — continuous compliance programme",
+    statusLabel: "Compliant",
+    statusTone: "neutral",
   },
 ];
 
@@ -233,7 +235,7 @@ export const trustPillars = [
   {
     icon: "Lock",
     title: "Encryption at rest & in transit",
-    body: "AES-256 at rest, TLS 1.3 in transit. Customer-managed keys available on Enterprise Plus and Sovereign editions.",
+    body: "AES-256 at rest, TLS 1.3 in transit. Customer-managed keys available on Enterprise, Telco & Datacenter and Government editions.",
   },
   {
     icon: "Eye",
@@ -245,11 +247,11 @@ export const trustPillars = [
 export const trustFaq = [
   {
     q: "What's the status of your SOC 2 Type II audit?",
-    a: "We've completed a SOC 2 Type II readiness assessment against the AICPA Trust Services Criteria, confirming our control design is audit-ready. The readiness assessment report is available to Enterprise and Sovereign customers under NDA — email security@bluewhalestack.com to request it.",
+    a: "We've completed a SOC 2 Type II readiness assessment against the AICPA Trust Services Criteria, confirming our control design is audit-ready. The readiness assessment report is available to Enterprise and Government customers under NDA — email security@bluewhalestack.com to request it.",
   },
   {
-    q: "Which certifications apply to the Sovereign / air-gapped edition?",
-    a: "All certifications apply to the Sovereign edition. Air-gapped deployments additionally support in-region AI inference and can be scoped for additional local regulatory requirements.",
+    q: "Which certifications apply to the Government (sovereign / air-gapped) edition?",
+    a: "All certifications apply to the Government edition. Air-gapped deployments additionally support in-region AI inference and can be scoped for additional local regulatory requirements.",
   },
   {
     q: "Do you offer a Data Processing Agreement (DPA)?",
@@ -261,6 +263,6 @@ export const trustFaq = [
   },
   {
     q: "What sub-processors do you use?",
-    a: "Our current sub-processor list is maintained and updated on this page. We notify customers of material changes 30 days in advance (per our DPA terms).",
+    a: "Our current sub-processor list is provided with the Data Processing Agreement and on request from legal@bluewhalestack.com. We notify customers of material changes 30 days in advance (per our DPA terms).",
   },
 ];

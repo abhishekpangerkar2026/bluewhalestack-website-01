@@ -25,7 +25,7 @@
   /* Text (light) */
   --text-primary: #0a1628;
   --text-secondary: #4a5a70;
-  --text-tertiary: #7a8494;
+  --text-tertiary: #66717f; /* ≈4.6:1 on canvas — WCAG AA for small text */
   --text-inverse: #ffffff;
   --text-accent: #1e6fdb;
   --text-disabled: #a0aab8;
@@ -199,6 +199,8 @@
     Roboto, Helvetica, Arial, sans-serif;
   --font-mono: var(--font-mono-src), "SF Mono", Menlo, Monaco, Consolas,
     "Courier New", monospace;
+  /* Display face = the same Inter; keeps `font-display` a real utility rather than a no-op */
+  --font-display: var(--font-sans);
 
   /* Content width */
   --breakpoint-content: 1200px;
@@ -234,6 +236,41 @@ body {
 
 @utility num {
   font-variant-numeric: tabular-nums;
+}
+
+/* ── Type scale — one hierarchy for the whole site ─────────────
+   display-1: page hero h1   display-2: section h2   eyebrow: tracked label
+   Every page hero and section heading uses these instead of ad-hoc sizes,
+   so headings, eyebrows and weights stay identical from page to page. */
+@utility display-1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+  @media (min-width: 640px) {
+    font-size: 3.25rem;
+  }
+  @media (min-width: 1024px) {
+    font-size: 3.75rem;
+  }
+}
+@utility display-2 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  @media (min-width: 640px) {
+    font-size: 2.25rem;
+  }
+}
+@utility eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 }
 
 /* Subtle dotted grid for hero/feature backgrounds */

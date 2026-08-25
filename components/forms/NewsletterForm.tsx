@@ -32,7 +32,7 @@ export function NewsletterForm() {
 
   return (
     <form className="mt-6" onSubmit={onSubmit}>
-      <label className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+      <label className="eyebrow text-white/60">
         Cloud insights, monthly
       </label>
       <div className="mt-2 flex gap-2">
@@ -40,7 +40,7 @@ export function NewsletterForm() {
           type="email"
           name="email"
           required
-          placeholder="you@company.com"
+          placeholder="Work email"
           className="h-10 w-full rounded-lg border border-white/10 bg-white/5 px-3 text-sm text-white placeholder:text-slate-500 focus:border-brand-400 focus:outline-none"
         />
         <button

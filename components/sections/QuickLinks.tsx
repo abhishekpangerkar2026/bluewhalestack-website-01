@@ -13,7 +13,7 @@ const TILES = [
   {
     icon: "Layers",
     title: "Editions",
-    sub: "Five editions, one platform",
+    sub: "Four editions, one platform",
     href: "/editions",
   },
   {

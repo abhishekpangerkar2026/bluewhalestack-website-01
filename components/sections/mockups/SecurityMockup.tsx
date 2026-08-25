@@ -21,7 +21,7 @@ export function SecurityMockup() {
             <ShieldCheck className="h-4 w-4" />
           </span>
           <div>
-            <div className="font-display text-sm font-bold text-slate-900">
+            <div className="text-sm font-bold text-slate-900">
               0 critical
             </div>
             <div className="text-[10px] text-slate-500">open findings</div>
@@ -34,7 +34,7 @@ export function SecurityMockup() {
         <div className="flex items-center justify-between">
           <div>
             <div className="text-[11px] text-slate-400">Security &amp; Compliance</div>
-            <div className="font-display text-sm font-bold text-slate-900">
+            <div className="text-sm font-bold text-slate-900">
               Posture
             </div>
           </div>
@@ -69,7 +69,7 @@ export function SecurityMockup() {
               />
             </svg>
             <div className="absolute text-center">
-              <div className="font-display text-base font-bold leading-none text-slate-900">
+              <div className="text-base font-bold leading-none text-slate-900">
                 {SCORE}%
               </div>
               <div className="text-[8px] text-slate-400">score</div>
@@ -91,7 +91,7 @@ export function SecurityMockup() {
                   <span className={`h-2 w-2 rounded-full ${s.c}`} />
                   {s.l}
                 </span>
-                <span className="font-display text-xs font-bold tabular-nums text-slate-800">
+                <span className="text-xs font-bold tabular-nums text-slate-800">
                   {s.v}
                 </span>
               </div>

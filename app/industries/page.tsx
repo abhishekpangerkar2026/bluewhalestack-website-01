@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { ArchitectureDiagram } from "@/components/diagrams/ArchitectureDiagram";
+import { IndustryVisual } from "@/components/diagrams/IndustryVisual";
 import { getIndustries, getEdition } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -26,23 +27,30 @@ export default function IndustriesPage() {
         <Container>
           <div className="grid gap-x-16 gap-y-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
             <Reveal>
-              <SectionHeading
-                eyebrow="Industry solutions"
-                title={
-                  <>
-                    Purpose-built for{" "}
-                    <span className="text-accent">your sector.</span>
-                  </>
-                }
-                description="BlueWhale Stack adapts to the governance, regulatory, and commercial realities of every industry — the same platform, shaped to how each one runs. Standard, Enterprise and Government editions are generally available today; Telco and Datacenter editions are in preview ahead of GA in Q4 2026."
-              />
+              <div className="max-w-2xl">
+                <div className="mb-5 flex items-center gap-3">
+                  <span aria-hidden className="h-px w-8 bg-accent/50" />
+                  <span className="eyebrow text-accent">Industry solutions</span>
+                </div>
+                <h1 className="display-1 text-ink">
+                  Purpose-built for{" "}
+                  <span className="text-accent">your sector.</span>
+                </h1>
+                <p className="mt-6 text-lg leading-relaxed text-muted">
+                  BlueWhale Stack adapts to the governance, regulatory, and
+                  commercial realities of every industry — the same platform,
+                  shaped to how each one runs. Standard, Enterprise and
+                  Government editions are generally available today; the Telco
+                  &amp; Datacenter Edition is in preview ahead of GA in Q4 2026.
+                </p>
+              </div>
             </Reveal>
             <Reveal delay={90}>
               <div className="lg:text-right">
                 <span className="block text-6xl font-bold tracking-tight text-faint num sm:text-7xl">
                   {String(industries.length).padStart(2, "0")}
                 </span>
-                <p className="mt-1 text-sm font-semibold uppercase tracking-[0.18em] text-faint">
+                <p className="eyebrow mt-1 text-faint">
                   Sectors served
                 </p>
               </div>
@@ -88,7 +96,7 @@ export default function IndustriesPage() {
                       <span className="grid h-12 w-12 place-items-center rounded-lg bg-primary text-primary-fg">
                         <Icon name={featured.icon} className="h-6 w-6" />
                       </span>
-                      <span className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+                      <span className="eyebrow text-accent">
                         Featured sector
                       </span>
                     </div>
@@ -101,21 +109,22 @@ export default function IndustriesPage() {
                     <p className="mt-4 max-w-xl leading-relaxed text-muted">
                       {featured.description}
                     </p>
+                    <div className="mt-5 flex flex-wrap gap-2">
+                      {featured.compliance.map((c) => (
+                        <span
+                          key={c}
+                          className="rounded-full border border-line bg-sunken px-3 py-1 text-sm font-medium text-muted"
+                        >
+                          {c}
+                        </span>
+                      ))}
+                    </div>
                     <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-accent">
                       Explore {featured.name}
                       <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </span>
                   </div>
-                  <div className="flex flex-wrap gap-2 lg:justify-end">
-                    {featured.compliance.map((c) => (
-                      <span
-                        key={c}
-                        className="rounded-full border border-line bg-sunken px-3 py-1 text-sm font-medium text-muted"
-                      >
-                        {c}
-                      </span>
-                    ))}
-                  </div>
+                  <IndustryVisual industry={featured} />
                 </div>
               </Link>
             </Reveal>
@@ -145,7 +154,7 @@ export default function IndustriesPage() {
                     {i.title}
                   </p>
                   {edition?.comingSoon && (
-                    <span className="mt-2 inline-flex w-fit items-center rounded-full border border-amber-300 bg-amber-50 px-2.5 py-0.5 text-xs font-semibold text-amber-700">
+                    <span className="mt-2 inline-flex w-fit items-center rounded-full bg-[var(--warning-bg)] px-2.5 py-0.5 text-xs font-semibold text-[var(--warning-fg)]">
                       {edition.name} Edition preview
                       {edition.gaTarget ? ` · GA ${edition.gaTarget}` : ""}
                     </span>
@@ -171,7 +180,7 @@ export default function IndustriesPage() {
           <Reveal>
             <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
               <div className="max-w-2xl">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-200">
+                <p className="eyebrow text-brand-200">
                   Don&apos;t see your sector?
                 </p>
                 <h2 className="mt-5 text-3xl font-bold leading-[1.05] tracking-tight text-white sm:text-4xl">

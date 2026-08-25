@@ -66,7 +66,7 @@ export function PartnerTracks() {
 
                   <div className="mt-7">
                     <Button href={partnerPortal.register} external variant="secondary">
-                      Apply as a {t.shortName} partner
+                      Apply for the {t.shortName} track
                       <ArrowUpRight className="h-4 w-4" />
                     </Button>
                   </div>

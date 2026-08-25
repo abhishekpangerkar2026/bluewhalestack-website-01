@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, MapPin } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -6,6 +8,12 @@ import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { perks, jobs } from "@/content/careers";
+import { leadership } from "@/content/about";
+import { company } from "@/content/company";
+
+const team = leadership.filter((l) => l.name && l.image);
+const applyHref = (title: string) =>
+  `mailto:${company.emails.careers}?subject=${encodeURIComponent(`Application: ${title}`)}`;
 
 export const metadata: Metadata = {
   title: "Careers",
@@ -19,26 +27,23 @@ export default function CareersPage() {
       {/* ── Hero: editorial split, oversized statement left ── */}
       <section className="border-b border-line bg-surface py-20 sm:py-28">
         <Container>
-          <div className="grid gap-x-16 gap-y-10 lg:grid-cols-[1.25fr_0.75fr] lg:items-end">
+          <div className="grid gap-x-16 gap-y-10 lg:grid-cols-[1.25fr_0.75fr] lg:items-center">
             <Reveal>
               <div>
                 <div className="mb-5 flex items-center gap-3">
-                  <span className="text-sm font-bold tabular-nums text-accent">
-                    00
-                  </span>
                   <span aria-hidden className="h-px w-8 bg-accent/50" />
-                  <span className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+                  <span className="eyebrow text-accent">
                     Careers
                   </span>
                 </div>
-                <h1 className="text-[2.6rem] font-bold leading-[1.02] tracking-tight text-ink sm:text-6xl">
+                <h1 className="display-1 text-ink">
                   Build the future of{" "}
                   <span className="text-accent">cloud infrastructure</span>.
                 </h1>
               </div>
             </Reveal>
             <Reveal delay={90}>
-              <div className="lg:pb-2">
+              <div>
                 <p className="text-lg leading-relaxed text-muted">
                   We&apos;re a team of engineers, architects and product thinkers
                   solving enterprise cloud management at scale — for governments,
@@ -53,6 +58,45 @@ export default function CareersPage() {
               </div>
             </Reveal>
           </div>
+
+          {/* the people you'd work with — real headshots from the leadership roster */}
+          {team.length > 0 && (
+            <Reveal delay={140}>
+              <Link
+                href="/about/leadership"
+                className="group mt-14 flex flex-wrap items-center gap-x-8 gap-y-4 rounded-lg border border-line bg-canvas p-5 transition-colors hover:border-line-strong sm:p-6"
+              >
+                <div className="flex -space-x-3">
+                  {team.map((m) => (
+                    <span
+                      key={m.name}
+                      className="relative h-14 w-14 overflow-hidden rounded-full ring-2 ring-surface"
+                    >
+                      <Image
+                        src={m.image!}
+                        alt={m.name!}
+                        width={56}
+                        height={56}
+                        className="h-full w-full object-cover object-top"
+                      />
+                    </span>
+                  ))}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="font-semibold text-ink">
+                    Meet the people you&apos;d be building with
+                  </p>
+                  <p className="mt-0.5 text-sm text-muted">
+                    Founder, product, delivery and go-to-market leads across Mumbai, Ajman and Wilmington.
+                  </p>
+                </div>
+                <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent">
+                  Leadership &amp; team
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </span>
+              </Link>
+            </Reveal>
+          )}
         </Container>
       </section>
 
@@ -88,7 +132,7 @@ export default function CareersPage() {
       {/* ── Roles: dark statement band, split heading + role list ── */}
       <section
         id="roles"
-        className="relative scroll-mt-24 overflow-hidden bg-brand-900 py-24 text-white sm:py-32"
+        className="relative scroll-mt-24 overflow-hidden border-b border-white/10 bg-brand-900 py-24 text-white sm:py-32"
       >
         <Container className="relative">
           <div className="grid gap-x-16 gap-y-12 lg:grid-cols-[0.8fr_1.2fr]">
@@ -97,12 +141,15 @@ export default function CareersPage() {
                 <SectionHeading
                   eyebrow="Open roles"
                   title="Find your role"
-                  description="We hire across engineering, product, sales and operations — in India, the UAE, and remote."
+                  description="We hire across engineering, product, sales and operations — in India, the UAE, the United States, and remote."
                   inverse
                 />
-                <p className="mt-8 text-sm text-white/60">
+                <p className="mt-8 text-sm text-white/70">
                   Don&apos;t see your role?{" "}
-                  <a href="/contact" className="font-semibold text-white hover:text-white/80">
+                  <a
+                    href={`mailto:${company.emails.careers}?subject=${encodeURIComponent("General application")}`}
+                    className="font-semibold text-white hover:text-white/80"
+                  >
                     Send us your CV
                   </a>{" "}
                   — we&apos;re always meeting great people.
@@ -132,7 +179,7 @@ export default function CareersPage() {
                       </div>
                     </div>
                     <Button
-                      href="/contact"
+                      href={applyHref(j.title)}
                       variant="white"
                       size="sm"
                       className="shrink-0 self-start sm:self-auto"

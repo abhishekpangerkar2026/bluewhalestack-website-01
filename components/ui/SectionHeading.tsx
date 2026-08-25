@@ -1,8 +1,10 @@
 import { cn } from "@/lib/utils";
 
 /**
- * Section heading — clean, product-matched. An accent eyebrow, a tight
- * sans display title, and a muted description. Left-aligned by default.
+ * Section heading — the one h2 hierarchy used on every page.
+ * `eyebrow` / `display-2` are site-wide utilities (app/globals.css), so the
+ * tracked label and the title scale are identical from page to page.
+ * Left-aligned by default.
  */
 export function SectionHeading({
   eyebrow,
@@ -25,25 +27,20 @@ export function SectionHeading({
       {eyebrow && (
         <p
           className={cn(
-            "mb-3 text-xs font-semibold uppercase tracking-[0.14em]",
-            inverse ? "text-[var(--brand-blue)]" : "text-accent",
+            "eyebrow mb-3",
+            inverse ? "text-brand-200" : "text-accent",
           )}
         >
           {eyebrow}
         </p>
       )}
-      <h2
-        className={cn(
-          "text-3xl font-bold leading-[1.15] tracking-tight sm:text-4xl",
-          inverse ? "text-white" : "text-ink",
-        )}
-      >
+      <h2 className={cn("display-2", inverse ? "text-white" : "text-ink")}>
         {title}
       </h2>
       {description && (
         <p
           className={cn(
-            "mt-4 text-lg leading-relaxed",
+            "mt-4 text-lg leading-relaxed text-pretty",
             inverse ? "text-white/70" : "text-muted",
           )}
         >

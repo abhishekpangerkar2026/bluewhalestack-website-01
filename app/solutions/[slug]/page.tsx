@@ -53,11 +53,11 @@ export default async function SolutionDetailPage({
               <span className="grid h-12 w-12 place-items-center rounded-lg bg-primary text-primary-fg shadow-sm">
                 <Icon name={solution.icon} className="h-6 w-6" />
               </span>
-              <span className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+              <span className="eyebrow text-accent">
                 Solution
               </span>
             </div>
-            <h1 className="mt-7 font-display text-4xl font-bold leading-[1.04] tracking-tight text-ink sm:text-5xl lg:text-6xl">
+            <h1 className="display-1 mt-7 text-ink">
               {solution.name}
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted sm:text-xl">
@@ -82,17 +82,14 @@ export default async function SolutionDetailPage({
           <div className="grid gap-x-16 gap-y-8 lg:grid-cols-[0.35fr_0.65fr]">
             <Reveal>
               <div className="flex items-center gap-3">
-                <span className="font-display text-sm font-bold text-accent num">
-                  01
-                </span>
-                <span aria-hidden className="h-px w-8 bg-line-strong" />
-                <span className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+                <span aria-hidden className="h-px w-8 bg-accent/50" />
+                <span className="eyebrow text-accent">
                   The challenge
                 </span>
               </div>
             </Reveal>
             <Reveal delay={80}>
-              <p className="font-display text-2xl font-bold leading-snug tracking-tight text-ink sm:text-3xl">
+              <p className="text-2xl font-bold leading-snug tracking-tight text-ink text-balance sm:text-3xl">
                 {solution.problem}
               </p>
             </Reveal>
@@ -132,9 +129,9 @@ export default async function SolutionDetailPage({
                 {solution.flow.map((step, i) => (
                   <li
                     key={step}
-                    className="flex items-start gap-4 border-t-2 border-line-strong pt-4"
+                    className="flex items-start gap-4 border-t-2 border-line-strong pt-4 sm:[&:last-child:nth-child(odd)]:col-span-2"
                   >
-                    <span className="font-display text-2xl font-bold text-accent num">
+                    <span className="text-2xl font-bold text-accent num">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <span className="pt-1 leading-relaxed text-muted">
@@ -172,7 +169,7 @@ export default async function SolutionDetailPage({
                 </ul>
                 {relatedModules.length > 0 && (
                   <div className="mt-10">
-                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-faint">
+                    <p className="eyebrow text-faint">
                       Modules used
                     </p>
                     <div className="mt-4 flex flex-wrap gap-2">
@@ -195,7 +192,7 @@ export default async function SolutionDetailPage({
             <Reveal delay={120}>
               <div className="lg:sticky lg:top-28 lg:self-start">
                 <div className="rounded-lg border border-line bg-surface p-7 shadow-sm">
-                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+                  <p className="eyebrow text-accent">
                     Recommended editions
                   </p>
                   <div className="mt-5 space-y-3">
@@ -206,7 +203,7 @@ export default async function SolutionDetailPage({
                         className="group flex items-center justify-between rounded-md border border-line bg-canvas p-4 transition-colors hover:border-line-strong"
                       >
                         <div>
-                          <div className="font-display font-bold text-ink">
+                          <div className="font-bold text-ink">
                             {e.name}
                           </div>
                           <div className="text-xs text-muted">{e.tagline}</div>
@@ -239,11 +236,11 @@ export default async function SolutionDetailPage({
         </Container>
       </section>
 
-      {/* ── Outcomes: huge numbers on brand statement band ── */}
-      <section className="bg-primary py-20 text-primary-fg">
+      {/* ── Highlights: big stats on a dark band (same treatment as the industry KPI band) ── */}
+      <section className="bg-brand-900 py-20 text-white">
         <Container>
           <Reveal>
-            <SectionHeading eyebrow="Impact" title="Measurable outcomes" inverse />
+            <SectionHeading eyebrow="Highlights" title="At a glance" inverse />
           </Reveal>
           <div className="mt-12 grid grid-cols-2 gap-x-8 gap-y-12 lg:grid-cols-4">
             {solution.outcomes.map((o, i) => (

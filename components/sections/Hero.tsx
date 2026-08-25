@@ -31,7 +31,7 @@ export function Hero() {
               {hero.badge}
             </span>
 
-            <h1 className="mt-6 text-[2.6rem] font-extrabold leading-[1.04] tracking-tight text-ink sm:text-[3.4rem]">
+            <h1 className="display-1 mt-6 text-ink">
               {parts ? (
                 <>
                   {parts[0]}
@@ -59,7 +59,7 @@ export function Hero() {
 
             {/* trust row */}
             <div className="mt-10">
-              <p className="text-xs font-medium uppercase tracking-[0.14em] text-faint">
+              <p className="eyebrow text-faint">
                 Across every major cloud, on-prem &amp; hybrid
               </p>
               <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3 opacity-80">
@@ -70,8 +70,8 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Right: product mock */}
-          <div className="relative">
+          {/* Right: product mock — min-w-0 so the mock shrinks to the column instead of widening the page */}
+          <div className="relative min-w-0">
             <ProductMockup />
           </div>
         </div>

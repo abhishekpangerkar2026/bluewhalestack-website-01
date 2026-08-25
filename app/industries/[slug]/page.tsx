@@ -51,25 +51,19 @@ export default async function IndustryDetailPage({
                 </span>
                 <Badge tone="neutral">{industry.name}</Badge>
                 {edition?.comingSoon ? (
-                  <Badge
-                    tone="neutral"
-                    className="border-amber-300 bg-amber-50 text-amber-700"
-                  >
+                  <Badge tone="warning">
                     {edition.name} Edition in preview
                     {edition.gaTarget ? ` · GA ${edition.gaTarget}` : ""}
                   </Badge>
                 ) : (
                   edition && (
-                    <Badge
-                      tone="neutral"
-                      className="border-emerald-300 bg-emerald-50 text-emerald-700"
-                    >
+                    <Badge tone="success">
                       Available now on {edition.name} Edition
                     </Badge>
                   )
                 )}
               </div>
-              <h1 className="mt-6 text-[2.4rem] font-bold leading-[1.03] tracking-tight text-ink sm:text-5xl lg:text-6xl">
+              <h1 className="mt-6 display-1 text-ink">
                 {industry.title}
               </h1>
               <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">
@@ -136,7 +130,7 @@ export default async function IndustryDetailPage({
             <Reveal delay={120}>
               <div className="lg:sticky lg:top-28 lg:self-start">
                 <div className="rounded-lg border border-line bg-sunken p-8">
-                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+                  <p className="eyebrow text-accent">
                     Compliance &amp; controls
                   </p>
                   <div className="mt-5 flex flex-wrap gap-2">
@@ -146,9 +140,9 @@ export default async function IndustryDetailPage({
                       </Badge>
                     ))}
                   </div>
-                  <h3 className="mt-9 text-xs font-semibold uppercase tracking-[0.18em] text-faint">
+                  <p className="eyebrow mt-9 text-faint">
                     Who it&apos;s for
-                  </h3>
+                  </p>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {industry.targets.map((t) => (
                       <span
@@ -245,7 +239,7 @@ export default async function IndustryDetailPage({
           <Reveal>
             <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
               <div className="max-w-2xl">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-200">
+                <p className="eyebrow text-brand-200">
                   {edition?.comingSoon
                     ? `In preview${edition.gaTarget ? ` — GA ${edition.gaTarget}` : ""}`
                     : "Ready when you are"}

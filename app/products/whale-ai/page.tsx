@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
+import { modules } from "@/content/modules";
 
 export const metadata: Metadata = {
   title: "Whale AI — Horizontal Intelligence Layer",
@@ -137,16 +138,9 @@ const DIFFERENTIATORS = [
   },
 ];
 
-const MODULES = [
-  "Cloud Inventory",
-  "Whale Nomics (FinOps)",
-  "Whale Helm (ITSM)",
-  "WhaleForge IaC",
-  "Whale Observe",
-  "Whale Security",
-  "Migration Engine",
-  "Landing Zone",
-];
+// The modules Whale AI runs across — the real catalog minus Whale AI itself,
+// so this list can never drift from /modules.
+const MODULES = modules.filter((m) => m.slug !== "whale-ai");
 
 const GROUNDING = [
   "resource_inventory",
@@ -172,10 +166,13 @@ export default function WhaleAIPage() {
         />
         <Container className="relative py-20 sm:py-28">
           <div className="max-w-3xl">
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-widest text-white/70">
-              ✦ Whale AI · Horizontal Intelligence Layer
+            <div className="mb-5 flex items-center gap-3">
+              <span aria-hidden className="h-px w-8 bg-white/40" />
+              <span className="eyebrow text-white/80">
+                Whale AI · Horizontal intelligence layer
+              </span>
             </div>
-            <h1 className="text-[2.6rem] font-bold leading-[1.03] tracking-tight sm:text-5xl lg:text-[3.5rem]">
+            <h1 className="display-1 text-white">
               Your cloud operations{" "}
               <span className="text-[#a5b4fc]">intelligence co-pilot</span>
             </h1>
@@ -192,10 +189,11 @@ export default function WhaleAIPage() {
               <Button
                 href="/platform"
                 size="lg"
-                variant="ghost"
-                className="text-white hover:bg-white/10"
+                variant="outline"
+                className="border-white/30 text-white hover:border-white hover:bg-white/10 hover:text-white"
               >
                 See the platform
+                <ArrowRight className="h-4 w-4" />
               </Button>
             </div>
           </div>
@@ -205,7 +203,7 @@ export default function WhaleAIPage() {
             {STATS.map((s) => (
               <div key={s.label} className="px-5 py-4">
                 <p className="text-2xl font-bold text-white num">{s.value}</p>
-                <p className="mt-0.5 text-xs font-medium text-white/50">{s.label}</p>
+                <p className="mt-0.5 text-xs font-medium text-white/70">{s.label}</p>
               </div>
             ))}
           </div>
@@ -218,12 +216,10 @@ export default function WhaleAIPage() {
           <div className="grid gap-14 lg:grid-cols-2 lg:items-start">
             <Reveal>
               <div>
-                <span className="text-xs font-bold uppercase tracking-[0.18em] text-accent">
-                  What is Whale AI
-                </span>
-                <h2 className="mt-3 text-3xl font-bold tracking-tight text-ink sm:text-4xl">
-                  AI that knows your cloud — not just cloud AI
-                </h2>
+                <SectionHeading
+                  eyebrow="What is Whale AI"
+                  title="AI that knows your cloud — not just cloud AI"
+                />
                 <p className="mt-4 text-base leading-relaxed text-muted">
                   Most enterprise AI tools answer generic questions. Whale AI answers questions
                   about <em>your</em> actual resources, <em>your</em> real spend, <em>your</em>{" "}
@@ -232,7 +228,7 @@ export default function WhaleAIPage() {
                 <h3 className="mt-8 text-xl font-bold text-ink">
                   A horizontal fabric, not a feature
                 </h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted">
+                <p className="mt-3 text-base leading-relaxed text-muted">
                   Whale AI is architected as a horizontal intelligence layer that runs across every
                   vertical module. It is not another module — it is the connective tissue between
                   all of them. Every module contributes grounding data: FinOps feeds live cost
@@ -240,7 +236,7 @@ export default function WhaleAIPage() {
                   security findings.
                 </p>
                 <h3 className="mt-6 text-xl font-bold text-ink">Grounded, not hallucinating</h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted">
+                <p className="mt-3 text-base leading-relaxed text-muted">
                   Every use case declares its data dependencies. Before generating a response, the
                   grounding layer queries the live database, appends your real tenant data to the
                   context window, and only then reasons over it. There is no guessing, no
@@ -251,39 +247,46 @@ export default function WhaleAIPage() {
 
             {/* Fabric diagram */}
             <Reveal delay={100}>
-              <div className="rounded-2xl border border-line bg-sunken p-8">
-                <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-primary text-3xl shadow-lg">
-                  🐋
-                </div>
-                <p className="mt-4 text-center text-base font-bold text-ink">
-                  Whale AI Fabric
-                </p>
-                <p className="mt-1 text-center text-xs text-faint">
-                  Horizontal intelligence layer across all modules
-                </p>
-                <div className="mt-6 flex flex-wrap justify-center gap-2">
-                  {MODULES.map((m) => (
-                    <span
-                      key={m}
-                      className="rounded-lg border border-line bg-surface px-3 py-1.5 text-xs font-semibold text-muted"
-                    >
-                      {m}
-                    </span>
-                  ))}
-                </div>
-                <div className="mt-6 rounded-xl border border-line bg-surface p-4">
-                  <p className="mb-3 text-[10px] font-bold uppercase tracking-wider text-accent">
-                    Grounding Providers
+              <div className="relative overflow-hidden rounded-lg border border-line bg-sunken p-8">
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 bg-dot-grid opacity-50 [mask-image:radial-gradient(ellipse_70%_60%_at_50%_30%,black,transparent)]"
+                />
+                <div className="relative">
+                  <div className="mx-auto grid h-20 w-20 place-items-center rounded-full bg-primary text-primary-fg shadow-lg">
+                    <Icon name="Sparkles" className="h-9 w-9" />
+                  </div>
+                  <p className="mt-4 text-center text-base font-bold text-ink">
+                    Whale AI Fabric
                   </p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {GROUNDING.map((g) => (
+                  <p className="mt-1 text-center text-sm text-muted">
+                    One intelligence layer across all {MODULES.length} modules
+                  </p>
+                  <div className="mt-6 flex flex-wrap justify-center gap-2">
+                    {MODULES.map((m) => (
                       <span
-                        key={g}
-                        className="rounded-md border border-line bg-sunken px-2 py-0.5 font-mono text-[10px] text-faint"
+                        key={m.slug}
+                        className="inline-flex items-center gap-1.5 rounded-md border border-line bg-surface px-3 py-1.5 text-xs font-semibold text-ink shadow-[3px_3px_0_0_rgba(0,45,161,0.10)]"
                       >
-                        {g}
+                        <Icon name={m.icon} className="h-3.5 w-3.5 text-accent" />
+                        {m.name}
                       </span>
                     ))}
+                  </div>
+                  <div className="mt-6 rounded-lg border border-line bg-surface p-4">
+                    <p className="eyebrow mb-3 text-accent">
+                      Grounding providers
+                    </p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {GROUNDING.map((g) => (
+                        <span
+                          key={g}
+                          className="rounded-md border border-line bg-sunken px-2 py-0.5 font-mono text-xs text-muted"
+                        >
+                          {g}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -318,13 +321,13 @@ export default function WhaleAIPage() {
                     >
                       {t.name}
                       <span
-                        className="rounded-sm px-1.5 py-0.5 text-[10px]"
+                        className="rounded-sm px-1.5 py-0.5 text-xs"
                         style={{ background: `${t.accentColor}25` }}
                       >
                         {t.badge}
                       </span>
                     </div>
-                    <p className="mb-1 text-[11px] text-faint">{t.tagline}</p>
+                    <p className="mb-1 text-sm text-muted">{t.tagline}</p>
                     <ul className="mt-4 flex-1 space-y-0">
                       {t.features.map((f) => (
                         <li
@@ -343,7 +346,7 @@ export default function WhaleAIPage() {
                       {t.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="rounded-md border border-line bg-sunken px-2 py-0.5 font-mono text-[10px] text-faint"
+                          className="rounded-md border border-line bg-sunken px-2 py-0.5 font-mono text-xs text-muted"
                         >
                           {tag}
                         </span>
@@ -374,8 +377,8 @@ export default function WhaleAIPage() {
                   <div className="grid h-10 w-10 place-items-center rounded-lg bg-[var(--bg-active)] text-accent">
                     <Icon name={c.icon} className="h-5 w-5" />
                   </div>
-                  <p className="mt-3 text-xs font-bold text-ink">{c.name}</p>
-                  <p className="mt-1 text-[11px] text-faint">{c.count} use cases</p>
+                  <p className="mt-3 text-sm font-bold text-ink">{c.name}</p>
+                  <p className="mt-1 text-xs text-muted">{c.count} use cases</p>
                 </div>
               </Reveal>
             ))}
@@ -417,7 +420,7 @@ export default function WhaleAIPage() {
                 },
               ].map((col) => (
                 <div key={col.heading}>
-                  <p className="mb-3 text-[11px] font-bold uppercase tracking-wider text-accent">
+                  <p className="eyebrow mb-3 text-accent">
                     {col.heading}
                   </p>
                   <ul className="space-y-0">
@@ -458,11 +461,11 @@ export default function WhaleAIPage() {
                   <div className="grid h-[72px] w-[72px] place-items-center rounded-full bg-primary text-white shadow-md">
                     <Icon name={s.icon} className="h-6 w-6" />
                   </div>
-                  <p className="mt-1 text-[10px] font-bold uppercase tracking-wider text-accent">
+                  <p className="eyebrow mt-2 text-accent">
                     {s.step}
                   </p>
-                  <h3 className="mt-3 text-sm font-bold text-ink">{s.title}</h3>
-                  <p className="mt-2 text-xs leading-relaxed text-muted">{s.body}</p>
+                  <h3 className="mt-3 text-base font-bold text-ink">{s.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted">{s.body}</p>
                 </div>
               </Reveal>
             ))}
@@ -566,7 +569,9 @@ export default function WhaleAIPage() {
         <Container>
           <Reveal>
             <div className="overflow-hidden rounded-2xl bg-primary px-8 py-14 text-center text-primary-fg sm:px-14">
-              <p className="mb-2 text-3xl">🐋</p>
+              <span className="mx-auto mb-4 grid h-12 w-12 place-items-center rounded-full bg-white/15 text-white">
+                <Icon name="Sparkles" className="h-6 w-6" />
+              </span>
               <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
                 Ready to explore Whale AI?
               </h2>

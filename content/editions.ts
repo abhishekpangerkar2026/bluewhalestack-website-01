@@ -17,6 +17,8 @@ export interface EditionDef {
   tagline: string;
   headline: string;
   positioning: string;
+  /** ≤45-word version of `positioning` for cards and grids */
+  summary: string;
   audience: string;
   deploy: string[];
   priceAnchor: string;
@@ -52,6 +54,8 @@ export const editions: EditionDef[] = [
     headline: "Govern your AWS, Azure & GCP estate with Whale AI Spark.",
     positioning:
       "Entry-level single-tenant CMP for organisations running AWS, Azure and GCP. Includes cloud inventory, governed provisioning, security scanning, audit, basic ITSM, business connectors and Whale AI Spark — delivered as SaaS or BYOC.",
+    summary:
+      "Single-tenant control plane for AWS, Azure and GCP — inventory, governed provisioning, security scanning, audit, basic ITSM and Whale AI Spark. SaaS or BYOC.",
     audience: "SMB · Single-region teams · Departmental IT",
     deploy: ["SaaS", "BYOC"],
     priceAnchor: "$24,000 / year",
@@ -83,6 +87,8 @@ export const editions: EditionDef[] = [
     headline: "The complete platform — hybrid, multi-tenant, with the full Whale AI stack.",
     positioning:
       "Everything in Standard plus Migration Engine, WhaleForge IaC, Landing Zone Builder, Whale Observe, Whale Nomics (FinOps), Whale IAM-PAM, all six public clouds, on-prem connectors via Edge Agent, and the full Whale AI stack (Spark · Tide · Abyss). Available as SaaS, BYOC or Sovereign across four deployment regions.",
+    summary:
+      "The complete platform — all six public clouds plus on-prem, Migration Engine, Observe, FinOps, IaC and landing zones, and the full Whale AI stack. SaaS, BYOC or Sovereign across four regions.",
     audience: "Large enterprise · BFSI · Regulated industries · Multi-cloud operators",
     deploy: ["SaaS", "BYOC", "Sovereign"],
     priceAnchor: "$120,000 / year",
@@ -120,6 +126,8 @@ export const editions: EditionDef[] = [
     headline: "Enterprise platform extended for infrastructure operators.",
     positioning:
       "Full Enterprise platform extended for two operator personas on one licensed edition. For telecom operators: a network fabric — VNF/CNF discovery, 5G core awareness (AMF/SMF/UPF/slices), NFVI/VIM, MEC site management, OSS/BSS connectors (Amdocs, Netcracker, Ericsson, Nokia, TM Forum), carrier-grade SLA management. For datacenter and colocation operators: physical datacenter management (DCIM) — rack/row/cage inventory at U-position level, power (PDU, kW, A/B feeds), cooling & environmental (CRAC/CRAH), space & capacity, cross-connect, access control. Both get native multi-tenancy and white-label branding.",
+    summary:
+      "The Enterprise platform extended for telecom and datacenter operators — NFV/5G network fabric, DCIM at U-position level, native multi-tenancy and white-label branding, with per-tenant metering into your BSS.",
     audience: "Tier-1/2/3 telecom operators · MVNOs · Colocation & datacenter operators · Carrier-grade MSPs",
     deploy: ["SaaS", "BYOC", "Telco Edge", "Datacenter Edge"],
     priceAnchor: "Contact sales",
@@ -199,10 +207,12 @@ export const editions: EditionDef[] = [
     headline: "Sovereign / air-gapped Enterprise platform hardened for public sector.",
     positioning:
       "Full Enterprise platform with a mandatory sovereignty layer: air-gapped install, offline update channel, FIPS-validated crypto, PAM always-on with session recording, MFA mandatory on every role, immutable WORM-backed audit log, data residency enforcement, compliance pack export for FedRAMP/IRAP/StateRAMP-style accreditation. Connects to sovereign cloud environments (AWS GovCloud, Azure Government, Google Distributed Cloud, national sovereign clouds).",
+    summary:
+      "The Enterprise platform with a mandatory sovereignty layer — air-gapped install, FIPS crypto, always-on PAM, WORM audit log, residency enforcement and accreditation-ready compliance packs.",
     audience: "National & state government · Defense · Central banks · Regulated public sector",
-    deploy: ["Sovereign (on-prem)", "Private Gov Cloud", "Government Edge", "Government Hub (coming soon)"],
-    priceAnchor: "$280,000 – $600,000 / year",
-    priceSub: "Enterprise base +40% sovereignty premium; 3–5 yr fixed-bid; contact sales",
+    deploy: ["Sovereign (on-prem)", "Private Gov Cloud", "Government Edge"],
+    priceAnchor: "Contact sales",
+    priceSub: "Enterprise base plus sovereignty layer · 3–5 yr fixed-bid terms · tender & empanelment-ready",
     aiTier: "Whale AI — in-region Abyss (air-gapped, no call-home)",
     highlights: [
       "Full Enterprise platform, sovereign/air-gapped deployment",
@@ -263,7 +273,7 @@ export const editionSpecs: EditionSpecRow[] = [
       standard: "1,000 MRU",
       enterprise: "1,000,000 resources",
       "telco-datacenter": "Network elements · per-rack metered",
-      government: "250 MRU included",
+      government: "Per-contract",
     },
   },
   {

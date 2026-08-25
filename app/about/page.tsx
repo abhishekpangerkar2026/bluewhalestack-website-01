@@ -9,8 +9,8 @@ import { Button } from "@/components/ui/Button";
 import { Stat } from "@/components/ui/Stat";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
-import { LeadershipSpotlight, LeadershipTile } from "@/components/sections/LeadershipCard";
-import { clouds, regions, compliance, offices } from "@/content/company";
+import { LeadershipMini } from "@/components/sections/LeadershipCard";
+import { regions, compliance, offices, headlineStats } from "@/content/company";
 import {
   aboutHero,
   companyFacts,
@@ -29,14 +29,13 @@ export const metadata: Metadata = {
 };
 
 const numbers = [
-  { value: `${clouds.length}+`, label: "Clouds & hypervisors" },
+  { value: headlineStats[0].value, label: headlineStats[0].label },
   { value: `${regions.length}`, label: "Global regions" },
   { value: "4", label: "Platform editions" },
   { value: `${compliance.length}`, label: "Compliance frameworks" },
 ];
 
 const announcedLeaders = leadership.filter((l) => l.name);
-const unannouncedRoles = leadership.filter((l) => !l.name);
 
 export default function AboutPage() {
   return (
@@ -44,16 +43,16 @@ export default function AboutPage() {
       {/* ── Hero: editorial split, oversized statement left ── */}
       <section className="border-b border-line bg-surface py-20 sm:py-28">
         <Container>
-          <div className="grid gap-x-16 gap-y-10 lg:grid-cols-[1.25fr_0.75fr] lg:items-end">
+          <div className="grid gap-x-16 gap-y-10 lg:grid-cols-[1.25fr_0.75fr] lg:items-center">
             <Reveal>
               <div>
                 <div className="mb-5 flex items-center gap-3">
                   <span aria-hidden className="h-px w-8 bg-accent/50" />
-                  <span className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+                  <span className="eyebrow text-accent">
                     {aboutHero.eyebrow}
                   </span>
                 </div>
-                <h1 className="text-[2.6rem] font-bold leading-[1.02] tracking-tight text-ink sm:text-6xl">
+                <h1 className="display-1 text-ink">
                   The command center for{" "}
                   <span className="text-accent">every cloud</span> you run.
                 </h1>
@@ -149,7 +148,7 @@ export default function AboutPage() {
           <div className="grid gap-x-16 gap-y-12 lg:grid-cols-2">
             <Reveal>
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+                <p className="eyebrow text-accent">
                   Our mission
                 </p>
                 <p className="mt-6 text-2xl font-bold leading-[1.25] tracking-tight text-ink sm:text-3xl">
@@ -159,7 +158,7 @@ export default function AboutPage() {
             </Reveal>
             <Reveal delay={120}>
               <div className="lg:border-l lg:border-line-strong lg:pl-16">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+                <p className="eyebrow text-accent">
                   Our vision
                 </p>
                 <p className="mt-6 text-2xl font-bold leading-[1.25] tracking-tight text-muted sm:text-3xl">
@@ -219,7 +218,7 @@ export default function AboutPage() {
             {milestones.map((m, i) => (
               <Reveal key={`${m.year}-${m.title}`} delay={(i % 2) * 90}>
                 <div className="flex gap-6 border-t-2 border-ink pt-5">
-                  <span className="num shrink-0 text-4xl font-bold leading-none text-accent/20">
+                  <span className="num shrink-0 text-4xl font-bold leading-none text-accent/50">
                     0{i + 1}
                   </span>
                   <div>
@@ -299,17 +298,17 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* ── Global presence: split heading + office cards ── */}
+      {/* ── Global presence: heading, then a full-width 3-up office grid ── */}
       <section className="bg-canvas py-24 sm:py-32">
         <Container>
-          <div className="grid gap-x-16 gap-y-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
-            <Reveal>
-              <SectionHeading
-                eyebrow="Global presence"
-                title="Where we are"
-                description="Headquartered in India, with offices in the UAE and the United States — serving customers across the globe."
-              />
-            </Reveal>
+          <Reveal>
+            <SectionHeading
+              eyebrow="Global presence"
+              title="Where we are"
+              description="Headquartered in India, with offices in the UAE and the United States — serving customers across the globe."
+            />
+          </Reveal>
+          <div className="mt-14">
             <div className="grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {offices.map((o, i) => (
                 <Reveal key={o.city} delay={i * 90} className="h-full">
@@ -337,45 +336,31 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* ── Leadership: quiet surface band, heading + portrait grid ── */}
+      {/* ── Leadership: compact roster; full bios live on /about/leadership ── */}
       <section className="border-y border-line bg-sunken py-24 sm:py-32">
         <Container>
-          <Reveal>
-            <SectionHeading
-              eyebrow="Leadership"
-              title="The team behind the platform"
-            />
-          </Reveal>
-          <div className="mt-14">
-            {announcedLeaders.length > 0 && (
-              <div className="grid gap-5 sm:grid-cols-2">
-                {announcedLeaders.map((l, i) => (
-                  <Reveal key={l.name} delay={(i % 2) * 80}>
-                    <LeadershipSpotlight member={l} />
-                  </Reveal>
-                ))}
-              </div>
-            )}
-            {unannouncedRoles.length > 0 && (
-              <div
-                className={`grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4 ${
-                  announcedLeaders.length > 0 ? "mt-6" : ""
-                }`}
-              >
-                {unannouncedRoles.map((l, i) => (
-                  <Reveal key={l.role} delay={(i % 4) * 70}>
-                    <LeadershipTile member={l} />
-                  </Reveal>
-                ))}
-              </div>
-            )}
+          <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+            <Reveal>
+              <SectionHeading
+                eyebrow="Leadership"
+                title="The team behind the platform"
+                description="Founder-led, with product, delivery and go-to-market leadership across Mumbai, Ajman and Wilmington."
+              />
+            </Reveal>
+            <Reveal delay={80}>
+              <Button href="/about/leadership" variant="secondary" className="shrink-0">
+                Meet the full team
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+            </Reveal>
           </div>
-          {unannouncedRoles.length > 0 && (
-            <p className="mt-6 text-sm text-faint">
-              More leadership bios &amp; photos to be added — share them and
-              we&apos;ll drop them in.
-            </p>
-          )}
+          <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+            {announcedLeaders.map((l, i) => (
+              <Reveal key={l.name} delay={(i % 5) * 60} className="h-full">
+                <LeadershipMini member={l} />
+              </Reveal>
+            ))}
+          </div>
         </Container>
       </section>
 
@@ -403,7 +388,7 @@ export default function AboutPage() {
             </Reveal>
             <Reveal delay={120}>
               <div className="rounded-lg border border-line bg-surface p-7 shadow-sm">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+                <p className="eyebrow text-accent">
                   Compliance frameworks
                 </p>
                 <div className="mt-5 flex flex-wrap gap-2">

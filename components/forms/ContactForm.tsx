@@ -2,32 +2,29 @@
 
 import { useState } from "react";
 import { CheckCircle2, Loader2 } from "lucide-react";
+import { editions } from "@/content/editions";
+import { industries } from "@/content/industries";
 
-const INDUSTRIES = [
-  "Government",
-  "Telco & MSP",
-  "BFSI",
-  "Healthcare",
-  "Manufacturing",
-  "Energy & Utilities",
-  "Media",
-  "Enterprise SaaS",
-  "Other",
-];
-const EDITIONS = [
-  "Standard",
-  "Enterprise",
-  "Datacenter",
-  "Government",
-  "Telco & MSP",
-  "Not sure yet",
-];
+// Option lists come straight from the canonical content so the form can never
+// drift from the editions/industries the site actually sells.
+const INDUSTRIES = [...industries.map((i) => i.name), "Other"];
+const EDITIONS = [...editions.map((e) => e.name), "Not sure yet"];
 
 const inputCls =
-  "h-11 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-100";
-const labelCls = "mb-1.5 block text-sm font-medium text-slate-700";
+  "h-11 w-full rounded-md border border-line bg-surface px-3 text-sm text-ink placeholder:text-faint focus:border-[var(--border-accent)] focus:outline-none focus:ring-2 focus:ring-[var(--bg-active)]";
+const labelCls = "mb-1.5 block text-sm font-medium text-ink";
 
-export function ContactForm({ submitLabel = "Book a demo" }: { submitLabel?: string }) {
+export function ContactForm({
+  submitLabel = "Book a demo",
+  intent = "demo",
+  resource,
+}: {
+  submitLabel?: string;
+  /** Which CTA sent the visitor here — forwarded to the sales inbox. */
+  intent?: string;
+  /** Resource slug when the visitor asked for a gated document. */
+  resource?: string;
+}) {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [reference, setReference] = useState("");
   const [error, setError] = useState("");
@@ -61,25 +58,22 @@ export function ContactForm({ submitLabel = "Book a demo" }: { submitLabel?: str
 
   if (status === "success") {
     return (
-      <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-8 text-center">
-        <CheckCircle2 className="mx-auto h-10 w-10 text-emerald-500" />
-        <h3 className="mt-4 font-display text-xl font-bold text-slate-900">
+      <div className="rounded-lg border border-[var(--success-border)] bg-[var(--success-bg)] p-8 text-center">
+        <CheckCircle2 className="mx-auto h-10 w-10 text-[var(--success-fg)]" />
+        <h3 className="mt-4 text-xl font-bold text-ink">
           Thanks — we&apos;ve got your request
         </h3>
-        <p className="mt-2 text-sm text-slate-600">
+        <p className="mt-2 text-sm text-muted">
           A solutions architect will reach out within one business day. Your
           reference is{" "}
-          <span className="font-semibold text-slate-900">{reference}</span>.
+          <span className="font-semibold text-ink">{reference}</span>.
         </p>
       </div>
     );
   }
 
   return (
-    <form
-      onSubmit={onSubmit}
-      className="rounded-2xl border border-slate-200 bg-white p-6 shadow-soft sm:p-8"
-    >
+    <form onSubmit={onSubmit}>
       {/* honeypot */}
       <input
         type="text"
@@ -89,6 +83,9 @@ export function ContactForm({ submitLabel = "Book a demo" }: { submitLabel?: str
         className="hidden"
         aria-hidden
       />
+      {/* routing context — tells the sales inbox which CTA this came from */}
+      <input type="hidden" name="intent" value={intent} />
+      {resource && <input type="hidden" name="resource" value={resource} />}
 
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
@@ -137,17 +134,22 @@ export function ContactForm({ submitLabel = "Book a demo" }: { submitLabel?: str
           id="message"
           name="message"
           rows={4}
-          className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-100"
+          className="w-full rounded-md border border-line bg-surface px-3 py-2 text-sm text-ink placeholder:text-faint focus:border-[var(--border-accent)] focus:outline-none focus:ring-2 focus:ring-[var(--bg-active)]"
         />
       </div>
 
-      <label className="mt-4 flex items-start gap-2.5 text-sm text-slate-600">
-        <input type="checkbox" name="consent" required className="mt-0.5 h-4 w-4 rounded border-slate-300 text-brand-600 focus:ring-brand-500" />
+      <label className="mt-4 flex items-start gap-2.5 text-sm text-muted">
+        <input
+          type="checkbox"
+          name="consent"
+          required
+          className="mt-0.5 h-4 w-4 rounded border-line-strong accent-[var(--primary-bg)]"
+        />
         <span>I agree to be contacted about BlueWhale Stack and accept the privacy policy. *</span>
       </label>
 
       {status === "error" && (
-        <p className="mt-4 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600">
+        <p className="mt-4 rounded-md bg-[var(--danger-bg)] px-3 py-2 text-sm text-[var(--danger-fg)]">
           {error}
         </p>
       )}
@@ -155,7 +157,7 @@ export function ContactForm({ submitLabel = "Book a demo" }: { submitLabel?: str
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="mt-6 inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-brand-600 px-6 font-medium text-white shadow-brand transition-colors hover:bg-brand-700 disabled:opacity-60 sm:w-auto"
+        className="mt-6 inline-flex h-12 w-full items-center justify-center gap-2 rounded-md bg-primary px-6 font-medium text-primary-fg transition-colors hover:bg-[var(--primary-hover)] disabled:opacity-60 sm:w-auto"
       >
         {status === "submitting" && <Loader2 className="h-4 w-4 animate-spin" />}
         {status === "submitting" ? "Sending…" : submitLabel}

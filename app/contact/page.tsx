@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { ContactForm } from "@/components/forms/ContactForm";
-import { CTASection } from "@/components/sections/CTASection";
 import { company, offices } from "@/content/company";
+import { resources } from "@/content/resources";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -14,28 +14,44 @@ export const metadata: Metadata = {
 export default async function ContactPage({
   searchParams,
 }: {
-  searchParams: Promise<{ intent?: string }>;
+  searchParams: Promise<{ intent?: string; resource?: string }>;
 }) {
-  const { intent } = await searchParams;
-  const isSales = intent === "sales";
+  const { intent = "demo", resource } = await searchParams;
+  const requestedResource = resource
+    ? resources.find((r) => r.slug === resource)
+    : undefined;
 
-  const hero = isSales
-    ? {
-        eyebrow: "Contact Sales",
-        title: "Let's talk about your cloud strategy",
-        body: "Reach our sales team for pricing, editions, and a tailored evaluation for your environment. We reply within one business day.",
-        formTitle: "Talk to sales",
-        formBody: "Tell us about your organisation and what you're looking to solve.",
-        submitLabel: "Contact sales",
-      }
-    : {
-        eyebrow: "Contact Us",
-        title: "Let's talk cloud transformation",
-        body: "Book a guided demo, discuss your cloud strategy, or get a tailored evaluation. Our solutions team replies within one business day.",
-        formTitle: "Book a demo",
-        formBody: "Tell us a little about your environment and goals.",
-        submitLabel: "Book a demo",
-      };
+  const hero =
+    intent === "sales"
+      ? {
+          eyebrow: "Contact Sales",
+          title: "Let's talk about your cloud strategy",
+          body: "Reach our sales team for pricing, editions, and a tailored evaluation for your environment. We reply within one business day.",
+          formTitle: "Talk to sales",
+          formBody: "Tell us about your organisation and what you're looking to solve.",
+          submitLabel: "Contact sales",
+        }
+      : intent === "resource"
+        ? {
+            eyebrow: "Resource access",
+            title: requestedResource
+              ? `Request “${requestedResource.title}”`
+              : "Request a resource",
+            body: "Tell us who you are and we'll send the document straight to your inbox — usually within one business day.",
+            formTitle: "Request access",
+            formBody: requestedResource
+              ? `You're requesting: ${requestedResource.title} (${requestedResource.type}).`
+              : "Tell us which resource you're after.",
+            submitLabel: "Request access",
+          }
+        : {
+            eyebrow: "Contact Us",
+            title: "Let's talk about your cloud",
+            body: "Book a guided demo, discuss your cloud strategy, or get a tailored evaluation. Our solutions team replies within one business day.",
+            formTitle: "Book a demo",
+            formBody: "Tell us a little about your environment and goals.",
+            submitLabel: "Book a demo",
+          };
 
   return (
     <>
@@ -47,11 +63,11 @@ export default async function ContactPage({
             <div className="lg:py-4">
               <div className="mb-5 flex items-center gap-3">
                 <span aria-hidden className="h-px w-8 bg-white/40" />
-                <span className="text-xs font-semibold uppercase tracking-[0.18em] text-white/80">
+                <span className="eyebrow text-white/80">
                   {hero.eyebrow}
                 </span>
               </div>
-              <h1 className="text-[2.4rem] font-bold leading-[1.03] tracking-tight text-white sm:text-5xl">
+              <h1 className="display-1 text-white">
                 {hero.title}
               </h1>
               <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/70">
@@ -60,7 +76,7 @@ export default async function ContactPage({
 
               <div className="mt-10 grid gap-8 sm:grid-cols-2">
                 <div>
-                  <h3 className="text-xs font-semibold uppercase tracking-[0.18em] text-white/80">
+                  <h3 className="eyebrow text-white/80">
                     Reach us directly
                   </h3>
                   <ul className="mt-4 space-y-4">
@@ -104,7 +120,7 @@ export default async function ContactPage({
                 </div>
 
                 <div>
-                  <h3 className="text-xs font-semibold uppercase tracking-[0.18em] text-white/80">
+                  <h3 className="eyebrow text-white/80">
                     Offices
                   </h3>
                   <ul className="mt-4 space-y-4">
@@ -116,7 +132,7 @@ export default async function ContactPage({
                             {o.city} · {o.label}
                           </div>
                           <div className="text-sm text-white/70">{o.address}</div>
-                          <div className="mt-0.5 text-xs text-white/40">{o.entity}</div>
+                          <div className="mt-0.5 text-xs text-white/60">{o.entity}</div>
                         </div>
                       </li>
                     ))}
@@ -125,26 +141,25 @@ export default async function ContactPage({
               </div>
             </div>
 
-            {/* Form (light card, lifted onto the dark band) */}
-            <div className="lg:-mb-20 lg:translate-y-4">
+            {/* Form (light card on the dark band) */}
+            <div>
               <div className="rounded-xl border border-line bg-surface p-7 shadow-lg sm:p-9">
                 <h2 className="text-2xl font-bold text-ink">
                   {hero.formTitle}
                 </h2>
                 <p className="mt-2 text-muted">{hero.formBody}</p>
                 <div className="mt-6">
-                  <ContactForm submitLabel={hero.submitLabel} />
+                  <ContactForm
+                    submitLabel={hero.submitLabel}
+                    intent={intent}
+                    resource={requestedResource?.slug}
+                  />
                 </div>
               </div>
             </div>
           </div>
         </Container>
       </section>
-
-      {/* spacer to clear the lifted form card */}
-      <div className="h-12 sm:h-20" aria-hidden />
-
-      <CTASection />
     </>
   );
 }

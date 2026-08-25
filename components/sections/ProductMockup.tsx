@@ -445,7 +445,7 @@ export function ProductMockup() {
 
       {/* floating card — bottom right */}
       <div
-        className="absolute -right-4 bottom-16 z-10 hidden sm:block"
+        className="absolute -bottom-5 -right-4 z-10 hidden sm:block"
         style={{
           background: "#fff",
           border: "1px solid #E3E8EF",
@@ -516,18 +516,16 @@ export function ProductMockup() {
         </div>
 
         {/* layout */}
-        <div style={{ display: "grid", gridTemplateColumns: "120px 1fr" }}>
-          {/* sidebar */}
+        <div className="grid grid-cols-1 sm:grid-cols-[120px_1fr]">
+          {/* sidebar — layout lives in classes so `hidden` actually hides it on phones */}
           <aside
             style={{
               borderRight: "1px solid #E3E8EF",
               background: "#F8F9FB",
               padding: 10,
-              display: "flex",
-              flexDirection: "column",
               gap: 2,
             }}
-            className="hidden sm:flex"
+            className="hidden sm:flex sm:flex-col"
           >
             <div
               style={{
@@ -587,7 +585,7 @@ export function ProductMockup() {
           </aside>
 
           {/* main content */}
-          <div style={{ padding: 12, minHeight: 340 }}>
+          <div className="min-w-0" style={{ padding: 12, minHeight: 340 }}>
             {/* tab strip (mobile + context) */}
             <div
               style={{

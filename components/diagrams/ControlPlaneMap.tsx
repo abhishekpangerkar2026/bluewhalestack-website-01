@@ -12,12 +12,10 @@ import { modules, moduleGroups, type ModuleGroup } from "@/content/modules";
  */
 
 // Operational groups shown as rows; the AI group renders as the cross-cutting rail.
-const ROW_GROUPS: ModuleGroup[] = [
-  "foundation",
-  "operations",
-  "builder",
-  "datacenter",
-];
+// Only groups that actually contain modules are rendered — no empty rows.
+const ROW_GROUPS: ModuleGroup[] = (
+  ["foundation", "operations", "builder", "datacenter"] as ModuleGroup[]
+).filter((g) => modules.some((m) => m.group === g));
 
 const DEFAULT_OUTCOMES = [
   "−28% cloud spend",
@@ -34,11 +32,11 @@ export function ControlPlaneMap({
   return (
     <div
       role="img"
-      aria-label="The BlueWhale Stack control plane sitting over nine clouds and hypervisors, with Whale AI across every layer, delivering cost, compliance and recovery outcomes."
+      aria-label={`The BlueWhale Stack control plane sitting over ${cloudLogoNames.length} clouds and hypervisors, with Whale AI across every layer, delivering cost, compliance and recovery outcomes.`}
       className="mx-auto max-w-5xl"
     >
       {/* sources */}
-      <p className="text-center text-xs font-semibold uppercase tracking-wider text-slate-400">
+      <p className="eyebrow text-center text-white/60">
         Your clouds, hypervisors &amp; data centers
       </p>
       <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
@@ -57,7 +55,7 @@ export function ControlPlaneMap({
       {/* control plane + AI rail */}
       <div className="grid gap-3 lg:grid-cols-[1fr_auto]">
         <div className="rounded-2xl border border-brand-400/30 bg-gradient-to-br from-brand-600/25 to-brand-900/20 p-5">
-          <p className="text-center text-sm font-semibold text-accent-400">
+          <p className="text-center text-sm font-semibold text-brand-100">
             BlueWhale Stack control plane
           </p>
           <div className="mt-4 space-y-2.5">
@@ -76,7 +74,7 @@ export function ControlPlaneMap({
                       <Link
                         key={m.slug}
                         href={`/modules/${m.slug}`}
-                        className="rounded-md bg-white/[0.06] px-2 py-1 text-[11px] font-medium text-slate-200 transition hover:bg-white/[0.14] hover:text-white"
+                        className="rounded-md bg-white/[0.08] px-2.5 py-1 text-xs font-medium text-white/85 transition hover:bg-white/[0.16] hover:text-white"
                       >
                         {m.name}
                       </Link>
@@ -90,10 +88,10 @@ export function ControlPlaneMap({
         {/* Whale AI rail — spans the full height of the control plane */}
         <Link
           href="/modules/whale-ai"
-          className="group flex items-center justify-center rounded-2xl border border-accent-400/40 bg-gradient-to-b from-accent-500/15 to-brand-600/10 px-3 py-4 text-center transition hover:border-accent-400/70 lg:w-16 lg:flex-col"
+          className="group flex items-center justify-center rounded-2xl border border-brand-200/40 bg-gradient-to-b from-brand-300/20 to-brand-600/10 px-3 py-4 text-center transition hover:border-brand-200/80 lg:w-16 lg:flex-col"
         >
-          <Sparkles className="h-4 w-4 text-accent-300" />
-          <span className="ml-2 text-xs font-semibold uppercase tracking-wider text-accent-200 lg:ml-0 lg:mt-2 lg:[writing-mode:vertical-rl] lg:rotate-180">
+          <Sparkles className="h-4 w-4 text-brand-100" />
+          <span className="ml-2 text-xs font-semibold uppercase tracking-wider text-brand-100 lg:ml-0 lg:mt-2 lg:[writing-mode:vertical-rl] lg:rotate-180">
             Whale AI · every layer
           </span>
         </Link>
@@ -121,8 +119,8 @@ function Connector({ flip = false }: { flip?: boolean }) {
     <div
       className={`mx-auto my-5 h-6 w-px bg-gradient-to-b ${
         flip
-          ? "from-accent-400/60 to-white/30"
-          : "from-white/30 to-accent-400/60"
+          ? "from-brand-200/70 to-white/30"
+          : "from-white/30 to-brand-200/70"
       }`}
     />
   );

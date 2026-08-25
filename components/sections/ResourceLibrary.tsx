@@ -2,10 +2,29 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import { resources, resourceTypes, type ResourceType } from "@/content/resources";
+import { ArrowRight, FileText, PlayCircle, Presentation, Newspaper, BookOpen } from "lucide-react";
+import { resources, type ResourceType } from "@/content/resources";
 import { Badge } from "@/components/ui/Badge";
 import { cn } from "@/lib/utils";
+
+/** Only offer filters for types that actually have resources — no empty tabs. */
+const presentTypes = Array.from(new Set(resources.map((r) => r.type))) as ResourceType[];
+
+const COVER_ICON: Record<string, React.ComponentType<{ className?: string }>> = {
+  Video: PlayCircle,
+  Webinar: Presentation,
+  Blog: Newspaper,
+  Whitepaper: FileText,
+  Guide: BookOpen,
+};
+
+const COVER_TONE: Record<string, string> = {
+  Video: "from-brand-700 to-brand-900",
+  Webinar: "from-brand-600 to-brand-800",
+  Blog: "from-brand-500 to-brand-700",
+  Whitepaper: "from-brand-800 to-brand-900",
+  Guide: "from-brand-600 to-brand-900",
+};
 
 export function ResourceLibrary() {
   const [filter, setFilter] = useState<ResourceType | "All">("All");
@@ -17,7 +36,7 @@ export function ResourceLibrary() {
       {/* filters — left-aligned, with a live count */}
       <div className="flex flex-col gap-5 border-b border-line pb-6 sm:flex-row sm:items-end sm:justify-between">
         <div className="flex flex-wrap gap-2">
-          {(["All", ...resourceTypes] as const).map((t) => (
+          {(["All", ...presentTypes] as const).map((t) => (
             <button
               key={t}
               onClick={() => setFilter(t)}
@@ -38,48 +57,69 @@ export function ResourceLibrary() {
         </span>
       </div>
 
-      {/* grid — first item runs full-width as a feature */}
+      {/* grid — uniform cards, each with a typed cover so the library reads as a library */}
       <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {list.map((r, i) => (
-          <Link
-            key={r.slug}
-            href={`/contact?intent=resource&resource=${r.slug}`}
-            className={cn(
-              "group relative flex h-full flex-col overflow-hidden rounded-lg border border-line bg-surface p-6 shadow-sm transition-all hover:-translate-y-1 hover:border-line-strong hover:shadow-md",
-              i === 0 && "sm:col-span-2 lg:col-span-2",
-            )}
-          >
-            <span
-              aria-hidden
-              className="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-primary transition-transform duration-300 group-hover:scale-x-100"
-            />
-            <div className="flex items-center justify-between">
-              <Badge tone="accent">{r.type}</Badge>
-              <span className="text-xs text-faint">{r.meta}</span>
-            </div>
-            <h3
-              className={cn(
-                "mt-4 font-bold leading-snug text-ink group-hover:text-accent",
-                i === 0 ? "text-2xl" : "text-lg",
-              )}
+        {list.map((r) => {
+          const CoverIcon = COVER_ICON[r.type] ?? FileText;
+          const tone = COVER_TONE[r.type] ?? "from-brand-600 to-brand-900";
+          return (
+            <Link
+              key={r.slug}
+              href={`/contact?intent=resource&resource=${r.slug}`}
+              className="group relative flex h-full flex-col overflow-hidden rounded-lg border border-line bg-surface shadow-sm transition-all hover:-translate-y-1 hover:border-line-strong hover:shadow-md"
             >
-              {r.title}
-            </h3>
-            <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">
-              {r.summary}
-            </p>
-            <div className="mt-5 flex items-center justify-between border-t border-line pt-4">
-              <span className="text-xs font-semibold uppercase tracking-wide text-faint">
-                {r.topic}
-              </span>
-              <span className="inline-flex items-center gap-1 text-xs font-semibold text-accent">
-                Request access
-                <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
-              </span>
-            </div>
-          </Link>
-        ))}
+              {/* cover */}
+              <div
+                className={cn(
+                  "relative flex aspect-[16/7] items-center justify-between bg-gradient-to-br px-5 text-white",
+                  tone,
+                )}
+              >
+                <div
+                  aria-hidden
+                  className="absolute inset-0 opacity-[0.14]"
+                  style={{
+                    backgroundImage:
+                      "linear-gradient(to right, rgba(255,255,255,.5) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,.5) 1px, transparent 1px)",
+                    backgroundSize: "28px 28px",
+                  }}
+                />
+                <span className="relative eyebrow text-white/80">{r.type}</span>
+                <CoverIcon className="relative h-9 w-9 text-white/80" />
+              </div>
+
+              <div className="flex flex-1 flex-col p-6">
+                <div className="flex items-center justify-between">
+                  <Badge tone="accent">{r.topic}</Badge>
+                  <span className="text-xs text-faint">{r.meta}</span>
+                </div>
+                <h3 className="mt-4 text-lg font-bold leading-snug text-ink group-hover:text-accent">
+                  {r.title}
+                </h3>
+                <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">
+                  {r.summary}
+                </p>
+                <div className="mt-5 flex items-center justify-end border-t border-line pt-4">
+                  <span className="inline-flex items-center gap-1 text-xs font-semibold text-accent">
+                    Request access
+                    <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
+                  </span>
+                </div>
+              </div>
+            </Link>
+          );
+        })}
       </div>
+
+      {list.length === 0 && (
+        <div className="mt-8 rounded-lg border border-dashed border-line bg-sunken p-10 text-center">
+          <p className="font-semibold text-ink">Nothing here yet</p>
+          <p className="mt-1 text-sm text-muted">
+            We&apos;re adding {filter.toLowerCase()} resources — ask us and we&apos;ll send
+            what&apos;s in the pipeline.
+          </p>
+        </div>
+      )}
     </div>
   );
 }

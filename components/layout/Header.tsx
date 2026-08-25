@@ -19,11 +19,10 @@ import { solutionsBySlug } from "@/content/solutions";
 import { cn } from "@/lib/utils";
 
 const EDITION_ICONS: Record<string, string> = {
-  community: "Cloud",
   standard: "Cloud",
   enterprise: "Layers",
-  "enterprise-plus": "Building2",
-  sovereign: "Landmark",
+  "telco-datacenter": "Server",
+  government: "Landmark",
 };
 const STATIC_ICONS: Record<string, string> = {
   "/platform": "Cloud",

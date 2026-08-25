@@ -115,7 +115,7 @@ export const milestones = [
   {
     year: "2026 · Q4",
     title: "Extending the platform",
-    body: "Telco and Datacenter editions move from preview to general availability, and BlueWhale Stack Fabric — unifying India's datacenter capacity into one sovereign cloud — launches.",
+    body: "The Telco & Datacenter Edition moves from preview to general availability, and BlueWhale Stack Fabric — unifying India's datacenter capacity into one sovereign cloud — launches.",
   },
 ];
 

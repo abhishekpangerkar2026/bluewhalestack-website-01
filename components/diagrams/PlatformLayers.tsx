@@ -28,8 +28,8 @@ const LAYERS: LayerDef[] = [
     color: "#6366f1",
     bg: "#eef2ff",
     description:
-      "Packaged for your world — Enterprise, Telco, Government, Datacenter, or as an MSP/partner offering.",
-    items: ["Enterprise", "Telco", "Government", "Datacenter", "MSP / Partner"],
+      "Packaged for your world — Standard, Enterprise, Telco & Datacenter, Government, or as an MSP/partner offering.",
+    items: ["Standard", "Enterprise", "Telco & Datacenter", "Government", "MSP / Partner"],
   },
   {
     id: "experience",
@@ -52,9 +52,9 @@ const LAYERS: LayerDef[] = [
     groups: [
       { name: "Discover & Manage", chips: ["Inventory", "Discovery", "Assessment", "Service Catalog"] },
       { name: "Build & Migrate", chips: ["Migration Engine", "WhaleForge IaC", "Landing Zone"] },
-      { name: "Optimize", chips: ["Whale Nomics", "FinOps", "cost · carbon"] },
-      { name: "Operate", chips: ["Whale Observe", "Whale Helm (ITSM)"] },
-      { name: "Secure & Govern", chips: ["Whale Security", "IAM-PAM", "Compliance · Audit"] },
+      { name: "Optimize", chips: ["FinOps (Whale Nomics)", "cost · carbon"] },
+      { name: "Operate", chips: ["Observe", "ITSM"] },
+      { name: "Secure & Govern", chips: ["Identity & Access", "Security scanning", "Compliance · Audit"] },
     ],
   },
   {
@@ -111,7 +111,9 @@ export function PlatformLayers() {
         <div
           key={layer.id}
           className="flex border-b border-line last:border-b-0"
-          style={{ background: layer.bg }}
+          // Tint the row from the layer colour over the theme surface so it
+          // stays legible in dark mode instead of a hardcoded pastel.
+          style={{ background: `color-mix(in srgb, ${layer.color} 9%, var(--bg-surface))` }}
         >
           {/* Colored left accent */}
           <div className="w-[5px] shrink-0" style={{ background: layer.color }} />
@@ -120,32 +122,32 @@ export function PlatformLayers() {
           <div className="flex flex-1 flex-col gap-3 px-5 py-4 sm:flex-row sm:items-start">
             {/* Layer name */}
             <div className="w-full shrink-0 sm:w-44">
-              <p className="text-[13px] font-bold" style={{ color: layer.color }}>
+              <p className="text-sm font-bold" style={{ color: layer.color }}>
                 {layer.name}
               </p>
-              <p className="mt-0.5 text-[11px] text-muted">{layer.subtitle}</p>
+              <p className="mt-0.5 text-xs text-muted">{layer.subtitle}</p>
             </div>
 
             {/* Layer content */}
-            <div className="flex-1">
+            <div className="min-w-0 flex-1">
               {/* Standard items */}
               {layer.items && (
-                <div className="flex flex-wrap gap-1.5">
+                <div className="flex flex-wrap gap-2">
                   {layer.items.map((item) => (
                     <span
                       key={item}
-                      className="rounded-md px-2.5 py-0.5 text-[11.5px] font-semibold"
+                      className="rounded-md px-2.5 py-1 text-xs font-semibold"
                       style={{
-                        background: `${layer.color}18`,
+                        background: `color-mix(in srgb, ${layer.color} 12%, var(--bg-surface))`,
                         color: layer.color,
-                        border: `1px solid ${layer.color}30`,
+                        border: `1px solid color-mix(in srgb, ${layer.color} 30%, transparent)`,
                       }}
                     >
                       {item}
                     </span>
                   ))}
                   {layer.subtext && (
-                    <p className="mt-1.5 w-full text-[11px] leading-relaxed text-muted">
+                    <p className="mt-1.5 w-full text-xs leading-relaxed text-muted">
                       {layer.subtext}
                     </p>
                   )}
@@ -154,24 +156,23 @@ export function PlatformLayers() {
 
               {/* Capability sub-groups */}
               {layer.groups && (
-                <div className="flex flex-wrap gap-2">
+                <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-5">
                   {layer.groups.map((group) => (
                     <div
                       key={group.name}
-                      className="min-w-[140px] rounded-lg px-3 py-2"
+                      className="min-w-0 rounded-lg bg-surface px-3.5 py-2.5"
                       style={{
-                        background: "rgba(255,255,255,0.9)",
-                        border: `1px solid ${layer.color}40`,
+                        border: `1px solid color-mix(in srgb, ${layer.color} 40%, transparent)`,
                       }}
                     >
-                      <p className="text-[11.5px] font-bold" style={{ color: layer.color }}>
+                      <p className="text-xs font-bold" style={{ color: layer.color }}>
                         {group.name}
                       </p>
-                      <div className="mt-1 space-y-0.5">
+                      <div className="mt-1.5 space-y-0.5">
                         {group.chips.map((chip) => (
                           <span
                             key={chip}
-                            className="block text-[10.5px] text-muted"
+                            className="block text-xs text-muted"
                           >
                             {chip}
                           </span>
@@ -188,7 +189,7 @@ export function PlatformLayers() {
                   {layer.highlight.map((line, i) => (
                     <p
                       key={i}
-                      className={i === 0 ? "text-sm font-bold" : "mt-0.5 text-[11px]"}
+                      className={i === 0 ? "text-sm font-bold" : "mt-0.5 text-xs"}
                       style={{ color: layer.color }}
                     >
                       {line}
@@ -199,7 +200,7 @@ export function PlatformLayers() {
             </div>
 
             {/* Description (hidden on small screens) */}
-            <p className="hidden w-64 shrink-0 text-[12px] leading-relaxed text-muted xl:block">
+            <p className="hidden w-64 shrink-0 text-sm leading-relaxed text-muted xl:block">
               {layer.description}
             </p>
           </div>
@@ -210,7 +211,7 @@ export function PlatformLayers() {
       <div className="border-t border-line bg-surface px-5 py-3">
         <div className="flex flex-wrap gap-4">
           {LAYERS.map((l) => (
-            <span key={l.id} className="flex items-center gap-1.5 text-[11.5px] text-muted">
+            <span key={l.id} className="flex items-center gap-1.5 text-xs text-muted">
               <span
                 className="inline-block h-2 w-2 rounded-full"
                 style={{ background: l.color }}

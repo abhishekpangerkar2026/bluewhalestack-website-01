@@ -10,50 +10,6 @@ export const hero = {
   secondaryCta: { label: "Explore the Platform", href: "/platform" },
 };
 
-/**
- * Hero carousel slides — the headline highlight, blurb, and right-side visual
- * rotate together (auto-advancing, with a clickable slide bar). Each `visual`
- * key maps to a panel in components/sections/Hero.tsx.
- */
-export const heroSlides = [
-  {
-    key: "console",
-    tab: "Unified console",
-    headlinePre: "Every cloud. ",
-    highlight: "One control plane.",
-    blurb:
-      "Unified inventory, AI-native provisioning, bundled observability, migration and governance across public cloud, on-prem and hybrid — in one place.",
-    visual: "console",
-  },
-  {
-    key: "editions",
-    tab: "Editions",
-    headlinePre: "One platform, ",
-    highlight: "four editions",
-    blurb:
-      "Standard, Enterprise, Telco & Datacenter and Government — the same platform, shaped to exactly how you operate.",
-    visual: "editions",
-  },
-  {
-    key: "industries",
-    tab: "Industries",
-    headlinePre: "Built for ",
-    highlight: "regulated estates",
-    blurb:
-      "Government, Telco & MSP, BFSI, Healthcare and regulated enterprise — with the governance, residency and audit each sector demands.",
-    visual: "industries",
-  },
-  {
-    key: "approach",
-    tab: "Approach",
-    headlinePre: "Public, on-prem, hybrid — or ",
-    highlight: "fully sovereign",
-    blurb:
-      "Deploy as multi-tenant SaaS, in your own cloud with BYOC, or fully air-gapped in-country with in-region AI. No lock-in.",
-    visual: "approach",
-  },
-];
-
 export const problems = [
   {
     icon: "Network",
@@ -77,46 +33,6 @@ export const promise = {
   body: "BlueWhale Stack unifies inventory, provisioning, ITSM, observability, migration and governance into one hyperscaler-neutral platform — so you can see everything, govern centrally, and run it as SaaS, BYOC or fully sovereign.",
 };
 
-/** Capability tiles shown on Home — map to module slugs. */
-export const capabilities = [
-  {
-    moduleSlug: "cloud-connectors",
-    badge: "6 public clouds + on-prem",
-    title: "Unified Multi-Cloud Control",
-    body: "One control plane over AWS, Azure, GCP, Oracle, IBM and Alibaba — plus on-prem via the Edge Agent.",
-  },
-  {
-    moduleSlug: "inventory",
-    badge: "GA",
-    title: "Inventory & Discovery",
-    body: "Every asset across cloud, on-prem and hybrid, grouped by workload, with PDF / Excel / CSV reports.",
-  },
-  {
-    moduleSlug: "provisioning",
-    badge: "AWS live",
-    title: "AI-Native Provisioning",
-    body: "Provision approved resources without consoles — AWS live (EC2/S3/RDS/VPC/EFS), with Whale AI sizing.",
-  },
-  {
-    moduleSlug: "observe",
-    badge: "Bundled",
-    title: "Observability, Bundled",
-    body: "Logs, metrics, traces and SLOs with burn-rate alerts — no separate Datadog contract.",
-  },
-  {
-    moduleSlug: "migration",
-    badge: "6R assessment",
-    title: "Cloud Migration",
-    body: "Auto-classify on-prem workloads and run a 6R assessment with cost, effort and blocker analysis.",
-  },
-  {
-    moduleSlug: "whale-ai",
-    badge: "40+ use cases",
-    title: "Whale AI",
-    body: "A horizontal AI layer powered by Anthropic Claude across every module — Spark, Tide and Abyss tiers.",
-  },
-];
-
 /** Why-BlueWhale differentiators — the four reasons teams choose the platform. */
 export const whyBluewhale = {
   eyebrow: "Why BlueWhale Stack",
@@ -132,7 +48,7 @@ export const whyBluewhale = {
     {
       icon: "Sparkles",
       title: "AI-native, not bolted on",
-      body: "Whale AI runs across every module in tiers — Spark, Tide, Abyss — with 40+ use cases, answering questions and drafting work where it already happens. Powered by Anthropic Claude.",
+      body: "Whale AI runs across every module in tiers — Spark, Tide, Abyss — with 50+ use cases, answering questions and drafting work where it already happens. Powered by Anthropic Claude.",
     },
     {
       icon: "Cloud",
@@ -167,33 +83,6 @@ export const howItWorks = [
     step: "04",
     title: "Observe & Scale",
     body: "Bundled observability gives you logs, metrics, traces and SLOs — run it as SaaS, BYOC or fully sovereign as you scale.",
-  },
-];
-
-export const testimonials = [
-  {
-    quote:
-      "One control plane across our cloud and on-prem estate finally gave us a single map — and the air-gapped option meant our regulator was satisfied from day one.",
-    name: "Representative",
-    role: "Director of IT, public-sector agency",
-    edition: "Sovereign Edition",
-    initials: "RA",
-  },
-  {
-    quote:
-      "Bundled observability and ITSM in the same platform as our inventory removed two separate contracts and a stack of integrations we used to maintain.",
-    name: "Representative",
-    role: "Head of Cloud Operations, regulated enterprise",
-    edition: "Enterprise Edition",
-    initials: "RB",
-  },
-  {
-    quote:
-      "Whale AI sits inside every module, so sizing a resource or assessing a migration happens right where we work — not in a separate tool.",
-    name: "Representative",
-    role: "Platform Engineering Lead, telco",
-    edition: "Enterprise Edition",
-    initials: "RC",
   },
 ];
 

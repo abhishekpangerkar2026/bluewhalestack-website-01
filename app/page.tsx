@@ -31,7 +31,7 @@ export default function HomePage() {
       {/* Cloud marquee */}
       <section className="border-b border-line bg-surface py-10">
         <Container>
-          <p className="text-center text-xs font-semibold uppercase tracking-[0.14em] text-faint">
+          <p className="text-center eyebrow text-faint">
             One control plane for every major cloud, hypervisor &amp; private platform
           </p>
         </Container>
@@ -153,8 +153,8 @@ export default function HomePage() {
             <Reveal>
               <SectionHeading
                 eyebrow="Editions"
-                title="One platform. Five editions."
-                description="From a free Community tier to a fully sovereign, air-gapped deployment — an edition shaped to how you operate."
+                title="One platform. Four editions."
+                description="From Standard SaaS to a fully sovereign, air-gapped Government deployment — an edition shaped to how you operate."
               />
             </Reveal>
             <Reveal delay={80}>
@@ -164,20 +164,20 @@ export default function HomePage() {
               </Button>
             </Reveal>
           </div>
-          <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-5">
+          <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
             {editions.map((e, i) => (
-              <Reveal key={e.slug} delay={(i % 5) * 60}>
+              <Reveal key={e.slug} delay={(i % 4) * 60}>
                 <Link href={`/editions/${e.slug}`} className="block h-full">
                   <Card
                     interactive
-                    className={`flex h-full flex-col ${e.featured ? "ring-1 ring-[var(--border-accent)]" : ""}`}
+                    className={`relative flex h-full flex-col ${e.featured ? "ring-1 ring-[var(--border-accent)]" : ""}`}
                   >
                     {e.featured && (
-                      <span className="mb-3 inline-flex w-fit rounded-full bg-primary px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-primary-fg">
-                        Most popular
+                      <span className="absolute right-4 top-4 inline-flex rounded-full bg-primary px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide text-primary-fg">
+                        Popular
                       </span>
                     )}
-                    <h3 className="text-lg font-bold text-ink">{e.name}</h3>
+                    <h3 className="min-h-[3.5rem] pr-16 text-lg font-bold leading-tight text-ink">{e.name}</h3>
                     <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-accent">
                       {e.tagline}
                     </p>
@@ -209,7 +209,7 @@ export default function HomePage() {
             />
           </Reveal>
           <Reveal delay={80}>
-            <div className="mt-10 flex flex-wrap gap-3">
+            <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
               {industries.map((i) => (
                 <Link
                   key={i.slug}
@@ -235,7 +235,7 @@ export default function HomePage() {
         <Container className="relative">
           <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-2xl">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-200">
+              <p className="eyebrow text-brand-200">
                 BlueWhale Stack Fabric
               </p>
               <h2 className="mt-5 text-3xl font-bold leading-[1.05] tracking-tight sm:text-4xl">

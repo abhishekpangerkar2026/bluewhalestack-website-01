@@ -7,13 +7,10 @@ import { Icon } from "@/components/ui/Icon";
 import { modules, moduleGroups, type ModuleGroup } from "@/content/modules";
 import { cn } from "@/lib/utils";
 
-const ORDER: ModuleGroup[] = [
-  "foundation",
-  "operations",
-  "builder",
-  "datacenter",
-  "ai",
-];
+// Only groups that actually contain modules — an empty tab is a dead end.
+const ORDER: ModuleGroup[] = (
+  ["foundation", "operations", "builder", "datacenter", "ai"] as ModuleGroup[]
+).filter((g) => modules.some((m) => m.group === g));
 
 /** Interactive module map — switch groups to explore the 11 modules. */
 export function ModuleExplorer() {
@@ -47,7 +44,7 @@ export function ModuleExplorer() {
       </div>
 
       {/* module grid — staggered numbering for an intentional rhythm */}
-      <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {list.map((m, i) => (
           <Link
             key={m.slug}

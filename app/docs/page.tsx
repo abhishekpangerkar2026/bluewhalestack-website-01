@@ -7,7 +7,7 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
-import { docCards, docQuickLinks } from "@/content/docs";
+import { docCards } from "@/content/docs";
 
 export const metadata: Metadata = {
   title: "Docs",
@@ -15,47 +15,54 @@ export const metadata: Metadata = {
     "Technical documentation, API reference, quick-start guides and integration tutorials for BlueWhale Stack.",
 };
 
+/** Hero "Jump to" chips — only destinations that actually exist as routes. */
+const quickLinks: { label: string; href: string }[] = [
+  { label: "Quick start", href: "/docs/quick-start" },
+  { label: "API reference", href: "/docs/api-reference" },
+  { label: "Cloud integration", href: "/docs/cloud-integration" },
+  { label: "Security & compliance", href: "/trust" },
+  { label: "Support", href: "/contact" },
+];
+
 export default function DocsPage() {
   return (
     <>
       {/* ── Hero: editorial split, oversized statement left ── */}
       <section className="border-b border-line bg-surface py-20 sm:py-28">
         <Container>
-          <div className="grid gap-x-16 gap-y-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
+          <div className="grid gap-x-16 gap-y-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
             <Reveal>
               <div>
                 <div className="mb-5 flex items-center gap-3">
-                  <span className="text-sm font-bold tabular-nums text-accent">
-                    00
-                  </span>
                   <span aria-hidden className="h-px w-8 bg-accent/50" />
-                  <span className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+                  <span className="eyebrow text-accent">
                     Documentation
                   </span>
                 </div>
-                <h1 className="text-[2.6rem] font-bold leading-[1.02] tracking-tight text-ink sm:text-6xl">
+                <h1 className="display-1 text-ink">
                   Everything you need to{" "}
                   <span className="text-accent">build &amp; deploy</span>.
                 </h1>
-                <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">
-                  Full technical reference, API docs, quick-start guides and
-                  integration tutorials for every edition.
-                </p>
               </div>
             </Reveal>
             <Reveal delay={90}>
-              <div className="lg:pb-2">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-faint">
+              <div>
+                <p className="text-lg leading-relaxed text-muted">
+                  Full technical reference, API docs, quick-start guides and
+                  integration tutorials for every edition.
+                </p>
+                <p className="eyebrow mt-8 text-faint">
                   Jump to
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">
-                  {docQuickLinks.map((q) => (
-                    <span
-                      key={q}
-                      className="rounded-full border border-line bg-sunken px-3 py-1.5 text-xs font-semibold text-muted"
+                  {quickLinks.map((q) => (
+                    <Link
+                      key={q.href}
+                      href={q.href}
+                      className="rounded-full border border-line bg-sunken px-3 py-1.5 text-xs font-semibold text-muted transition-colors hover:border-line-strong hover:text-accent"
                     >
-                      {q}
-                    </span>
+                      {q.label}
+                    </Link>
                   ))}
                 </div>
               </div>
@@ -118,29 +125,33 @@ export default function DocsPage() {
         </Container>
       </section>
 
-      {/* ── API CTA: full-bleed dark statement band ── */}
-      <section className="relative overflow-hidden bg-brand-900 py-20 text-white sm:py-24">
+      {/* ── API CTA: full-bleed dark statement band (hairline keeps it off the footer) ── */}
+      <section className="relative overflow-hidden border-b border-white/10 bg-brand-900 py-20 text-white sm:py-24">
         <Container className="relative">
           <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
             <Reveal>
-              <div className="max-w-2xl">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/80">
-                  Developer reference
-                </p>
-                <h2 className="mt-5 text-3xl font-bold leading-[1.1] tracking-tight text-white sm:text-4xl">
-                  Looking for the <span className="text-white/70">API?</span>
-                </h2>
-                <p className="mt-5 text-lg leading-relaxed text-white/70">
-                  Full REST reference with OAuth2, webhooks, and Python &amp; Go
-                  SDKs.
-                </p>
-              </div>
+              <SectionHeading
+                inverse
+                eyebrow="Developer reference"
+                title="Looking for the API?"
+                description="Full REST reference with OAuth2, webhooks, and Python & Go SDKs."
+              />
             </Reveal>
             <Reveal delay={90}>
-              <Button href="/contact" size="lg" variant="white" className="shrink-0">
-                Request docs access
-                <ArrowRight className="h-4 w-4" />
-              </Button>
+              <div className="flex shrink-0 flex-wrap gap-3">
+                <Button href="/docs/api-reference" size="lg" variant="white">
+                  Open the API reference
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+                <Button
+                  href="/contact"
+                  size="lg"
+                  variant="outline"
+                  className="border-white/30 text-white hover:border-white hover:bg-white/10 hover:text-white"
+                >
+                  Request SDK access
+                </Button>
+              </div>
             </Reveal>
           </div>
         </Container>

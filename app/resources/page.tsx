@@ -24,11 +24,11 @@ export default function ResourcesPage() {
                     00
                   </span>
                   <span aria-hidden className="h-px w-8 bg-accent/50" />
-                  <span className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+                  <span className="eyebrow text-accent">
                     Resources
                   </span>
                 </div>
-                <h1 className="text-[2.6rem] font-bold leading-[1.02] tracking-tight text-ink sm:text-6xl">
+                <h1 className="display-1 text-ink">
                   Cloud intelligence at your{" "}
                   <span className="text-accent">fingertips</span>.
                 </h1>

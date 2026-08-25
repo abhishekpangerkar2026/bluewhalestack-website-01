@@ -7,8 +7,9 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
-import { LeadershipSpotlight, LeadershipTile } from "@/components/sections/LeadershipCard";
+import { LeadershipFeature, LeadershipSpotlight, LeadershipTile } from "@/components/sections/LeadershipCard";
 import { leadership } from "@/content/about";
+import { offices } from "@/content/company";
 
 export const metadata: Metadata = {
   title: "Leadership & Team",
@@ -28,7 +29,7 @@ const departments = [
     name: "Product",
     icon: "Layers",
     description:
-      "Module strategy, UX design, and the roadmap that keeps every edition growing from Standard to Sovereign.",
+      "Module strategy, UX design, and the roadmap that keeps every edition growing from Standard to Government.",
     focus: ["Platform Strategy", "UX & Design", "Editions Roadmap", "Partner Integrations"],
   },
   {
@@ -72,6 +73,8 @@ const values = [
 
 const announcedLeaders = leadership.filter((l) => l.name);
 const unannouncedRoles = leadership.filter((l) => !l.name);
+// The founder gets the full-width feature; everyone else fills a balanced grid.
+const [founder, ...team] = announcedLeaders;
 
 export default function LeadershipPage() {
   return (
@@ -84,11 +87,11 @@ export default function LeadershipPage() {
               <div>
                 <div className="mb-5 flex items-center gap-3">
                   <span aria-hidden className="h-px w-8 bg-accent/50" />
-                  <span className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+                  <span className="eyebrow text-accent">
                     About · Leadership
                   </span>
                 </div>
-                <h1 className="text-[2.6rem] font-bold leading-[1.02] tracking-tight text-ink sm:text-6xl">
+                <h1 className="display-1 text-ink">
                   The team building the command center for{" "}
                   <span className="text-accent">every cloud</span>.
                 </h1>
@@ -117,7 +120,7 @@ export default function LeadershipPage() {
       </section>
 
       {/* ── Leadership roster ── */}
-      <section className="py-24 sm:py-32">
+      <section className="pb-20 pt-24 sm:pb-24 sm:pt-32">
         <Container>
           <Reveal>
             <SectionHeading
@@ -127,10 +130,15 @@ export default function LeadershipPage() {
             />
           </Reveal>
           <div className="mt-14">
-            {announcedLeaders.length > 0 && (
-              <div className="grid gap-5 sm:grid-cols-2">
-                {announcedLeaders.map((l, i) => (
-                  <Reveal key={l.name} delay={(i % 2) * 80}>
+            {founder && (
+              <Reveal>
+                <LeadershipFeature member={founder} />
+              </Reveal>
+            )}
+            {team.length > 0 && (
+              <div className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+                {team.map((l, i) => (
+                  <Reveal key={l.name} delay={(i % 4) * 70} className="h-full">
                     <LeadershipSpotlight member={l} />
                   </Reveal>
                 ))}
@@ -154,7 +162,7 @@ export default function LeadershipPage() {
       </section>
 
       {/* ── Departments ── */}
-      <section className="py-24 sm:py-32">
+      <section className="border-t border-line bg-surface py-24 sm:py-32">
         <Container>
           <Reveal>
             <SectionHeading
@@ -196,18 +204,19 @@ export default function LeadershipPage() {
         <Container>
           <Reveal>
             <SectionHeading
-              eyebrow="How we work"
-              title="The principles we build on"
+              eyebrow="Operating values"
+              title="How we work, day to day"
+              description="The four principles on the About page are what we build; these are how the team operates while building it."
             />
           </Reveal>
-          <div className="mt-14 grid gap-px overflow-hidden rounded-xl bg-line sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-14 grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
             {values.map((v, i) => (
               <Reveal key={v.title} delay={(i % 4) * 60}>
                 <div className="h-full bg-surface p-6">
                   <div className="grid h-10 w-10 place-items-center rounded-md bg-[var(--bg-active)] text-accent">
                     <Icon name={v.icon} className="h-5 w-5" />
                   </div>
-                  <h3 className="mt-4 font-bold text-ink">{v.title}</h3>
+                  <h3 className="mt-4 text-lg font-bold text-ink">{v.title}</h3>
                   <p className="mt-1.5 text-sm leading-relaxed text-muted">{v.body}</p>
                 </div>
               </Reveal>
@@ -227,36 +236,21 @@ export default function LeadershipPage() {
             />
           </Reveal>
           <div className="mt-14 grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              {
-                city: "Mumbai, India",
-                label: "Headquarters",
-                body: "Engineering, product, and operations. The core platform and Whale AI are built here.",
-                detail: "Innov8 Ackruti Star, 3rd Floor, 301, Ackruti Star, Central Road, Marol MIDC, near Marol Telephone Exchange, Andheri (E), Mumbai, Maharashtra 400093",
-              },
-              {
-                city: "Ajman, UAE",
-                label: "Middle East",
-                body: "Government, Telco and Enterprise customers across the GCC region.",
-                detail: "BC 892084, 26th Floor, Amber Gem Tower, Ajman",
-              },
-              {
-                city: "Wilmington, USA",
-                label: "Americas",
-                body: "Corporate entity and customers across the United States.",
-                detail: "221 W 9th St, PMB 1099, Wilmington, Delaware 19801, New Castle County",
-              },
-            ].map((loc, i) => (
-              <Reveal key={loc.city} delay={i * 80} className="h-full">
+            {offices.map((o, i) => (
+              <Reveal key={o.city} delay={i * 80} className="h-full">
                 <Card className="flex h-full flex-col gap-3 p-6">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-lg font-bold text-ink">{loc.city}</h3>
-                    <span className="rounded-full bg-[var(--bg-active)] px-3 py-1 text-xs font-semibold text-accent">
-                      {loc.label}
+                  <div className="flex items-center justify-between gap-3">
+                    <h3 className="text-lg font-bold text-ink">{o.city}</h3>
+                    <span className="shrink-0 rounded-full bg-[var(--bg-active)] px-3 py-1 text-xs font-semibold text-accent">
+                      {o.label}
                     </span>
                   </div>
-                  <p className="text-sm leading-relaxed text-muted">{loc.body}</p>
-                  <p className="text-xs text-faint">{loc.detail}</p>
+                  <p className="text-sm leading-relaxed text-muted">{o.blurb}</p>
+                  <p className="mt-auto border-t border-line pt-3 text-xs leading-relaxed text-faint">
+                    {o.address}
+                    <br />
+                    {o.entity}
+                  </p>
                 </Card>
               </Reveal>
             ))}
@@ -270,15 +264,15 @@ export default function LeadershipPage() {
           <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
             <Reveal>
               <div className="max-w-2xl">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/80">
+                <p className="eyebrow text-white/80">
                   We&apos;re hiring
                 </p>
-                <h2 className="mt-5 text-3xl font-bold leading-[1.1] tracking-tight text-white sm:text-4xl">
+                <h2 className="display-2 mt-5 text-white">
                   Build the platform that governs the world&apos;s clouds.
                 </h2>
                 <p className="mt-5 text-lg leading-relaxed text-white/70">
                   Open roles across engineering, product, sales and operations —
-                  in India, the UAE, and remote.
+                  in India, the UAE, the United States, and remote.
                 </p>
               </div>
             </Reveal>

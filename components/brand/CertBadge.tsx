@@ -184,7 +184,7 @@ function CsaStarBadge() {
         fontFamily="Arial, Helvetica, sans-serif"
         letterSpacing="1.5"
       >
-        CERTIFIED
+        SELF-ASSESSED
       </text>
     </svg>
   );
@@ -242,7 +242,7 @@ function Soc2Badge() {
         fontFamily="Arial, Helvetica, sans-serif"
         letterSpacing="1.5"
       >
-        TYPE II
+        TYPE II · READINESS
       </text>
     </svg>
   );

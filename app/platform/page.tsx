@@ -37,11 +37,11 @@ export default function PlatformPage() {
           <div className="max-w-4xl pt-20 sm:pt-28">
             <div className="mb-6 flex items-center gap-3">
               <span aria-hidden className="h-px w-8 bg-accent/60" />
-              <span className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+              <span className="eyebrow text-accent">
                 {platformHero.eyebrow}
               </span>
             </div>
-            <h1 className="text-[2.6rem] font-bold leading-[1.03] tracking-tight sm:text-5xl lg:text-6xl">
+            <h1 className="display-1">
               Every cloud.{" "}
               <span className="text-accent">One control plane.</span>
             </h1>
@@ -63,9 +63,9 @@ export default function PlatformPage() {
           <Reveal delay={120}>
             <div className="mt-14 mb-0 grid grid-cols-2 gap-px overflow-hidden rounded-t-lg border-x border-t border-line bg-line sm:grid-cols-4">
               {heroStats.map((s) => (
-                <div key={s.label} className="bg-surface px-5 py-4">
-                  <p className="text-sm font-bold text-ink">{s.value}</p>
-                  <p className="mt-0.5 text-xs text-faint">{s.label}</p>
+                <div key={s.label} className="bg-surface px-5 py-5">
+                  <p className="text-base font-bold text-ink sm:text-lg">{s.value}</p>
+                  <p className="eyebrow mt-1 text-faint">{s.label}</p>
                 </div>
               ))}
             </div>
@@ -99,14 +99,19 @@ export default function PlatformPage() {
         </Container>
       </section>
 
-      {/* ── Control plane map ── */}
-      <section className="relative overflow-hidden bg-sunken py-20 sm:py-24">
+      {/* ── Control plane map (dark band — the map is designed for it) ── */}
+      <section className="relative overflow-hidden bg-brand-900 py-20 text-white sm:py-24">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-24 top-0 h-80 w-80 rounded-full bg-brand-500/30 blur-[110px]"
+        />
         <Container className="relative">
           <Reveal>
             <SectionHeading
               eyebrow="Unified control plane"
               title="See the whole estate at a glance"
               description="Every cloud and data center connected, governed, and visible from one layer."
+              inverse
             />
           </Reveal>
           <Reveal delay={100}>
@@ -176,7 +181,7 @@ export default function PlatformPage() {
           <div className="overflow-hidden rounded-2xl bg-[var(--brand-deep)] px-8 py-14 text-center sm:px-14">
             <div className="mb-3 flex items-center justify-center gap-3">
               <span aria-hidden className="h-px w-8 bg-white/30" />
-              <span className="text-xs font-bold uppercase tracking-[0.18em] text-white/60">
+              <span className="eyebrow text-white/60">
                 ✦ Whale AI
               </span>
               <span aria-hidden className="h-px w-8 bg-white/30" />
@@ -251,9 +256,9 @@ export default function PlatformPage() {
               description="The same platform — delivered as SaaS, in your own cloud, or fully air-gapped."
             />
           </Reveal>
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 grid gap-6 sm:grid-cols-3">
             {deploymentModels.map((d, i) => (
-              <Reveal key={d.name} delay={(i % 4) * 70}>
+              <Reveal key={d.name} delay={(i % 3) * 70}>
                 <Card className="h-full">
                   <Badge tone="accent">{d.badge}</Badge>
                   <h3 className="mt-3 text-lg font-bold text-ink">{d.name}</h3>
@@ -293,7 +298,7 @@ export default function PlatformPage() {
           <Reveal delay={80}>
             <div className="mt-14 grid gap-10 lg:grid-cols-2">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-wider text-accent">
+                <p className="eyebrow text-accent">
                   Security posture
                 </p>
                 <ul className="mt-4 space-y-3">
@@ -308,7 +313,7 @@ export default function PlatformPage() {
                 </ul>
               </div>
               <div className="rounded-lg border border-line bg-sunken p-6">
-                <p className="text-xs font-semibold uppercase tracking-wider text-accent">
+                <p className="eyebrow text-accent">
                   Compliance frameworks
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">

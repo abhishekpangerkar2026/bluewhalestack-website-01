@@ -2,7 +2,7 @@
 
 export const perks = [
   { icon: "Wallet", title: "Competitive pay", body: "Market-leading salaries, performance bonuses and meaningful equity." },
-  { icon: "Cloud", title: "Remote-friendly", body: "Work from our India or UAE offices, or remote-first where you're most productive." },
+  { icon: "Cloud", title: "Remote-friendly", body: "Work from our India, UAE or US offices, or remote-first where you're most productive." },
   { icon: "GraduationCap", title: "Learning budget", body: "Annual budget for courses, certifications and conferences." },
   { icon: "HeartPulse", title: "Health & wellness", body: "Comprehensive medical cover for you and your family." },
   { icon: "Sparkles", title: "Generous PTO", body: "30 days paid time off plus regional public holidays." },

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Check, ChevronDown, ExternalLink, ShieldCheck } from "lucide-react";
+import { ArrowRight, Check, ChevronDown, ShieldCheck } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Icon } from "@/components/ui/Icon";
@@ -11,7 +11,7 @@ import { CertificateVault } from "@/components/trust/CertificateVault";
 import { certifications, trustPillars, trustFaq } from "@/content/trust";
 
 export const metadata: Metadata = {
-  title: "Trust Center — BlueWhale Stack",
+  title: "Trust Center",
   description:
     "BlueWhale Stack's security certifications, compliance posture, and privacy programme. ISO 27001, ISO 27017, ISO 27018, ISO 27701, ISO 22301, CSA STAR Level 1, SOC 2 Type II readiness assessment, GDPR, and India DPDP Act 2023.",
 };
@@ -31,11 +31,11 @@ export default function TrustPage() {
               <div>
                 <div className="mb-5 flex items-center gap-3">
                   <ShieldCheck className="h-5 w-5 text-brand-200" />
-                  <span className="text-xs font-semibold uppercase tracking-[0.18em] text-white/80">
+                  <span className="eyebrow text-white/80">
                     Trust Center
                   </span>
                 </div>
-                <h1 className="text-[2.6rem] font-bold leading-[1.03] tracking-tight text-white sm:text-5xl lg:text-6xl">
+                <h1 className="display-1 text-white">
                   Security and compliance,{" "}
                   <span className="text-brand-200">independently verified.</span>
                 </h1>
@@ -44,8 +44,8 @@ export default function TrustPage() {
                   attestations across information security, privacy, cloud
                   security, and business continuity — independently audited
                   ISO certifications, a CSA STAR self-assessment, and a SOC 2
-                  Type II readiness assessment, all current and downloadable
-                  below.
+                  Type II readiness assessment — all current, with eight
+                  signed certificates downloadable below.
                 </p>
                 <div className="mt-8 flex flex-wrap gap-3">
                   <Button href="#certifications" size="lg">
@@ -58,7 +58,7 @@ export default function TrustPage() {
                     className="border-white/30 text-white hover:border-white hover:bg-white/10 hover:text-white"
                   >
                     Privacy policy
-                    <ExternalLink className="h-4 w-4" />
+                    <ArrowRight className="h-4 w-4" />
                   </Button>
                   <Button
                     href="/legal/terms"
@@ -67,7 +67,7 @@ export default function TrustPage() {
                     className="border-white/30 text-white hover:border-white hover:bg-white/10 hover:text-white"
                   >
                     Terms of service
-                    <ExternalLink className="h-4 w-4" />
+                    <ArrowRight className="h-4 w-4" />
                   </Button>
                 </div>
               </div>
@@ -139,7 +139,7 @@ export default function TrustPage() {
                     <th className="pb-3 text-left text-xs font-semibold uppercase tracking-wider text-faint">
                       Certification
                     </th>
-                    <th className="pb-3 text-center text-xs font-semibold uppercase tracking-wider text-faint">
+                    <th className="pb-3 text-center text-xs font-semibold normal-case tracking-wider text-faint">
                       SaaS
                     </th>
                     <th className="pb-3 text-center text-xs font-semibold uppercase tracking-wider text-faint">
@@ -220,8 +220,8 @@ export default function TrustPage() {
                 <Button href="/contact" variant="white" size="lg">
                   Request documents
                 </Button>
-                <Button href="/editions/sovereign" variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/10">
-                  Sovereign edition
+                <Button href="/editions/government" variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/10">
+                  Government Edition
                 </Button>
               </div>
             </div>

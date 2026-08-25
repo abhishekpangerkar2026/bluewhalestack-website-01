@@ -67,7 +67,7 @@ export const solutions: SolutionDef[] = [
     ],
     outcomes: [
       { value: "AWS", label: "Provisioning live" },
-      { value: "EC2/S3/RDS", label: "+ VPC / EFS" },
+      { value: "5", label: "Services: EC2 · S3 · RDS · VPC · EFS" },
       { value: "Whale AI", label: "Sizing built in" },
       { value: "GA", label: "Shipping today" },
     ],
@@ -99,14 +99,14 @@ export const solutions: SolutionDef[] = [
     ],
     outcomes: [
       { value: "Bundled", label: "No separate Datadog" },
-      { value: "Logs/Metrics/Traces", label: "Unified" },
+      { value: "3", label: "Signals unified: logs · metrics · traces" },
       { value: "SLOs", label: "Burn-rate alerts" },
       { value: "GA", label: "Shipping today" },
     ],
     audience: "SRE, platform and operations teams who want observability inside the control plane.",
     modules: ["observe", "itsm", "inventory"],
     architectureId: "platform",
-    editions: ["enterprise", "enterprise-plus"],
+    editions: ["enterprise", "telco-datacenter"],
     flow: [
       "Telemetry — logs, metrics and traces — flows into the bundled observability tier.",
       "SLOs are defined with burn-rate alerts; synthetics probe critical paths.",
@@ -137,8 +137,8 @@ export const solutions: SolutionDef[] = [
     ],
     audience: "CIOs and Heads of Infrastructure running data-center-exit and cloud-migration programs.",
     modules: ["migration", "inventory", "cloud-connectors"],
-    architectureId: "platform",
-    editions: ["enterprise", "enterprise-plus"],
+    architectureId: "migration",
+    editions: ["enterprise", "telco-datacenter"],
     flow: [
       "On-prem workloads are discovered via the Edge Agent and auto-classified.",
       "A 6R assessment scores each workload for cost, effort and blockers.",
@@ -169,14 +169,14 @@ export const solutions: SolutionDef[] = [
     ],
     audience: "CISOs, Heads of Cloud Security and compliance officers in regulated industries.",
     modules: ["identity", "itsm", "inventory"],
-    architectureId: "platform",
-    editions: ["enterprise", "sovereign"],
+    architectureId: "security",
+    editions: ["enterprise", "government"],
     flow: [
       "Federate 9+ identity providers with auto-provisioning so the right people get the right access.",
       "Role-based access is enforced consistently across every connected cloud.",
       "Every action is written to a full audit trail.",
       "Data residency pins workloads and records to an in-country region (e.g. Mumbai for DPDP, Frankfurt for GDPR).",
-      "For the strictest estates, deploy air-gapped Sovereign with in-region AI only.",
+      "For the strictest estates, deploy the air-gapped Government Edition with in-region AI only.",
     ],
   },
   {
@@ -188,7 +188,7 @@ export const solutions: SolutionDef[] = [
     problem:
       "Data-residency law and national regulators demand to know exactly where data lives, who operates it, and who has access — which most hyperscaler-only deployments cannot prove.",
     features: [
-      "Air-gapped Sovereign deployment",
+      "Air-gapped Government Edition deployment",
       "In-region LLMs only — no call-home",
       "BYOC option in your own cloud",
       "Provable data residency & sovereignty",
@@ -201,8 +201,8 @@ export const solutions: SolutionDef[] = [
     ],
     audience: "National governments, defense agencies, central banks and regulated public sector.",
     modules: ["identity", "inventory", "whale-ai"],
-    architectureId: "platform",
-    editions: ["sovereign", "enterprise"],
+    architectureId: "sovereign",
+    editions: ["government", "enterprise"],
     flow: [
       "The platform is deployed inside national borders — BYOC or fully air-gapped.",
       "An air-gapped control plane runs with no outbound connectivity or call-home.",

@@ -142,7 +142,7 @@ export const docPages: DocPageDef[] = [
               {
                 icon: "Sparkles",
                 title: "AI-native by design",
-                body: "Whale AI (powered by Anthropic Claude) spans every module with 40+ use cases — not bolted on.",
+                body: "Whale AI (powered by Anthropic Claude) spans every module with 50+ use cases — not bolted on.",
               },
             ],
           },
@@ -166,7 +166,7 @@ export const docPages: DocPageDef[] = [
           },
           {
             type: "p",
-            text: "The platform is composed of 11 modules grouped across five areas: Foundation (Inventory, Cloud Connectors, Identity, Service Catalog), Operations (ITSM, Observe, FinOps, Migration Engine), Builder (WhaleForge IaC, Landing Zone Builder), and Intelligence (Whale AI). Modules are gated by edition — see the Editions page for the capability matrix.",
+            text: "The platform is composed of 11 modules grouped across four areas: Foundation (Inventory, Cloud Connectors, Identity, Service Catalog), Operations (ITSM, Observe, FinOps, Migration Engine), Builder (WhaleForge IaC, Landing Zone Builder), and Intelligence (Whale AI). Modules are gated by edition — see the Editions page for the capability matrix.",
           },
           {
             type: "h3",
@@ -190,7 +190,7 @@ export const docPages: DocPageDef[] = [
           },
           {
             type: "p",
-            text: "The AI layer powered by Anthropic Claude. It is horizontal — it runs across every module with 40+ use cases. Three tiers: Spark (fast, entry-level — inventory Q&A, sizing), Tide (deep reasoning — migration planning, IaC drafting), Abyss (multi-step agents for complex cross-module workflows). Sovereign deployments use in-region LLMs only with no call-home.",
+            text: "The AI layer powered by Anthropic Claude. It is horizontal — it runs across every module with 50+ use cases. Three tiers: Spark (fast, entry-level — inventory Q&A, sizing), Tide (deep reasoning — migration planning, IaC drafting), Abyss (multi-step agents for complex cross-module workflows). Sovereign deployments use in-region LLMs only with no call-home.",
           },
         ],
       },
@@ -230,7 +230,7 @@ export const docPages: DocPageDef[] = [
               {
                 icon: "Cloud",
                 title: "SaaS",
-                body: "Fully managed, multi-tenant from Singapore. Fastest time-to-value — no infrastructure overhead. Available on Standard and Enterprise editions.",
+                body: "Fully managed, multi-tenant from Singapore. Fastest time-to-value — no infrastructure overhead. Available on Standard, Enterprise and Telco & Datacenter editions.",
               },
               {
                 icon: "Server",
@@ -268,13 +268,13 @@ export const docPages: DocPageDef[] = [
               "Migration Engine — 6R assessment & wave planning (assessment live)",
               "WhaleForge IaC — YAML DSL → Terraform HCL, live diagrams (Beta)",
               "Landing Zone Builder — visual designer for AWS Control Tower / Azure CLZ (Beta)",
-              "Whale AI — horizontal AI layer, 40+ use cases (Spark · Tide · Abyss)",
+              "Whale AI — horizontal AI layer, 50+ use cases (Spark · Tide · Abyss)",
             ],
           },
           {
             type: "callout",
             variant: "tip",
-            text: "Module availability is gated by edition. Community includes Inventory only. Standard adds the full Foundation set plus ITSM and Whale AI Spark. Enterprise unlocks all modules.",
+            text: "Module availability is gated by edition. Standard includes the Foundation set (Inventory, Cloud Connectors, Identity, Service Catalog) plus ITSM and Whale AI Spark. Enterprise, Telco & Datacenter and Government unlock all 11 modules.",
           },
         ],
       },
@@ -1173,7 +1173,7 @@ Token:         <GENERATED_TOKEN>`,
             items: [
               "Standard edition: 120 requests / minute per credential",
               "Enterprise edition: 600 requests / minute per credential",
-              "Enterprise Plus / Sovereign: negotiated limits",
+              "Telco & Datacenter / Government editions: negotiated limits",
               "Bulk read endpoints (/v1/inventory/resources with pagination) are excluded from per-minute limits and have separate daily quotas",
             ],
           },

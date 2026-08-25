@@ -82,7 +82,7 @@ export const resources: ResourceDef[] = [
   {
     slug: "whale-ai-use-cases",
     type: "Webinar",
-    title: "Whale AI in Practice: 40+ Use Cases Across the Platform",
+    title: "Whale AI in Practice: 50+ Use Cases Across the Platform",
     summary:
       "A walkthrough of Whale AI tiers — Spark, Tide and Abyss — and where they show up across every module.",
     meta: "45 min",

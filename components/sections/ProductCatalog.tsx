@@ -26,23 +26,27 @@ const GROUP_COLOR: Record<ModuleGroup, string> = {
   ai: "bg-[var(--bg-active)] text-accent ring-line",
 };
 
-/** Curated "Featured" set — a spread across all groups. */
+/** Curated "Featured" set — a spread across all groups (all real module slugs). */
 const FEATURED = [
   "cloud-connectors",
   "finops",
-  "security-compliance",
+  "identity",
   "inventory",
   "migration",
   "itsm",
-  "dcim",
+  "landing-zone",
   "whale-ai",
 ];
 
 type Tab = "featured" | ModuleGroup;
 
+// Only offer tabs for groups that actually contain modules — an empty tab is a dead end.
 const TABS: { key: Tab; label: string }[] = [
   { key: "featured", label: "Featured" },
-  ...GROUP_ORDER.map((g) => ({ key: g, label: moduleGroups[g] })),
+  ...GROUP_ORDER.filter((g) => modules.some((m) => m.group === g)).map((g) => ({
+    key: g,
+    label: moduleGroups[g],
+  })),
 ];
 
 export function ProductCatalog() {
@@ -63,7 +67,7 @@ export function ProductCatalog() {
             eyebrow="The platform"
             title={
               <>
-                Seventeen modules.
+                Eleven modules.
                 <br />
                 <span className="text-faint">One control plane.</span>
               </>

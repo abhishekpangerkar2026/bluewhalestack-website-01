@@ -71,7 +71,7 @@ export function SolutionComposite({
               <div className="text-[10px] font-semibold uppercase tracking-wider text-brand-100">
                 {title}
               </div>
-              <div className="font-display text-sm font-bold leading-tight">
+              <div className="text-sm font-bold leading-tight">
                 {outcome}
               </div>
             </div>

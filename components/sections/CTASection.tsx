@@ -10,7 +10,7 @@ export function CTASection() {
         <div className="relative overflow-hidden rounded-xl border border-line bg-surface px-6 py-16 shadow-sm sm:px-14 sm:py-20">
           <div className="relative grid items-center gap-10 lg:grid-cols-[1.4fr_0.6fr]">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+              <p className="eyebrow text-accent">
                 Get started
               </p>
               <h2 className="mt-5 max-w-2xl text-[2.1rem] font-bold leading-[1.05] tracking-tight text-ink sm:text-4xl lg:text-5xl">

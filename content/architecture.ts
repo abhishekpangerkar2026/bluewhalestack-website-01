@@ -56,7 +56,7 @@ export const diagrams: Record<string, ArchDiagram> = {
         tone: "plane",
         highlight: true,
         nodes: [
-          { label: "Inventory (URM)", icon: "Boxes" },
+          { label: "Inventory & Discovery", icon: "Boxes" },
           { label: "Provisioning", icon: "PackagePlus" },
           { label: "FinOps", icon: "Wallet" },
           { label: "Security & Compliance", icon: "ShieldCheck" },
@@ -107,13 +107,13 @@ export const diagrams: Record<string, ArchDiagram> = {
   migration: {
     kind: "flow",
     caption:
-      "Agentless discovery scores readiness, dependencies are grouped into waves, workloads replicate continuously, and every cut-over is validated before and after.",
+      "On-prem workloads are discovered via the Edge Agent and auto-classified, scored with a 6R assessment, grouped into waves with Whale AI guidance, then executed — assessment and planning are live today; execution hooks are in progress.",
     steps: [
-      { label: "Discover & assess", sub: "Agentless, readiness score", icon: "Eye" },
-      { label: "Plan waves", sub: "Dependency-grouped batches", icon: "Layers" },
-      { label: "Replicate", sub: "Continuous, RPO < 1hr", icon: "DatabaseBackup" },
-      { label: "Cut-over & validate", sub: "Automated pre/post checks", icon: "FileCheck" },
-      { label: "Optimize", sub: "Rightsize on the new estate", icon: "Gauge" },
+      { label: "Discover", sub: "Edge Agent, outbound-only HTTPS", icon: "Eye" },
+      { label: "Auto-classify", sub: "Workload types & dependencies", icon: "Boxes" },
+      { label: "6R assess", sub: "Cost · effort · blockers", icon: "FileCheck" },
+      { label: "Plan waves", sub: "Whale AI guidance", icon: "Layers" },
+      { label: "Execute", sub: "Execution hooks in progress", icon: "MoveRight" },
     ],
   },
 
@@ -227,7 +227,7 @@ export const diagrams: Record<string, ArchDiagram> = {
   "edition-standard": {
     kind: "stack",
     caption:
-      "A multi-tenant SaaS control plane in Singapore over your AWS, Azure and GCP accounts — see, secure and govern without the enterprise sprawl.",
+      "A single-tenant SaaS control plane in Singapore over your AWS, Azure and GCP accounts — see, secure and govern without the enterprise sprawl.",
     layers: [
       {
         title: "Your public clouds (single region)",
@@ -477,7 +477,7 @@ export const diagrams: Record<string, ArchDiagram> = {
         tone: "source",
         nodes: industries.map((i) => ({
           label: i.name,
-          sub: i.kpis[0]?.value,
+          sub: i.title,
           icon: i.icon,
         })),
       },
@@ -535,7 +535,7 @@ export const diagrams: Record<string, ArchDiagram> = {
         highlight: true,
         nodes: [
           { label: "Whale IAM + PAM", icon: "ShieldCheck" },
-          { label: "Inventory (URM)", icon: "Boxes" },
+          { label: "Inventory & Discovery", icon: "Boxes" },
           { label: "Security (CIS · DPDP)", icon: "Eye" },
           { label: "Landing Zone (GovCloud)", icon: "LayoutTemplate" },
           { label: "ITSM + CAB approvals", icon: "Headset" },
@@ -572,7 +572,7 @@ export const diagrams: Record<string, ArchDiagram> = {
         title: "Operator & cloud infrastructure",
         tone: "source",
         nodes: [
-          { label: "Public clouds (AWS · Azure · GCP)", icon: "Cloud" },
+          { label: "6 public clouds + on-prem", icon: "Cloud" },
           { label: "Operator data centers", icon: "Server" },
           { label: "Edge & distributed sites", icon: "Plug" },
         ],
@@ -603,7 +603,7 @@ export const diagrams: Record<string, ArchDiagram> = {
         tone: "experience",
         nodes: [
           { label: "White-label tenant portals", icon: "Users" },
-          { label: "Billing passthrough (Stripe)", icon: "CreditCard" },
+          { label: "Billing passthrough", icon: "CreditCard" },
           { label: "Per-tenant SLA & usage", icon: "Activity" },
         ],
       },
@@ -632,7 +632,7 @@ export const diagrams: Record<string, ArchDiagram> = {
           { label: "Whale IAM + PAM (approval gates)", icon: "ShieldCheck" },
           { label: "Whalenomics (cost + chargeback)", icon: "Wallet" },
           { label: "Migration (legacy → cloud)", icon: "MoveRight" },
-          { label: "Security (PCI · SOC 2)", icon: "Eye" },
+          { label: "Security scanning (CIS · DPDP)", icon: "Eye" },
           { label: "Observe", icon: "Activity" },
         ],
       },
@@ -649,7 +649,7 @@ export const diagrams: Record<string, ArchDiagram> = {
         title: "Regulatory outcomes",
         tone: "experience",
         nodes: [
-          { label: "RBI · MAS · FCA reporting", icon: "FileCheck" },
+          { label: "RBI · SEBI · CERT-In reporting", icon: "FileCheck" },
           { label: "Business-unit chargeback", icon: "Percent" },
           { label: "Audit-ready evidence", icon: "ShieldCheck" },
         ],
@@ -660,14 +660,14 @@ export const diagrams: Record<string, ArchDiagram> = {
   "industry-healthcare": {
     kind: "stack",
     caption:
-      "Data-resident clinical cloud: workloads and audit stay in-region, security is scoped to HIPAA, and every production change is CAB-gated through ITSM + PAM.",
+      "Data-resident clinical cloud: workloads and audit stay in-region, security is scoped to DPDP and GDPR, and every production change is CAB-gated through ITSM + PAM.",
     layers: [
       {
         title: "Clinical estate (in-region)",
         tone: "source",
         nodes: [
           { label: "On-prem clinical systems (Edge)", icon: "Plug" },
-          { label: "Mumbai region (DPDP)", icon: "Landmark" },
+          { label: "Mumbai · Frankfurt regions (DPDP · GDPR)", icon: "Landmark" },
           { label: "Entra ID · AD", icon: "KeyRound" },
         ],
       },
@@ -676,10 +676,10 @@ export const diagrams: Record<string, ArchDiagram> = {
         tone: "plane",
         highlight: true,
         nodes: [
-          { label: "Security (HIPAA · Prowler)", icon: "Eye" },
+          { label: "Security scanning (CIS · DPDP · GDPR)", icon: "Eye" },
           { label: "Whale IAM + PAM", icon: "ShieldCheck" },
           { label: "ITSM change control (CAB)", icon: "Headset" },
-          { label: "Inventory (URM)", icon: "Boxes" },
+          { label: "Inventory & Discovery", icon: "Boxes" },
           { label: "Landing Zone", icon: "LayoutTemplate" },
         ],
       },
@@ -697,7 +697,7 @@ export const diagrams: Record<string, ArchDiagram> = {
         tone: "experience",
         nodes: [
           { label: "100% data residency", icon: "Landmark" },
-          { label: "HIPAA / ADHICS evidence", icon: "FileCheck" },
+          { label: "DPDP / GDPR evidence", icon: "FileCheck" },
           { label: "CAB-gated changes", icon: "ShieldCheck" },
         ],
       },
@@ -727,7 +727,7 @@ export const diagrams: Record<string, ArchDiagram> = {
           { label: "Migration (ERP → cloud)", icon: "MoveRight" },
           { label: "Landing Zone (hub-spoke)", icon: "LayoutTemplate" },
           { label: "Observe", icon: "Activity" },
-          { label: "Inventory (URM)", icon: "Boxes" },
+          { label: "Inventory & Discovery", icon: "Boxes" },
         ],
       },
       {
@@ -864,7 +864,7 @@ export const diagrams: Record<string, ArchDiagram> = {
         nodes: [
           { label: "Identity sync + JIT (Whale IAM)", icon: "KeyRound" },
           { label: "License & Billing", icon: "CreditCard" },
-          { label: "Inventory (URM)", icon: "Boxes" },
+          { label: "Inventory & Discovery", icon: "Boxes" },
           { label: "Whalenomics (chargeback)", icon: "Wallet" },
           { label: "ITSM", icon: "Headset" },
           { label: "Whale AI", icon: "Sparkles" },

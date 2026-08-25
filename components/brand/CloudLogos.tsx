@@ -27,7 +27,7 @@ export function CloudLogo({
   className?: string;
 }) {
   const wrap = cn("inline-flex items-center gap-2", className);
-  const word = "font-display font-bold tracking-tight text-[15px] leading-none";
+  const word = "font-bold tracking-tight text-[15px] leading-none";
 
   switch (name) {
     case "aws":

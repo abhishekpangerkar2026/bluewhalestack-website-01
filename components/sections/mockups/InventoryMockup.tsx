@@ -16,7 +16,7 @@ export function InventoryMockup() {
             <Boxes className="h-4 w-4" />
           </span>
           <div>
-            <div className="font-display text-sm font-bold text-slate-900">
+            <div className="text-sm font-bold text-slate-900">
               4,821
             </div>
             <div className="text-[10px] text-slate-500">resources · 6 clouds</div>
@@ -29,7 +29,7 @@ export function InventoryMockup() {
         <div className="flex items-center justify-between">
           <div>
             <div className="text-[11px] text-slate-400">Inventory</div>
-            <div className="font-display text-sm font-bold text-slate-900">
+            <div className="text-sm font-bold text-slate-900">
               Unified Resource Map
             </div>
           </div>
@@ -49,7 +49,7 @@ export function InventoryMockup() {
               key={k.l}
               className="rounded-lg border border-slate-100 bg-slate-50/60 p-2.5"
             >
-              <div className="font-display text-sm font-bold text-slate-900">
+              <div className="text-sm font-bold text-slate-900">
                 {k.v}
               </div>
               <div className="text-[10px] text-slate-500">{k.l}</div>

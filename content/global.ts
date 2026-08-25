@@ -48,8 +48,8 @@ export const globalRegions: RegionNode[] = [
 export const globalStats = [
   { value: "4", label: "Deployment regions" },
   { value: "6", label: "Public clouds + on-prem" },
-  { value: "3", label: "Deployment models (SaaS · BYOC · Sovereign)" },
-  { value: "In-region", label: "Data residency" },
+  { value: "3", label: "Deployment models" },
+  { value: "In‑region", label: "Data residency, every region" },
 ];
 
 export const globalIntro = {

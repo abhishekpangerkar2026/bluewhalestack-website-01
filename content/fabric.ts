@@ -22,8 +22,12 @@ export const fabricStats: { value: string; label: string }[] = [
   { value: "39", label: "Datacenter operators" },
   { value: "132", label: "Facilities, all three tiers" },
   { value: "84", label: "More facilities under construction" },
-  { value: "1.7 GW", label: "National capacity, headed there" },
+  { value: "1.7 GW", label: "National capacity, projected" },
 ];
+
+/** Footnote under the market stats — the counts are industry estimates, not audited figures. */
+export const fabricStatsNote =
+  "Market figures are 2025 industry estimates for the Indian datacenter sector.";
 
 export const fabricProblems: { title: string; body: string }[] = [
   {
@@ -123,7 +127,7 @@ export const fabricRevenueStreams: {
   {
     name: "Managed services on the fabric",
     body: "Operations, security and compliance services per customer estate.",
-    character: "Recurring attach",
+    character: "Recurring · attach",
   },
   {
     name: "Migration & onboarding",

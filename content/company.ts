@@ -29,6 +29,7 @@ export const offices = [
     city: "Mumbai",
     label: "India — Headquarters",
     entity: "BlueWhale Stack Consulting and Technologies Pvt Ltd",
+    blurb: "Engineering, product and delivery. The core platform and Whale AI are built here.",
     address:
       "Innov8 Ackruti Star, 3rd Floor, 301, Ackruti Star, Central Road, Marol MIDC, near Marol Telephone Exchange, Andheri (E), Mumbai, Maharashtra 400093, India",
   },
@@ -36,6 +37,7 @@ export const offices = [
     city: "Ajman",
     label: "UAE",
     entity: "BlueWhale Stack Consulting and Technologies FZE LLC",
+    blurb: "Sovereign and government focus — Government, Telco and Enterprise customers across the GCC.",
     address:
       "BC 892084, 26th Floor, Amber Gem Tower, Ajman, United Arab Emirates",
   },
@@ -43,6 +45,7 @@ export const offices = [
     city: "Wilmington",
     label: "USA",
     entity: "BlueWhale Stack Consulting and Technologies Inc",
+    blurb: "Product entity and customers across the United States.",
     address:
       "221 W 9th St, PMB 1099, Wilmington, Delaware 19801, New Castle County, USA",
   },

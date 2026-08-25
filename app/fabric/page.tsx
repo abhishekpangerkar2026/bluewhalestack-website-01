@@ -8,9 +8,12 @@ import { Stat } from "@/components/ui/Stat";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { ArchitectureDiagram } from "@/components/diagrams/ArchitectureDiagram";
+import { FabricHeroVisual } from "@/components/diagrams/FabricHeroVisual";
+import { editionsBySlug } from "@/content/editions";
 import {
   fabricHero,
   fabricStats,
+  fabricStatsNote,
   fabricProblems,
   fabricTiers,
   fabricStakeholders,
@@ -27,38 +30,54 @@ export const metadata: Metadata = {
 };
 
 export default function FabricPage() {
+  const platformEdition = editionsBySlug["telco-datacenter"];
   return (
     <>
-      {/* ── Hero: dark, oversized, asymmetric ── */}
+      {/* ── Hero: dark, two-column — copy left, tier→fabric illustration right ── */}
       <section className="relative overflow-hidden bg-brand-900 text-white">
         <div
           aria-hidden
           className="pointer-events-none absolute -left-20 top-0 h-80 w-80 rounded-full bg-brand-500/30 blur-[110px]"
         />
         <Container className="relative">
-          <div className="max-w-3xl py-20 sm:py-28">
-            <Badge tone="neutral" className="bg-white/10 text-white">
-              {fabricHero.eyebrow}
-            </Badge>
-            <h1 className="mt-6 text-[2.6rem] font-bold leading-[1.02] tracking-tight sm:text-5xl lg:text-6xl">
-              {fabricHero.title}
-            </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/70">
-              {fabricHero.description}
-            </p>
-            <div className="mt-9 flex flex-wrap gap-3">
-              <Button href="/contact" size="lg" variant="white">
-                Request a fabric workshop
-                <ArrowRight className="h-4 w-4" />
-              </Button>
-              <Button
-                href="/editions/telco-datacenter"
-                size="lg"
-                variant="ghost"
-                className="text-white hover:bg-white/10"
-              >
-                Runs on Telco &amp; Datacenter Edition
-              </Button>
+          <div className="grid items-center gap-12 py-20 sm:py-28 lg:grid-cols-[1.05fr_0.95fr]">
+            <div>
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="eyebrow text-white/80">{fabricHero.eyebrow}</span>
+                {platformEdition?.comingSoon && (
+                  <Badge tone="neutral" className="bg-amber-500/20 text-amber-300">
+                    Preview{platformEdition.gaTarget ? ` · GA ${platformEdition.gaTarget}` : ""}
+                  </Badge>
+                )}
+              </div>
+              <h1 className="display-1 mt-6 text-white">
+                {fabricHero.title}
+              </h1>
+              <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/70">
+                {fabricHero.description}
+              </p>
+              <div className="mt-9 flex flex-wrap gap-3">
+                <Button href="/contact" size="lg" variant="white">
+                  Request a fabric workshop
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+                <Button
+                  href="/editions/telco-datacenter"
+                  size="lg"
+                  variant="outline"
+                  className="border-white/30 text-white hover:border-white hover:bg-white/10 hover:text-white"
+                >
+                  Runs on Telco &amp; Datacenter Edition
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+            <div className="relative">
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 -z-10 rounded-full bg-brand-500/20 blur-3xl"
+              />
+              <FabricHeroVisual />
             </div>
           </div>
         </Container>
@@ -74,6 +93,7 @@ export default function FabricPage() {
               </Reveal>
             ))}
           </div>
+          <p className="mt-6 text-xs text-faint">{fabricStatsNote}</p>
         </Container>
       </section>
 
@@ -91,7 +111,7 @@ export default function FabricPage() {
             {fabricProblems.map((p, i) => (
               <Reveal key={p.title} delay={(i % 2) * 80}>
                 <div className="flex h-full flex-col bg-surface p-7">
-                  <span className="text-sm font-bold text-faint num">
+                  <span className="text-sm font-bold text-accent num">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <h3 className="mt-4 text-lg font-bold text-ink">
@@ -133,11 +153,11 @@ export default function FabricPage() {
               description="Roughly 39 operators run 132 facilities today, with 84 more under construction, and national capacity growing toward 1.7 GW — concentrated in Mumbai, Chennai, Hyderabad, Bengaluru and Noida."
             />
           </Reveal>
-          <div className="mt-14 grid gap-5 sm:grid-cols-3">
+          <div className="mt-14 grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-3">
             {fabricTiers.map((t, i) => (
               <Reveal key={t.name} delay={i * 90}>
-                <div className="h-full rounded-lg border border-line bg-surface p-7 shadow-sm">
-                  <span className="text-xs font-bold uppercase tracking-[0.18em] text-accent">
+                <div className="flex h-full flex-col bg-surface p-7">
+                  <span className="eyebrow text-accent">
                     {t.name}
                   </span>
                   <p className="mt-1 text-sm font-semibold text-ink">
@@ -210,7 +230,7 @@ export default function FabricPage() {
             {fabricRevenueStreams.map((r, i) => (
               <Reveal key={r.name} delay={(i % 3) * 70}>
                 <div className="flex h-full flex-col bg-surface p-7">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-accent">
+                  <span className="eyebrow text-accent">
                     {r.character}
                   </span>
                   <h3 className="mt-3 text-lg font-bold text-ink">
@@ -279,7 +299,7 @@ export default function FabricPage() {
             </Reveal>
             <Reveal delay={120}>
               <div className="rounded-lg border border-line bg-sunken p-8">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+                <p className="eyebrow text-accent">
                   Getting started
                 </p>
                 <ol className="mt-6 flex flex-col">
@@ -288,7 +308,7 @@ export default function FabricPage() {
                       key={s.step}
                       className="flex items-start gap-5 border-t border-line py-5 first:border-t-0 first:pt-0"
                     >
-                      <span className="text-xl font-bold text-accent num">
+                      <span className="pt-0.5 text-sm font-bold text-accent num">
                         {String(i + 1).padStart(2, "0")}
                       </span>
                       <div>
@@ -316,16 +336,16 @@ export default function FabricPage() {
         <Container className="relative">
           <Reveal>
             <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-              <div className="max-w-2xl">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-200">
+              <div className="max-w-xl">
+                <p className="eyebrow text-brand-200">
                   India doesn&apos;t need another datacenter
                 </p>
-                <h2 className="mt-5 text-3xl font-bold leading-[1.05] tracking-tight text-white sm:text-4xl">
+                <h2 className="display-2 mt-5 text-white">
                   It needs a fabric that lets buyers{" "}
-                  <span className="text-brand-100">pick a policy.</span>
+                  <span className="whitespace-nowrap text-brand-100">pick a policy.</span>
                 </h2>
               </div>
-              <div className="flex flex-wrap gap-3">
+              <div className="flex shrink-0 flex-wrap gap-3">
                 <Button href="/contact" size="lg" variant="white">
                   Request a fabric workshop
                   <ArrowRight className="h-4 w-4" />
@@ -333,10 +353,11 @@ export default function FabricPage() {
                 <Button
                   href="/industries/datacenter"
                   size="lg"
-                  variant="ghost"
-                  className="text-white hover:bg-white/10"
+                  variant="outline"
+                  className="border-white/30 text-white hover:border-white hover:bg-white/10 hover:text-white"
                 >
                   For datacenter operators
+                  <ArrowRight className="h-4 w-4" />
                 </Button>
               </div>
             </div>

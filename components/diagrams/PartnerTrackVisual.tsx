@@ -10,8 +10,7 @@ import type { PartnerTrack } from "@/content/partners";
 export function PartnerTrackVisual({ track }: { track: PartnerTrack }) {
   return (
     <div
-      style={{ aspectRatio: "16/12" }}
-      className="relative w-full overflow-hidden rounded-lg border border-line bg-surface shadow-md"
+      className="relative min-h-[280px] w-full overflow-hidden rounded-lg border border-line bg-surface shadow-md"
     >
       <svg
         aria-hidden
@@ -34,13 +33,13 @@ export function PartnerTrackVisual({ track }: { track: PartnerTrack }) {
         className="pointer-events-none absolute -right-16 -top-16 h-44 w-44 rounded-full bg-accent/10 blur-2xl"
       />
 
-      <div className="relative flex h-full flex-col p-6 sm:p-7">
+      <div className="relative flex min-h-[280px] flex-col p-6 sm:p-7">
         <div className="flex items-center gap-3">
           <span className="grid h-12 w-12 place-items-center rounded-lg bg-primary text-primary-fg shadow-md">
             <Icon name={track.icon} className="h-6 w-6" />
           </span>
           <div className="min-w-0">
-            <p className="text-[11px] font-semibold uppercase tracking-wider text-accent">
+            <p className="eyebrow text-accent">
               How it works
             </p>
             <h3 className="truncate text-lg font-bold text-ink">
@@ -49,7 +48,7 @@ export function PartnerTrackVisual({ track }: { track: PartnerTrack }) {
           </div>
         </div>
 
-        <div className="flex flex-1 flex-col justify-center">
+        <div className="flex flex-1 flex-col justify-center pt-6">
           {track.slug === "lsp" && <LspDiagram />}
           {track.slug === "implementation" && <ImplementationDiagram />}
           {track.slug === "strategic" && <StrategicDiagram />}
@@ -63,7 +62,7 @@ function FlowNode({ label, sub }: { label: string; sub: string }) {
   return (
     <div className="flex-1 rounded-lg border border-line bg-sunken p-3 text-center">
       <p className="text-xs font-bold leading-tight text-ink">{label}</p>
-      <p className="mt-0.5 text-[10px] leading-tight text-faint">{sub}</p>
+      <p className="mt-0.5 text-xs leading-tight text-muted">{sub}</p>
     </div>
   );
 }
@@ -130,7 +129,7 @@ function StrategicDiagram() {
           <Icon name="Globe" className="h-8 w-8" />
         </span>
         <div>
-          <span className="inline-flex items-center rounded-full bg-brand-900 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white">
+          <span className="inline-flex items-center rounded-full bg-brand-900 px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-white">
             Official Partner
           </span>
           <p className="mt-1.5 text-xs leading-snug text-muted">
@@ -142,13 +141,13 @@ function StrategicDiagram() {
       <div className="mt-4 grid grid-cols-2 gap-2.5">
         <div className="rounded-lg border border-line bg-sunken p-3">
           <p className="text-xs font-bold text-ink">Exclusive territory</p>
-          <p className="mt-0.5 text-[10px] leading-tight text-faint">
+          <p className="mt-0.5 text-xs leading-tight text-muted">
             One partner, one country
           </p>
         </div>
         <div className="rounded-lg border border-line bg-sunken p-3">
           <p className="text-xs font-bold text-ink">Advance procurement</p>
-          <p className="mt-0.5 text-[10px] leading-tight text-faint">
+          <p className="mt-0.5 text-xs leading-tight text-muted">
             Volume-committed licensing
           </p>
         </div>

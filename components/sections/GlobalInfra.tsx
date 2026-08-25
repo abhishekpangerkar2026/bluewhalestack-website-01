@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import createGlobe from "cobe";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { Stat } from "@/components/ui/Stat";
 import { Reveal } from "@/components/ui/Reveal";
 import { globalRegions, globalStats, globalIntro } from "@/content/global";
 
@@ -47,18 +48,18 @@ export function GlobalInfra() {
                       <div className="font-bold text-white">
                         {r.city}
                       </div>
-                      <span className="rounded-md bg-white/10 px-2 py-0.5 text-[10px] font-semibold text-white/70">
+                      <span className="rounded-md bg-white/10 px-2.5 py-1 text-xs font-semibold text-white/80">
                         {r.code}
                       </span>
                     </div>
-                    <div className="text-xs text-white/60">
+                    <div className="text-xs text-white/70">
                       {r.country} · {r.serves}
                     </div>
-                    <div className="mt-2 flex flex-wrap gap-1">
+                    <div className="mt-2 flex flex-wrap gap-1.5">
                       {r.compliance.map((c) => (
                         <span
                           key={c}
-                          className="rounded-full border border-white/10 px-2 py-0.5 text-[10px] text-white/70"
+                          className="rounded-full border border-white/15 px-2.5 py-1 text-xs text-white/80"
                         >
                           {c}
                         </span>
@@ -68,14 +69,9 @@ export function GlobalInfra() {
                 ))}
               </div>
 
-              <div className="mt-7 grid grid-cols-4 gap-4 border-t border-white/10 pt-7">
+              <div className="mt-7 grid grid-cols-2 gap-6 border-t border-white/10 pt-7 sm:grid-cols-4">
                 {globalStats.map((s) => (
-                  <div key={s.label}>
-                    <div className="text-3xl font-bold leading-none tracking-tight text-white num sm:text-4xl">
-                      {s.value}
-                    </div>
-                    <div className="mt-1.5 text-[11px] text-white/60">{s.label}</div>
-                  </div>
+                  <Stat key={s.label} value={s.value} label={s.label} inverse />
                 ))}
               </div>
             </div>

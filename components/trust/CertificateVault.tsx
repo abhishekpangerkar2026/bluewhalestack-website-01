@@ -153,7 +153,11 @@ export function CertificateVault({ certifications }: { certifications: Certifica
 
                 <div className="grid gap-5 md:grid-cols-2">
                   {items.map((cert, i) => (
-                    <Reveal key={cert.id} delay={i * 70}>
+                    <Reveal
+                      key={cert.id}
+                      delay={i * 70}
+                      className={items.length === 1 ? "md:col-span-2" : undefined}
+                    >
                       <Card className="flex h-full flex-col">
                         <div className="flex items-start gap-4">
                           <div className="w-16 shrink-0">
@@ -189,8 +193,8 @@ export function CertificateVault({ certifications }: { certifications: Certifica
                           </div>
                         </dl>
 
-                        {cert.certNumber && (
-                          <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-line pt-4">
+                        <div className="mt-auto flex flex-wrap items-center justify-between gap-3 border-t border-line pt-4">
+                          {cert.certNumber ? (
                             <p className="text-xs text-faint">
                               <span className="font-semibold text-muted">No. {cert.certNumber}</span>
                               {cert.validUntil && (
@@ -200,6 +204,11 @@ export function CertificateVault({ certifications }: { certifications: Certifica
                                 </>
                               )}
                             </p>
+                          ) : (
+                            <p className="text-xs text-faint">
+                              Regulatory framework — no certificate issued
+                            </p>
+                          )}
                             {cert.downloadable && (
                               <button
                                 type="button"
@@ -214,8 +223,7 @@ export function CertificateVault({ certifications }: { certifications: Certifica
                                 Download PDF
                               </button>
                             )}
-                          </div>
-                        )}
+                        </div>
                       </Card>
                     </Reveal>
                   ))}

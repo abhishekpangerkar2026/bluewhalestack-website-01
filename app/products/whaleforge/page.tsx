@@ -136,11 +136,11 @@ export default function WhaleForge() {
               <div>
                 <div className="mb-5 flex items-center gap-3">
                   <Badge tone="warning">Beta</Badge>
-                  <span className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+                  <span className="eyebrow text-accent">
                     Product · WhaleForge
                   </span>
                 </div>
-                <h1 className="text-[2.6rem] font-bold leading-[1.02] tracking-tight text-ink sm:text-6xl">
+                <h1 className="display-1 text-ink">
                   Infrastructure as Code,{" "}
                   <span className="text-accent">without the complexity</span>.
                 </h1>
@@ -154,7 +154,7 @@ export default function WhaleForge() {
             <Reveal delay={90}>
               <div className="flex flex-col gap-4 lg:pb-2">
                 <div className="rounded-xl border border-line bg-sunken p-5">
-                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-faint">
+                  <p className="eyebrow text-faint">
                     What you get today
                   </p>
                   <ul className="mt-4 flex flex-col gap-2.5">
@@ -342,7 +342,7 @@ export default function WhaleForge() {
             />
           </Reveal>
           <div className="mt-10 flex flex-wrap gap-3">
-            {["Standard", "Enterprise", "Telco", "Government", "Datacenter"].map((e) => (
+            {["Standard", "Enterprise", "Telco & Datacenter", "Government"].map((e) => (
               <span
                 key={e}
                 className="rounded-full border border-line bg-sunken px-4 py-2 text-sm font-semibold text-muted"
@@ -352,7 +352,7 @@ export default function WhaleForge() {
             ))}
           </div>
           <p className="mt-6 text-sm text-faint">
-            Community edition coming. Landing-zone packs: Enterprise and above only.
+            Landing-zone packs and advanced Git import: Enterprise and above only.
           </p>
         </Container>
       </section>
@@ -363,7 +363,7 @@ export default function WhaleForge() {
           <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
             <Reveal>
               <div className="max-w-2xl">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/80">
+                <p className="eyebrow text-white/80">
                   Beta · Free to try
                 </p>
                 <h2 className="mt-5 text-3xl font-bold leading-[1.1] tracking-tight text-white sm:text-4xl">

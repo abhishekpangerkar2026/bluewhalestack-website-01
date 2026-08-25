@@ -2,75 +2,54 @@ import { Icon } from "@/components/ui/Icon";
 import type { IndustryDef } from "@/content/industries";
 
 /**
- * Branded "industry snapshot" panel for the industry detail hero.
+ * Branded "industry snapshot" panel for the industry hero / featured card.
  * Pure HTML/SVG (no image files), server component. Renders the industry
- * icon, name, its first two KPIs, and compliance badges as a dashboard card.
+ * icon, name, all four KPIs in a 2×2 grid, and compliance badges — sized to
+ * its content rather than a forced aspect ratio, so nothing floats in space.
  */
 export function IndustryVisual({ industry }: { industry: IndustryDef }) {
-  const kpis = industry.kpis.slice(0, 2);
+  const kpis = industry.kpis.slice(0, 4);
   const compliance = industry.compliance.slice(0, 4);
 
   return (
-    <div
-      style={{ aspectRatio: "4/3" }}
-      className="relative w-full overflow-hidden rounded-lg border border-line bg-surface shadow-md"
-    >
+    <div className="relative w-full overflow-hidden rounded-lg border border-line bg-surface shadow-md">
       {/* Subtle brand grid backdrop */}
-      <svg
+      <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 h-full w-full text-accent/[0.06]"
-      >
-        <defs>
-          <pattern
-            id="industry-visual-grid"
-            width="28"
-            height="28"
-            patternUnits="userSpaceOnUse"
-          >
-            <path
-              d="M28 0H0V28"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1"
-            />
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#industry-visual-grid)" />
-      </svg>
+        className="pointer-events-none absolute inset-0 bg-dot-grid opacity-60 [mask-image:radial-gradient(ellipse_80%_70%_at_50%_20%,black,transparent)]"
+      />
       {/* Accent glow */}
       <div
         aria-hidden
         className="pointer-events-none absolute -right-16 -top-16 h-44 w-44 rounded-full bg-accent/10 blur-2xl"
       />
 
-      <div className="relative flex h-full flex-col p-6 sm:p-7">
+      <div className="relative flex flex-col p-6 sm:p-7">
         {/* Header: icon + name */}
         <div className="flex items-center gap-3">
           <span className="grid h-12 w-12 place-items-center rounded-lg bg-primary text-primary-fg shadow-md">
             <Icon name={industry.icon} className="h-6 w-6" />
           </span>
           <div className="min-w-0">
-            <p className="text-[11px] font-semibold uppercase tracking-wider text-accent">
-              Industry Cloud
-            </p>
-            <h3 className="truncate text-lg font-bold text-ink">
+            <p className="eyebrow text-accent">Industry cloud</p>
+            <p className="truncate text-lg font-bold text-ink">
               {industry.name}
-            </h3>
+            </p>
           </div>
         </div>
 
-        {/* KPIs */}
+        {/* KPIs — 2×2 so the panel earns its height */}
         {kpis.length > 0 && (
           <div className="mt-6 grid grid-cols-2 gap-3">
             {kpis.map((k) => (
               <div
                 key={k.label}
-                className="rounded-lg border border-line bg-sunken p-4"
+                className="rounded-lg border border-line bg-sunken p-4 shadow-[3px_3px_0_0_rgba(0,45,161,0.06)]"
               >
-                <div className="text-2xl font-bold tracking-tight text-accent sm:text-3xl">
+                <div className="text-xl font-bold tracking-tight text-accent sm:text-2xl lg:text-3xl">
                   {k.value}
                 </div>
-                <div className="mt-1 text-xs leading-snug text-faint">
+                <div className="mt-1 text-xs leading-snug text-muted">
                   {k.label}
                 </div>
               </div>
@@ -80,10 +59,8 @@ export function IndustryVisual({ industry }: { industry: IndustryDef }) {
 
         {/* Compliance chips */}
         {compliance.length > 0 && (
-          <div className="mt-auto pt-6">
-            <p className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-faint">
-              Compliance &amp; controls
-            </p>
+          <div className="mt-6">
+            <p className="eyebrow mb-2 text-faint">Compliance &amp; controls</p>
             <div className="flex flex-wrap gap-2">
               {compliance.map((c) => (
                 <span
