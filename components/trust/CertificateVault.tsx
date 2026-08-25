@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Check, Download, Loader2, Lock, X } from "lucide-react";
+import { Check, ChevronDown, Download, FileText, Loader2, Lock, X } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { CertBadge } from "@/components/brand/CertBadge";
 import { Reveal } from "@/components/ui/Reveal";
 import { cn } from "@/lib/utils";
-import { certCategories, type Certification, type CertCategory } from "@/content/trust";
+import { certCategories, docAccessLabel, type Certification, type CertCategory } from "@/content/trust";
 
 const CATEGORY_ORDER: CertCategory[] = [
   "information-security",
@@ -187,20 +187,126 @@ export function CertificateVault({ certifications }: { certifications: Certifica
                             <dt className="font-semibold text-ink">Scope</dt>
                             <dd className="mt-1 text-muted">{cert.scope}</dd>
                           </div>
-                          <div>
-                            <dt className="font-semibold text-ink">Audit cycle</dt>
-                            <dd className="mt-1 text-muted">{cert.cycle}</dd>
+                          <div className="space-y-3">
+                            <div>
+                              <dt className="font-semibold text-ink">Audit cycle</dt>
+                              <dd className="mt-1 text-muted">{cert.cycle}</dd>
+                            </div>
+                            <div>
+                              <dt className="font-semibold text-ink">Issued by</dt>
+                              <dd className="mt-1 text-muted">{cert.issuedBy}</dd>
+                            </div>
+                            {cert.entity && (
+                              <div>
+                                <dt className="font-semibold text-ink">Certified entity</dt>
+                                <dd className="mt-1 text-muted">{cert.entity}</dd>
+                              </div>
+                            )}
                           </div>
                         </dl>
+
+                        {(cert.audit || cert.documents?.length) && (
+                          <details className="group/audit mt-4 rounded-lg border border-line bg-sunken px-4 py-3 text-xs [&_summary::-webkit-details-marker]:hidden">
+                            <summary className="flex cursor-pointer list-none items-center justify-between gap-3 font-semibold text-ink">
+                              <span className="inline-flex items-center gap-2">
+                                <FileText className="h-3.5 w-3.5 text-accent" />
+                                Audit history &amp; documentation
+                              </span>
+                              <ChevronDown className="h-4 w-4 shrink-0 text-muted transition-transform group-open/audit:rotate-180" />
+                            </summary>
+
+                            {cert.audit && (
+                              <dl className="mt-3 grid gap-x-4 gap-y-2 border-t border-line pt-3 sm:grid-cols-2">
+                                {cert.audit.stage1 && (
+                                  <div>
+                                    <dt className="text-faint">
+                                      {cert.audit.stage2 ? "Stage 1 audit" : "Assessment date"}
+                                    </dt>
+                                    <dd className="font-medium text-ink">{cert.audit.stage1}</dd>
+                                  </div>
+                                )}
+                                {cert.audit.stage2 && (
+                                  <div>
+                                    <dt className="text-faint">Stage 2 audit</dt>
+                                    <dd className="font-medium text-ink">{cert.audit.stage2}</dd>
+                                  </div>
+                                )}
+                                {cert.audit.mode && (
+                                  <div>
+                                    <dt className="text-faint">Audit mode</dt>
+                                    <dd className="font-medium text-ink">{cert.audit.mode}</dd>
+                                  </div>
+                                )}
+                                {cert.audit.findings && (
+                                  <div>
+                                    <dt className="text-faint">Findings</dt>
+                                    <dd className="font-medium text-ink">{cert.audit.findings}</dd>
+                                  </div>
+                                )}
+                                {cert.audit.nextSurveillance && (
+                                  <div className="sm:col-span-2">
+                                    <dt className="text-faint">Surveillance programme</dt>
+                                    <dd className="font-medium text-ink">{cert.audit.nextSurveillance}</dd>
+                                  </div>
+                                )}
+                              </dl>
+                            )}
+
+                            {cert.documents && cert.documents.length > 0 && (
+                              <div className="mt-3 border-t border-line pt-3">
+                                <p className="text-faint">
+                                  Management-system documents ({cert.documents.length})
+                                </p>
+                                <ul className="mt-2 space-y-1.5">
+                                  {cert.documents.map((d) => (
+                                    <li key={d.title} className="flex items-start justify-between gap-3">
+                                      <span className="text-ink">{d.title}</span>
+                                      <span
+                                        className={cn(
+                                          "shrink-0 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide",
+                                          d.access === "public"
+                                            ? "bg-[var(--success-bg)] text-[var(--success-fg)]"
+                                            : d.access === "contract"
+                                              ? "bg-brand-50 text-accent"
+                                              : "bg-surface text-muted ring-1 ring-line",
+                                        )}
+                                      >
+                                        {docAccessLabel[d.access]}
+                                      </span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+                          </details>
+                        )}
 
                         <div className="mt-auto flex flex-wrap items-center justify-between gap-3 border-t border-line pt-4">
                           {cert.certNumber ? (
                             <p className="text-xs text-faint">
                               <span className="font-semibold text-muted">No. {cert.certNumber}</span>
+                              {cert.issueDate && <> · Issued {cert.issueDate}</>}
                               {cert.validUntil && (
                                 <>
                                   {" "}
                                   · {cert.validLabel ?? "Valid until"} {cert.validUntil}
+                                </>
+                              )}
+                              {cert.recertificationDate && (
+                                <> · Recertification {cert.recertificationDate}</>
+                              )}
+                              {cert.verifyUrl && (
+                                <>
+                                  {" "}
+                                  ·{" "}
+                                  <a
+                                    href={cert.verifyUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="font-medium text-accent hover:underline"
+                                  >
+                                    Verify with issuer
+                                  </a>
                                 </>
                               )}
                             </p>
