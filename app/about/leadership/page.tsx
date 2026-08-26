@@ -5,6 +5,7 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
+import { LocationVisual } from "@/components/diagrams/LocationVisual";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { LeadershipFeature, LeadershipSpotlight, LeadershipTile } from "@/components/sections/LeadershipCard";
@@ -238,19 +239,22 @@ export default function LeadershipPage() {
           <div className="mt-14 grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {offices.map((o, i) => (
               <Reveal key={o.city} delay={i * 80} className="h-full">
-                <Card className="flex h-full flex-col gap-3 p-6">
-                  <div className="flex items-center justify-between gap-3">
-                    <h3 className="text-lg font-bold text-ink">{o.city}</h3>
-                    <span className="shrink-0 rounded-full bg-[var(--bg-active)] px-3 py-1 text-xs font-semibold text-accent">
-                      {o.label}
-                    </span>
+                <Card className="flex h-full flex-col overflow-hidden p-0">
+                  <LocationVisual city={o.city} className="aspect-[20/9]" />
+                  <div className="flex flex-1 flex-col gap-3 p-6">
+                    <div className="flex items-center justify-between gap-3">
+                      <h3 className="text-lg font-bold text-ink">{o.city}</h3>
+                      <span className="shrink-0 rounded-full bg-[var(--bg-active)] px-3 py-1 text-xs font-semibold text-accent">
+                        {o.label}
+                      </span>
+                    </div>
+                    <p className="text-sm leading-relaxed text-muted">{o.blurb}</p>
+                    <p className="mt-auto border-t border-line pt-3 text-xs leading-relaxed text-faint">
+                      {o.address}
+                      <br />
+                      {o.entity}
+                    </p>
                   </div>
-                  <p className="text-sm leading-relaxed text-muted">{o.blurb}</p>
-                  <p className="mt-auto border-t border-line pt-3 text-xs leading-relaxed text-faint">
-                    {o.address}
-                    <br />
-                    {o.entity}
-                  </p>
                 </Card>
               </Reveal>
             ))}
