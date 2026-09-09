@@ -99,49 +99,30 @@ export function ProductCatalog() {
           </div>
         </Reveal>
 
-        {/* Cards — first tile spans two columns to break the uniform grid */}
+        {/* Cards — one consistent size and type scale across the grid */}
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {visible.map((m, i) => {
-            const featured = i === 0;
-            return (
-              <Reveal key={m.slug} delay={(i % 4) * 60}>
-                <Link
-                  href={`/modules/${m.slug}`}
-                  className={`group flex h-full flex-col rounded-lg border border-line bg-surface p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-line-strong hover:shadow-md ${
-                    featured ? "sm:col-span-2 sm:p-7" : ""
-                  }`}
-                >
-                  <div className="flex items-start justify-between">
-                    <span
-                      className={`grid place-items-center rounded-xl ring-1 ring-inset ${GROUP_COLOR[m.group]} ${
-                        featured ? "h-14 w-14" : "h-12 w-12"
-                      }`}
-                    >
-                      <Icon name={m.icon} className={featured ? "h-7 w-7" : "h-6 w-6"} />
-                    </span>
-                    <ArrowUpRight className="h-4 w-4 text-faint transition-colors group-hover:text-accent" />
-                  </div>
-                  <h3
-                    className={`mt-4 font-bold text-ink ${
-                      featured ? "text-2xl" : "text-base"
-                    }`}
+          {visible.map((m, i) => (
+            <Reveal key={m.slug} delay={(i % 4) * 60}>
+              <Link
+                href={`/modules/${m.slug}`}
+                className="group flex h-full flex-col rounded-lg border border-line bg-surface p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-line-strong hover:shadow-md"
+              >
+                <div className="flex items-start justify-between">
+                  <span
+                    className={`grid h-12 w-12 place-items-center rounded-xl ring-1 ring-inset ${GROUP_COLOR[m.group]}`}
                   >
-                    {m.name}
-                  </h3>
-                  <p
-                    className={`mt-1.5 flex-1 leading-relaxed text-muted ${
-                      featured ? "max-w-md text-base" : "text-sm"
-                    }`}
-                  >
-                    {m.tagline}
-                  </p>
-                  <span className="mt-3 text-[11px] font-semibold uppercase tracking-wider text-faint">
-                    {moduleGroups[m.group]}
+                    <Icon name={m.icon} className="h-6 w-6" />
                   </span>
-                </Link>
-              </Reveal>
-            );
-          })}
+                  <ArrowUpRight className="h-4 w-4 text-faint transition-colors group-hover:text-accent" />
+                </div>
+                <h3 className="mt-4 text-base font-bold leading-snug text-ink">{m.name}</h3>
+                <p className="mt-1.5 flex-1 text-sm leading-relaxed text-muted">{m.tagline}</p>
+                <span className="mt-3 text-[11px] font-semibold uppercase tracking-wider text-faint">
+                  {moduleGroups[m.group]}
+                </span>
+              </Link>
+            </Reveal>
+          ))}
         </div>
       </Container>
     </section>

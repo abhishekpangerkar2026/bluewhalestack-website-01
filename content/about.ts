@@ -126,6 +126,7 @@ export type LeadershipMember = {
   bio?: string;
   /** Path under /public, e.g. "/team/anil-pakale.jpg". */
   image?: string;
+  linkedin?: string;
 };
 
 export const leadership: LeadershipMember[] = [
@@ -133,30 +134,35 @@ export const leadership: LeadershipMember[] = [
     name: "Abhishek Pangerkar",
     role: "Founder & CEO",
     image: "/team/abhishek-pangerkar.jpg",
+    linkedin: "https://www.linkedin.com/in/abhishek-p-a376b561/",
     bio: "Abhishek Pangerkar founded BlueWhale Stack in 2018 as a cloud consulting firm and leads the company today as Founder & CEO. His vision — to simplify how organizations manage the complexity of modern cloud environments — became the platform: eight years of field experience across telecom, banking, government, healthcare, manufacturing and datacenter modernization, productized in 2026 into a single unified control plane for hybrid and multi-cloud operations.",
   },
   {
     name: "Anil Pakale",
     role: "General Manager — Middle East, US & Asia",
     image: "/team/anil-pakale.jpg",
+    linkedin: "https://www.linkedin.com/in/anil-pakale-70a15636/",
     bio: "Anil Pakale brings over 40 years of experience across manufacturing, engineering, sales, business development, and product management to BlueWhale Stack. A Mechanical Engineering graduate from VJTI, Mumbai, he has delivered landmark projects across the Middle East — including chillers for The Pearl-Qatar, Emirates Palace, Etihad Towers, and the Sheikh Zayed Grand Mosque — spanning the HVAC, industrial, construction machinery and technology sectors. At BlueWhale Stack, he focuses on helping enterprises accelerate digital transformation through intelligent cloud management solutions that improve operational visibility and infrastructure performance.",
   },
   {
     name: "Asawari More",
     role: "Legal, Partner & Customer Enablement — Middle East, Asia & US",
     image: "/team/asawari-more.jpg",
+    linkedin: "https://www.linkedin.com/in/asawari-more-82308b70/",
     bio: "Asawari More leads Legal, Partner & Customer Enablement at BlueWhale Stack, building and scaling high-impact partner ecosystems that accelerate revenue growth and deliver measurable business outcomes. She works closely with cross-functional teams to design structured onboarding and enablement programs, translating complex product capabilities into clear, value-driven partner narratives that speed adoption and strengthen collaboration. Her focus spans partner strategy, channel growth, training program design, and data-driven performance optimization — aligning partner goals with organizational strategy to build sustainable, win-win partnerships.",
   },
   {
     name: "Ganesh Muthusamy",
     role: "Head of Product Development",
     image: "/team/ganesh-muthusamy.jpg",
-    bio: "Ganesh Muthusamy is a Product & Technology Leader with over 18 years of experience designing, building, and scaling enterprise software platforms across cloud, AI, digital transformation, and SaaS ecosystems. As Head of Product Development at BlueWhale Stack, he leads the product strategy, architecture, and engineering execution of the company's Unified Multi-Cloud Management Platform — delivering enterprise-grade solutions for cloud governance, FinOps, automation, security, compliance, and workload management across public, private, hybrid, and sovereign environments. He specializes in cloud-native architectures, distributed systems, AI-powered platforms, and enterprise integration, with a focus on building scalable, secure platforms that help organizations accelerate digital transformation.",
+    linkedin: "https://www.linkedin.com/in/ganezm",
+    bio: "Ganesh Muthusamy is a Product & Technology Leader with over 18 years of experience designing, building, and scaling enterprise software platforms across cloud, AI, and SaaS ecosystems. As Head of Product Development at BlueWhale Stack, he leads the strategy, architecture, and engineering execution of the company's Unified Multi-Cloud Management Platform — delivering enterprise-grade solutions for cloud governance, FinOps, security, and compliance across public, private, hybrid, and sovereign environments. He specializes in cloud-native architectures and AI-powered platforms that help organizations accelerate digital transformation.",
   },
   {
     name: "Parag Ware",
     role: "Senior Account Director — Middle East & Asia",
     image: "/team/parag-ware.jpg",
+    linkedin: "https://www.linkedin.com/in/parag-ware-03227814/",
     bio: "Parag Ware brings over 25 years of experience in program and project management, consulting, and large-scale GIS implementation to BlueWhale Stack. He has led client relationships, pre-sales, and delivery for utility companies across the US, UK, and Middle East, government bodies including MHADA and CSPDCL, and defense and law-enforcement agencies such as DRDO and Maharashtra Police. Most recently Vice President – Operations at Replete Business Solutions, he brings deep expertise in full project lifecycle management, business process mapping, and building high-performance operations teams.",
   },
 ];

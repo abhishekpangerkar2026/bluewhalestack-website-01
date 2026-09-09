@@ -91,9 +91,9 @@ export const headlineStats = [
 // ── Partner Portal (external app — partners.bluewhalestack.com) ─
 // The portal is a separate, already-built product. The website only links to it.
 export const partnerPortal = {
-  url: "https://partner.bluewhalestack.com",
-  login: "https://partner.bluewhalestack.com/login",
-  register: "https://partner.bluewhalestack.com/register",
+  url: "https://partners.bluewhalestack.com",
+  login: "https://partners.bluewhalestack.com/login",
+  register: "https://partners.bluewhalestack.com/register",
 };
 
 // ── Primary navigation (mega-menu) ────────────────────────────
@@ -259,7 +259,7 @@ export const primaryNav: NavItem[] = [
         heading: "Featured",
         featured: true,
         links: [
-          { label: "Open Partner Portal", href: partnerPortal.login, external: true, desc: "partner.bluewhalestack.com" },
+          { label: "Open Partner Portal", href: partnerPortal.login, external: true, desc: "partners.bluewhalestack.com" },
           { label: "Partner tracks", href: "/partners#tracks" },
         ],
       },

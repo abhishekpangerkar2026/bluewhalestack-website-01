@@ -16,7 +16,7 @@ const variants: Record<Variant, string> = {
     "border border-line-strong text-ink hover:border-accent hover:text-accent",
   ghost: "text-ink hover:bg-sunken",
   white:
-    "bg-surface text-accent border border-line shadow-sm hover:bg-sunken",
+    "bg-white text-[var(--brand-deep)] shadow-sm hover:bg-white/90 active:bg-white/80",
 };
 
 const sizes: Record<Size, string> = {

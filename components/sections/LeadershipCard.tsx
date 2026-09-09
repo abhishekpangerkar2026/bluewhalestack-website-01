@@ -5,6 +5,22 @@ import { User } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import type { LeadershipMember } from "@/content/about";
 
+/** Official LinkedIn mark — blue rounded square with the white "in" glyph. */
+function LinkedInIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+      <path
+        fill="#0A66C2"
+        d="M22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
+      />
+      <path
+        fill="#fff"
+        d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452z"
+      />
+    </svg>
+  );
+}
+
 /** Public-folder photos are added by hand; fall back to the icon until the file actually exists. */
 function imageExists(publicPath: string): boolean {
   try {
@@ -24,23 +40,35 @@ function Portrait({
   className?: string;
 }) {
   const hasImage = !!member.image && imageExists(member.image);
+  const badgeSize = Math.round(size * 0.3);
   return (
-    <div
-      className={`shrink-0 overflow-hidden rounded-full ring-1 ring-line ${className}`}
-      style={{ width: size, height: size }}
-    >
-      {hasImage ? (
-        <Image
-          src={member.image!}
-          alt={member.name ?? member.role}
-          width={size}
-          height={size}
-          className="h-full w-full object-cover object-top"
-        />
-      ) : (
-        <div className="grid h-full w-full place-items-center bg-brand-50 text-accent">
-          <User style={{ width: size * 0.4, height: size * 0.4 }} />
-        </div>
+    <div className={`relative shrink-0 ${className}`} style={{ width: size, height: size }}>
+      <div className="h-full w-full overflow-hidden rounded-full ring-1 ring-line">
+        {hasImage ? (
+          <Image
+            src={member.image!}
+            alt={member.name ?? member.role}
+            width={size}
+            height={size}
+            className="h-full w-full object-cover object-top"
+          />
+        ) : (
+          <div className="grid h-full w-full place-items-center bg-brand-50 text-accent">
+            <User style={{ width: size * 0.4, height: size * 0.4 }} />
+          </div>
+        )}
+      </div>
+      {member.linkedin && (
+        <a
+          href={member.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`${member.name} on LinkedIn`}
+          className="absolute bottom-0 right-0 block rounded-[6px] ring-2 ring-surface transition-transform hover:scale-110"
+          style={{ width: badgeSize, height: badgeSize }}
+        >
+          <LinkedInIcon className="h-full w-full rounded-[6px]" />
+        </a>
       )}
     </div>
   );
@@ -67,9 +95,9 @@ export function LeadershipSpotlight({ member }: { member: LeadershipMember }) {
   return (
     <Card className="flex h-full flex-col items-center gap-4 p-8">
       <Portrait member={member} size={96} />
-      <div className="text-center">
-        <h3 className="text-lg font-bold text-ink">{member.name ?? "To be announced"}</h3>
-        <p className="mt-1 text-sm font-semibold text-accent">{member.role}</p>
+      <div className="flex min-h-[6.75rem] flex-col items-center justify-start text-center">
+        <h3 className="whitespace-nowrap text-lg font-bold text-ink">{member.name ?? "To be announced"}</h3>
+        <p className="mt-1.5 text-sm font-semibold leading-snug text-accent text-pretty">{member.role}</p>
       </div>
       {member.bio && (
         <p className="text-sm leading-relaxed text-muted text-pretty">{member.bio}</p>
