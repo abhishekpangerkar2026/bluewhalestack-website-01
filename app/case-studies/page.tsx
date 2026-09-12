@@ -5,6 +5,7 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
+import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { Iso, INDUSTRY_ISO } from "@/components/illustrations/Iso";
 import { customerStories } from "@/content/customers";
@@ -28,9 +29,13 @@ export default function CaseStudiesPage() {
           <div className="grid items-center gap-12 py-20 sm:py-28 lg:grid-cols-[1.1fr_0.9fr]">
             <Reveal>
               <div className="max-w-2xl">
-                <div className="mb-5 flex items-center gap-3">
-                  <span aria-hidden className="h-px w-8 bg-white/40" />
+                <div className="mb-6 flex items-center gap-3">
+                  <span className="grid h-11 w-11 place-items-center rounded-lg bg-white/15 text-white ring-1 ring-white/25">
+                    <Icon name="FileText" className="h-5 w-5" />
+                  </span>
                   <span className="eyebrow text-white/80">Case studies</span>
+                  <span aria-hidden className="h-px w-8 bg-white/40" />
+                  <span className="text-xs font-semibold text-white/60">Situation · work · outcome</span>
                 </div>
                 <h1 className="display-1 text-white">
                   Four estates, written up the way an architect reads them.

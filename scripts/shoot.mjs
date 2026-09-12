@@ -13,10 +13,19 @@ if (!base || !outDir || !mode || routes.length === 0) {
 }
 fs.mkdirSync(outDir, { recursive: true });
 
+// SHOOT_GL=1 keeps WebGL alive (software ANGLE) so live three.js scenes render
+// instead of falling back to their static images.
+const gl = process.env.SHOOT_GL === "1";
 const browser = await puppeteer.launch({
   executablePath: "C:/Program Files/Google/Chrome/Application/chrome.exe",
   headless: true,
-  args: ["--no-sandbox", "--disable-gpu", "--hide-scrollbars"],
+  args: [
+    "--no-sandbox",
+    "--hide-scrollbars",
+    ...(gl
+      ? ["--use-gl=angle", "--use-angle=swiftshader", "--enable-unsafe-swiftshader", "--ignore-gpu-blocklist"]
+      : ["--disable-gpu"]),
+  ],
 });
 
 const page = await browser.newPage();

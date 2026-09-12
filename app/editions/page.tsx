@@ -5,6 +5,7 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
+import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { getEditions } from "@/lib/content";
 import { modules } from "@/content/modules";
@@ -28,9 +29,13 @@ export default function EditionsPage() {
           <div className="grid gap-x-16 gap-y-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
             <Reveal>
               <div className="max-w-2xl">
-                <div className="mb-5 flex items-center gap-3">
-                  <span aria-hidden className="h-px w-8 bg-accent/50" />
+                <div className="mb-6 flex items-center gap-3">
+                  <span className="grid h-11 w-11 place-items-center rounded-lg bg-primary text-primary-fg shadow-sm">
+                    <Icon name="Layers" className="h-5 w-5" />
+                  </span>
                   <span className="eyebrow text-accent">Editions</span>
+                  <span aria-hidden className="h-px w-8 bg-accent/50" />
+                  <span className="text-xs font-semibold text-faint">Four licences · one deployment</span>
                 </div>
                 <h1 className="display-1 text-ink">
                   Four editions.{" "}

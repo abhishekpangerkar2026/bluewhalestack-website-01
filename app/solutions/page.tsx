@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/Button";
 import { Iso, SOLUTION_ISO } from "@/components/illustrations/Iso";
 import { StoryVisual } from "@/components/sections/CustomerStories";
 import { ClosingCTA } from "@/components/sections/ClosingCTA";
+import { SolutionsSceneLoader } from "@/components/scenes/SolutionsSceneLoader";
 import { getSolutions, getIndustries, getEdition } from "@/lib/content";
 import { customerStories } from "@/content/customers";
 
@@ -36,9 +37,13 @@ export default function SolutionsPage() {
           <div className="grid items-center gap-12 py-20 sm:py-28 lg:grid-cols-[1.1fr_0.9fr]">
             <Reveal>
               <div className="max-w-2xl">
-                <div className="mb-5 flex items-center gap-3">
-                  <span aria-hidden className="h-px w-8 bg-accent/50" />
+                <div className="mb-6 flex items-center gap-3">
+                  <span className="grid h-11 w-11 place-items-center rounded-lg bg-primary text-primary-fg shadow-sm">
+                    <Icon name="Workflow" className="h-5 w-5" />
+                  </span>
                   <span className="eyebrow text-accent">Solutions</span>
+                  <span aria-hidden className="h-px w-8 bg-accent/50" />
+                  <span className="text-xs font-semibold text-faint">Six outcomes · one control plane</span>
                 </div>
                 <h1 className="display-1 text-ink">
                   Six things teams buy the platform for.
@@ -61,12 +66,23 @@ export default function SolutionsPage() {
                     Read the case studies
                   </Button>
                 </div>
+                {/* the six solutions as icon chips — a jump list that mirrors the tiles in the 3D scene */}
+                <div className="mt-8 flex flex-wrap gap-2">
+                  {solutions.map((s) => (
+                    <Link
+                      key={s.slug}
+                      href={`/solutions/${s.slug}`}
+                      className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3 py-1.5 text-xs font-semibold text-muted transition-colors hover:border-accent hover:text-accent"
+                    >
+                      <Icon name={s.icon} className="h-3.5 w-3.5 text-accent" />
+                      {s.name}
+                    </Link>
+                  ))}
+                </div>
               </div>
             </Reveal>
-            <Reveal delay={100}>
-              <div className="mx-auto w-full max-w-[480px]">
-                <Iso name="solutions" title="Three governed steps up to a sovereign estate" />
-              </div>
+            <Reveal delay={100} className="min-w-0">
+              <SolutionsSceneLoader />
             </Reveal>
           </div>
         </Container>

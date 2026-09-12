@@ -14,13 +14,14 @@ import {
   ArrowDownRight,
   Activity,
   Zap,
+  type LucideIcon,
 } from "lucide-react";
 import { CloudLogo } from "@/components/brand/CloudLogos";
 
 const TABS = ["Inventory", "FinOps", "Whale AI", "Security"] as const;
 type Tab = (typeof TABS)[number];
 
-const TAB_ICONS: Record<Tab, React.ElementType> = {
+const TAB_ICONS: Record<Tab, LucideIcon> = {
   Inventory: Boxes,
   FinOps: Wallet,
   "Whale AI": Sparkles,

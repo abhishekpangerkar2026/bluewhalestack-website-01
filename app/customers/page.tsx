@@ -6,6 +6,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
+import { Icon } from "@/components/ui/Icon";
 import { Stat } from "@/components/ui/Stat";
 import { Reveal } from "@/components/ui/Reveal";
 import { Iso } from "@/components/illustrations/Iso";
@@ -33,9 +34,13 @@ export default function CustomersPage() {
           <div className="grid items-center gap-12 py-20 sm:py-28 lg:grid-cols-[1.1fr_0.9fr]">
             <Reveal>
               <div className="max-w-2xl">
-                <div className="mb-5 flex items-center gap-3">
-                  <span aria-hidden className="h-px w-8 bg-accent/50" />
+                <div className="mb-6 flex items-center gap-3">
+                  <span className="grid h-11 w-11 place-items-center rounded-lg bg-primary text-primary-fg shadow-sm">
+                    <Icon name="Users" className="h-5 w-5" />
+                  </span>
                   <span className="eyebrow text-accent">Customer success stories</span>
+                  <span aria-hidden className="h-px w-8 bg-accent/50" />
+                  <span className="text-xs font-semibold text-faint">Four delivered engagements</span>
                 </div>
                 <h1 className="display-1 text-ink">
                   Banks, ministries, operators and a newsroom — what changed for each.
