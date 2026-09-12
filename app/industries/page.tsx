@@ -8,6 +8,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { ArchitectureDiagram } from "@/components/diagrams/ArchitectureDiagram";
 import { IndustryVisual } from "@/components/diagrams/IndustryVisual";
 import { ClosingCTA } from "@/components/sections/ClosingCTA";
+import { POSTER_GALLERY, posterSrc } from "@/content/industryPosters";
 import { getIndustries, getEdition } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -28,9 +29,13 @@ export default function IndustriesPage() {
           <div className="grid gap-x-16 gap-y-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
             <Reveal>
               <div className="max-w-2xl">
-                <div className="mb-5 flex items-center gap-3">
-                  <span aria-hidden className="h-px w-8 bg-accent/50" />
+                <div className="mb-6 flex items-center gap-3">
+                  <span className="grid h-11 w-11 place-items-center rounded-lg bg-primary text-primary-fg shadow-sm">
+                    <Icon name="Landmark" className="h-5 w-5" />
+                  </span>
                   <span className="eyebrow text-accent">Industry solutions</span>
+                  <span aria-hidden className="h-px w-8 bg-accent/50" />
+                  <span className="text-xs font-semibold text-faint">Seven sectors · one control plane</span>
                 </div>
                 <h1 className="display-1 text-ink">
                   Seven sectors, and the regimes each one answers to.
@@ -72,6 +77,73 @@ export default function IndustriesPage() {
               <ArchitectureDiagram id="industries-overview" />
             </div>
           </Reveal>
+        </Container>
+      </section>
+
+      {/* ── Sector architecture sheets ── */}
+      <section className="border-t border-line bg-canvas py-20 sm:py-28">
+        <Container>
+          <Reveal>
+            <SectionHeading
+              eyebrow="Sector architecture sheets"
+              title="Five sectors, drawn on the same seven layers."
+              description="Each sheet is the same platform read for one sector: the consoles its people use, the Digital Experience Layer, the nine-module core with the modules that lead marked in gold, the systems it plugs into, the estates it governs, the seven-step request flow, and the deployment modes that fit. Open one to read every label full screen."
+            />
+          </Reveal>
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {POSTER_GALLERY.map(({ poster, href, sector }, i) => (
+              <Reveal key={poster.file} delay={(i % 3) * 80}>
+                <Link
+                  href={href}
+                  className="group flex h-full flex-col overflow-hidden rounded-lg border border-line bg-surface shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-line-strong hover:shadow-md"
+                >
+                  <div className="bg-[#0b1f4d]">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={posterSrc(poster, 1200)}
+                      width={1200}
+                      height={693}
+                      alt={`${poster.title} — reference architecture sheet`}
+                      loading="lazy"
+                      decoding="async"
+                      className="block h-auto w-full transition-transform duration-500 group-hover:scale-[1.02]"
+                    />
+                  </div>
+                  <div className="flex flex-1 flex-col p-6">
+                    <p className="eyebrow text-accent">{sector}</p>
+                    <h3 className="mt-2 text-lg font-bold leading-snug text-ink">{poster.subtitle}</h3>
+                    <div className="mt-4 flex flex-wrap gap-1.5">
+                      {poster.modules.map((m) => (
+                        <span key={m} className="rounded-full border border-[#e2c57c] bg-[#fdf6e3] px-2 py-0.5 text-[11px] font-semibold text-[#7a5a12]">
+                          {m}
+                        </span>
+                      ))}
+                    </div>
+                    <span className="mt-auto inline-flex items-center gap-1.5 pt-5 text-sm font-semibold text-accent transition-all group-hover:gap-2.5">
+                      Open the sheet <ArrowRight className="h-3.5 w-3.5" />
+                    </span>
+                  </div>
+                </Link>
+              </Reveal>
+            ))}
+            <Reveal delay={160}>
+              <div className="flex h-full flex-col justify-between rounded-lg border border-dashed border-line-strong bg-sunken p-6">
+                <div>
+                  <p className="eyebrow text-faint">Your sector</p>
+                  <h3 className="mt-2 text-lg font-bold leading-snug text-ink">Healthcare, SaaS, manufacturing, utilities — the sheet is drawn per engagement.</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted">
+                    Tell us the regulators and frameworks you answer to and the estates you run. We return the same seven-layer sheet for your sector with the control mapping alongside it, before any commercial conversation.
+                  </p>
+                </div>
+                <Link
+                  href="/contact?intent=resource"
+                  className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-accent hover:gap-2.5"
+                >
+                  Request your sector sheet <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              </div>
+            </Reveal>
+          </div>
         </Container>
       </section>
 

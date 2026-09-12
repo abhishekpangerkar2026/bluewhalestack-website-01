@@ -16,6 +16,8 @@ import { StoryVisual } from "@/components/sections/CustomerStories";
 import { FAQ } from "@/components/sections/FAQ";
 import { ClosingCTA } from "@/components/sections/ClosingCTA";
 import { INDUSTRY_3D } from "@/content/product3d";
+import { INDUSTRY_POSTER } from "@/content/industryPosters";
+import { IndustryArchitecturePoster } from "@/components/diagrams/IndustryArchitecturePoster";
 import { customerStories } from "@/content/customers";
 import { getIndustries, getIndustry, getEdition, getModule } from "@/lib/content";
 
@@ -45,6 +47,7 @@ export default async function IndustryDetailPage({
   const edition = getEdition(industry.edition);
   const preview = Boolean(edition?.comingSoon);
   const story = industry.story ? customerStories.find((c) => c.slug === industry.story) : undefined;
+  const poster = INDUSTRY_POSTER[industry.slug];
 
   return (
     <>
@@ -201,24 +204,43 @@ export default async function IndustryDetailPage({
         </Container>
       </section>
 
-      {/* Reference architecture */}
-      {industry.architectureId && (
-        <section className="bg-canvas py-20 sm:py-28">
+      {/* Reference architecture — the official sector sheet where one exists, else the code diagram */}
+      {poster ? (
+        <section id="architecture" className="scroll-mt-24 bg-canvas py-20 sm:py-28">
           <Container>
             <Reveal>
               <SectionHeading
                 eyebrow="Reference architecture"
-                title="The estates, the control plane, and what comes out"
-                description={`Read left to right: the estates a ${industry.name.toLowerCase()} organisation runs, the shared control plane over them, and the outcome delivered back — ${industry.outcome.toLowerCase()}.`}
+                title={poster.subtitle}
+                description={`The official ${poster.title} sheet, read top to bottom in seven bands: who uses it, the Digital Experience Layer, the Unified Platform Core, what it integrates with, the estates and data it governs, the path every request takes, and the deployment modes that fit. Gold marks the modules and modes that lead in ${industry.name.toLowerCase()} estates. Open it full screen to read every label.`}
               />
             </Reveal>
             <Reveal delay={100}>
               <div className="mt-12">
-                <ArchitectureDiagram id={industry.architectureId} />
+                <IndustryArchitecturePoster poster={poster} sector={industry.name} />
               </div>
             </Reveal>
           </Container>
         </section>
+      ) : (
+        industry.architectureId && (
+          <section id="architecture" className="scroll-mt-24 bg-canvas py-20 sm:py-28">
+            <Container>
+              <Reveal>
+                <SectionHeading
+                  eyebrow="Reference architecture"
+                  title="The estates, the control plane, and what comes out"
+                  description={`Read left to right: the estates a ${industry.name.toLowerCase()} organisation runs, the shared control plane over them, and the outcome delivered back — ${industry.outcome.toLowerCase()}.`}
+                />
+              </Reveal>
+              <Reveal delay={100}>
+                <div className="mt-12">
+                  <ArchitectureDiagram id={industry.architectureId} />
+                </div>
+              </Reveal>
+            </Container>
+          </section>
+        )
       )}
 
       {/* ── Use cases ── */}
