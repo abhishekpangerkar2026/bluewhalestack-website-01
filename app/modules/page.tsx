@@ -7,6 +7,7 @@ import { Card } from "@/components/ui/Card";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
+import { Iso, FAMILY_ISO } from "@/components/illustrations/Iso";
 import {
   modules,
   moduleGroups,
@@ -89,6 +90,7 @@ export default function ModulesPage() {
               <div className="grid gap-x-14 gap-y-10 lg:grid-cols-[0.85fr_1.15fr]">
                 <Reveal>
                   <div className="lg:sticky lg:top-28 lg:self-start">
+                    <Iso name={FAMILY_ISO[group]} className="mb-6 max-w-[260px]" />
                     <div className="mb-4 flex items-center gap-3">
                       <span className="grid h-10 w-10 place-items-center rounded-lg bg-primary text-primary-fg">
                         <Icon name={moduleGroupIcons[group]} className="h-5 w-5" />

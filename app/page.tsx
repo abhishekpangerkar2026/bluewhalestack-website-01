@@ -13,6 +13,7 @@ import { ProductCatalog } from "@/components/sections/ProductCatalog";
 import { GlobalInfra } from "@/components/sections/GlobalInfra";
 import { CustomerStories } from "@/components/sections/CustomerStories";
 import { PrototypeOffer } from "@/components/sections/PrototypeOffer";
+import { Iso, EDITION_ISO } from "@/components/illustrations/Iso";
 import { problems, promise, whyBluewhale, howItWorks } from "@/content/home";
 import { headlineStats } from "@/content/company";
 import { CloudLogo, cloudLogoNames } from "@/components/brand/CloudLogos";
@@ -73,9 +74,14 @@ export default function HomePage() {
             ))}
           </div>
           <Reveal delay={120}>
-            <div className="mt-8 rounded-xl border border-line bg-sunken p-8 text-center">
-              <h3 className="text-2xl font-bold text-ink">{promise.title}</h3>
-              <p className="mx-auto mt-3 max-w-2xl text-muted">{promise.body}</p>
+            <div className="mt-8 grid items-center gap-8 rounded-xl border border-line bg-sunken p-8 lg:grid-cols-[0.8fr_1.2fr]">
+              <div className="mx-auto w-full max-w-[360px]">
+                <Iso name="platform-stack" title="One control plane over every estate" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-ink">{promise.title}</h3>
+                <p className="mt-3 max-w-2xl text-muted">{promise.body}</p>
+              </div>
             </div>
           </Reveal>
         </Container>
@@ -182,7 +188,8 @@ export default function HomePage() {
                         Most deployed
                       </span>
                     )}
-                    <h3 className="min-h-[3.5rem] pr-16 text-lg font-bold leading-tight text-ink">{e.name}</h3>
+                    <Iso name={EDITION_ISO[e.slug]} className="mb-3 h-28 w-auto self-start" />
+                    <h3 className="pr-16 text-lg font-bold leading-tight text-ink">{e.name}</h3>
                     <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-accent">
                       {e.tagline}
                     </p>

@@ -13,6 +13,7 @@ import { ArchitectureDiagram } from "@/components/diagrams/ArchitectureDiagram";
 import { ModuleExplorer } from "@/components/sections/ModuleExplorer";
 import { ProductShowcase } from "@/components/sections/ProductShowcase";
 import { PrototypeOffer } from "@/components/sections/PrototypeOffer";
+import { Iso, FAMILY_ISO, DEPLOY_ISO } from "@/components/illustrations/Iso";
 import { compliance, estates } from "@/content/company";
 import {
   modules,
@@ -55,30 +56,40 @@ export default function PlatformPage() {
           className="pointer-events-none absolute inset-0 bg-dot-grid opacity-60 [mask-image:radial-gradient(ellipse_70%_60%_at_50%_0%,black,transparent_75%)]"
         />
         <Container className="relative">
-          <div className="max-w-4xl pt-20 sm:pt-28">
-            <div className="mb-6 flex items-center gap-3">
-              <span aria-hidden className="h-px w-8 bg-accent/60" />
-              <span className="eyebrow text-accent">{platformHero.eyebrow}</span>
+          <div className="grid items-center gap-12 pt-20 sm:pt-28 lg:grid-cols-[1.1fr_0.9fr]">
+            <div className="max-w-3xl">
+              <div className="mb-6 flex items-center gap-3">
+                <span aria-hidden className="h-px w-8 bg-accent/60" />
+                <span className="eyebrow text-accent">{platformHero.eyebrow}</span>
+              </div>
+              <h1 className="display-1">
+                One Platform.{" "}
+                <span className="text-accent">Every Industry. Every Estate.</span>
+              </h1>
+              <p className="mt-7 text-lg leading-relaxed text-muted sm:text-xl">
+                {platformHero.description}
+              </p>
+              <p className="mt-5 text-base font-semibold text-ink">
+                {platformHero.tagline}
+              </p>
+              <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+                <Button href="/contact?intent=demo" size="lg" variant="primary">
+                  Book the discovery workshop
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+                <Button href="/editions" size="lg" variant="outline">
+                  See the four editions
+                </Button>
+              </div>
             </div>
-            <h1 className="display-1">
-              One Platform.{" "}
-              <span className="text-accent">Every Industry. Every Estate.</span>
-            </h1>
-            <p className="mt-7 max-w-3xl text-lg leading-relaxed text-muted sm:text-xl">
-              {platformHero.description}
-            </p>
-            <p className="mt-5 text-base font-semibold text-ink">
-              {platformHero.tagline}
-            </p>
-            <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-              <Button href="/contact?intent=demo" size="lg" variant="primary">
-                Book the discovery workshop
-                <ArrowRight className="h-4 w-4" />
-              </Button>
-              <Button href="/editions" size="lg" variant="outline">
-                See the four editions
-              </Button>
-            </div>
+            <Reveal delay={100}>
+              <div className="mx-auto w-full max-w-[560px]">
+                <Iso
+                  name="platform-stack"
+                  title="The BlueWhale Stack platform — three stacked layers connected to every cloud"
+                />
+              </div>
+            </Reveal>
           </div>
 
           {/* Stats strip — the official at-a-glance numbers */}
@@ -193,6 +204,7 @@ export default function PlatformPage() {
                 <Reveal key={g} delay={(i % 3) * 70}>
                   <Link href={`/modules#${g}`} className="block h-full">
                     <Card interactive className="flex h-full flex-col">
+                      <Iso name={FAMILY_ISO[g]} className="mb-3 h-28 w-auto self-start" />
                       <div className="flex items-center gap-3">
                         <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-primary text-primary-fg">
                           <Icon name={moduleGroupIcons[g]} className="h-5 w-5" />
@@ -451,6 +463,7 @@ export default function PlatformPage() {
             {deploymentModes.map((d, i) => (
               <Reveal key={d.name} delay={(i % 5) * 60}>
                 <Card className="h-full">
+                  <Iso name={DEPLOY_ISO[i]} className="mb-3 h-24 w-auto" />
                   <Badge tone="accent">{d.badge}</Badge>
                   <h3 className="mt-3 text-base font-bold text-ink">{d.name}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted">{d.body}</p>

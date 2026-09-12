@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Reveal } from "@/components/ui/Reveal";
 import { getEditions } from "@/lib/content";
 import { modules } from "@/content/modules";
+import { Iso, EDITION_ISO } from "@/components/illustrations/Iso";
 
 export const metadata: Metadata = {
   title: "Editions",
@@ -75,7 +76,8 @@ export default function EditionsPage() {
                       {String(i + 1).padStart(2, "0")}
                     </span>
                   </div>
-                  <h3 className="mt-4 text-xl font-bold text-ink">
+                  <Iso name={EDITION_ISO[e.slug]} className="mt-3 h-32 w-auto self-start" />
+                  <h3 className="mt-3 text-xl font-bold text-ink">
                     {e.name}
                   </h3>
                   <p className="mt-1 text-sm font-medium italic text-accent">

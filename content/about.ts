@@ -11,6 +11,8 @@
  * that conflicted with the story section below — now reconciled.
  */
 
+import type { IsoName } from "@/components/illustrations/Iso";
+
 export const aboutHero = {
   eyebrow: "About Us",
   title: "Building the command center for every cloud",
@@ -75,64 +77,74 @@ export const principles = [
 ];
 
 /** Product offerings — the platform and what ships inside it (Company Profile, "Our offerings"). */
-export const productFamily = [
+export const productFamily: { name: string; badge: string; href: string; body: string; iso: IsoName }[] = [
   {
     name: "BlueWhale Stack Platform",
     badge: "Core",
     href: "/platform",
+    iso: "stacked-slabs",
     body: "One control plane across public, private, virtualization, hybrid and edge — 54 capabilities · nine families · four editions.",
   },
   {
     name: "Whalenomics · FinOps",
     badge: "Family",
     href: "/modules/finops",
+    iso: "chart",
     body: "Budgets, forecasts, chargeback, continuous optimization — spend decomposed to workload, department or tenant.",
   },
   {
     name: "Whale AI — incl. offline",
     badge: "GA",
     href: "/products/whale-ai",
+    iso: "ai-cube",
     body: "AI for operations, documentation and compliance — your choice of model, able to run fully inside the perimeter.",
   },
   {
     name: "Migration Engine",
     badge: "Family",
     href: "/modules/migration",
+    iso: "migration",
     body: "Assessment, dependency mapping, rehearsed waves and cutover across six platforms — entry, movement and exit industrialized.",
   },
   {
     name: "Cloud Audit & Evidence",
     badge: "Family",
     href: "/modules/cloud-audit",
+    iso: "audit",
     body: "Controls monitored continuously — examiner-grade reports on demand, for the board, the auditor and the regulator.",
   },
   {
     name: "BlueWhale Stack Fabric",
     badge: "Flagship initiative",
     href: "/fabric",
+    iso: "datacenter",
     body: "India — datacenter capacity unified on one platform: operator monetization plus a sovereign cloud.",
   },
 ];
 
 /** Service offerings — consulting and implementation, delivered globally, with or without the platform. */
-export const services = [
+export const services: { icon: string; iso: IsoName; name: string; body: string }[] = [
   {
     icon: "LayoutTemplate",
+    iso: "app-window",
     name: "App Modernization",
     body: "Legacy applications re-architected cloud-native — microservices, containers and governed landing zones, without downtime.",
   },
   {
     icon: "Server",
+    iso: "racks",
     name: "Infrastructure Modernization",
     body: "Datacenter and virtualization estates modernized — hybrid architectures and a rehearsed migration factory.",
   },
   {
     icon: "Database",
+    iso: "data",
     name: "Data Modernization",
     body: "One governed data platform — pipelines, quality and shared definitions feeding analytics and every AI use case.",
   },
   {
     icon: "Sparkles",
+    iso: "network",
     name: "AI Design & Modernization",
     body: "AI adoption inside the perimeter — use-case design, Whale AI deployment, custom models the customer owns outright.",
   },

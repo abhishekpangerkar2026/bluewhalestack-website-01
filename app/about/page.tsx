@@ -5,6 +5,7 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Card } from "@/components/ui/Card";
 import { LocationVisual } from "@/components/diagrams/LocationVisual";
+import { Iso } from "@/components/illustrations/Iso";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Stat } from "@/components/ui/Stat";
@@ -265,6 +266,7 @@ export default function AboutPage() {
               <Reveal key={p.name} delay={(i % 3) * 80}>
                 <Link href={p.href} className="block h-full">
                   <Card interactive className="flex h-full flex-col">
+                    <Iso name={p.iso} className="mb-4 h-32 w-auto self-start" />
                     <div className="flex items-center justify-between">
                       <h3 className="text-lg font-bold text-ink">
                         {p.name}
@@ -302,10 +304,8 @@ export default function AboutPage() {
             {services.map((s, i) => (
               <Reveal key={s.name} delay={(i % 4) * 80}>
                 <Card className="flex h-full flex-col border-l-4 border-l-primary">
-                  <span className="grid h-11 w-11 place-items-center rounded-lg bg-[var(--bg-active)] text-accent">
-                    <Icon name={s.icon} className="h-5 w-5" />
-                  </span>
-                  <h3 className="mt-5 text-lg font-bold text-ink">{s.name}</h3>
+                  <Iso name={s.iso} className="h-32 w-auto self-start" />
+                  <h3 className="mt-4 text-lg font-bold text-ink">{s.name}</h3>
                   <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">{s.body}</p>
                 </Card>
               </Reveal>

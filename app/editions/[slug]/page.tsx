@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { ArrowRight, Check, Clock } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { Iso, EDITION_ISO } from "@/components/illustrations/Iso";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
@@ -72,7 +73,8 @@ export default async function EditionDetailPage({
           className="pointer-events-none absolute -left-20 top-0 h-80 w-80 rounded-full bg-brand-500/30 blur-[110px]"
         />
         <Container className="relative">
-          <div className="max-w-3xl py-20 sm:py-28">
+          <div className="grid items-center gap-12 py-20 sm:py-28 lg:grid-cols-[1.15fr_0.85fr]">
+          <div className="max-w-3xl">
             <div className="flex flex-wrap items-center gap-3">
               <Badge tone="neutral" className="bg-white/10 text-white">
                 {edition.badge}
@@ -136,6 +138,14 @@ export default async function EditionDetailPage({
                 </>
               )}
             </div>
+          </div>
+          <div className="mx-auto w-full max-w-[440px]">
+            <Iso
+              name={EDITION_ISO[edition.slug]}
+              variant="dark"
+              title={`${edition.name} Edition — ${edition.tagline}`}
+            />
+          </div>
           </div>
         </Container>
       </section>

@@ -3,6 +3,7 @@ import { ArrowRight, Check } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
+import { Iso } from "@/components/illustrations/Iso";
 import { Card } from "@/components/ui/Card";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
@@ -165,6 +166,7 @@ export default function WhaleAIPage() {
           className="pointer-events-none absolute -bottom-20 -left-20 h-[300px] w-[300px] rounded-full bg-[#0ea5e9]/15 blur-[100px]"
         />
         <Container className="relative py-20 sm:py-28">
+          <div className="grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr]">
           <div className="max-w-3xl">
             <div className="mb-5 flex items-center gap-3">
               <span aria-hidden className="h-px w-8 bg-white/40" />
@@ -196,6 +198,10 @@ export default function WhaleAIPage() {
                 <ArrowRight className="h-4 w-4" />
               </Button>
             </div>
+          </div>
+          <div className="mx-auto w-full max-w-[460px]">
+            <Iso name="ai-cube" variant="dark" title="Whale AI — an intelligence layer over every module, inside the perimeter" />
+          </div>
           </div>
 
           {/* Stats strip */}
