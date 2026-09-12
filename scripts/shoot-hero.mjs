@@ -13,7 +13,7 @@ page.on("pageerror", (e) => logs.push(`pageerror: ${e.message}`));
 page.on("response", (r) => { if (r.status() >= 400) logs.push(`http ${r.status()}: ${r.url()}`); });
 await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
 await page.goto(base + (process.argv[4] || "/solutions"), { waitUntil: "load", timeout: 120000 });
-await new Promise((r) => setTimeout(r, 7000));
+await new Promise((r) => setTimeout(r, Number(process.argv[6] || 7000)));
 const hasCanvas = await page.evaluate(() => !!document.querySelector("canvas"));
 await page.screenshot({ path: out, clip: { x: 0, y: 60, width: 1440, height: Number(process.argv[5] || 640) } });
 console.log("canvas:", hasCanvas);

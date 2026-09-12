@@ -16,8 +16,8 @@ export function ProductSceneFrame({ sceneKey, live, children }: { sceneKey: stri
       </div>
       {live && <LiveSceneMount sceneKey={sceneKey} onReady={() => setReady(true)} />}
       {ready && (
-        <p className="pointer-events-none absolute inset-x-0 -bottom-1 text-center text-[10px] font-medium text-faint">
-          Drag to rotate
+        <p className="pointer-events-none absolute bottom-1 right-2 inline-flex items-center gap-1 rounded-full border border-line bg-surface/90 px-2 py-0.5 text-[11px] font-semibold text-muted shadow-sm">
+          <span aria-hidden>↻</span> Live 3D · drag to rotate
         </p>
       )}
     </div>

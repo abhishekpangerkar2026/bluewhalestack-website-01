@@ -16,8 +16,9 @@ export function LiveSceneMount({ sceneKey, onReady }: { sceneKey: string; onRead
 
   useEffect(() => {
     try {
-      const desktop = window.matchMedia("(min-width: 1024px) and (pointer: fine)").matches;
-      if (!desktop) return;
+      // laptops, desktops and tablets rotate; phones keep the static capture
+      const capable = window.matchMedia("(min-width: 768px)").matches;
+      if (!capable) return;
       const c = document.createElement("canvas");
       const gl = c.getContext("webgl2") || c.getContext("webgl");
       if (!gl) return;

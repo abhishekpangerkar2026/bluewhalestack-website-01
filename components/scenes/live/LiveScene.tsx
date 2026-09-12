@@ -116,9 +116,12 @@ function Model({ sceneKey, controls, angle, animate, onReady }: { sceneKey: stri
     } else {
       const c = controls.current;
       if (!c.dragging) {
-        const idle = animate && !c.reduced ? Math.sin(clock.elapsedTime * 0.32) * 0.16 : 0;
-        c.targetY = THREE.MathUtils.damp(c.targetY, idle, 1.6, dt);
-        c.targetX = THREE.MathUtils.damp(c.targetX, 0, 1.6, dt);
+        // a visible, slow turn: ±20° of yaw every ~11 s with a touch of pitch, so the scene reads as 3D without being asked
+        const t = clock.elapsedTime;
+        const idleY = animate && !c.reduced ? Math.sin(t * 0.55) * 0.35 : 0;
+        const idleX = animate && !c.reduced ? Math.sin(t * 0.55 * 0.5 + 1) * 0.05 : 0;
+        c.targetY = THREE.MathUtils.damp(c.targetY, idleY, 1.6, dt);
+        c.targetX = THREE.MathUtils.damp(c.targetX, idleX, 1.6, dt);
       }
       r.rotation.y = THREE.MathUtils.damp(r.rotation.y, c.targetY, 7, dt);
       r.rotation.x = THREE.MathUtils.damp(r.rotation.x, c.targetX, 7, dt);

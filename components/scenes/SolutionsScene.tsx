@@ -307,9 +307,11 @@ function Model({ controls, onOpen }: { controls: Controls; onOpen: (slug: string
   useFrame(({ clock }, dt) => {
     const c = controls.current;
     if (!c.dragging) {
-      const idle = c.reduced ? 0 : Math.sin(clock.elapsedTime * 0.35) * 0.14;
-      c.targetY = THREE.MathUtils.damp(c.targetY, idle, 1.6, dt);
-      c.targetX = THREE.MathUtils.damp(c.targetX, 0, 1.6, dt);
+      const t = clock.elapsedTime;
+      const idleY = c.reduced ? 0 : Math.sin(t * 0.55) * 0.32;
+      const idleX = c.reduced ? 0 : Math.sin(t * 0.275 + 1) * 0.05;
+      c.targetY = THREE.MathUtils.damp(c.targetY, idleY, 1.6, dt);
+      c.targetX = THREE.MathUtils.damp(c.targetX, idleX, 1.6, dt);
     }
     const r = rig.current;
     if (!r) return;
