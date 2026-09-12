@@ -16,7 +16,7 @@ const GY = SHELF_Y + 0.26; // mini shelves sit on the console shelf
 const OBJ_Y = GY + 0.16 + 0.04;
 const PANEL_Z = -1.75;
 const PANEL_TOP_Y = SHELF_Y + 0.26 + 2.7;
-const PILL_Y = 6.7, PILL_Z = -1.3;
+const PILL_Y = 6.85, PILL_Z = -1.3;
 export const CABLE_TARGETS_X = [-4.2, -2.9, -1.6, 0, 1.6, 2.9, 4.2];
 
 export type Materials = ReturnType<typeof makeMaterials>;
@@ -321,42 +321,45 @@ function uiPanelTexture(def: SceneDef, family: FontFamily) {
   const W = 2560, H = 680;
   return texture((g) => {
     g.clearRect(0, 0, W, H);
+    // sizes are chosen so the smallest words are still ~14px tall at a 640px-wide hero
     g.fillStyle = "#0b2a7a"; g.textAlign = "left"; g.textBaseline = "middle";
     let fs = 150;
     do { g.font = `800 ${fs}px ${family}`; fs -= 4; } while (g.measureText(def.ui.title).width > W - 180 && fs > 70);
-    g.fillText(def.ui.title, 90, 135);
+    g.fillText(def.ui.title, 90, 120);
     // buttons first, sized to their labels, right-aligned; the search bar takes what is left
-    g.font = `700 74px ${family}`;
-    const bw = def.ui.buttons.map((b) => Math.ceil(g.measureText(b).width) + 120);
+    g.font = `700 92px ${family}`;
+    const bw = def.ui.buttons.map((b) => Math.ceil(g.measureText(b).width) + 140);
     const gap = 36;
     const totalB = bw.reduce((a, b) => a + b, 0) + gap * Math.max(0, bw.length - 1);
-    const sy = 250, sh = 150, sx = 90;
+    const sy = 225, sh = 190, sx = 90;
     let bx = W - 90 - totalB;
     const sw = Math.max(600, bx - 60 - sx);
     g.fillStyle = "#ffffff"; g.strokeStyle = "rgba(26,71,201,.3)"; g.lineWidth = 6;
-    roundRectPath(g, sx, sy, sw, sh, 50); g.fill(); g.stroke();
-    g.fillStyle = "#6b7a99"; g.font = `600 70px ${family}`;
+    roundRectPath(g, sx, sy, sw, sh, 60); g.fill(); g.stroke();
+    g.fillStyle = "#6b7a99"; g.font = `600 92px ${family}`;
     // magnifier glyph
-    g.strokeStyle = "#6b7a99"; g.lineWidth = 9; g.beginPath(); g.arc(sx + 80, sy + sh / 2 - 8, 26, 0, Math.PI * 2); g.stroke();
-    g.beginPath(); g.moveTo(sx + 99, sy + sh / 2 + 11); g.lineTo(sx + 122, sy + sh / 2 + 34); g.stroke();
+    g.strokeStyle = "#6b7a99"; g.lineWidth = 11; g.beginPath(); g.arc(sx + 92, sy + sh / 2 - 10, 32, 0, Math.PI * 2); g.stroke();
+    g.beginPath(); g.moveTo(sx + 115, sy + sh / 2 + 13); g.lineTo(sx + 144, sy + sh / 2 + 42); g.stroke();
     // placeholder text, ellipsised to the bar rather than clipped mid-letter
     let search = def.ui.search.replace(/…$/, "...");
-    const maxW = sw - 260;
+    const maxW = sw - 300;
     while (search.length > 3 && g.measureText(search).width > maxW) search = search.replace(/\.\.\.$/, "").slice(0, -1).trimEnd() + "...";
-    g.fillText(search, sx + 150, sy + sh / 2 + 4);
+    // a placeholder cut inside its first word reads worse than the plain verb
+    if (search.length < 12) search = "Search";
+    g.fillText(search, sx + 180, sy + sh / 2 + 5);
     def.ui.buttons.forEach((b, i) => {
       const w = bw[i];
       g.fillStyle = i === 0 ? "#1a47c9" : "#ffffff"; g.strokeStyle = "rgba(26,71,201,.35)"; g.lineWidth = 6;
-      roundRectPath(g, bx, sy, w, sh, 34); g.fill(); g.stroke();
-      g.fillStyle = i === 0 ? "#ffffff" : "#0b2a7a"; g.font = `700 74px ${family}`; g.textAlign = "center";
-      g.fillText(b, bx + w / 2, sy + sh / 2 + 4); g.textAlign = "left";
+      roundRectPath(g, bx, sy, w, sh, 40); g.fill(); g.stroke();
+      g.fillStyle = i === 0 ? "#ffffff" : "#0b2a7a"; g.font = `700 92px ${family}`; g.textAlign = "center";
+      g.fillText(b, bx + w / 2, sy + sh / 2 + 5); g.textAlign = "left";
       bx += w + gap;
     });
     // a hint of a table under the toolbar
     g.fillStyle = "rgba(26,71,201,0.12)";
-    [470, 560].forEach((y) => { roundRectPath(g, 90, y, W - 180, 56, 18); g.fill(); });
+    [460, 560].forEach((y) => { roundRectPath(g, 90, y, W - 180, 64, 20); g.fill(); });
     g.fillStyle = "rgba(26,71,201,0.35)";
-    [[130, 470, 520], [130, 560, 380], [1300, 470, 420], [1300, 560, 640]].forEach(([x, y, w]) => { roundRectPath(g, x, y + 14, w, 28, 10); g.fill(); });
+    [[130, 460, 520], [130, 560, 380], [1300, 460, 420], [1300, 560, 640]].forEach(([x, y, w]) => { roundRectPath(g, x, y + 17, w, 30, 10); g.fill(); });
   }, W, H);
 }
 
@@ -400,11 +403,16 @@ export function buildScene(def: SceneDef, M: Materials, family: FontFamily): Bui
     const ui = new THREE.Mesh(new THREE.PlaneGeometry(9.6, 2.55), new THREE.MeshBasicMaterial({ map: uiPanelTexture(def, family), transparent: true, toneMapped: false }));
     ui.position.set(0, SHELF_Y + 0.26 + 1.35, PANEL_Z + 0.22 + 0.04 + 0.03); root.add(ui);
 
-    /* three mini shelves with their labels lying on the base in front */
+    /* three mini shelves, each with a nameplate standing at its front edge, facing the camera */
     GX.forEach((x, i) => {
       slab(c, x, GY, GZ, 2.7, 2.6, 0.16, 0.35, M.glass, 0.04);
-      const chip = chipMesh(def.groups[i], family, 0.5);
-      chip.rotation.x = -Math.PI / 2; chip.position.set(x, SHELF_Y + 0.29, GZ + 1.75); root.add(chip);
+      const chip = chipMesh(def.groups[i], family, 0.78);
+      const w = (chip.geometry as THREE.PlaneGeometry).parameters.width;
+      const s = Math.min(1, 3.15 / w); // never wider than the shelf spacing allows
+      chip.scale.setScalar(s);
+      chip.rotation.x = -0.38;
+      chip.position.set(x, GY + 0.16 + 0.39 * s + 0.06, GZ + 1.3 + 0.16);
+      root.add(chip);
     });
 
     (CENTER[def.center] ?? CENTER.inventory)(c);
@@ -412,10 +420,10 @@ export function buildScene(def: SceneDef, M: Materials, family: FontFamily): Bui
     /* provider pills above the console, cabled into its top edge — sized so the row always fits */
     const providers = def.providers ?? DEFAULT_PROVIDERS;
     const n = providers.length;
-    const pills = providers.map((p) => chipMesh(p, family, 0.62, "light", 90));
-    const gap = 0.32;
+    const pills = providers.map((p) => chipMesh(p, family, 0.85, "light", 90));
+    const gap = 0.3;
     const natural = pills.reduce((a, m) => a + (m.geometry as THREE.PlaneGeometry).parameters.width, 0) + gap * (n - 1);
-    const maxSpan = 12.6;
+    const maxSpan = 13.8;
     const scale = Math.min(1, maxSpan / natural);
     const rowW = natural * scale;
     let cursor = -rowW / 2;
@@ -428,7 +436,7 @@ export function buildScene(def: SceneDef, M: Materials, family: FontFamily): Bui
       pill.position.set(x, PILL_Y, PILL_Z); root.add(pill);
       const tx = CABLE_TARGETS_X[Math.round((i / Math.max(1, n - 1)) * 6)];
       const curve = new THREE.CatmullRomCurve3([
-        new THREE.Vector3(x, PILL_Y - 0.31 * scale, PILL_Z),
+        new THREE.Vector3(x, PILL_Y - 0.43 * scale, PILL_Z),
         new THREE.Vector3(x * 0.85, PILL_Y - 1.1, PILL_Z - 0.1),
         new THREE.Vector3(tx, PANEL_TOP_Y + 0.5, PANEL_Z),
         new THREE.Vector3(tx, PANEL_TOP_Y - 0.05, PANEL_Z),
@@ -466,13 +474,13 @@ function buildStack(c: Ctx, def: SceneDef) {
   const layers = def.layers ?? [];
   const mats = [c.M.baseDeep, c.M.blue, c.M.frost, c.M.base, c.M.frost, c.M.blueLight];
   const sizes: [number, number][] = [[12.6, 6.8], [11.5, 6.2], [10.4, 5.6], [9.3, 5.0], [8.2, 4.4], [7.1, 3.8]];
-  const H = 0.5, GAP = 0.62;
+  const H = 0.64, GAP = 0.5;
   let y = SHELF_Y + 0.05;
   layers.forEach((name, i) => {
     const [w, d] = sizes[i] ?? [7, 3.8];
     slab(c, 0, y, 0, w, d, H, 0.45, mats[i % mats.length], 0.05);
     // nameplate on the front face
-    const chip = chipMesh(name, c.family, 0.42, i === 2 || i === 4 ? "light" : "dark", 84);
+    const chip = chipMesh(name, c.family, 0.6, i === 2 || i === 4 ? "light" : "dark", 84);
     chip.position.set(0, y + H / 2 + 0.06, d / 2 + 0.12);
     c.scene.add(chip);
     if (i === 3) {

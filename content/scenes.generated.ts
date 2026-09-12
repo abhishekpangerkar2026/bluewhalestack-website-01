@@ -5,7 +5,7 @@ export const scenes = {
     "src": "/product-3d/scenes/platform.webp",
     "src800": "/product-3d/scenes/platform-800.webp",
     "width": 1908,
-    "height": 1034,
+    "height": 1060,
     "title": "Digital Experience Platform",
     "tagline": "One Platform. Every Industry. Every Estate."
   },
@@ -13,7 +13,7 @@ export const scenes = {
     "src": "/product-3d/scenes/inventory.webp",
     "src800": "/product-3d/scenes/inventory-800.webp",
     "width": 1908,
-    "height": 1034,
+    "height": 1060,
     "title": "Unified Cloud Inventory",
     "tagline": "One inventory. Every cloud. Full control."
   },
@@ -21,7 +21,7 @@ export const scenes = {
     "src": "/product-3d/scenes/cloud-connectors.webp",
     "src800": "/product-3d/scenes/cloud-connectors-800.webp",
     "width": 1908,
-    "height": 1034,
+    "height": 1060,
     "title": "Cloud Connectors",
     "tagline": "Connect once. Govern everywhere."
   },
@@ -29,7 +29,7 @@ export const scenes = {
     "src": "/product-3d/scenes/identity.webp",
     "src800": "/product-3d/scenes/identity-800.webp",
     "width": 1908,
-    "height": 1034,
+    "height": 1060,
     "title": "Identity & Access",
     "tagline": "One identity fabric. Every estate."
   },
@@ -37,7 +37,7 @@ export const scenes = {
     "src": "/product-3d/scenes/provisioning.webp",
     "src800": "/product-3d/scenes/provisioning-800.webp",
     "width": 1908,
-    "height": 1034,
+    "height": 1060,
     "title": "Service Catalog",
     "tagline": "Approved resources. No consoles."
   },
@@ -45,7 +45,7 @@ export const scenes = {
     "src": "/product-3d/scenes/itsm.webp",
     "src800": "/product-3d/scenes/itsm-800.webp",
     "width": 1908,
-    "height": 1034,
+    "height": 1060,
     "title": "ITSM",
     "tagline": "Service management, cloud-ops native."
   },
@@ -53,7 +53,7 @@ export const scenes = {
     "src": "/product-3d/scenes/observe.webp",
     "src800": "/product-3d/scenes/observe-800.webp",
     "width": 1908,
-    "height": 1034,
+    "height": 1060,
     "title": "Observe",
     "tagline": "Logs, metrics, traces, SLOs — included."
   },
@@ -61,7 +61,7 @@ export const scenes = {
     "src": "/product-3d/scenes/whalenomics.webp",
     "src800": "/product-3d/scenes/whalenomics-800.webp",
     "width": 1908,
-    "height": 1034,
+    "height": 1060,
     "title": "Whalenomics · FinOps",
     "tagline": "Every dollar resolves to a workload and an owner."
   },
@@ -69,7 +69,7 @@ export const scenes = {
     "src": "/product-3d/scenes/migration.webp",
     "src800": "/product-3d/scenes/migration-800.webp",
     "width": 1908,
-    "height": 1034,
+    "height": 1060,
     "title": "Migration Engine",
     "tagline": "Entry, movement and exit — scored and rehearsed."
   },
@@ -77,7 +77,7 @@ export const scenes = {
     "src": "/product-3d/scenes/whaleforge.webp",
     "src800": "/product-3d/scenes/whaleforge-800.webp",
     "width": 1908,
-    "height": 1034,
+    "height": 1060,
     "title": "WhaleForge IaC",
     "tagline": "YAML in. Terraform and diagrams out."
   },
@@ -85,7 +85,7 @@ export const scenes = {
     "src": "/product-3d/scenes/landing-zone.webp",
     "src800": "/product-3d/scenes/landing-zone-800.webp",
     "width": 1908,
-    "height": 1034,
+    "height": 1060,
     "title": "Landing Zone Builder",
     "tagline": "Compliant foundations, designed visually."
   },
@@ -93,7 +93,7 @@ export const scenes = {
     "src": "/product-3d/scenes/cloud-audit.webp",
     "src800": "/product-3d/scenes/cloud-audit-800.webp",
     "width": 1908,
-    "height": 1034,
+    "height": 1060,
     "title": "Cloud Audit & Evidence",
     "tagline": "Controls monitored continuously. Evidence on demand."
   },
@@ -101,7 +101,7 @@ export const scenes = {
     "src": "/product-3d/scenes/whale-ai.webp",
     "src800": "/product-3d/scenes/whale-ai-800.webp",
     "width": 1908,
-    "height": 1034,
+    "height": 1060,
     "title": "Whale AI — including offline",
     "tagline": "AI in every family. Inside the perimeter."
   },
@@ -109,7 +109,7 @@ export const scenes = {
     "src": "/product-3d/scenes/tenancy.webp",
     "src800": "/product-3d/scenes/tenancy-800.webp",
     "width": 1908,
-    "height": 1034,
+    "height": 1060,
     "title": "Tenancy & Monetization",
     "tagline": "Revenue per tenant, on capacity you own."
   },
@@ -117,7 +117,7 @@ export const scenes = {
     "src": "/product-3d/scenes/sovereign-operations.webp",
     "src800": "/product-3d/scenes/sovereign-operations-800.webp",
     "width": 1908,
-    "height": 1032,
+    "height": 1054,
     "title": "Sovereign Operations",
     "tagline": "Sovereignty as a property of the architecture."
   },
@@ -125,7 +125,7 @@ export const scenes = {
     "src": "/product-3d/scenes/industry-government.webp",
     "src800": "/product-3d/scenes/industry-government-800.webp",
     "width": 1908,
-    "height": 1032,
+    "height": 1054,
     "title": "Government",
     "tagline": "Sovereign operations, air-gapped when required."
   },
@@ -133,7 +133,7 @@ export const scenes = {
     "src": "/product-3d/scenes/industry-bfsi.webp",
     "src800": "/product-3d/scenes/industry-bfsi-800.webp",
     "width": 1908,
-    "height": 1034,
+    "height": 1060,
     "title": "BFSI",
     "tagline": "Answer an inspection from a system of record."
   },
@@ -141,7 +141,7 @@ export const scenes = {
     "src": "/product-3d/scenes/industry-healthcare.webp",
     "src800": "/product-3d/scenes/industry-healthcare-800.webp",
     "width": 1908,
-    "height": 1034,
+    "height": 1060,
     "title": "Healthcare",
     "tagline": "Clinical systems governed in-country."
   },
@@ -149,7 +149,7 @@ export const scenes = {
     "src": "/product-3d/scenes/industry-regulated-enterprise.webp",
     "src800": "/product-3d/scenes/industry-regulated-enterprise-800.webp",
     "width": 1908,
-    "height": 1034,
+    "height": 1060,
     "title": "Regulated Enterprise",
     "tagline": "Six clouds and the datacenter floor, one estate."
   },
@@ -157,7 +157,7 @@ export const scenes = {
     "src": "/product-3d/scenes/industry-saas.webp",
     "src800": "/product-3d/scenes/industry-saas-800.webp",
     "width": 1908,
-    "height": 1034,
+    "height": 1064,
     "title": "SaaS & Digital Native",
     "tagline": "Governed from the first account."
   },
@@ -165,7 +165,7 @@ export const scenes = {
     "src": "/product-3d/scenes/industry-telco.webp",
     "src800": "/product-3d/scenes/industry-telco-800.webp",
     "width": 1908,
-    "height": 1034,
+    "height": 1061,
     "title": "Telco & MSP",
     "tagline": "Operators become cloud providers."
   },
@@ -173,7 +173,7 @@ export const scenes = {
     "src": "/product-3d/scenes/industry-datacenter.webp",
     "src800": "/product-3d/scenes/industry-datacenter-800.webp",
     "width": 1908,
-    "height": 1034,
+    "height": 1062,
     "title": "Datacenter & Colocation",
     "tagline": "Rent per megawatt becomes revenue per tenant."
   },
@@ -181,7 +181,7 @@ export const scenes = {
     "src": "/product-3d/scenes/fabric.webp",
     "src800": "/product-3d/scenes/fabric-800.webp",
     "width": 1908,
-    "height": 1033,
+    "height": 1055,
     "title": "BlueWhale Stack Fabric",
     "tagline": "Every datacenter. One fabric."
   },
@@ -189,7 +189,7 @@ export const scenes = {
     "src": "/product-3d/scenes/architecture.webp",
     "src800": "/product-3d/scenes/architecture-800.webp",
     "width": 1707,
-    "height": 952,
+    "height": 976,
     "title": "The architecture, top to bottom",
     "tagline": "Six layers. One platform build."
   },
@@ -197,7 +197,7 @@ export const scenes = {
     "src": "/product-3d/scenes/edition-standard.webp",
     "src800": "/product-3d/scenes/edition-standard-800.webp",
     "width": 1908,
-    "height": 1034,
+    "height": 1064,
     "title": "Standard Edition",
     "tagline": "Governed cloud for a single estate."
   },
@@ -205,7 +205,7 @@ export const scenes = {
     "src": "/product-3d/scenes/edition-enterprise.webp",
     "src800": "/product-3d/scenes/edition-enterprise-800.webp",
     "width": 1908,
-    "height": 1034,
+    "height": 1060,
     "title": "Enterprise Edition",
     "tagline": "Every estate answerable from one console."
   },
@@ -213,7 +213,7 @@ export const scenes = {
     "src": "/product-3d/scenes/edition-telco-datacenter.webp",
     "src800": "/product-3d/scenes/edition-telco-datacenter-800.webp",
     "width": 1908,
-    "height": 1034,
+    "height": 1062,
     "title": "Telco & Datacenter Edition",
     "tagline": "Operators become cloud providers."
   },
@@ -221,7 +221,7 @@ export const scenes = {
     "src": "/product-3d/scenes/edition-government.webp",
     "src800": "/product-3d/scenes/edition-government-800.webp",
     "width": 1908,
-    "height": 1032,
+    "height": 1054,
     "title": "Government Edition",
     "tagline": "Sovereignty demonstrated by the architecture."
   },
@@ -229,7 +229,7 @@ export const scenes = {
     "src": "/product-3d/scenes/solution-unified-cloud-inventory.webp",
     "src800": "/product-3d/scenes/solution-unified-cloud-inventory-800.webp",
     "width": 1908,
-    "height": 1034,
+    "height": 1060,
     "title": "Unified Cloud Inventory",
     "tagline": "Six clouds and on-prem, one live map."
   },
@@ -237,7 +237,7 @@ export const scenes = {
     "src": "/product-3d/scenes/solution-ai-native-provisioning.webp",
     "src800": "/product-3d/scenes/solution-ai-native-provisioning-800.webp",
     "width": 1908,
-    "height": 1034,
+    "height": 1060,
     "title": "AI-Native Provisioning",
     "tagline": "Approved resources, right-sized, no consoles."
   },
@@ -245,7 +245,7 @@ export const scenes = {
     "src": "/product-3d/scenes/solution-bundled-observability.webp",
     "src800": "/product-3d/scenes/solution-bundled-observability-800.webp",
     "width": 1908,
-    "height": 1034,
+    "height": 1060,
     "title": "Bundled Observability",
     "tagline": "Logs, metrics, traces and SLOs — in the licence."
   },
@@ -253,7 +253,7 @@ export const scenes = {
     "src": "/product-3d/scenes/solution-cloud-migration.webp",
     "src800": "/product-3d/scenes/solution-cloud-migration-800.webp",
     "width": 1908,
-    "height": 1034,
+    "height": 1060,
     "title": "Cloud Migration",
     "tagline": "Scored, sequenced, rehearsed."
   },
@@ -261,7 +261,7 @@ export const scenes = {
     "src": "/product-3d/scenes/solution-security-compliance.webp",
     "src800": "/product-3d/scenes/solution-security-compliance-800.webp",
     "width": 1908,
-    "height": 1034,
+    "height": 1060,
     "title": "Security & Compliance",
     "tagline": "One identity fabric. One audit trail."
   },
@@ -269,7 +269,7 @@ export const scenes = {
     "src": "/product-3d/scenes/solution-sovereign-cloud.webp",
     "src800": "/product-3d/scenes/solution-sovereign-cloud-800.webp",
     "width": 1908,
-    "height": 1032,
+    "height": 1054,
     "title": "Sovereign Cloud",
     "tagline": "In-country. Air-gapped. In-region AI."
   },
@@ -277,7 +277,7 @@ export const scenes = {
     "src": "/product-3d/scenes/estate.webp",
     "src800": "/product-3d/scenes/estate-800.webp",
     "width": 1908,
-    "height": 1034,
+    "height": 1060,
     "title": "Every estate, one control plane",
     "tagline": "Every cloud. One control plane."
   }
