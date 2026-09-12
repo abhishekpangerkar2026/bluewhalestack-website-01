@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { scenes, type SceneKey } from "@/content/scenes.generated";
+import { TiltFrame } from "./TiltFrame";
 
 /**
  * Native 3D product scene: the rendered objects (transparent WebP, see
@@ -7,14 +8,27 @@ import { scenes, type SceneKey } from "@/content/scenes.generated";
  * provider pills, glowing cables, group labels and tagline are real HTML/SVG
  * positioned from the exported anchors — crisp, responsive, theme-aware and
  * selectable. Server component; motion is CSS only and honours
- * prefers-reduced-motion.
+ * prefers-reduced-motion. Wrapped in TiltFrame for a light pointer tilt.
  */
 
-const PROVIDERS = ["AWS", "Azure", "Google Cloud", "Oracle", "Alibaba", "Huawei", "On-prem & Hybrid"];
+/** Short labels so pills never wrap; full names on hover. */
+const PROVIDERS: { short: string; full: string }[] = [
+  { short: "AWS", full: "Amazon Web Services" },
+  { short: "Azure", full: "Microsoft Azure" },
+  { short: "GCP", full: "Google Cloud" },
+  { short: "Oracle", full: "Oracle Cloud" },
+  { short: "Alibaba", full: "Alibaba Cloud" },
+  { short: "Huawei", full: "Huawei Cloud" },
+  { short: "On-prem", full: "On-prem, private, hybrid & edge" },
+];
 
 /** Module slugs whose scene is keyed differently. */
 const ALIAS: Record<string, SceneKey> = { finops: "whalenomics" };
 const resolve = (key: string) => scenes[(key in scenes ? key : ALIAS[key]) as SceneKey];
+
+// Layout bands, as fractions of the image height: pills above, tagline below.
+const PILL_BAND = 0.2;
+const TAG_BAND = 0.16;
 
 /** Compact card thumbnail: the objects on a soft brand tile, no pills or labels. */
 export function SceneThumb({ scene, className }: { scene: SceneKey | string; className?: string }) {
@@ -48,6 +62,7 @@ export function ProductScene({
   pills = true,
   labels = true,
   tagline = true,
+  tilt = true,
   className,
   priority = false,
 }: {
@@ -56,6 +71,7 @@ export function ProductScene({
   pills?: boolean;
   labels?: boolean;
   tagline?: boolean;
+  tilt?: boolean;
   className?: string;
   priority?: boolean;
 }) {
@@ -63,13 +79,22 @@ export function ProductScene({
   if (!s) return null;
   const dark = variant === "dark";
   const ratio = s.width / s.height;
-  // Pill row height as a fraction of the image height, so cable geometry stays in one % space.
-  const PILL_BAND = 0.22;
-  const boxRatio = ratio / (1 + PILL_BAND);
-  const toBox = ([x, y]: readonly number[]) => [x * 100, ((PILL_BAND + y) / (1 + PILL_BAND)) * 100] as const;
-  const pillY = ((PILL_BAND * 0.62) / (1 + PILL_BAND)) * 100; // bottom of the pill row, in box %
+  const top = pills ? PILL_BAND : 0.04;
+  const bottom = tagline ? TAG_BAND : 0.04;
+  const total = 1 + top + bottom;
+  const boxRatio = ratio / total;
+  // image-space (0..1) → box-space (%)
+  const toBox = ([x, y]: readonly number[]) => [x * 100, ((top + y) / total) * 100] as const;
+  const imgTop = (top / total) * 100;
+  const imgH = (1 / total) * 100;
+  const pillBottom = ((top * 0.7) / total) * 100;
 
-  return (
+  const pillCls = dark
+    ? "border-white/15 bg-white/10 text-white backdrop-blur"
+    : "border-line bg-surface text-ink shadow-sm";
+  const chipCls = dark ? "border-white/15 bg-white/95 text-brand-900" : "border-line bg-surface text-ink shadow-sm";
+
+  const body = (
     <div
       className={cn("relative w-full select-none", className)}
       style={{ aspectRatio: `${boxRatio}` }}
@@ -80,9 +105,10 @@ export function ProductScene({
       <div
         aria-hidden
         className={cn(
-          "pointer-events-none absolute left-1/2 top-[58%] h-[55%] w-[80%] -translate-x-1/2 rounded-[100%] blur-3xl",
-          dark ? "bg-brand-400/25" : "bg-brand-300/30",
+          "pointer-events-none absolute left-1/2 h-[46%] w-[76%] -translate-x-1/2 rounded-[100%] blur-3xl",
+          dark ? "bg-brand-400/25" : "bg-brand-300/25",
         )}
+        style={{ top: `${imgTop + imgH * 0.45}%` }}
       />
 
       {/* cables: from each pill down into the console top */}
@@ -91,7 +117,7 @@ export function ProductScene({
           aria-hidden
           viewBox="0 0 100 100"
           preserveAspectRatio="none"
-          className="pointer-events-none absolute inset-0 hidden h-full w-full sm:block"
+          className="pointer-events-none absolute inset-0 h-full w-full"
         >
           <defs>
             <linearGradient id={`cg-${scene}`} x1="0" y1="0" x2="0" y2="1">
@@ -102,20 +128,20 @@ export function ProductScene({
           {s.cableTargets.map((t, i) => {
             const x1 = ((i + 0.5) / PROVIDERS.length) * 100;
             const [x2, y2] = toBox(t);
-            const d = `M${x1} ${pillY} C ${x1} ${pillY + (y2 - pillY) * 0.55}, ${x2} ${y2 - (y2 - pillY) * 0.45}, ${x2} ${y2}`;
+            const d = `M${x1} ${pillBottom} C ${x1} ${pillBottom + (y2 - pillBottom) * 0.55}, ${x2} ${y2 - (y2 - pillBottom) * 0.45}, ${x2} ${y2}`;
             return (
               <g key={i}>
-                <path d={d} fill="none" stroke={dark ? "#4a7cf0" : "#4a7cf0"} strokeOpacity="0.18" strokeWidth="9" vectorEffect="non-scaling-stroke" strokeLinecap="round" />
-                <path d={d} fill="none" stroke={`url(#cg-${scene})`} strokeOpacity="0.9" strokeWidth="3" vectorEffect="non-scaling-stroke" strokeLinecap="round" />
+                <path d={d} fill="none" stroke="#4a7cf0" strokeOpacity="0.16" strokeWidth="8" vectorEffect="non-scaling-stroke" strokeLinecap="round" />
+                <path d={d} fill="none" stroke={`url(#cg-${scene})`} strokeOpacity="0.9" strokeWidth="2.5" vectorEffect="non-scaling-stroke" strokeLinecap="round" />
                 <path
                   d={d}
                   fill="none"
                   stroke="#ffffff"
                   strokeOpacity="0.85"
-                  strokeWidth="1.5"
+                  strokeWidth="1.25"
                   vectorEffect="non-scaling-stroke"
                   strokeLinecap="round"
-                  strokeDasharray="6 14"
+                  strokeDasharray="5 13"
                   className="scene-flow"
                   style={{ animationDelay: `${i * 0.35}s` }}
                 />
@@ -125,31 +151,30 @@ export function ProductScene({
         </svg>
       )}
 
-      {/* provider pills */}
+      {/* provider pills — equal columns, short labels, one line */}
       {pills && (
         <ul
-          className="absolute left-0 right-0 top-0 grid grid-cols-7 gap-1.5 px-1 sm:gap-2"
-          style={{ height: `${(PILL_BAND / (1 + PILL_BAND)) * 100}%` }}
+          className="absolute left-0 right-0 top-0 grid grid-cols-7 gap-1 sm:gap-1.5"
+          style={{ height: `${(top / total) * 100}%` }}
         >
           {PROVIDERS.map((p, i) => (
             <li
-              key={p}
+              key={p.short}
+              title={p.full}
               className={cn(
-                "scene-float flex h-[62%] items-center justify-center rounded-md border text-center text-[9px] font-bold leading-tight sm:rounded-lg sm:text-[11px] lg:text-xs",
-                dark
-                  ? "border-white/20 bg-white/10 text-white shadow-[0_8px_24px_rgba(0,0,0,0.25)] backdrop-blur"
-                  : "border-brand-100 bg-surface text-brand-900 shadow-[0_8px_24px_rgba(0,45,161,0.12)]",
+                "scene-float flex h-[70%] items-center justify-center whitespace-nowrap rounded-md border px-1 text-[10px] font-semibold leading-none sm:text-[11px] lg:text-xs",
+                pillCls,
               )}
               style={{ animationDelay: `${i * 0.4}s` }}
             >
-              {p}
+              {p.short}
             </li>
           ))}
         </ul>
       )}
 
       {/* the rendered objects */}
-      <div className="absolute inset-x-0 bottom-0" style={{ top: pills ? `${(PILL_BAND / (1 + PILL_BAND)) * 100}%` : 0 }}>
+      <div className="absolute inset-x-0" style={{ top: `${imgTop}%`, height: `${imgH}%` }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={s.src}
@@ -164,7 +189,7 @@ export function ProductScene({
         />
       </div>
 
-      {/* group labels */}
+      {/* group labels — on the base surface, in front of the objects */}
       {labels &&
         s.groups.map((g) => {
           const [x, y] = toBox(g.at);
@@ -172,8 +197,8 @@ export function ProductScene({
             <span
               key={g.label}
               className={cn(
-                "absolute -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-md border px-2 py-0.5 text-[10px] font-bold sm:px-2.5 sm:py-1 sm:text-xs",
-                dark ? "border-white/20 bg-white/90 text-brand-900" : "border-brand-100 bg-surface text-brand-900 shadow-sm",
+                "absolute -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-md border px-2 py-0.5 text-[10px] font-semibold leading-none sm:px-2.5 sm:py-1 sm:text-[11px]",
+                chipCls,
               )}
               style={{ left: `${x}%`, top: `${y}%` }}
             >
@@ -182,18 +207,20 @@ export function ProductScene({
           );
         })}
 
-      {/* tagline */}
+      {/* tagline — its own band under the base */}
       {tagline && (
         <span
           className={cn(
-            "absolute -translate-x-1/2 whitespace-nowrap rounded-lg border px-3 py-1.5 text-[11px] font-bold sm:px-5 sm:py-2 sm:text-sm",
-            dark ? "border-white/20 bg-white text-brand-900" : "border-brand-100 bg-surface text-brand-900 shadow-md",
+            "absolute left-1/2 -translate-x-1/2 whitespace-nowrap rounded-lg border px-3 py-1.5 text-[11px] font-semibold sm:px-4 sm:py-2 sm:text-sm",
+            chipCls,
           )}
-          style={{ left: `${toBox(s.tag)[0]}%`, top: `${toBox(s.tag)[1] - 3}%` }}
+          style={{ top: `${((top + 1 + bottom * 0.12) / total) * 100}%` }}
         >
           {s.tagline}
         </span>
       )}
     </div>
   );
+
+  return tilt ? <TiltFrame>{body}</TiltFrame> : body;
 }

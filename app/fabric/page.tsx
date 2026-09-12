@@ -8,7 +8,7 @@ import { Stat } from "@/components/ui/Stat";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { ArchitectureDiagram } from "@/components/diagrams/ArchitectureDiagram";
-import { FabricHeroVisual } from "@/components/diagrams/FabricHeroVisual";
+import { ProductScene } from "@/components/scenes/ProductScene";
 import { editionsBySlug } from "@/content/editions";
 import {
   fabricHero,
@@ -73,13 +73,7 @@ export default function FabricPage() {
                 </Button>
               </div>
             </div>
-            <div className="relative">
-              <div
-                aria-hidden
-                className="pointer-events-none absolute inset-0 -z-10 rounded-full bg-brand-500/20 blur-3xl"
-              />
-              <FabricHeroVisual />
-            </div>
+            <ProductScene scene="fabric" variant="dark" priority className="mx-auto w-full max-w-[660px]" />
           </div>
         </Container>
       </section>

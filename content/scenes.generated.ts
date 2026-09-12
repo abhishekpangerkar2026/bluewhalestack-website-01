@@ -42,22 +42,22 @@ export const scenes = {
       {
         "label": "Public cloud",
         "at": [
-          0.2845,
-          0.5668
+          0.2804,
+          0.6114
         ]
       },
       {
         "label": "Private & virtual",
         "at": [
           0.4952,
-          0.5668
+          0.6114
         ]
       },
       {
         "label": "Hybrid & edge",
         "at": [
-          0.706,
-          0.5668
+          0.7101,
+          0.6114
         ]
       }
     ],
@@ -111,22 +111,22 @@ export const scenes = {
       {
         "label": "Compute",
         "at": [
-          0.2845,
-          0.5668
+          0.2804,
+          0.6114
         ]
       },
       {
         "label": "Databases",
         "at": [
           0.4952,
-          0.5668
+          0.6114
         ]
       },
       {
         "label": "Storage",
         "at": [
-          0.706,
-          0.5668
+          0.7101,
+          0.6114
         ]
       }
     ],
@@ -180,22 +180,22 @@ export const scenes = {
       {
         "label": "Public cloud",
         "at": [
-          0.2845,
-          0.5668
+          0.2804,
+          0.6114
         ]
       },
       {
         "label": "Private & virtual",
         "at": [
           0.4952,
-          0.5668
+          0.6114
         ]
       },
       {
         "label": "Edge Agent",
         "at": [
-          0.706,
-          0.5668
+          0.7101,
+          0.6114
         ]
       }
     ],
@@ -249,22 +249,22 @@ export const scenes = {
       {
         "label": "Providers",
         "at": [
-          0.2845,
-          0.5668
+          0.2804,
+          0.6114
         ]
       },
       {
         "label": "Roles",
         "at": [
           0.4952,
-          0.5668
+          0.6114
         ]
       },
       {
         "label": "Access",
         "at": [
-          0.706,
-          0.5668
+          0.7101,
+          0.6114
         ]
       }
     ],
@@ -318,22 +318,22 @@ export const scenes = {
       {
         "label": "Catalog",
         "at": [
-          0.2845,
-          0.5668
+          0.2804,
+          0.6114
         ]
       },
       {
         "label": "Approvals",
         "at": [
           0.4952,
-          0.5668
+          0.6114
         ]
       },
       {
         "label": "Deployed",
         "at": [
-          0.706,
-          0.5668
+          0.7101,
+          0.6114
         ]
       }
     ],
@@ -387,22 +387,22 @@ export const scenes = {
       {
         "label": "Incidents",
         "at": [
-          0.2845,
-          0.5668
+          0.2804,
+          0.6114
         ]
       },
       {
         "label": "Changes",
         "at": [
           0.4952,
-          0.5668
+          0.6114
         ]
       },
       {
         "label": "CMDB",
         "at": [
-          0.706,
-          0.5668
+          0.7101,
+          0.6114
         ]
       }
     ],
@@ -456,22 +456,22 @@ export const scenes = {
       {
         "label": "Logs",
         "at": [
-          0.2845,
-          0.5668
+          0.2804,
+          0.6114
         ]
       },
       {
         "label": "Metrics & traces",
         "at": [
           0.4952,
-          0.5668
+          0.6114
         ]
       },
       {
         "label": "SLOs",
         "at": [
-          0.706,
-          0.5668
+          0.7101,
+          0.6114
         ]
       }
     ],
@@ -525,22 +525,22 @@ export const scenes = {
       {
         "label": "Budgets",
         "at": [
-          0.2845,
-          0.5668
+          0.2804,
+          0.6114
         ]
       },
       {
         "label": "Chargeback",
         "at": [
           0.4952,
-          0.5668
+          0.6114
         ]
       },
       {
         "label": "Optimization",
         "at": [
-          0.706,
-          0.5668
+          0.7101,
+          0.6114
         ]
       }
     ],
@@ -594,22 +594,22 @@ export const scenes = {
       {
         "label": "Discover",
         "at": [
-          0.2845,
-          0.5668
+          0.2804,
+          0.6114
         ]
       },
       {
         "label": "6R assess",
         "at": [
           0.4952,
-          0.5668
+          0.6114
         ]
       },
       {
         "label": "Waves",
         "at": [
-          0.706,
-          0.5668
+          0.7101,
+          0.6114
         ]
       }
     ],
@@ -663,22 +663,22 @@ export const scenes = {
       {
         "label": "YAML",
         "at": [
-          0.2845,
-          0.5668
+          0.2804,
+          0.6114
         ]
       },
       {
         "label": "Terraform",
         "at": [
           0.4952,
-          0.5668
+          0.6114
         ]
       },
       {
         "label": "Diagrams",
         "at": [
-          0.706,
-          0.5668
+          0.7101,
+          0.6114
         ]
       }
     ],
@@ -732,22 +732,22 @@ export const scenes = {
       {
         "label": "Accounts",
         "at": [
-          0.2845,
-          0.5668
+          0.2804,
+          0.6114
         ]
       },
       {
         "label": "Guardrails",
         "at": [
           0.4952,
-          0.5668
+          0.6114
         ]
       },
       {
         "label": "Baseline",
         "at": [
-          0.706,
-          0.5668
+          0.7101,
+          0.6114
         ]
       }
     ],
@@ -801,22 +801,22 @@ export const scenes = {
       {
         "label": "Policies",
         "at": [
-          0.2845,
-          0.5668
+          0.2804,
+          0.6114
         ]
       },
       {
         "label": "Controls",
         "at": [
           0.4952,
-          0.5668
+          0.6114
         ]
       },
       {
         "label": "Evidence",
         "at": [
-          0.706,
-          0.5668
+          0.7101,
+          0.6114
         ]
       }
     ],
@@ -870,22 +870,22 @@ export const scenes = {
       {
         "label": "Operations",
         "at": [
-          0.2845,
-          0.5668
+          0.2804,
+          0.6114
         ]
       },
       {
         "label": "Documentation",
         "at": [
           0.4952,
-          0.5668
+          0.6114
         ]
       },
       {
         "label": "Compliance",
         "at": [
-          0.706,
-          0.5668
+          0.7101,
+          0.6114
         ]
       }
     ],
@@ -939,22 +939,22 @@ export const scenes = {
       {
         "label": "Tenants",
         "at": [
-          0.2845,
-          0.5668
+          0.2804,
+          0.6114
         ]
       },
       {
         "label": "Marketplace",
         "at": [
           0.4952,
-          0.5668
+          0.6114
         ]
       },
       {
         "label": "Metering",
         "at": [
-          0.706,
-          0.5668
+          0.7101,
+          0.6114
         ]
       }
     ],
@@ -1008,22 +1008,574 @@ export const scenes = {
       {
         "label": "Zones",
         "at": [
-          0.2845,
-          0.5668
+          0.2804,
+          0.6114
         ]
       },
       {
         "label": "Directorates",
         "at": [
           0.4952,
-          0.5668
+          0.6114
         ]
       },
       {
         "label": "Edge sites",
         "at": [
-          0.706,
-          0.5668
+          0.7101,
+          0.6114
+        ]
+      }
+    ],
+    "tag": [
+      0.4952,
+      0.979
+    ],
+    "panelTop": [
+      0.4952,
+      0.0061
+    ]
+  },
+  "industry-government": {
+    "src": "/product-3d/scenes/industry-government.webp",
+    "src800": "/product-3d/scenes/industry-government-800.webp",
+    "width": 1997,
+    "height": 814,
+    "title": "Government",
+    "tagline": "Sovereign & audited.",
+    "cableTargets": [
+      [
+        0.2521,
+        0.0061
+      ],
+      [
+        0.3274,
+        0.0061
+      ],
+      [
+        0.4026,
+        0.0061
+      ],
+      [
+        0.4952,
+        0.0061
+      ],
+      [
+        0.5879,
+        0.0061
+      ],
+      [
+        0.6631,
+        0.0061
+      ],
+      [
+        0.7384,
+        0.0061
+      ]
+    ],
+    "groups": [
+      {
+        "label": "Ministries",
+        "at": [
+          0.2804,
+          0.6114
+        ]
+      },
+      {
+        "label": "Agencies",
+        "at": [
+          0.4952,
+          0.6114
+        ]
+      },
+      {
+        "label": "Edge sites",
+        "at": [
+          0.7101,
+          0.6114
+        ]
+      }
+    ],
+    "tag": [
+      0.4952,
+      0.979
+    ],
+    "panelTop": [
+      0.4952,
+      0.0061
+    ]
+  },
+  "industry-bfsi": {
+    "src": "/product-3d/scenes/industry-bfsi.webp",
+    "src800": "/product-3d/scenes/industry-bfsi-800.webp",
+    "width": 1997,
+    "height": 814,
+    "title": "BFSI",
+    "tagline": "Compliant. Governed. Audited.",
+    "cableTargets": [
+      [
+        0.2521,
+        0.0061
+      ],
+      [
+        0.3274,
+        0.0061
+      ],
+      [
+        0.4026,
+        0.0061
+      ],
+      [
+        0.4952,
+        0.0061
+      ],
+      [
+        0.5879,
+        0.0061
+      ],
+      [
+        0.6631,
+        0.0061
+      ],
+      [
+        0.7384,
+        0.0061
+      ]
+    ],
+    "groups": [
+      {
+        "label": "Core banking",
+        "at": [
+          0.2804,
+          0.6114
+        ]
+      },
+      {
+        "label": "Channels",
+        "at": [
+          0.4952,
+          0.6114
+        ]
+      },
+      {
+        "label": "Analytics",
+        "at": [
+          0.7101,
+          0.6114
+        ]
+      }
+    ],
+    "tag": [
+      0.4952,
+      0.979
+    ],
+    "panelTop": [
+      0.4952,
+      0.0061
+    ]
+  },
+  "industry-healthcare": {
+    "src": "/product-3d/scenes/industry-healthcare.webp",
+    "src800": "/product-3d/scenes/industry-healthcare-800.webp",
+    "width": 1997,
+    "height": 814,
+    "title": "Healthcare",
+    "tagline": "Secure. Private. In-region.",
+    "cableTargets": [
+      [
+        0.2521,
+        0.0061
+      ],
+      [
+        0.3274,
+        0.0061
+      ],
+      [
+        0.4026,
+        0.0061
+      ],
+      [
+        0.4952,
+        0.0061
+      ],
+      [
+        0.5879,
+        0.0061
+      ],
+      [
+        0.6631,
+        0.0061
+      ],
+      [
+        0.7384,
+        0.0061
+      ]
+    ],
+    "groups": [
+      {
+        "label": "Clinical systems",
+        "at": [
+          0.2804,
+          0.6114
+        ]
+      },
+      {
+        "label": "Research",
+        "at": [
+          0.4952,
+          0.6114
+        ]
+      },
+      {
+        "label": "Digital health",
+        "at": [
+          0.7101,
+          0.6114
+        ]
+      }
+    ],
+    "tag": [
+      0.4952,
+      0.979
+    ],
+    "panelTop": [
+      0.4952,
+      0.0061
+    ]
+  },
+  "industry-regulated-enterprise": {
+    "src": "/product-3d/scenes/industry-regulated-enterprise.webp",
+    "src800": "/product-3d/scenes/industry-regulated-enterprise-800.webp",
+    "width": 1997,
+    "height": 814,
+    "title": "Regulated Enterprise",
+    "tagline": "Governed at scale.",
+    "cableTargets": [
+      [
+        0.2521,
+        0.0061
+      ],
+      [
+        0.3274,
+        0.0061
+      ],
+      [
+        0.4026,
+        0.0061
+      ],
+      [
+        0.4952,
+        0.0061
+      ],
+      [
+        0.5879,
+        0.0061
+      ],
+      [
+        0.6631,
+        0.0061
+      ],
+      [
+        0.7384,
+        0.0061
+      ]
+    ],
+    "groups": [
+      {
+        "label": "Public cloud",
+        "at": [
+          0.2804,
+          0.6114
+        ]
+      },
+      {
+        "label": "Private",
+        "at": [
+          0.4952,
+          0.6114
+        ]
+      },
+      {
+        "label": "Hybrid",
+        "at": [
+          0.7101,
+          0.6114
+        ]
+      }
+    ],
+    "tag": [
+      0.4952,
+      0.979
+    ],
+    "panelTop": [
+      0.4952,
+      0.0061
+    ]
+  },
+  "industry-saas": {
+    "src": "/product-3d/scenes/industry-saas.webp",
+    "src800": "/product-3d/scenes/industry-saas-800.webp",
+    "width": 1997,
+    "height": 814,
+    "title": "SaaS & Digital Native",
+    "tagline": "Ship fast. Spend less.",
+    "cableTargets": [
+      [
+        0.2521,
+        0.0061
+      ],
+      [
+        0.3274,
+        0.0061
+      ],
+      [
+        0.4026,
+        0.0061
+      ],
+      [
+        0.4952,
+        0.0061
+      ],
+      [
+        0.5879,
+        0.0061
+      ],
+      [
+        0.6631,
+        0.0061
+      ],
+      [
+        0.7384,
+        0.0061
+      ]
+    ],
+    "groups": [
+      {
+        "label": "Production",
+        "at": [
+          0.2804,
+          0.6114
+        ]
+      },
+      {
+        "label": "Staging",
+        "at": [
+          0.4952,
+          0.6114
+        ]
+      },
+      {
+        "label": "Data",
+        "at": [
+          0.7101,
+          0.6114
+        ]
+      }
+    ],
+    "tag": [
+      0.4952,
+      0.979
+    ],
+    "panelTop": [
+      0.4952,
+      0.0061
+    ]
+  },
+  "industry-telco": {
+    "src": "/product-3d/scenes/industry-telco.webp",
+    "src800": "/product-3d/scenes/industry-telco-800.webp",
+    "width": 1997,
+    "height": 814,
+    "title": "Telco & MSP",
+    "tagline": "Operators become cloud providers.",
+    "cableTargets": [
+      [
+        0.2521,
+        0.0061
+      ],
+      [
+        0.3274,
+        0.0061
+      ],
+      [
+        0.4026,
+        0.0061
+      ],
+      [
+        0.4952,
+        0.0061
+      ],
+      [
+        0.5879,
+        0.0061
+      ],
+      [
+        0.6631,
+        0.0061
+      ],
+      [
+        0.7384,
+        0.0061
+      ]
+    ],
+    "groups": [
+      {
+        "label": "Core",
+        "at": [
+          0.2804,
+          0.6114
+        ]
+      },
+      {
+        "label": "Edge",
+        "at": [
+          0.4952,
+          0.6114
+        ]
+      },
+      {
+        "label": "Tenants",
+        "at": [
+          0.7101,
+          0.6114
+        ]
+      }
+    ],
+    "tag": [
+      0.4952,
+      0.979
+    ],
+    "panelTop": [
+      0.4952,
+      0.0061
+    ]
+  },
+  "industry-datacenter": {
+    "src": "/product-3d/scenes/industry-datacenter.webp",
+    "src800": "/product-3d/scenes/industry-datacenter-800.webp",
+    "width": 1997,
+    "height": 814,
+    "title": "Datacenter & Colocation",
+    "tagline": "Rent per megawatt becomes revenue per tenant.",
+    "cableTargets": [
+      [
+        0.2521,
+        0.0061
+      ],
+      [
+        0.3274,
+        0.0061
+      ],
+      [
+        0.4026,
+        0.0061
+      ],
+      [
+        0.4952,
+        0.0061
+      ],
+      [
+        0.5879,
+        0.0061
+      ],
+      [
+        0.6631,
+        0.0061
+      ],
+      [
+        0.7384,
+        0.0061
+      ]
+    ],
+    "groups": [
+      {
+        "label": "Racks",
+        "at": [
+          0.2804,
+          0.6114
+        ]
+      },
+      {
+        "label": "Power & cooling",
+        "at": [
+          0.4952,
+          0.6114
+        ]
+      },
+      {
+        "label": "Tenants",
+        "at": [
+          0.7101,
+          0.6114
+        ]
+      }
+    ],
+    "tag": [
+      0.4952,
+      0.979
+    ],
+    "panelTop": [
+      0.4952,
+      0.0061
+    ]
+  },
+  "fabric": {
+    "src": "/product-3d/scenes/fabric.webp",
+    "src800": "/product-3d/scenes/fabric-800.webp",
+    "width": 1997,
+    "height": 814,
+    "title": "BlueWhale Stack Fabric",
+    "tagline": "Every datacenter. One fabric.",
+    "cableTargets": [
+      [
+        0.2521,
+        0.0061
+      ],
+      [
+        0.3274,
+        0.0061
+      ],
+      [
+        0.4026,
+        0.0061
+      ],
+      [
+        0.4952,
+        0.0061
+      ],
+      [
+        0.5879,
+        0.0061
+      ],
+      [
+        0.6631,
+        0.0061
+      ],
+      [
+        0.7384,
+        0.0061
+      ]
+    ],
+    "groups": [
+      {
+        "label": "Tier 1",
+        "at": [
+          0.2804,
+          0.6114
+        ]
+      },
+      {
+        "label": "Tier 2",
+        "at": [
+          0.4952,
+          0.6114
+        ]
+      },
+      {
+        "label": "Tier 3",
+        "at": [
+          0.7101,
+          0.6114
         ]
       }
     ],

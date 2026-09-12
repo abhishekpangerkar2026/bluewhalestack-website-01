@@ -10,7 +10,8 @@ import { Stat } from "@/components/ui/Stat";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { ArchitectureDiagram } from "@/components/diagrams/ArchitectureDiagram";
-import { IndustryVisual } from "@/components/diagrams/IndustryVisual";
+import { ProductScene } from "@/components/scenes/ProductScene";
+import { INDUSTRY_3D } from "@/content/product3d";
 import { getIndustries, getIndustry, getEdition, getModule } from "@/lib/content";
 
 export function generateStaticParams() {
@@ -81,7 +82,7 @@ export default async function IndustryDetailPage({
                 )}
               </div>
             </div>
-            <IndustryVisual industry={industry} />
+            <ProductScene scene={INDUSTRY_3D[industry.slug] ?? "platform"} priority className="mx-auto w-full max-w-[660px]" />
           </div>
         </Container>
       </section>

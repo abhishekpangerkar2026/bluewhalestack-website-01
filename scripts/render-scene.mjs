@@ -12,6 +12,8 @@ const ALL = [
   "platform", "inventory", "cloud-connectors", "identity", "provisioning", "itsm", "observe",
   "whalenomics", "migration", "whaleforge", "landing-zone", "cloud-audit", "whale-ai", "tenancy",
   "sovereign-operations",
+  "industry-government", "industry-bfsi", "industry-healthcare", "industry-regulated-enterprise",
+  "industry-saas", "industry-telco", "industry-datacenter", "fabric",
 ];
 const arg = process.argv[2];
 const scenes = arg && arg !== "all" ? arg.split(",") : ALL;

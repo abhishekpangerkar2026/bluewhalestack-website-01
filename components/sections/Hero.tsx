@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
-import { ProductMockup } from "@/components/sections/ProductMockup";
+import { ProductScene } from "@/components/scenes/ProductScene";
 import { CloudLogo } from "@/components/brand/CloudLogos";
 import { hero } from "@/content/home";
 
@@ -60,7 +60,7 @@ export function Hero() {
             {/* trust row */}
             <div className="mt-10">
               <p className="eyebrow text-faint">
-                Six public clouds · private &amp; virtualization · hybrid &amp; sovereign stacks · edge
+                Six public clouds · private, hybrid &amp; edge estates
               </p>
               <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3 opacity-80">
                 {TRUST_CLOUDS.map((c) => (
@@ -70,9 +70,9 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Right: product mock — min-w-0 so the mock shrinks to the column instead of widening the page */}
+          {/* Right: the platform, natively — objects on the page surface, pills and cables in HTML */}
           <div className="relative min-w-0">
-            <ProductMockup />
+            <ProductScene scene="platform" priority className="mx-auto w-full max-w-[680px]" />
           </div>
         </div>
       </Container>

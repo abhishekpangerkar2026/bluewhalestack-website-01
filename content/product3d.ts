@@ -12,6 +12,17 @@ export const EDITION_3D: Record<string, SceneKey> = {
   government: "sovereign-operations",
 };
 
+/** Industry slug → its industry scene. */
+export const INDUSTRY_3D: Record<string, SceneKey> = {
+  government: "industry-government",
+  bfsi: "industry-bfsi",
+  healthcare: "industry-healthcare",
+  "regulated-enterprise": "industry-regulated-enterprise",
+  saas: "industry-saas",
+  telco: "industry-telco",
+  datacenter: "industry-datacenter",
+};
+
 /** Solution → the module scene behind it. */
 export const SOLUTION_3D: Record<string, SceneKey> = {
   "unified-cloud-inventory": "inventory",
