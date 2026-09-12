@@ -346,9 +346,9 @@ export default async function IndustryDetailPage({
             : { label: "Book a working session", href: "/contact?intent=demo", note: "45 minutes · a solutions engineer, not a sales deck · nothing installed on your side" }
         }
         secondary={{
-          label: `Request the ${industry.name} control-mapping pack`,
-          href: "/contact?intent=resource",
-          note: `${industry.regimes.map((r) => r.name).join(", ")} — each obligation mapped to a platform control.`,
+          label: `Read the ${industry.name} brief`,
+          href: `/resources/industry-${industry.slug}`,
+          note: `${industry.regimes.map((r) => r.name).join(", ")} — each obligation mapped to a platform control, online or as a PDF.`,
         }}
         tertiary={edition ? { label: `${edition.name} Edition details`, href: `/editions/${edition.slug}`, note: edition.priceAnchor } : undefined}
       />

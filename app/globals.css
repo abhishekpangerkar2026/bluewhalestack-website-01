@@ -339,3 +339,14 @@ body {
     scroll-behavior: auto;
   }
 }
+
+/* ── printed documents (/print/[slug] → public/docs/*.pdf) ─────────── */
+@page { size: A4; }
+.printing-document { background: #ffffff; }
+.doc-print { color-adjust: exact; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+.doc-print h2 { break-after: avoid; }
+.doc-print table { break-inside: auto; }
+.doc-print thead { display: table-header-group; }
+@media print {
+  .doc-page { max-width: none !important; }
+}

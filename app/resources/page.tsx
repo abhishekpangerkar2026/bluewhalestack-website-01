@@ -4,6 +4,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
 import { Iso } from "@/components/illustrations/Iso";
 import { ResourceLibrary } from "@/components/sections/ResourceLibrary";
+import { ClosingCTA } from "@/components/sections/ClosingCTA";
 
 export const metadata: Metadata = {
   title: "Resources",
@@ -27,12 +28,13 @@ export default function ResourcesPage() {
                   </span>
                 </div>
                 <h1 className="display-1 text-ink">
-                  Datasheets, solution briefs and the company profile.
+                  Datasheets, briefs, whitepapers and case studies — read online or download.
                 </h1>
                 <p className="mt-6 text-lg leading-relaxed text-muted">
-                  The documents a procurement or architecture review asks for — edition datasheets, the technical
-                  capability list with edition mapping, industry solution briefs and the company profile. Request one
-                  and it is sent by email, usually the same working day.
+                  The documents a procurement or architecture review asks for: a datasheet per edition, a brief per
+                  solution and per industry, the platform overview and capability guide, four case studies, the trust
+                  summary and the company profile. Every one is written from the same content as the product pages,
+                  readable here and downloadable as a PDF — no form, no email required.
                 </p>
               </div>
             </Reveal>
@@ -52,7 +54,7 @@ export default function ResourcesPage() {
             <SectionHeading
               eyebrow="Library"
               title="Browse the collection"
-              description="Filter by type. Every item is a real document from the product or company pack; request it and we send it directly."
+              description="Filter by type. Each document opens as a reading page with a table of contents; the PDF is the same content laid out for print, A4, with page numbers."
             />
           </Reveal>
           <div className="mt-12">
@@ -60,6 +62,15 @@ export default function ResourcesPage() {
           </div>
         </Container>
       </section>
+
+      <ClosingCTA
+        eyebrow="Something specific?"
+        title="Need a document written for your estate or your regulator?"
+        body="We prepare custom control mappings for a named regime, sector sheets for industries not listed here, and datasheets sized to an estate — usually within a week, before any commercial conversation."
+        primary={{ label: "Request a custom document", href: "/contact?intent=resource", note: "Name the regime, sector or estate; a solutions engineer writes it" }}
+        secondary={{ label: "Book a working session", href: "/contact?intent=demo", note: "45 minutes · one of your accounts connected read-only" }}
+        tertiary={{ label: "Trust Center", href: "/trust", note: "signed certificates to download" }}
+      />
     </>
   );
 }
