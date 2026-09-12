@@ -180,31 +180,35 @@ export const primaryNav: NavItem[] = [
           { label: "Unified Cloud Inventory", href: "/solutions/unified-cloud-inventory" },
           { label: "AI-Native Provisioning", href: "/solutions/ai-native-provisioning" },
           { label: "Bundled Observability", href: "/solutions/bundled-observability" },
-        ],
-      },
-      {
-        heading: "More outcomes",
-        links: [
           { label: "Cloud Migration", href: "/solutions/cloud-migration" },
           { label: "Security & Compliance", href: "/solutions/security-compliance" },
           { label: "Sovereign Cloud", href: "/solutions/sovereign-cloud" },
         ],
       },
       {
-        heading: "By deployment",
+        heading: "Industry solutions",
         links: [
-          { label: "SaaS", href: "/platform#deployment" },
-          { label: "BYOC — your clouds", href: "/platform#deployment" },
-          { label: "On-premise", href: "/platform#deployment" },
-          { label: "Sovereign / air-gapped", href: "/editions/government" },
-          { label: "Edge — offline-tolerant", href: "/platform#deployment" },
+          { label: "Government", href: "/industries/government" },
+          { label: "BFSI", href: "/industries/bfsi" },
+          { label: "Healthcare", href: "/industries/healthcare" },
+          { label: "Telco & MSP", href: "/industries/telco" },
+          { label: "Datacenter & Colocation", href: "/industries/datacenter" },
+          { label: "All industry solutions", href: "/solutions#industries" },
+        ],
+      },
+      {
+        heading: "Customer proof",
+        links: [
+          { label: "Customer success stories", href: "/customers", desc: "Delivered engagements, by sector" },
+          { label: "Case studies", href: "/case-studies", desc: "Situation · work · outcome" },
+          { label: "Trust Center", href: "/trust", desc: "Certifications & compliance" },
         ],
       },
       {
         heading: "Featured",
         featured: true,
         links: [
-          { label: "Every cloud, one control plane", href: "/solutions/unified-cloud-inventory", desc: "See the whole estate" },
+          { label: "Audit-ready across two regulatory regimes", href: "/case-studies/bfsi-singapore-qatar", desc: "BFSI case study — Singapore & Qatar" },
           { label: "All solutions", href: "/solutions" },
         ],
       },
@@ -369,6 +373,8 @@ export const footerNav = [
     heading: "Company",
     links: [
       { label: "About Us", href: "/about" },
+      { label: "Customer stories", href: "/customers" },
+      { label: "Case studies", href: "/case-studies" },
       { label: "Careers", href: "/careers" },
       { label: "Partners", href: "/partners" },
       { label: "Resources", href: "/resources" },

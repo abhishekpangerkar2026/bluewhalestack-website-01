@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
+import { Iso } from "@/components/illustrations/Iso";
 import { ResourceLibrary } from "@/components/sections/ResourceLibrary";
 
 export const metadata: Metadata = {
@@ -35,10 +36,13 @@ export default function ResourcesPage() {
               </div>
             </Reveal>
             <Reveal delay={90}>
-              <p className="text-lg leading-relaxed text-muted lg:pb-2">
-                Whitepapers, case studies, webinars and expert insights on cloud
-                management, FinOps and enterprise cloud strategy.
-              </p>
+              <div className="lg:pb-2">
+                <Iso name="data" className="mb-6 max-w-[320px]" title="Whitepapers, datasheets and insights" />
+                <p className="text-lg leading-relaxed text-muted">
+                  Whitepapers, case studies, webinars and expert insights on cloud
+                  management, FinOps and enterprise cloud strategy.
+                </p>
+              </div>
             </Reveal>
           </div>
         </Container>

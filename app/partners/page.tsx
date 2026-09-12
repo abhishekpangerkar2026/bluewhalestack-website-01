@@ -5,6 +5,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
+import { Iso } from "@/components/illustrations/Iso";
 import { PartnerTracks } from "@/components/sections/PartnerTracks";
 import { PartnerJourney } from "@/components/sections/PartnerJourney";
 import { PartnerDocuments } from "@/components/sections/PartnerDocuments";
@@ -27,7 +28,8 @@ export default function PartnersPage() {
           className="pointer-events-none absolute inset-0 bg-dot-grid opacity-60 [mask-image:radial-gradient(ellipse_70%_60%_at_50%_50%,black,transparent)]"
         />
         <Container className="relative">
-          <div className="max-w-3xl py-20 sm:py-28">
+          <div className="grid items-center gap-12 py-20 sm:py-28 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="max-w-3xl">
             <div className="mb-5 flex items-center gap-3">
               <span aria-hidden className="h-px w-8 bg-accent/50" />
               <span className="eyebrow text-accent">
@@ -64,6 +66,15 @@ export default function PartnersPage() {
                 {partnerPortal.url.replace(/^https?:\/\//, "")}
               </a>
             </p>
+          </div>
+          <Reveal delay={100}>
+            <div className="mx-auto w-full max-w-[500px]">
+              <Iso
+                name="partners"
+                title="Three partner tracks — License Service Provider, System Implementation and Strategic — around one platform"
+              />
+            </div>
+          </Reveal>
           </div>
         </Container>
       </section>

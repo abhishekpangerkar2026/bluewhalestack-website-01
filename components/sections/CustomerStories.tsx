@@ -1,6 +1,9 @@
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Badge } from "@/components/ui/Badge";
+import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { customerStories, type CustomerStory } from "@/content/customers";
@@ -18,13 +21,26 @@ export function CustomerStories() {
   return (
     <section className="bg-canvas py-20 sm:py-24">
       <Container>
-        <Reveal>
-          <SectionHeading
-            eyebrow="Customer outcomes"
-            title="Trusted across governments, telcos & enterprises"
-            description="Representative outcomes from the kind of regulated, multi-cloud environments BlueWhale Stack is built for."
-          />
-        </Reveal>
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+          <Reveal>
+            <SectionHeading
+              eyebrow="Customer success stories"
+              title="Trusted across governments, telcos & enterprises"
+              description="Delivered engagements in the regulated, multi-cloud environments BlueWhale Stack is built for — anonymized under confidentiality, real in every outcome."
+            />
+          </Reveal>
+          <Reveal delay={80}>
+            <div className="flex shrink-0 flex-wrap gap-3">
+              <Button href="/customers" variant="outline">
+                All success stories
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+              <Button href="/case-studies" variant="secondary">
+                Case studies
+              </Button>
+            </div>
+          </Reveal>
+        </div>
 
         <div className="mt-14 space-y-12">
           {customerStories.map((s, i) => (
@@ -85,6 +101,13 @@ export function CustomerStories() {
                       </div>
                     ))}
                   </dl>
+                  <Link
+                    href={`/case-studies/${s.slug}`}
+                    className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-accent hover:gap-2.5"
+                  >
+                    Read the full case study
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </Link>
                 </div>
               </article>
             </Reveal>
@@ -101,10 +124,14 @@ export function CustomerStories() {
  * metric on a navy panel beneath. Falls back to the panel alone when a story
  * has no image.
  */
-function StoryVisual({ story }: { story: CustomerStory }) {
+export function StoryVisual({ story, compact = false }: { story: CustomerStory; compact?: boolean }) {
   const hero = story.metrics[0];
   return (
-    <div className="relative flex w-full flex-col overflow-hidden rounded-lg bg-brand-900 shadow-md">
+    <div
+      className={`relative flex w-full flex-col overflow-hidden bg-brand-900 shadow-md ${
+        compact ? "rounded-none" : "rounded-lg"
+      }`}
+    >
       {story.image && (
         // eslint-disable-next-line @next/next/no-img-element
         <img
@@ -112,7 +139,7 @@ function StoryVisual({ story }: { story: CustomerStory }) {
           alt={story.imageAlt}
           width={1200}
           height={345}
-          className="block w-full object-cover"
+          className={`block w-full object-cover ${compact ? "max-h-40" : ""}`}
         />
       )}
       {/* grid + glow motifs */}
@@ -129,7 +156,7 @@ function StoryVisual({ story }: { story: CustomerStory }) {
         aria-hidden
         className="pointer-events-none absolute -right-10 -bottom-10 h-48 w-48 rounded-full bg-brand-500/25 blur-3xl"
       />
-      <div className="relative flex flex-col justify-between gap-6 p-6 sm:p-8">
+      <div className={`relative flex flex-col justify-between gap-6 ${compact ? "p-5" : "p-6 sm:p-8"}`}>
         <div className="flex items-center justify-between">
           <span className="grid h-12 w-12 place-items-center rounded-lg bg-white/15 text-white ring-1 ring-white/25 backdrop-blur">
             <Icon name={SECTOR_ICON[story.industry] ?? "Building2"} className="h-6 w-6" />
@@ -142,13 +169,13 @@ function StoryVisual({ story }: { story: CustomerStory }) {
           <p className="eyebrow text-brand-100">
             {story.industry}
           </p>
-          <p className="mt-1 text-xl font-bold leading-snug text-white">
+          <p className={`mt-1 font-bold leading-snug text-white ${compact ? "text-base" : "text-xl"}`}>
             {story.org}
           </p>
-          {story.note && (
+          {story.note && !compact && (
             <p className="mt-1 text-xs text-white/60">{story.note}</p>
           )}
-          {hero && (
+          {hero && !compact && (
             <p className="mt-4 text-4xl font-bold text-white">
               {hero.value}{" "}
               <span className="text-base font-medium text-brand-100">

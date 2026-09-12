@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
+import { Iso } from "@/components/illustrations/Iso";
 
 export const metadata: Metadata = {
   title: "WhaleForge — Infrastructure as Code",
@@ -153,6 +154,7 @@ export default function WhaleForge() {
             </Reveal>
             <Reveal delay={90}>
               <div className="flex flex-col gap-4 lg:pb-2">
+                <Iso name="app-window" className="max-w-[300px] self-center" title="YAML in, Terraform and live diagrams out" />
                 <div className="rounded-xl border border-line bg-sunken p-5">
                   <p className="eyebrow text-faint">
                     What you get today

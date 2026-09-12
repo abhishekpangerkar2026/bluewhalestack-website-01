@@ -3,6 +3,7 @@ import { editions } from "@/content/editions";
 import { modules } from "@/content/modules";
 import { industries } from "@/content/industries";
 import { solutions } from "@/content/solutions";
+import { customerStories } from "@/content/customers";
 
 const BASE = "https://www.bluewhalestack.com";
 
@@ -14,6 +15,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/modules",
     "/industries",
     "/solutions",
+    "/customers",
+    "/case-studies",
     "/fabric",
     "/pricing",
     "/resources",
@@ -29,6 +32,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...modules.map((m) => `/modules/${m.slug}`),
     ...industries.map((i) => `/industries/${i.slug}`),
     ...solutions.map((s) => `/solutions/${s.slug}`),
+    ...customerStories.map((c) => `/case-studies/${c.slug}`),
   ];
 
   return [...staticRoutes, ...dynamic].map((path) => ({

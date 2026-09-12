@@ -44,13 +44,8 @@ export default function EditionsPage() {
               </div>
             </Reveal>
             <Reveal delay={90}>
-              <div className="lg:text-right">
-                <span className="block text-6xl font-bold tracking-tight text-faint num sm:text-7xl">
-                  {String(editions.length).padStart(2, "0")}
-                </span>
-                <p className="eyebrow mt-1 text-faint">
-                  Editions
-                </p>
+              <div className="mx-auto w-full max-w-[440px] lg:ml-auto lg:mr-0">
+                <Iso name="stacked-slabs" title="Four editions on one architecture" />
               </div>
             </Reveal>
           </div>

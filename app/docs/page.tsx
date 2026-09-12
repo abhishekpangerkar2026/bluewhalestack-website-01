@@ -7,6 +7,7 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
+import { Iso } from "@/components/illustrations/Iso";
 import { docCards } from "@/content/docs";
 
 export const metadata: Metadata = {
@@ -47,6 +48,7 @@ export default function DocsPage() {
             </Reveal>
             <Reveal delay={90}>
               <div>
+                <Iso name="app-window" className="mb-6 max-w-[320px]" title="Technical documentation and API reference" />
                 <p className="text-lg leading-relaxed text-muted">
                   Full technical reference, API docs, quick-start guides and
                   integration tutorials for every edition.

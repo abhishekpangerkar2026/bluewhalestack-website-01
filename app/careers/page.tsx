@@ -7,6 +7,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
+import { Iso } from "@/components/illustrations/Iso";
 import { perks, jobs } from "@/content/careers";
 import { leadership } from "@/content/about";
 import { company } from "@/content/company";
@@ -44,6 +45,7 @@ export default function CareersPage() {
             </Reveal>
             <Reveal delay={90}>
               <div>
+                <Iso name="network" className="mb-6 max-w-[300px]" title="A distributed team, one platform" />
                 <p className="text-lg leading-relaxed text-muted">
                   We&apos;re a team of engineers, architects and product thinkers
                   solving enterprise cloud management at scale — for governments,

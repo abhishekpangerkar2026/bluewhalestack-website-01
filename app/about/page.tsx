@@ -64,6 +64,7 @@ export default function AboutPage() {
             </Reveal>
             <Reveal delay={90}>
               <div className="lg:pb-2">
+                <Iso name="edge" className="mb-6 max-w-[300px]" title="A global platform company — India, UAE, United States" />
                 <p className="text-lg leading-relaxed text-muted">
                   {aboutHero.mission}
                 </p>

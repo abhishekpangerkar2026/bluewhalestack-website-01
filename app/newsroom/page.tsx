@@ -7,6 +7,7 @@ import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
+import { Iso } from "@/components/illustrations/Iso";
 
 export const metadata: Metadata = {
   title: "Newsroom",
@@ -103,6 +104,7 @@ export default function NewsroomPage() {
             </Reveal>
             <Reveal delay={90}>
               <div className="lg:pb-2">
+                <Iso name="audit" className="mb-6 max-w-[300px]" title="Announcements and certifications" />
                 <p className="text-lg leading-relaxed text-muted">
                   Product launches, certifications, partnerships and company milestones.
                   For press enquiries, reach us at{" "}

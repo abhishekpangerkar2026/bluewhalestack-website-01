@@ -9,6 +9,7 @@ import { Stat } from "@/components/ui/Stat";
 import { Placeholder } from "@/components/ui/Placeholder";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
+import { Iso, SOLUTION_ISO } from "@/components/illustrations/Iso";
 import { ArchitectureDiagram } from "@/components/diagrams/ArchitectureDiagram";
 import { getSolutions, getSolution, getModule, getEdition } from "@/lib/content";
 
@@ -48,6 +49,7 @@ export default async function SolutionDetailPage({
       {/* ── Hero: light band, oversized title ── */}
       <section className="border-b border-line bg-sunken py-24 sm:py-32">
         <Container>
+          <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="max-w-3xl">
             <div className="flex items-center gap-3">
               <span className="grid h-12 w-12 place-items-center rounded-lg bg-primary text-primary-fg shadow-sm">
@@ -72,6 +74,12 @@ export default async function SolutionDetailPage({
                 View architecture
               </Button>
             </div>
+          </div>
+          <Reveal delay={100}>
+            <div className="mx-auto w-full max-w-[460px]">
+              <Iso name={SOLUTION_ISO[solution.slug] ?? "stacked-slabs"} title={solution.name} />
+            </div>
+          </Reveal>
           </div>
         </Container>
       </section>

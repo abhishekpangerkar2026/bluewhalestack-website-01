@@ -6,6 +6,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
+import { Iso } from "@/components/illustrations/Iso";
 import { getEditions } from "@/lib/content";
 import { modules } from "@/content/modules";
 
@@ -66,12 +67,15 @@ export default function PricingPage() {
               </div>
             </Reveal>
             <Reveal delay={90}>
-              <p className="text-lg leading-relaxed text-muted lg:pb-2">
-                Standard and Enterprise have flat, published list prices —
-                $24,000 and $120,000 a year. Telco & Datacenter and
-                Government are contact-sales — shaped around your scale,
-                region and regulatory requirements.
-              </p>
+              <div className="lg:pb-2">
+                <Iso name="chart" className="mb-6 max-w-[320px]" title="Whalenomics — spend explained, decomposed, owned" />
+                <p className="text-lg leading-relaxed text-muted">
+                  Standard and Enterprise have flat, published list prices —
+                  $24,000 and $120,000 a year. Telco & Datacenter and
+                  Government are contact-sales — shaped around your scale,
+                  region and regulatory requirements.
+                </p>
+              </div>
             </Reveal>
           </div>
         </Container>

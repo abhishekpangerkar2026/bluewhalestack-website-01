@@ -585,6 +585,74 @@ function Observe({ p, v }: Ctx) {
   );
 }
 
+function Partners({ p, v }: Ctx) {
+  const c = p(0, 0, 44);
+  const sats: { x: number; y: number; tag: string }[] = [
+    { x: -62, y: -6, tag: "LSP" },
+    { x: 30, y: -62, tag: "SI" },
+    { x: 30, y: 30, tag: "SP" },
+  ];
+  return (
+    <>
+      <Shadow cx={120} cy={178} rx={86} ry={12} v={v} />
+      <Box p={p} x={-70} y={-70} z={0} w={140} d={140} h={12} tone="deep" dots />
+      {sats.map((s) => (
+        <Dotted key={s.tag} a={c} b={p(s.x + 13, s.y + 13, 36)} v={v} />
+      ))}
+      {sats.map((s) => (
+        <g key={s.tag}>
+          <Box p={p} x={s.x} y={s.y} z={12} w={26} d={26} h={24} tone="glass" />
+          <Tag x={p(s.x + 13, s.y + 13, 36)[0]} y={p(s.x + 13, s.y + 13, 36)[1] - 14} label={s.tag} v={v} />
+        </g>
+      ))}
+      <Box p={p} x={-16} y={-16} z={12} w={32} d={32} h={32} tone="blue" />
+      <Glow at={c} r={2.8} />
+      <Coin x={190} y={60} r={9} />
+    </>
+  );
+}
+
+function Solutions({ p, v }: Ctx) {
+  const steps = [
+    { x: -96, y: 14, z: 0, tone: "deep" as Tone },
+    { x: -40, y: -14, z: 18, tone: "blue" as Tone },
+    { x: 16, y: -42, z: 36, tone: "glass" as Tone },
+  ];
+  const tops = steps.map((s) => p(s.x + 24, s.y + 24, s.z + 12));
+  return (
+    <>
+      <Shadow cx={120} cy={178} rx={86} ry={12} v={v} />
+      {steps.map((s, i) => (
+        <Box key={i} p={p} x={s.x} y={s.y} z={s.z} w={48} d={48} h={12} tone={s.tone} dots={i === 2} />
+      ))}
+      <polyline
+        points={pts(tops)}
+        fill="none"
+        stroke={GOLD}
+        strokeWidth="2.4"
+        strokeDasharray="5 4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      {tops.map((t, i) => (
+        <g key={i}>
+          <circle cx={t[0]} cy={t[1] - 14} r="9" fill="#2f62e6" stroke={GOLD} strokeWidth="1.4" />
+          <polyline
+            points={`${t[0] - 4},${t[1] - 14} ${t[0] - 1},${t[1] - 11} ${t[0] + 4},${t[1] - 18}`}
+            fill="none"
+            stroke="#ffffff"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </g>
+      ))}
+      <Sparkle x={196} y={40} s={1.1} />
+      <Cloud x={20} y={26} s={1.1} v={v} />
+    </>
+  );
+}
+
 /* ─── registry ────────────────────────────────────────────────────────────── */
 
 const SCENES = {
@@ -606,6 +674,8 @@ const SCENES = {
   byoc: Byoc,
   edge: Edge,
   observe: Observe,
+  partners: Partners,
+  solutions: Solutions,
 } as const;
 
 export type IsoName = keyof typeof SCENES;
@@ -629,6 +699,24 @@ export const FAMILY_ISO: Record<string, IsoName> = {
   observability: "observe",
   tenancy: "servers",
   sovereign: "edge",
+};
+
+/** Solution slug → illustration. */
+export const SOLUTION_ISO: Record<string, IsoName> = {
+  "unified-cloud-inventory": "cloud-slab",
+  "ai-native-provisioning": "ai-cube",
+  "bundled-observability": "observe",
+  "cloud-migration": "migration",
+  "security-compliance": "shield-slab",
+  "sovereign-cloud": "edge",
+};
+
+/** Customer-story industry → illustration. */
+export const INDUSTRY_ISO: Record<string, IsoName> = {
+  BFSI: "audit",
+  Government: "shield-slab",
+  "Telco & Datacenter": "servers",
+  Media: "edge",
 };
 
 /** Deployment mode → illustration (matches the deck's deployment row). */
