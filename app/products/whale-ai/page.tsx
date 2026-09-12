@@ -3,7 +3,7 @@ import { ArrowRight, Check } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
-import { Iso } from "@/components/illustrations/Iso";
+import { Product3D } from "@/components/media/Product3D";
 import { Card } from "@/components/ui/Card";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
@@ -199,9 +199,7 @@ export default function WhaleAIPage() {
               </Button>
             </div>
           </div>
-          <div className="mx-auto w-full max-w-[460px]">
-            <Iso name="ai-cube" variant="dark" title="Whale AI — an intelligence layer over every module, inside the perimeter" />
-          </div>
+          <Product3D name="whale-ai" priority className="mx-auto w-full max-w-[600px] border-white/20" />
           </div>
 
           {/* Stats strip */}

@@ -8,6 +8,7 @@ import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
 import { Iso, FAMILY_ISO } from "@/components/illustrations/Iso";
+import { Product3D } from "@/components/media/Product3D";
 import {
   modules,
   moduleGroups,
@@ -116,6 +117,7 @@ export default function ModulesPage() {
                     >
                       <Link href={`/modules/${m.slug}`} className="group/card block h-full">
                         <Card interactive className="flex h-full flex-col">
+                          <Product3D name={m.slug} framed={false} className="mb-4 rounded-lg border border-line" sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 100vw" />
                           <div className="flex items-center justify-between">
                             <span className="grid h-11 w-11 place-items-center rounded-lg bg-[var(--bg-active)] text-accent">
                               <Icon name={m.icon} className="h-5 w-5" />

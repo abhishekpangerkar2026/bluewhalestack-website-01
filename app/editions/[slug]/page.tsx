@@ -4,7 +4,8 @@ import { notFound } from "next/navigation";
 import { ArrowRight, Check, Clock } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Iso, EDITION_ISO } from "@/components/illustrations/Iso";
+import { Product3D } from "@/components/media/Product3D";
+import { EDITION_3D } from "@/content/product3d";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
@@ -139,13 +140,7 @@ export default async function EditionDetailPage({
               )}
             </div>
           </div>
-          <div className="mx-auto w-full max-w-[440px]">
-            <Iso
-              name={EDITION_ISO[edition.slug]}
-              variant="dark"
-              title={`${edition.name} Edition — ${edition.tagline}`}
-            />
-          </div>
+          <Product3D name={EDITION_3D[edition.slug]} priority className="mx-auto w-full max-w-[600px] border-white/20" />
           </div>
         </Container>
       </section>

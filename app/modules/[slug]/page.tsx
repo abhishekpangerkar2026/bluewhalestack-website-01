@@ -10,6 +10,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { getModules, getModule } from "@/lib/content";
 import { moduleGroups } from "@/content/modules";
 import { editions } from "@/content/editions";
+import { Product3D } from "@/components/media/Product3D";
 
 export function generateStaticParams() {
   return getModules().map((m) => ({ slug: m.slug }));
@@ -40,26 +41,37 @@ export default async function ModuleDetailPage({
   return (
     <>
       {/* ── Hero: light band, big icon + oversized title ── */}
-      <section className="border-b border-line bg-sunken py-20 sm:py-24">
+      <section className="border-b border-line bg-sunken py-16 sm:py-24">
         <Container>
-          <div className="flex items-center gap-3">
-            <span className="text-sm font-bold text-accent num">
-              {moduleGroups[mod.group]}
-            </span>
-            <span aria-hidden className="h-px w-8 bg-line-strong" />
-          </div>
-          <div className="mt-6 flex items-start gap-5">
-            <div className="grid h-16 w-16 shrink-0 place-items-center rounded-xl bg-primary text-primary-fg shadow-sm">
-              <Icon name={mod.icon} className="h-8 w-8" />
-            </div>
+          <div className="grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
             <div>
-              <h1 className="text-4xl font-bold leading-[1.03] tracking-tight text-ink sm:text-5xl lg:text-6xl">
-                {mod.name}
-              </h1>
-              <p className="mt-3 max-w-2xl text-lg leading-relaxed text-muted">
-                {mod.tagline}
-              </p>
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-bold text-accent num">
+                  {moduleGroups[mod.group]}
+                </span>
+                <span aria-hidden className="h-px w-8 bg-line-strong" />
+              </div>
+              <div className="mt-6 flex items-start gap-5">
+                <div className="grid h-16 w-16 shrink-0 place-items-center rounded-xl bg-primary text-primary-fg shadow-sm">
+                  <Icon name={mod.icon} className="h-8 w-8" />
+                </div>
+                <div>
+                  <h1 className="display-1 text-ink">{mod.name}</h1>
+                  <p className="mt-3 max-w-2xl text-lg leading-relaxed text-muted">
+                    {mod.tagline}
+                  </p>
+                </div>
+              </div>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Button href="/contact?intent=demo">Book a demo</Button>
+                <Button href="/modules" variant="secondary">
+                  All modules
+                </Button>
+              </div>
             </div>
+            <Reveal delay={80}>
+              <Product3D name={mod.slug} priority />
+            </Reveal>
           </div>
         </Container>
       </section>
@@ -68,8 +80,8 @@ export default async function ModuleDetailPage({
       <section className="bg-canvas py-20 sm:py-24">
         <Container>
           <div className="grid items-start gap-x-16 gap-y-12 lg:grid-cols-[1.05fr_0.95fr]">
-            <Reveal>
-              <div>
+            <Reveal className="min-w-0">
+              <div className="min-w-0">
                 <p className="text-xl leading-relaxed text-ink sm:text-2xl sm:leading-relaxed">
                   {mod.description}
                 </p>
@@ -118,15 +130,9 @@ export default async function ModuleDetailPage({
               </div>
             </Reveal>
 
-            <Reveal delay={120}>
-              <div className="lg:sticky lg:top-28">
+            <Reveal delay={120} className="min-w-0">
+              <div className="min-w-0 overflow-hidden lg:sticky lg:top-28">
                 <ModuleDiagram module={mod} />
-                <div className="mt-6 flex flex-wrap gap-3">
-                  <Button href="/contact">Book a Demo</Button>
-                  <Button href="/modules" variant="secondary">
-                    All modules
-                  </Button>
-                </div>
               </div>
             </Reveal>
           </div>

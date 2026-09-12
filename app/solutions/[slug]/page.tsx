@@ -9,7 +9,8 @@ import { Stat } from "@/components/ui/Stat";
 import { Placeholder } from "@/components/ui/Placeholder";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
-import { Iso, SOLUTION_ISO } from "@/components/illustrations/Iso";
+import { Product3D } from "@/components/media/Product3D";
+import { SOLUTION_3D } from "@/content/product3d";
 import { ArchitectureDiagram } from "@/components/diagrams/ArchitectureDiagram";
 import { getSolutions, getSolution, getModule, getEdition } from "@/lib/content";
 
@@ -76,9 +77,7 @@ export default async function SolutionDetailPage({
             </div>
           </div>
           <Reveal delay={100}>
-            <div className="mx-auto w-full max-w-[460px]">
-              <Iso name={SOLUTION_ISO[solution.slug] ?? "stacked-slabs"} title={solution.name} />
-            </div>
+            <Product3D name={SOLUTION_3D[solution.slug] ?? "platform"} priority className="mx-auto w-full max-w-[620px]" />
           </Reveal>
           </div>
         </Container>

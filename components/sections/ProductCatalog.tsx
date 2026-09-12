@@ -7,6 +7,7 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
+import { Product3D } from "@/components/media/Product3D";
 import {
   modules,
   moduleGroups,
@@ -94,6 +95,7 @@ export function ProductCatalog() {
                 href={`/modules/${m.slug}`}
                 className="group flex h-full flex-col rounded-lg border border-line bg-surface p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-line-strong hover:shadow-md"
               >
+                <Product3D name={m.slug} framed={false} className="mb-4 rounded-md border border-line" sizes="(min-width: 1024px) 25vw, (min-width: 640px) 45vw, 100vw" />
                 <div className="flex items-start justify-between">
                   <span className="grid h-12 w-12 place-items-center rounded-xl bg-[var(--bg-active)] text-accent ring-1 ring-inset ring-line">
                     <Icon name={m.icon} className="h-6 w-6" />

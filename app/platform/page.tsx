@@ -14,6 +14,7 @@ import { ModuleExplorer } from "@/components/sections/ModuleExplorer";
 import { ProductShowcase } from "@/components/sections/ProductShowcase";
 import { PrototypeOffer } from "@/components/sections/PrototypeOffer";
 import { Iso, FAMILY_ISO, DEPLOY_ISO } from "@/components/illustrations/Iso";
+import { Product3D } from "@/components/media/Product3D";
 import { compliance, estates } from "@/content/company";
 import {
   modules,
@@ -83,12 +84,7 @@ export default function PlatformPage() {
               </div>
             </div>
             <Reveal delay={100}>
-              <div className="mx-auto w-full max-w-[560px]">
-                <Iso
-                  name="platform-stack"
-                  title="The BlueWhale Stack platform — three stacked layers connected to every cloud"
-                />
-              </div>
+              <Product3D name="platform" priority className="mx-auto w-full max-w-[680px]" />
             </Reveal>
           </div>
 
