@@ -56,6 +56,9 @@ import {
   RefreshCw,
   Star,
   FileText,
+  // platform families / services
+  Settings,
+  Database,
 } from "lucide-react";
 
 /**
@@ -114,6 +117,8 @@ const REGISTRY: Record<string, React.ComponentType<LucideProps>> = {
   RefreshCw,
   Star,
   FileText,
+  Settings,
+  Database,
 };
 
 /** Render a content-driven icon by name; falls back to HelpCircle. */

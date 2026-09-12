@@ -31,13 +31,14 @@ export default function EditionsPage() {
                   <span className="eyebrow text-accent">Editions</span>
                 </div>
                 <h1 className="display-1 text-ink">
-                  One platform.{" "}
-                  <span className="text-faint">Four editions.</span>
+                  Four editions.{" "}
+                  <span className="text-faint">One architecture.</span>
                 </h1>
                 <p className="mt-6 text-lg leading-relaxed text-muted">
-                  The same hyperscaler-neutral platform, shaped for how you
-                  operate — from a single-region SaaS team to a sovereign
-                  government cloud or a datacenter operator.
+                  Each edition targets its industries and adds the capability
+                  families they need — an upgrade is a licence change, not a
+                  migration. One console, one identity, one policy, one bill
+                  and an API-first surface are included in every edition.
                 </p>
               </div>
             </Reveal>
@@ -66,7 +67,7 @@ export default function EditionsPage() {
                         Preview{e.gaTarget ? ` · GA ${e.gaTarget}` : ""}
                       </Badge>
                     ) : e.featured ? (
-                      <Badge>Most popular</Badge>
+                      <Badge tone="warning">Most deployed</Badge>
                     ) : (
                       <span aria-hidden className="h-[26px]" />
                     )}
@@ -77,12 +78,30 @@ export default function EditionsPage() {
                   <h3 className="mt-4 text-xl font-bold text-ink">
                     {e.name}
                   </h3>
-                  <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-accent">
+                  <p className="mt-1 text-sm font-medium italic text-accent">
                     {e.tagline}
                   </p>
-                  <p className="mt-3 flex-1 text-sm leading-relaxed text-muted">
-                    {e.summary}
-                  </p>
+                  <div className="mt-4 flex-1 space-y-4">
+                    <div>
+                      <p className="eyebrow text-faint">Who it targets</p>
+                      <p className="mt-1 text-sm leading-relaxed text-muted">{e.audience}</p>
+                    </div>
+                    <div>
+                      <p className="eyebrow text-faint">What it includes</p>
+                      <ul className="mt-1.5 space-y-1">
+                        {e.includes.map((x) => (
+                          <li key={x} className="flex items-start gap-2 text-sm text-ink">
+                            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-400" />
+                            {x}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div>
+                      <p className="eyebrow text-faint">The outcome</p>
+                      <p className="mt-1 text-sm font-bold text-ink">{e.outcome}</p>
+                    </div>
+                  </div>
                   <dl className="mt-5 space-y-1.5 border-t border-line pt-5 text-sm">
                     <div className="flex justify-between gap-3">
                       <dt className="text-faint">Deploy</dt>
@@ -117,7 +136,7 @@ export default function EditionsPage() {
             <SectionHeading
               eyebrow="Compare"
               title="Modules by edition"
-              description="Every edition runs the same platform — these are the modules included by default."
+              description="Every edition runs the same platform — these are the modules included by default. One architecture: an upgrade is a licence change, not a migration."
             />
           </Reveal>
           <Reveal delay={100}>

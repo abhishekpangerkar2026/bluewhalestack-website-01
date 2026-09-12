@@ -1,26 +1,55 @@
-/** Platform page content. */
+/**
+ * Platform page content — sourced from the official Product Overview
+ * (v1.0, Sept 2026) and Company Profile (Aug 2026): "Digital Experience
+ * Platform — One Platform. Every Industry. Every Estate."
+ */
 
 export const platformHero = {
-  eyebrow: "Unified Cloud Management Platform",
-  title: "Every cloud. One control plane.",
+  eyebrow: "Digital Experience Platform",
+  title: "One Platform. Every Industry. Every Estate.",
   description:
-    "See, run, and optimize your entire cloud estate — across six public clouds and on-prem — from a single AI-powered platform. Replace 6–12 disconnected tools with one control plane.",
+    "Modern organizations run many estates — public clouds, private datacenters, virtualization farms, hybrid stacks, remote and air-gapped sites. Each arrives with its own console, its own identity, its own bill and its own audit story. BlueWhale Stack replaces that sprawl with one governed layer: a single console, one identity fabric, one policy engine and one explainable bill across everything — with a multi-tenant Digital Experience Layer on top that lets operators and enterprises publish governed services to their own customers and business units.",
+  tagline: "The change is not another tool in the estate — it is the layer that makes the estate answerable.",
 };
 
-/** Hero stats strip — four value propositions. */
+/** Hero stats strip — the official at-a-glance numbers. */
 export const heroStats = [
-  { value: "Every cloud", label: "+ on-prem & hybrid" },
-  { value: "One ledger", label: "cost · inventory · ops" },
-  { value: "AI in every module", label: "Whale AI" },
-  { value: "SaaS · BYOC · Sovereign", label: "your data, your region" },
+  { value: "54", label: "Capabilities shipped across the platform" },
+  { value: "9", label: "Capability families under one console" },
+  { value: "4", label: "Editions on one architecture — an upgrade is a licence change" },
+  { value: "6", label: "Platform classes — public, private, virtual, hybrid, sovereign, edge" },
 ];
+
+export const whoItIsFor = [
+  {
+    icon: "Layers",
+    title: "Enterprises",
+    body: "Multi-cloud and hybrid estates that need governance, cost discipline and audit evidence — without slowing delivery.",
+    href: "/editions/enterprise",
+  },
+  {
+    icon: "Server",
+    title: "Telco & DC operators",
+    body: "Sell governed cloud services on your own capacity — white-label, metered, billed through your BSS.",
+    href: "/editions/telco-datacenter",
+  },
+  {
+    icon: "ShieldCheck",
+    title: "Government & regulated",
+    body: "Sovereignty by architecture — in-country, segregated, air-gap-capable, with AI that never leaves the perimeter.",
+    href: "/editions/government",
+  },
+];
+
+export const whyNow =
+  "Estates are multiplying faster than governance. BlueWhale Stack makes governance the layer that arrives first — not the retrofit that arrives after the audit.";
 
 /** Why BlueWhale Stack — 6 pillars. */
 export const pillars = [
   {
     icon: "Cloud",
-    title: "Every cloud, one plane",
-    body: "AWS · Azure · GCP · Oracle · IBM · Alibaba, plus on-prem (VMware · Hyper-V · Nutanix). Connect once, manage everywhere.",
+    title: "Every estate, one plane",
+    body: "AWS · Azure · Google Cloud · Oracle · Alibaba · Huawei, plus VMware · Hyper-V · Nutanix · OpenShift · KVM, hybrid and sovereign stacks, air-gapped and edge. Connect once, manage everywhere.",
   },
   {
     icon: "Eye",
@@ -29,72 +58,181 @@ export const pillars = [
   },
   {
     icon: "TrendingDown",
-    title: "Spend less, prove it",
-    body: "Real cost intelligence — anomalies, recommendations, budgets, chargeback, unit economics, and carbon — in one place.",
+    title: "Spend explained, decomposed, owned",
+    body: "Whalenomics — budgets, forecasts, chargeback and continuous optimization, with spend decomposed to workload, department or tenant.",
   },
   {
     icon: "MoveRight",
     title: "Move anything",
-    body: "Any-to-any migration plus infrastructure-as-code and landing zones: on-prem→cloud, cloud→cloud, and repatriation.",
+    body: "Inventory, dependency mapping and rehearsed waves with rollback — entry, movement and exit industrialized across six platforms.",
   },
   {
     icon: "ShieldCheck",
-    title: "Run & secure it all",
-    body: "Observability, IT service management, security posture, and privileged access — one operations layer for everything you run.",
+    title: "Run, secure & prove it",
+    body: "Observability, ITSM, one identity fabric and continuous control monitoring — examiner-grade evidence on demand for the board, the auditor and the regulator.",
   },
   {
     icon: "Sparkles",
-    title: "AI in every module",
-    body: "Whale AI is woven across the whole platform — 50+ grounded use cases, an assistant wherever you work, not a bolt-on chatbot.",
+    title: "Whale AI — including offline",
+    body: "AI for operations, documentation and compliance woven through every family — your choice of model, able to run fully inside the perimeter.",
   },
 ];
 
-/** Five capability groups with feature chips. */
-export const capabilities = [
+/** "How the families work together — three everyday moments." */
+export const everydayMoments = [
   {
-    icon: "Eye",
-    title: "Discover & Manage",
-    chips: ["Dashboard", "Inventory", "Discovery", "Assessment", "Service Catalog"],
+    icon: "MoveRight",
+    title: "A new estate lands",
+    body: "Migration & Discovery inventories it; Security & Identity extends the identity fabric; Governance applies policy; Whalenomics baselines cost — governed from day one, not retrofitted.",
+  },
+  {
+    icon: "FileCheck",
+    title: "The auditor calls",
+    body: "Governance & Audit has been collecting evidence continuously across every estate — the supervisory request becomes report parameters, not a war room.",
+  },
+  {
+    icon: "Sparkles",
+    title: "AI, inside the walls",
+    body: "Whale AI reads operations and documentation on the customer's own model, inside the perimeter — with Observability watching it and Audit logging it.",
+  },
+];
+
+export const designRule =
+  "Every family reads from and writes to the same inventory, identity and policy plane — which is why one console can answer questions that previously took four tools and a spreadsheet.";
+
+/** The six-layer architecture, read top-down the way value flows. */
+export const architectureLayers = [
+  {
+    n: "1",
+    name: "Industry segments",
+    body: "Enterprise, datacenter, telco, government and SMB consume governed services — each through its own edition of the same platform.",
+  },
+  {
+    n: "2",
+    name: "Digital Experience Layer",
+    body: "Multi-tenant by design: white-label portals, catalog & marketplace, self-service, per-tenant metering & billing, SLA and tenant health — the layer your customers and business units see.",
+  },
+  {
+    n: "3",
+    name: "Unified Platform Core",
+    body: "Nine capability families under one console, one identity, one policy and one bill — the governance engine of the whole estate.",
+  },
+  {
+    n: "4",
+    name: "Integrations",
+    body: "The platform plugs into what you already run — OSS/BSS, ServiceNow/Jira, billing and invoicing, identity & SSO, and an API surface for everything else.",
+  },
+  {
+    n: "5",
+    name: "Every estate",
+    body: "Public clouds, private and virtualization estates, hybrid and sovereign stacks — discovered, governed and billed as one, down to air-gapped and edge sites.",
+  },
+  {
+    n: "6",
+    name: "Deployment modes",
+    body: "SaaS, BYOC on your own clouds, on-premise, sovereign air-gapped, or at the edge — the same product in every mode.",
+  },
+];
+
+/** Included in every edition. */
+export const includedInEveryEdition = [
+  { icon: "LayoutTemplate", title: "One console", body: "Every estate, one pane of glass." },
+  { icon: "KeyRound", title: "One identity", body: "SAML/OIDC fabric across everything." },
+  { icon: "FileCheck", title: "One policy", body: "Governance as configuration." },
+  { icon: "Wallet", title: "One bill", body: "Spend explained, decomposed, owned." },
+  { icon: "Zap", title: "API-first", body: "Everything the console does, the API does." },
+];
+
+/** Deployment — the same product, wherever it must run. */
+export const deploymentModes = [
+  {
+    name: "SaaS",
+    badge: "Fastest start",
+    body: "Running in days, with regional residency options — Singapore, Mumbai, Frankfurt or Los Angeles.",
+  },
+  {
+    name: "BYOC — your clouds",
+    badge: "Nothing re-hosted",
+    body: "On your own cloud accounts — the control plane runs in your AWS / Azure / GCP; nothing is re-hosted to adopt it.",
+  },
+  {
+    name: "On-premise",
+    badge: "Full control",
+    body: "Full control inside your own datacenters, on your virtualization or bare-metal estate.",
+  },
+  {
+    name: "Sovereign · air-gapped",
+    badge: "Disconnected",
+    body: "Fully disconnected operation — including Whale AI offline, in-region models and no call-home.",
+  },
+  {
+    name: "Edge — offline-tolerant",
+    badge: "HQ-grade policy",
+    body: "Plants, branches and bureaus under headquarters-grade policy, tolerant of disconnection.",
+  },
+];
+
+export const deploymentNote =
+  "Every mode runs the same platform build — moving between modes is an operational decision, not a re-implementation. Mixed estates (a SaaS console governing air-gapped and edge sites through the Edge Agent) are the norm, not the exception.";
+
+/** Support & service model. */
+export const supportModel = [
+  {
+    icon: "Headset",
+    title: "Tiered support",
+    body: "L1/L2 with the customer or partner, L3 with BlueWhale — 24×7 critical bridge at 99.9%.",
   },
   {
     icon: "MoveRight",
-    title: "Build & Migrate",
-    chips: ["Migration Engine", "WhaleForge IaC", "Landing Zone"],
+    title: "Implementation",
+    body: "BlueWhale practices — App, Infrastructure and Data Modernization, AI Design — or certified partners.",
   },
   {
-    icon: "TrendingDown",
-    title: "Optimize",
-    chips: ["FinOps (Whale Nomics)", "Cost intel", "Anomalies", "Budgets", "Chargeback", "Carbon"],
-  },
-  {
-    icon: "Activity",
-    title: "Operate",
-    chips: ["Observe", "ITSM", "Incidents", "Changes"],
-  },
-  {
-    icon: "ShieldCheck",
-    title: "Secure & Govern",
-    chips: ["Identity & Access", "Security scanning", "Compliance", "Audit"],
+    icon: "Sparkles",
+    title: "Product & roadmap",
+    body: "Quarterly releases; customer councils feed the roadmap; no forced upgrades on sovereign estates.",
   },
 ];
 
-export const deploymentModels = [
-  {
-    name: "SaaS",
-    badge: "Fastest to value",
-    body: "Fully managed, multi-tenant from Singapore. Zero infrastructure overhead.",
+/** The 90-day prototype — the standing offer. */
+export const prototypeOffer = {
+  eyebrow: "The standing offer",
+  title: "The 90-day prototype",
+  description:
+    "Proven before commitment. Half a day with your technology and finance leaders, then a full-featured prototype on your own estate — scored on agreed criteria before any licensing decision.",
+  steps: [
+    {
+      icon: "Users",
+      title: "Discovery workshop",
+      when: "Half day",
+      body: "The platform on your estate's shape; success criteria agreed with technology and finance.",
+    },
+    {
+      icon: "Zap",
+      title: "Prototype",
+      when: "90 days · no licence cost",
+      body: "Full-featured on your own estate: inventory live, cost decomposed, one audit report, one AI use case.",
+    },
+    {
+      icon: "FileCheck",
+      title: "Evidence review",
+      when: "Day 90",
+      body: "Scored on the agreed criteria — then, and only then, the licensing decision.",
+    },
+    {
+      icon: "TrendingUp",
+      title: "Scale",
+      when: "Quarters 2–4",
+      body: "The control plane extends estate by estate; every environment inherits governance day one.",
+    },
+  ],
+  cta: {
+    title: "Next step — the discovery workshop.",
+    body: "Bring your hardest audit finding and your least explainable cloud bill; we will show what the platform does with both, on your estate's shape, before any commercial conversation.",
+    label: "Book the discovery workshop",
+    href: "/contact?intent=demo",
   },
-  {
-    name: "BYOC",
-    badge: "Most flexible",
-    body: "Bring your own cloud — the control plane runs in your AWS / Azure / GCP.",
-  },
-  {
-    name: "Sovereign",
-    badge: "Air-gapped",
-    body: "Installed in your own data center, fully isolated — in-region AI models, no call-home, dedicated support and custom SLAs.",
-  },
-];
+};
 
 /** Whale AI tiers — Spark · Tide · Abyss. */
 export const whaleTiers = [
@@ -110,8 +248,8 @@ export const whaleTiers = [
   },
   {
     name: "Abyss",
-    edition: "Enterprise · Government (in-region)",
-    body: "Premium multi-step agents for the most complex, cross-module workflows — including sovereign in-region.",
+    edition: "Enterprise · Government (in-region, offline)",
+    body: "Premium multi-step agents for the most complex, cross-module workflows — including fully offline inside the perimeter.",
   },
 ];
 
@@ -130,7 +268,7 @@ export const trustPillars = [
   {
     icon: "Landmark",
     title: "Sovereign & air-gapped",
-    body: "SaaS, your own cloud (BYOC), or fully sovereign with no call-home and in-region AI.",
+    body: "SaaS, your own cloud (BYOC), on-premise, or fully sovereign with no call-home and in-region, offline AI.",
   },
   {
     icon: "Lock",
@@ -140,10 +278,10 @@ export const trustPillars = [
 ];
 
 export const securityPosture = [
-  "Federated identity across 9+ IdPs with auto-provisioning",
-  "Role-based access across every connected cloud",
-  "Full audit trail of platform activity",
+  "One identity fabric (SAML/OIDC) across 9+ IdPs with auto-provisioning",
+  "Least-privilege, role-based access across every connected estate",
+  "Continuous control monitoring with examiner-grade evidence on demand",
   "Data residency by region (DPDP — Mumbai, GDPR — Frankfurt)",
-  "ISO 27001 certified; SOC 2 Type II readiness complete",
+  "ISO 27001 certified; SOC 2 Type II readiness assessment complete",
   "Air-gapped & in-region deployment for sovereign customers",
 ];

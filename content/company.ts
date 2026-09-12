@@ -7,7 +7,7 @@ export const company = {
   name: "BlueWhale Stack",
   tagline: "Every cloud. One control plane.",
   metaDescription:
-    "BlueWhale Stack is a hyperscaler-neutral cloud management platform: unified inventory, AI-native provisioning, bundled observability, migration and governance across public cloud, on-prem and hybrid — one control plane, with BYOC and sovereign options.",
+    "BlueWhale Stack is the Digital Experience Platform for every estate — one control plane across public, private, virtualization, hybrid, sovereign and edge: 54 capabilities in nine families, four editions on one architecture, delivered as SaaS, BYOC, on-premise, sovereign air-gapped or at the edge.",
   emails: {
     sales: "sales@bluewhalestack.com",
     careers: "careers@bluewhalestack.com",
@@ -56,9 +56,29 @@ export const clouds = [
   "Microsoft Azure",
   "Google Cloud",
   "Oracle Cloud",
-  "IBM Cloud",
   "Alibaba Cloud",
-  "On-prem (VMware · Nutanix · Hyper-V)",
+  "Huawei Cloud",
+  "Private & virtualization (VMware · Hyper-V · Nutanix · OpenShift · KVM)",
+  "Hybrid & sovereign stacks (Azure Stack · Huawei Cloud Stack · Alibaba Apsara Stack)",
+] as const;
+
+/** Every estate — managed as one (Product Overview, layer 5). */
+export const estates = [
+  {
+    title: "Public cloud",
+    icon: "Cloud",
+    items: ["AWS", "Microsoft Azure", "Google Cloud", "Oracle OCI", "Alibaba Cloud", "Huawei Cloud"],
+  },
+  {
+    title: "Private cloud & virtualization",
+    icon: "Server",
+    items: ["VMware", "Microsoft Hyper-V", "Nutanix", "Red Hat OpenShift", "Bare metal & KVM estates"],
+  },
+  {
+    title: "Hybrid & sovereign stacks",
+    icon: "ShieldCheck",
+    items: ["Azure Stack", "Huawei Cloud Stack", "Alibaba Apsara Stack", "Air-gapped & edge (Edge Agent)"],
+  },
 ] as const;
 
 export const regions = [
@@ -82,10 +102,10 @@ export const compliance = [
 
 /** Headline metrics shown on Home/About — grounded in shipped product facts. */
 export const headlineStats = [
-  { value: "6", label: "Public clouds + on-prem & hybrid" },
-  { value: "11", label: "Modules, one control plane" },
-  { value: "50+", label: "Whale AI use cases" },
-  { value: "4", label: "Deployment regions" },
+  { value: "54", label: "Capabilities shipped across the platform" },
+  { value: "9", label: "Capability families under one console" },
+  { value: "4", label: "Editions on one architecture" },
+  { value: "6", label: "Platform classes — public, private, virtual, hybrid, sovereign, edge" },
 ] as const;
 
 // ── Partner Portal (external app — partners.bluewhalestack.com) ─
@@ -114,9 +134,9 @@ export const primaryNav: NavItem[] = [
       {
         heading: "Platform",
         links: [
-          { label: "Platform overview", href: "/platform", desc: "Every cloud, one control plane" },
-          { label: "Whale AI", href: "/products/whale-ai", desc: "AI across every module" },
-          { label: "Cloud Connectors", href: "/modules/cloud-connectors", desc: "6 public clouds + on-prem" },
+          { label: "Platform overview", href: "/platform", desc: "One platform. Every industry. Every estate." },
+          { label: "Whale AI", href: "/products/whale-ai", desc: "AI across every family — incl. offline" },
+          { label: "Cloud Connectors", href: "/modules/cloud-connectors", desc: "6 public clouds + private, hybrid & edge" },
           { label: "BlueWhale Stack Fabric", href: "/fabric", desc: "All of India's datacenters, one fabric" },
         ],
       },
@@ -134,9 +154,9 @@ export const primaryNav: NavItem[] = [
         links: [
           { label: "Inventory & Discovery", href: "/modules/inventory" },
           { label: "Migration Engine", href: "/modules/migration" },
-          { label: "Observe", href: "/modules/observe" },
-          { label: "ITSM", href: "/modules/itsm" },
-          { label: "All modules", href: "/modules" },
+          { label: "Whalenomics · FinOps", href: "/modules/finops" },
+          { label: "Cloud Audit & Evidence", href: "/modules/cloud-audit" },
+          { label: "All nine families", href: "/modules" },
         ],
       },
       {
@@ -173,9 +193,11 @@ export const primaryNav: NavItem[] = [
       {
         heading: "By deployment",
         links: [
-          { label: "SaaS", href: "/platform" },
-          { label: "BYOC", href: "/platform" },
+          { label: "SaaS", href: "/platform#deployment" },
+          { label: "BYOC — your clouds", href: "/platform#deployment" },
+          { label: "On-premise", href: "/platform#deployment" },
           { label: "Sovereign / air-gapped", href: "/editions/government" },
+          { label: "Edge — offline-tolerant", href: "/platform#deployment" },
         ],
       },
       {

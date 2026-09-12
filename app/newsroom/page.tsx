@@ -53,8 +53,8 @@ const announcements = [
   {
     date: "February 2026",
     category: "Platform",
-    title: "Oracle Cloud, IBM Cloud and Alibaba Cloud connectors live",
-    body: "The Cloud Connectors module now covers all six major public clouds — AWS, Azure, GCP, Oracle Cloud, IBM Cloud and Alibaba Cloud — plus on-prem via the Edge Agent.",
+    title: "Oracle Cloud, Alibaba Cloud and Huawei Cloud connectors live",
+    body: "The Cloud Connectors module now covers all six major public clouds — AWS, Azure, GCP, Oracle Cloud, Alibaba Cloud and Huawei Cloud — plus private, virtualization, hybrid and edge estates via the Edge Agent.",
     badge: "Product launch",
   },
 ];

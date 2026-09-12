@@ -20,6 +20,10 @@ export interface EditionDef {
   /** ≤45-word version of `positioning` for cards and grids */
   summary: string;
   audience: string;
+  /** Official "The outcome" line (Product Overview, Four Editions) */
+  outcome: string;
+  /** Official "What it includes" — the three headline inclusions */
+  includes: string[];
   deploy: string[];
   priceAnchor: string;
   priceSub?: string;
@@ -50,23 +54,29 @@ export const editions: EditionDef[] = [
     slug: "standard",
     name: "Standard",
     badge: "Standard Edition",
-    tagline: "See. Govern. Run.",
+    tagline: "Governed cloud for a single estate",
     headline: "Govern your AWS, Azure & GCP estate with Whale AI Spark.",
     positioning:
-      "Entry-level single-tenant CMP for organisations running AWS, Azure and GCP. Includes cloud inventory, governed provisioning, security scanning, audit, basic ITSM, business connectors and Whale AI Spark — delivered as SaaS or BYOC.",
+      "Governed cloud for a single estate — the foundation edition for mid-market and single-cloud enterprises running AWS, Azure or GCP. Management & Delivery, Whalenomics essentials, a security baseline with observability, basic ITSM, business connectors and Whale AI Spark — single-tenant, delivered as SaaS or BYOC.",
     summary:
-      "Single-tenant control plane for AWS, Azure and GCP — inventory, governed provisioning, security scanning, audit, basic ITSM and Whale AI Spark. SaaS or BYOC.",
-    audience: "SMB · Single-region teams · Departmental IT",
+      "Governance from day one for a single estate — inventory, governed provisioning, Whalenomics essentials, security baseline and observability, basic ITSM and Whale AI Spark. SaaS or BYOC.",
+    audience: "Mid-market and single-cloud enterprises · departmental IT",
+    outcome: "Governance from day one — not a retrofit.",
+    includes: [
+      "Management & Delivery",
+      "Whalenomics essentials",
+      "Security baseline & observability",
+    ],
     deploy: ["SaaS", "BYOC"],
     priceAnchor: "$24,000 / year",
     priceSub: "Flat, published · 1/3/5-yr terms (2-yr −10%, 3-yr −15%)",
     aiTier: "Whale AI — Spark (1M tokens / month)",
     highlights: [
       "Cloud inventory & governed provisioning",
-      "Security scanning, compliance & audit reports",
+      "Whalenomics essentials — cost visibility and budgets",
+      "Security baseline, compliance & audit reports, bundled observability",
       "Basic ITSM + CRM / ERP / ITSM connectors",
-      "3 public clouds (AWS · Azure · GCP)",
-      "Whale AI Spark — 1M AI tokens / month",
+      "3 public clouds (AWS · Azure · GCP) · Whale AI Spark — 1M AI tokens / month",
     ],
     modules: [
       "inventory",
@@ -74,6 +84,8 @@ export const editions: EditionDef[] = [
       "identity",
       "provisioning",
       "itsm",
+      "observe",
+      "finops",
       "whale-ai",
     ],
     diagram: "Standard: SaaS control plane over AWS / Azure / GCP, single region",
@@ -83,23 +95,29 @@ export const editions: EditionDef[] = [
     slug: "enterprise",
     name: "Enterprise",
     badge: "Enterprise Edition",
-    tagline: "Full platform. Every cloud. Every regulation.",
-    headline: "The complete platform — hybrid, multi-tenant, with the full Whale AI stack.",
+    tagline: "The full platform, BYOC across every estate",
+    headline: "The complete platform — every estate answerable from one console.",
     positioning:
-      "Everything in Standard plus Migration Engine, WhaleForge IaC, Landing Zone Builder, Whale Observe, Whale Nomics (FinOps), Whale IAM-PAM, all six public clouds, on-prem connectors via Edge Agent, and the full Whale AI stack (Spark · Tide · Abyss). Available as SaaS, BYOC or Sovereign across four deployment regions.",
+      "Everything in Standard plus all nine capability families: Migration Engine, WhaleForge IaC, Landing Zone Builder, Observe, Whalenomics · FinOps, Cloud Audit & Evidence, Whale IAM-PAM — all six public clouds plus private, virtualization, hybrid and sovereign stacks via the Edge Agent, and the full Whale AI stack (Spark · Tide · Abyss), including offline. Available as SaaS, BYOC or Sovereign across four deployment regions.",
     summary:
-      "The complete platform — all six public clouds plus on-prem, Migration Engine, Observe, FinOps, IaC and landing zones, and the full Whale AI stack. SaaS, BYOC or Sovereign across four regions.",
-    audience: "Large enterprise · BFSI · Regulated industries · Multi-cloud operators",
+      "The complete platform — all nine capability families, Whale AI including offline, Cloud Audit & Evidence and the Migration Engine, across every estate. SaaS, BYOC or Sovereign across four regions.",
+    audience: "Multi-cloud enterprises · BFSI · regulated industries",
+    outcome: "Every estate answerable from one console.",
+    includes: [
+      "All nine capability families",
+      "Whale AI — including offline",
+      "Cloud Audit & Evidence · Migration Engine",
+    ],
     deploy: ["SaaS", "BYOC", "Sovereign"],
     priceAnchor: "$120,000 / year",
     priceSub: "Flat, published · 1/3/5-yr terms (2-yr −10%, 3-yr −15%) · regional pricing on request",
     aiTier: "Whale AI — Spark · Tide · Abyss (100M tokens / month)",
     highlights: [
-      "Everything in Standard, across all 6 public clouds + on-prem",
-      "Migration Engine, Observe, FinOps, WhaleForge IaC, Landing Zone Builder",
-      "Whale IAM-PAM, advanced ITSM + Edge Agent for hybrid & on-prem",
-      "Multi-tenant, four deployment regions",
-      "Whale AI Spark · Tide · Abyss — 50+ grounded use cases, 100M tokens / month",
+      "Everything in Standard, across all 6 public clouds + private, hybrid & edge",
+      "Migration Engine, Observe, Whalenomics · FinOps, WhaleForge IaC, Landing Zone Builder",
+      "Cloud Audit & Evidence — controls monitored continuously, examiner-grade reports on demand",
+      "Whale IAM-PAM, advanced ITSM + Edge Agent for hybrid & on-prem · multi-tenant, four regions",
+      "Whale AI Spark · Tide · Abyss — 50+ grounded use cases, 100M tokens / month, offline-capable",
     ],
     modules: [
       "inventory",
@@ -112,6 +130,7 @@ export const editions: EditionDef[] = [
       "migration",
       "whaleforge",
       "landing-zone",
+      "cloud-audit",
       "whale-ai",
     ],
     featured: true,
@@ -122,13 +141,19 @@ export const editions: EditionDef[] = [
     slug: "telco-datacenter",
     name: "Telco & Datacenter",
     badge: "Telco & Datacenter Edition",
-    tagline: "Carrier-grade. DCIM-ready. White-label.",
+    tagline: "Operators become cloud providers",
     headline: "Enterprise platform extended for infrastructure operators.",
     positioning:
       "Full Enterprise platform extended for two operator personas on one licensed edition. For telecom operators: a network fabric — VNF/CNF discovery, 5G core awareness (AMF/SMF/UPF/slices), NFVI/VIM, MEC site management, OSS/BSS connectors (Amdocs, Netcracker, Ericsson, Nokia, TM Forum), carrier-grade SLA management. For datacenter and colocation operators: physical datacenter management (DCIM) — rack/row/cage inventory at U-position level, power (PDU, kW, A/B feeds), cooling & environmental (CRAC/CRAH), space & capacity, cross-connect, access control. Both get native multi-tenancy and white-label branding.",
     summary:
       "The Enterprise platform extended for telecom and datacenter operators — NFV/5G network fabric, DCIM at U-position level, native multi-tenancy and white-label branding, with per-tenant metering into your BSS.",
-    audience: "Tier-1/2/3 telecom operators · MVNOs · Colocation & datacenter operators · Carrier-grade MSPs",
+    audience: "Telcos, datacenter & hosting operators — Tier-1/2/3 telecom, MVNOs, colocation, carrier-grade MSPs",
+    outcome: "Revenue per tenant, on capacity you own.",
+    includes: [
+      "Tenancy & Monetization",
+      "White-label portals & catalog",
+      "OSS / BSS & billing integration",
+    ],
     deploy: ["SaaS", "BYOC", "Telco Edge", "Datacenter Edge"],
     priceAnchor: "Contact sales",
     priceSub: "Operator licensing shaped to the business — revenue-share models available; regional pricing on request",
@@ -152,6 +177,8 @@ export const editions: EditionDef[] = [
       "migration",
       "whaleforge",
       "landing-zone",
+      "cloud-audit",
+      "tenancy",
       "whale-ai",
     ],
     comingSoon: true,
@@ -203,13 +230,19 @@ export const editions: EditionDef[] = [
     slug: "government",
     name: "Government",
     badge: "Government Edition",
-    tagline: "Sovereign. Air-gapped. Hardened.",
+    tagline: "Sovereign by architecture",
     headline: "Sovereign / air-gapped Enterprise platform hardened for public sector.",
     positioning:
       "Full Enterprise platform with a mandatory sovereignty layer: air-gapped install, offline update channel, FIPS-validated crypto, PAM always-on with session recording, MFA mandatory on every role, immutable WORM-backed audit log, data residency enforcement, compliance pack export for FedRAMP/IRAP/StateRAMP-style accreditation. Connects to sovereign cloud environments (AWS GovCloud, Azure Government, Google Distributed Cloud, national sovereign clouds).",
     summary:
       "The Enterprise platform with a mandatory sovereignty layer — air-gapped install, FIPS crypto, always-on PAM, WORM audit log, residency enforcement and accreditation-ready compliance packs.",
-    audience: "National & state government · Defense · Central banks · Regulated public sector",
+    audience: "Ministries, agencies & public sector · defence · central banks",
+    outcome: "Sovereignty demonstrated, not asserted.",
+    includes: [
+      "Sovereign Operations",
+      "Air-gapped deployment classes",
+      "State-audit evidence & segregation",
+    ],
     deploy: ["Sovereign (on-prem)", "Private Gov Cloud", "Government Edge"],
     priceAnchor: "Contact sales",
     priceSub: "Enterprise base plus sovereignty layer · 3–5 yr fixed-bid terms · tender & empanelment-ready",
@@ -232,6 +265,8 @@ export const editions: EditionDef[] = [
       "migration",
       "whaleforge",
       "landing-zone",
+      "cloud-audit",
+      "sovereign-operations",
       "whale-ai",
     ],
     diagram: "Government: air-gapped sovereign control plane, FIPS crypto, in-region AI",
@@ -316,7 +351,7 @@ export const editionSpecs: EditionSpecRow[] = [
     label: "Clouds supported",
     values: {
       standard: "AWS · Azure · GCP",
-      enterprise: "All 6 public + on-prem",
+      enterprise: "All 6 public + private, hybrid & edge",
       "telco-datacenter": "All 6 + network & physical DC",
       government: "Sovereign clouds",
     },

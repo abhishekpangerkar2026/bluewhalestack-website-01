@@ -25,7 +25,7 @@ const TILES = [
   {
     icon: "LayoutTemplate",
     title: "Explore the platform",
-    sub: "11 modules, one control plane",
+    sub: "9 families · 54 capabilities · one control plane",
     href: "/platform",
   },
 ];

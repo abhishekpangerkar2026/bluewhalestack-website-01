@@ -15,7 +15,7 @@ const INTENTS: { keys: string[]; reply: string }[] = [
   {
     keys: ["finops", "saving", "spend", "chargeback"],
     reply:
-      "The FinOps module gives you real-time cost visibility, rightsizing recommendations, and chargeback across all connected clouds. Explore /modules/finops.",
+      "Whalenomics — the FinOps family — gives you budgets, forecasts, chargeback and continuous optimization, with spend decomposed to workload, department or tenant across every connected estate. Explore /modules/finops.",
   },
   {
     keys: ["government", "sovereign", "air-gap", "compliance"],

@@ -59,7 +59,7 @@ export const docCards: DocCard[] = [
   {
     slug: "cloud-integration",
     title: "Cloud Account & On-Prem Integration",
-    body: "Connect AWS, Azure, GCP, Oracle, IBM and Alibaba accounts, plus on-prem via the Edge Agent over outbound-only HTTPS.",
+    body: "Connect AWS, Azure, GCP, Oracle, Alibaba and Huawei accounts, plus private, virtualization, hybrid and edge estates via the Edge Agent over outbound-only HTTPS.",
     tags: ["AWS", "Azure", "GCP", "Oracle", "Edge Agent"],
     icon: "Plug",
   },
@@ -166,7 +166,7 @@ export const docPages: DocPageDef[] = [
           },
           {
             type: "p",
-            text: "The platform is composed of 11 modules grouped across four areas: Foundation (Inventory, Cloud Connectors, Identity, Service Catalog), Operations (ITSM, Observe, FinOps, Migration Engine), Builder (WhaleForge IaC, Landing Zone Builder), and Intelligence (Whale AI). Modules are gated by edition — see the Editions page for the capability matrix.",
+            text: "The platform core is organised into nine capability families — Management & Delivery (Cloud Connectors, Service Catalog, Landing Zone Builder, WhaleForge IaC), Whalenomics · FinOps, Security & Identity, Governance & Audit (Cloud Audit & Evidence), Whale AI — incl. offline, Migration & Discovery (Inventory & Discovery, Migration Engine), Observability & ITSM (Observe, ITSM), Tenancy & Monetization, and Sovereign Operations — 54 capabilities in all. Modules are gated by edition — see the Editions page for the capability matrix.",
           },
           {
             type: "h3",
@@ -259,7 +259,7 @@ export const docPages: DocPageDef[] = [
             type: "list",
             items: [
               "Inventory & Discovery — live asset map across 6 public clouds + on-prem",
-              "Cloud Connectors — GA for AWS, Azure, GCP, Oracle, IBM, Alibaba",
+              "Cloud Connectors — GA for AWS, Azure, GCP, Oracle, Alibaba, Huawei",
               "Identity & Access — federate 9+ IdPs with auto-provisioning",
               "Service Catalog — governed provisioning, AWS live (EC2/S3/RDS/VPC/EFS)",
               "ITSM — cloud-ops-native incident, change & problem management",
@@ -274,7 +274,7 @@ export const docPages: DocPageDef[] = [
           {
             type: "callout",
             variant: "tip",
-            text: "Module availability is gated by edition. Standard includes the Foundation set (Inventory, Cloud Connectors, Identity, Service Catalog) plus ITSM and Whale AI Spark. Enterprise, Telco & Datacenter and Government unlock all 11 modules.",
+            text: "Module availability is gated by edition. Standard includes Management & Delivery (Inventory, Cloud Connectors, Identity, Service Catalog), Whalenomics essentials, a security baseline with Observe, basic ITSM and Whale AI Spark. Enterprise unlocks all nine capability families; Telco & Datacenter adds Tenancy & Monetization and Government adds Sovereign Operations.",
           },
         ],
       },
@@ -465,7 +465,7 @@ aws iam create-role \\
           {
             type: "list",
             items: [
-              "Connect additional cloud accounts (Azure, GCP, Oracle, IBM, Alibaba)",
+              "Connect additional cloud accounts (Azure, GCP, Oracle, Alibaba, Huawei)",
               "Add on-premises environments via the Edge Agent",
               "Set up identity federation so your team can log in with their existing IdP",
               "Enable the Service Catalog so teams can self-serve resource provisioning",
@@ -482,7 +482,7 @@ aws iam create-role \\
     slug: "cloud-integration",
     title: "Cloud Account & On-Prem Integration",
     description:
-      "Connect AWS, Azure, GCP, Oracle, IBM and Alibaba accounts, plus on-prem environments via the Edge Agent.",
+      "Connect AWS, Azure, GCP, Oracle, Alibaba and Huawei accounts, plus private, virtualization, hybrid and edge estates via the Edge Agent.",
     tags: ["AWS", "Azure", "GCP", "Oracle", "Edge Agent", "On-Prem"],
     icon: "Plug",
     readTime: "12 min read",
@@ -626,24 +626,24 @@ az ad sp create-for-rbac \\
         ],
       },
       {
-        id: "connect-oracle-ibm-alibaba",
-        heading: "Connect Oracle, IBM & Alibaba",
+        id: "connect-oracle-alibaba-huawei",
+        heading: "Connect Oracle, Alibaba & Huawei",
         blocks: [
           {
             type: "p",
-            text: "Oracle Cloud Infrastructure (OCI), IBM Cloud, and Alibaba Cloud connectors follow a similar pattern: create a service identity or API key with read-only access, then provide the credentials and tenancy/account identifiers in the connector form.",
+            text: "Oracle Cloud Infrastructure (OCI), Alibaba Cloud and Huawei Cloud connectors follow a similar pattern: create a service identity or API key with read-only access, then provide the credentials and tenancy/account identifiers in the connector form.",
           },
           {
             type: "callout",
             variant: "note",
-            text: "Huawei Cloud connector is currently on the roadmap. Contact your account team for the latest connector roadmap.",
+            text: "Hybrid and sovereign stacks — Azure Stack, Huawei Cloud Stack and Alibaba Apsara Stack — connect through the Edge Agent rather than a public API endpoint. Contact your account team for the stack-specific onboarding guide.",
           },
           {
             type: "list",
             items: [
               "OCI: requires an OCI API signing key + tenancy OCID + user OCID + fingerprint",
-              "IBM: requires an IBM Cloud API key scoped to the target resource groups",
               "Alibaba: requires an AccessKey ID and AccessKey Secret with ReadOnlyAccess policy",
+              "Huawei: requires an IAM user Access Key (AK/SK) with the ReadOnlyAccess system policy",
             ],
           },
         ],
@@ -737,7 +737,7 @@ sudo ./bws-edge-agent-linux-amd64 install \\
               {
                 icon: "KeyRound",
                 title: "SSO with 9+ IdPs",
-                body: "Entra ID, Okta, Auth0, AWS Identity Center, Google IAM, OneLogin, on-prem AD, IBM IAM, Alibaba IAM, and Oracle IAM.",
+                body: "Entra ID, Okta, Auth0, AWS Identity Center, Google IAM, OneLogin, on-prem AD, Oracle IAM, Alibaba IAM, and Huawei IAM.",
               },
               {
                 icon: "UserCheck",
@@ -1202,7 +1202,7 @@ Retry-After:           12           # Seconds to wait (only on 429)`,
             label: "List resources",
             code: `# List all resources (paginated)
 GET /v1/inventory/resources
-  ?provider=aws          # Filter by cloud: aws | azure | gcp | oracle | ibm | alibaba
+  ?provider=aws          # Filter by cloud: aws | azure | gcp | oracle | alibaba | huawei
   &type=ec2_instance     # Filter by resource type
   &region=ap-southeast-1 # Filter by region
   &page=1                # Page number (default: 1)

@@ -7,26 +7,25 @@ import { Card } from "@/components/ui/Card";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
-import { modules, moduleGroups, type ModuleGroup } from "@/content/modules";
+import {
+  modules,
+  moduleGroups,
+  moduleGroupOrder,
+  moduleGroupBlurbs,
+  moduleGroupIcons,
+  type ModuleGroup,
+} from "@/content/modules";
 
 export const metadata: Metadata = {
   title: "Modules",
   description:
-    "The BlueWhale Stack module catalog — 11 modules across Foundation, Operate, Build and Intelligence, gated per edition.",
+    "What lives in the BlueWhale Stack platform core — 54 capabilities across nine families: Management & Delivery, Whalenomics · FinOps, Security & Identity, Governance & Audit, Whale AI, Migration & Discovery, Observability & ITSM, Tenancy & Monetization and Sovereign Operations — gated per edition.",
 };
 
-// Only groups that actually contain modules — an empty section is worse than none.
-const ORDER: ModuleGroup[] = (
-  ["foundation", "operations", "builder", "datacenter", "ai"] as ModuleGroup[]
-).filter((g) => modules.some((m) => m.group === g));
-
-const GROUP_BLURB: Record<ModuleGroup, string> = {
-  foundation: "Identity, connectors, inventory and the audit spine the whole platform stands on.",
-  operations: "Run the estate day to day — service management, telemetry, migration and security.",
-  builder: "Design landing zones, ship infrastructure-as-code, and account for every dollar.",
-  datacenter: "Map and operate physical infrastructure down to the rack, unit and watt.",
-  ai: "Claude-powered intelligence threaded across every module — not bolted on.",
-};
+// Only families that actually contain modules — an empty section is worse than none.
+const ORDER: ModuleGroup[] = moduleGroupOrder.filter((g) =>
+  modules.some((m) => m.group === g),
+);
 
 export default function ModulesPage() {
   return (
@@ -39,28 +38,34 @@ export default function ModulesPage() {
               <div>
                 <div className="mb-5 flex items-center gap-3">
                   <span aria-hidden className="h-px w-8 bg-accent/50" />
-                  <span className="eyebrow text-accent">Modules</span>
+                  <span className="eyebrow text-accent">The nine capability families</span>
                 </div>
                 <h1 className="display-1 text-ink">
-                  Every capability,{" "}
-                  <span className="text-accent">one platform.</span>
+                  What lives in the{" "}
+                  <span className="text-accent">platform core.</span>
                 </h1>
                 <p className="mt-7 max-w-2xl text-lg leading-relaxed text-muted sm:text-xl">
-                  A shared platform gated per edition. Compose the modules you
-                  need — from cloud connectors to migration to Whale AI — under
-                  one governance model.
+                  Nine capability families under one console, one identity,
+                  one policy and one bill — 54 capabilities, gated per
+                  edition. These are the modules that ship inside each family
+                  today; the full capability list with edition mapping is in
+                  the technical datasheet, on request.
                 </p>
               </div>
             </Reveal>
             <Reveal delay={90}>
-              <div className="flex items-center gap-8 lg:justify-end">
+              <div className="flex items-end gap-10 lg:justify-end">
                 <div className="lg:text-right">
                   <div className="text-6xl font-bold tracking-tight text-accent num sm:text-7xl">
-                    {modules.length}
+                    54
                   </div>
-                  <p className="eyebrow mt-1 text-faint">
-                    modules · {ORDER.length} groups
-                  </p>
+                  <p className="eyebrow mt-1 text-faint">capabilities</p>
+                </div>
+                <div className="lg:text-right">
+                  <div className="text-6xl font-bold tracking-tight text-ink num sm:text-7xl">
+                    {ORDER.length}
+                  </div>
+                  <p className="eyebrow mt-1 text-faint">families</p>
                 </div>
               </div>
             </Reveal>
@@ -68,14 +73,15 @@ export default function ModulesPage() {
         </Container>
       </section>
 
-      {/* ── Group sections, alternating surface, indexed, asymmetric heading column ── */}
+      {/* ── Family sections, alternating surface, indexed, asymmetric heading column ── */}
       {ORDER.map((group, gi) => {
         const groupMods = modules.filter((m) => m.group === group);
         const tinted = gi % 2 === 1;
         return (
           <section
             key={group}
-            className={`border-t border-line py-20 sm:py-24 ${
+            id={group}
+            className={`scroll-mt-24 border-t border-line py-20 sm:py-24 ${
               tinted ? "bg-sunken" : "bg-canvas"
             }`}
           >
@@ -83,16 +89,18 @@ export default function ModulesPage() {
               <div className="grid gap-x-14 gap-y-10 lg:grid-cols-[0.85fr_1.15fr]">
                 <Reveal>
                   <div className="lg:sticky lg:top-28 lg:self-start">
-                    <div className="mb-3 flex items-center gap-3">
-                      <span className="text-sm font-bold text-faint num">
-                        {`0${gi + 1}`}
+                    <div className="mb-4 flex items-center gap-3">
+                      <span className="grid h-10 w-10 place-items-center rounded-lg bg-primary text-primary-fg">
+                        <Icon name={moduleGroupIcons[group]} className="h-5 w-5" />
                       </span>
-                      <span aria-hidden className="h-px w-8 bg-line-strong" />
+                      <span className="text-sm font-bold text-faint num">
+                        {String(gi + 1).padStart(2, "0")} / {String(ORDER.length).padStart(2, "0")}
+                      </span>
                     </div>
                     <SectionHeading
-                      eyebrow={`${groupMods.length} ${groupMods.length === 1 ? "module" : "modules"}`}
+                      eyebrow={`${groupMods.length} ${groupMods.length === 1 ? "module" : "modules"} ship in this family`}
                       title={moduleGroups[group]}
-                      description={GROUP_BLURB[group]}
+                      description={moduleGroupBlurbs[group]}
                     />
                   </div>
                 </Reveal>
@@ -107,7 +115,7 @@ export default function ModulesPage() {
                       <Link href={`/modules/${m.slug}`} className="group/card block h-full">
                         <Card interactive className="flex h-full flex-col">
                           <div className="flex items-center justify-between">
-                            <span className="grid h-11 w-11 place-items-center rounded-lg bg-primary text-primary-fg">
+                            <span className="grid h-11 w-11 place-items-center rounded-lg bg-[var(--bg-active)] text-accent">
                               <Icon name={m.icon} className="h-5 w-5" />
                             </span>
                             <span className="text-sm font-bold text-faint num">
@@ -140,11 +148,11 @@ export default function ModulesPage() {
         <Container>
           <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
             <SectionHeading
-              title="Not sure which modules you need?"
-              description="Tell us how you run today — we will map the modules and edition to your estate."
+              title="Not sure which families you need?"
+              description="Tell us how you run today — we will map the families and edition to your estate, and show it running on your estate's shape in the discovery workshop."
             />
-            <Button href="/contact" size="lg" className="shrink-0">
-              Book a demo
+            <Button href="/contact?intent=demo" size="lg" className="shrink-0">
+              Book the discovery workshop
               <ArrowRight className="h-4 w-4" />
             </Button>
           </div>

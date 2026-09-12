@@ -12,6 +12,7 @@ import { QuickLinks } from "@/components/sections/QuickLinks";
 import { ProductCatalog } from "@/components/sections/ProductCatalog";
 import { GlobalInfra } from "@/components/sections/GlobalInfra";
 import { CustomerStories } from "@/components/sections/CustomerStories";
+import { PrototypeOffer } from "@/components/sections/PrototypeOffer";
 import { problems, promise, whyBluewhale, howItWorks } from "@/content/home";
 import { headlineStats } from "@/content/company";
 import { CloudLogo, cloudLogoNames } from "@/components/brand/CloudLogos";
@@ -153,8 +154,8 @@ export default function HomePage() {
             <Reveal>
               <SectionHeading
                 eyebrow="Editions"
-                title="One platform. Four editions."
-                description="From Standard SaaS to a fully sovereign, air-gapped Government deployment — an edition shaped to how you operate."
+                title="Four editions, one architecture."
+                description="Each edition targets its industries and adds the families they need — an upgrade is a licence change, not a migration."
               />
             </Reveal>
             <Reveal delay={80}>
@@ -173,8 +174,8 @@ export default function HomePage() {
                     className={`relative flex h-full flex-col ${e.featured ? "ring-1 ring-[var(--border-accent)]" : ""}`}
                   >
                     {e.featured && (
-                      <span className="absolute right-4 top-4 inline-flex rounded-full bg-primary px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide text-primary-fg">
-                        Popular
+                      <span className="absolute right-4 top-4 inline-flex rounded-full bg-amber-400 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide text-brand-900">
+                        Most deployed
                       </span>
                     )}
                     <h3 className="min-h-[3.5rem] pr-16 text-lg font-bold leading-tight text-ink">{e.name}</h3>
@@ -280,6 +281,9 @@ export default function HomePage() {
           </div>
         </Container>
       </section>
+
+      {/* The 90-day prototype — the standing offer */}
+      <PrototypeOffer />
 
       {/* Stats band */}
       <section className="bg-[var(--brand-deep)] py-16 text-white">

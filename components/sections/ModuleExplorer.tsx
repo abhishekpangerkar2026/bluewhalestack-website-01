@@ -4,17 +4,22 @@ import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Icon } from "@/components/ui/Icon";
-import { modules, moduleGroups, type ModuleGroup } from "@/content/modules";
+import {
+  modules,
+  moduleGroups,
+  moduleGroupOrder,
+  type ModuleGroup,
+} from "@/content/modules";
 import { cn } from "@/lib/utils";
 
-// Only groups that actually contain modules — an empty tab is a dead end.
-const ORDER: ModuleGroup[] = (
-  ["foundation", "operations", "builder", "datacenter", "ai"] as ModuleGroup[]
-).filter((g) => modules.some((m) => m.group === g));
+// Only families that actually contain modules — an empty tab is a dead end.
+const ORDER: ModuleGroup[] = moduleGroupOrder.filter((g) =>
+  modules.some((m) => m.group === g),
+);
 
-/** Interactive module map — switch groups to explore the 11 modules. */
+/** Interactive module map — switch families to explore the modules that ship in each. */
 export function ModuleExplorer() {
-  const [group, setGroup] = useState<ModuleGroup>("foundation");
+  const [group, setGroup] = useState<ModuleGroup>(ORDER[0]);
   const list = modules.filter((m) => m.group === group);
 
   return (

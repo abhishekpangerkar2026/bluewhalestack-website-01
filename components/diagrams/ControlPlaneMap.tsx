@@ -1,7 +1,12 @@
 import Link from "next/link";
 import { Sparkles } from "lucide-react";
 import { CloudLogo, cloudLogoNames } from "@/components/brand/CloudLogos";
-import { modules, moduleGroups, type ModuleGroup } from "@/content/modules";
+import {
+  modules,
+  moduleGroups,
+  moduleGroupOrder,
+  type ModuleGroup,
+} from "@/content/modules";
 
 /**
  * D-1 — the signature control-plane layer map. Clouds & data centers at the
@@ -11,11 +16,11 @@ import { modules, moduleGroups, type ModuleGroup } from "@/content/modules";
  * Code-based SVG/HTML, on-brand, designed for a dark section. Server component.
  */
 
-// Operational groups shown as rows; the AI group renders as the cross-cutting rail.
-// Only groups that actually contain modules are rendered — no empty rows.
-const ROW_GROUPS: ModuleGroup[] = (
-  ["foundation", "operations", "builder", "datacenter"] as ModuleGroup[]
-).filter((g) => modules.some((m) => m.group === g));
+// Operational families shown as rows; Whale AI renders as the cross-cutting rail.
+// Only families that actually contain modules are rendered — no empty rows.
+const ROW_GROUPS: ModuleGroup[] = moduleGroupOrder.filter(
+  (g) => g !== "ai" && modules.some((m) => m.group === g),
+);
 
 const DEFAULT_OUTCOMES = [
   "−28% cloud spend",
@@ -62,7 +67,7 @@ export function ControlPlaneMap({
             {ROW_GROUPS.map((g) => (
               <div
                 key={g}
-                className="grid items-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] p-3 sm:grid-cols-[110px_1fr]"
+                className="grid items-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] p-3 sm:grid-cols-[150px_1fr]"
               >
                 <span className="text-xs font-semibold uppercase tracking-wider text-brand-200">
                   {moduleGroups[g]}

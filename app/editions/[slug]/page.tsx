@@ -93,9 +93,16 @@ export default async function EditionDetailPage({
               {edition.positioning}
             </p>
             <p className="mt-5 text-sm text-white/60">
-              <span className="font-semibold text-white/80">For:</span>{" "}
+              <span className="font-semibold text-white/80">Who it targets:</span>{" "}
               {edition.audience}
             </p>
+            <div className="mt-6 rounded-lg border-l-4 border-amber-400 bg-white/[0.06] px-5 py-4">
+              <p className="eyebrow text-white/60">The outcome</p>
+              <p className="mt-1 text-lg font-bold text-white">{edition.outcome}</p>
+              <p className="mt-2 text-sm text-white/70">
+                Includes {edition.includes.join(" · ")}.
+              </p>
+            </div>
             <div className="mt-9 flex flex-wrap gap-3">
               {edition.comingSoon ? (
                 <>

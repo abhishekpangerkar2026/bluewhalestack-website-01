@@ -6,7 +6,7 @@ import { ProductMockup } from "@/components/sections/ProductMockup";
 import { CloudLogo } from "@/components/brand/CloudLogos";
 import { hero } from "@/content/home";
 
-const TRUST_CLOUDS = ["aws", "azure", "gcp", "oracle", "vmware"];
+const TRUST_CLOUDS = ["aws", "azure", "gcp", "oracle", "alibaba", "huawei"];
 
 export function Hero() {
   // Emphasize the highlight word(s) within the headline, if present.
@@ -60,7 +60,7 @@ export function Hero() {
             {/* trust row */}
             <div className="mt-10">
               <p className="eyebrow text-faint">
-                Across every major cloud, on-prem &amp; hybrid
+                Six public clouds · private &amp; virtualization · hybrid &amp; sovereign stacks · edge
               </p>
               <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3 opacity-80">
                 {TRUST_CLOUDS.map((c) => (

@@ -33,6 +33,86 @@ export type ArchDiagram =
   | { kind: "flow"; caption?: string; steps: ArchNode[] };
 
 export const diagrams: Record<string, ArchDiagram> = {
+  // ── Product architecture — the official six-layer view, read top-down ──
+  "platform-dxp": {
+    kind: "stack",
+    caption:
+      "The platform in one picture — read top-down, the way value flows: industry segments consume governed services through the Digital Experience Layer; the Unified Platform Core governs every estate under one console, one identity, one policy and one bill; integrations plug it into what you already run; and the same build ships in every deployment mode.",
+    layers: [
+      {
+        title: "1 · Industry segments",
+        tone: "experience",
+        nodes: [
+          { label: "Enterprise", icon: "Layers" },
+          { label: "Datacenter", icon: "Server" },
+          { label: "Telco", icon: "Zap" },
+          { label: "Government", icon: "ShieldCheck" },
+          { label: "SMB", icon: "Users" },
+        ],
+      },
+      {
+        title: "2 · Digital Experience Layer — multi-tenant by design",
+        tone: "experience",
+        nodes: [
+          { label: "White-label portals", icon: "LayoutTemplate" },
+          { label: "Catalog & marketplace", icon: "PackagePlus" },
+          { label: "Self-service", icon: "Users" },
+          { label: "Per-tenant metering & billing", icon: "Wallet" },
+          { label: "SLA & tenant health", icon: "Activity" },
+        ],
+      },
+      {
+        title: "3 · Unified Platform Core — one console · one identity · one policy · one bill",
+        tone: "plane",
+        highlight: true,
+        nodes: [
+          { label: "Management & Delivery", icon: "Settings" },
+          { label: "Whalenomics · FinOps", icon: "TrendingUp" },
+          { label: "Security & Identity", icon: "Lock" },
+          { label: "Governance & Audit", icon: "FileCheck" },
+          { label: "Whale AI — incl. offline", icon: "Sparkles" },
+          { label: "Migration & Discovery", icon: "MoveRight" },
+          { label: "Observability & ITSM", icon: "Eye" },
+          { label: "Tenancy & Monetization", icon: "Users" },
+          { label: "Sovereign Operations", icon: "Globe" },
+        ],
+      },
+      {
+        title: "4 · Integrations — how it plugs into your estate",
+        tone: "data",
+        nodes: [
+          { label: "OSS integration", icon: "Network" },
+          { label: "BSS integration", icon: "Wallet" },
+          { label: "ITSM", sub: "ServiceNow · Jira", icon: "Headset" },
+          { label: "Billing & invoicing", icon: "ScrollText" },
+          { label: "Identity & SSO", icon: "KeyRound" },
+          { label: "API & connectors", icon: "Workflow" },
+        ],
+      },
+      {
+        title: "5 · Every estate — managed as one",
+        tone: "source",
+        nodes: [
+          { label: "Public cloud", sub: "AWS · Azure · Google Cloud · Oracle OCI · Alibaba · Huawei", icon: "Cloud" },
+          { label: "Private cloud & virtualization", sub: "VMware · Hyper-V · Nutanix · OpenShift · bare metal & KVM", icon: "Server" },
+          { label: "Hybrid & sovereign stacks", sub: "Azure Stack · Huawei Cloud Stack · Alibaba Apsara Stack", icon: "ShieldCheck" },
+          { label: "Air-gapped & edge", sub: "Edge Agent", icon: "HardDrive" },
+        ],
+      },
+      {
+        title: "6 · Deployment modes — the same product in every mode",
+        tone: "data",
+        nodes: [
+          { label: "SaaS", icon: "Cloud" },
+          { label: "BYOC — your clouds", icon: "Cloud" },
+          { label: "On-premise", icon: "Server" },
+          { label: "Sovereign · air-gapped", icon: "Landmark" },
+          { label: "Edge — offline-tolerant", icon: "HardDrive" },
+        ],
+      },
+    ],
+  },
+
   // ── Overall platform ──────────────────────────────────────────
   platform: {
     kind: "stack",
@@ -46,7 +126,7 @@ export const diagrams: Record<string, ArchDiagram> = {
           { label: "AWS", icon: "Cloud" },
           { label: "Azure", icon: "Cloud" },
           { label: "Google Cloud", icon: "Cloud" },
-          { label: "Oracle · IBM · Alibaba", icon: "Cloud" },
+          { label: "Oracle · Alibaba · Huawei", icon: "Cloud" },
           { label: "VMware · Hyper-V · On-prem", icon: "Server" },
           { label: "Edge agents (Go · outbound HTTPS)", icon: "HardDrive" },
         ],
@@ -280,7 +360,7 @@ export const diagrams: Record<string, ArchDiagram> = {
         tone: "source",
         nodes: [
           { label: "AWS · Azure · GCP", icon: "Cloud" },
-          { label: "Oracle · IBM · Alibaba", icon: "Cloud" },
+          { label: "Oracle · Alibaba · Huawei", icon: "Cloud" },
           { label: "VMware · On-prem", icon: "Server" },
         ],
       },

@@ -47,8 +47,8 @@ export const globalRegions: RegionNode[] = [
 
 export const globalStats = [
   { value: "4", label: "Deployment regions" },
-  { value: "6", label: "Public clouds + on-prem" },
-  { value: "3", label: "Deployment models" },
+  { value: "6", label: "Platform classes managed" },
+  { value: "5", label: "Deployment modes" },
   { value: "In‑region", label: "Data residency, every region" },
 ];
 
@@ -56,5 +56,5 @@ export const globalIntro = {
   eyebrow: "Global infrastructure",
   title: "One platform, operated across the globe",
   description:
-    "Run BlueWhale Stack from regions in Singapore, Mumbai, Frankfurt and Los Angeles — as managed SaaS, in your own cloud (BYOC), or fully air-gapped and sovereign. Data stays where it must, with in-region residency built in.",
+    "Run BlueWhale Stack from regions in Singapore, Mumbai, Frankfurt and Los Angeles — as managed SaaS, in your own clouds (BYOC), on-premise, fully air-gapped and sovereign, or at the edge. Data stays where it must, with in-region residency built in.",
 };

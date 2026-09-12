@@ -25,7 +25,7 @@ export const companyFacts = [
   { label: "Headquarters", value: "Mumbai, India" },
   { label: "Presence", value: "India · UAE · USA" },
   { label: "Category", value: "Cloud Management Platform" },
-  { label: "Delivery", value: "SaaS · BYOC · Sovereign" },
+  { label: "Delivery", value: "SaaS · BYOC · On-prem · Sovereign · Edge" },
 ];
 
 /** Mission & vision statements, from the platform deck's Executive Summary. */
@@ -74,26 +74,72 @@ export const principles = [
   },
 ];
 
+/** Product offerings — the platform and what ships inside it (Company Profile, "Our offerings"). */
 export const productFamily = [
   {
-    name: "BlueWhale Stack CMP",
+    name: "BlueWhale Stack Platform",
     badge: "Core",
-    href: "/editions",
-    body: "The unified cloud management platform — four editions from Standard to Government, all on one control plane.",
+    href: "/platform",
+    body: "One control plane across public, private, virtualization, hybrid and edge — 54 capabilities · nine families · four editions.",
   },
   {
-    name: "WhaleForge",
-    badge: "Beta",
-    href: "/products/whaleforge",
-    body: "Infrastructure-as-code: a YAML DSL that generates real Terraform HCL with live HLD/LLD/TOGAF diagrams.",
+    name: "Whalenomics · FinOps",
+    badge: "Family",
+    href: "/modules/finops",
+    body: "Budgets, forecasts, chargeback, continuous optimization — spend decomposed to workload, department or tenant.",
   },
   {
-    name: "Whale AI",
+    name: "Whale AI — incl. offline",
     badge: "GA",
     href: "/products/whale-ai",
-    body: "A horizontal AI layer — 50+ use cases across every module, in Spark/Tide/Abyss tiers.",
+    body: "AI for operations, documentation and compliance — your choice of model, able to run fully inside the perimeter.",
+  },
+  {
+    name: "Migration Engine",
+    badge: "Family",
+    href: "/modules/migration",
+    body: "Assessment, dependency mapping, rehearsed waves and cutover across six platforms — entry, movement and exit industrialized.",
+  },
+  {
+    name: "Cloud Audit & Evidence",
+    badge: "Family",
+    href: "/modules/cloud-audit",
+    body: "Controls monitored continuously — examiner-grade reports on demand, for the board, the auditor and the regulator.",
+  },
+  {
+    name: "BlueWhale Stack Fabric",
+    badge: "Flagship initiative",
+    href: "/fabric",
+    body: "India — datacenter capacity unified on one platform: operator monetization plus a sovereign cloud.",
   },
 ];
+
+/** Service offerings — consulting and implementation, delivered globally, with or without the platform. */
+export const services = [
+  {
+    icon: "LayoutTemplate",
+    name: "App Modernization",
+    body: "Legacy applications re-architected cloud-native — microservices, containers and governed landing zones, without downtime.",
+  },
+  {
+    icon: "Server",
+    name: "Infrastructure Modernization",
+    body: "Datacenter and virtualization estates modernized — hybrid architectures and a rehearsed migration factory.",
+  },
+  {
+    icon: "Database",
+    name: "Data Modernization",
+    body: "One governed data platform — pipelines, quality and shared definitions feeding analytics and every AI use case.",
+  },
+  {
+    icon: "Sparkles",
+    name: "AI Design & Modernization",
+    body: "AI adoption inside the perimeter — use-case design, Whale AI deployment, custom models the customer owns outright.",
+  },
+];
+
+export const servicesNote =
+  "Delivered by BlueWhale or certified partners — every engagement lands governed on the platform.";
 
 /** Company journey / milestones — grounded in the "About BlueWhale Stack" facts repeated across every 2026 solution document. */
 export const milestones = [
@@ -104,18 +150,23 @@ export const milestones = [
   },
   {
     year: "2018–2025",
-    title: "Eight years in the field",
-    body: "Engagements across telecom, banking and financial services, government, healthcare, manufacturing and datacenter modernization in India and the GCC — the field experience the platform is built from, not designed in the abstract.",
+    title: "Consulting at scale",
+    body: "Engagements across telecom, banking and financial services, government, healthcare, manufacturing and datacenter modernization in India and the GCC — the challenges define the product. The platform is built from field experience, not designed in the abstract.",
   },
   {
     year: "2026",
     title: "The platform launches",
-    body: "BlueWhale Stack ships: Standard, Enterprise and Government editions generally available, a unified control plane across six public clouds plus on-prem, and the full Whale AI stack across every module.",
+    body: "Eight years of field experience productised into one control plane: Standard, Enterprise and Government editions generally available, six public clouds plus private, hybrid and edge estates, and Whale AI across every family — including offline.",
   },
   {
-    year: "2026 · Q4",
-    title: "Extending the platform",
-    body: "The Telco & Datacenter Edition moves from preview to general availability, and BlueWhale Stack Fabric — unifying India's datacenter capacity into one sovereign cloud — launches.",
+    year: "2026",
+    title: "Global footprint",
+    body: "Three registered entities — United States (Delaware), United Arab Emirates (Ajman) and India (Mumbai) — product, sovereign focus and delivery. The Telco & Datacenter Edition reaches general availability in Q4 2026, alongside BlueWhale Stack Fabric for India's datacenters.",
+  },
+  {
+    year: "Today",
+    title: "Partner-led growth",
+    body: "The Partner Portal is live — deal registration, licensing and tenant provisioning — so License Service Providers, Implementation Partners and Strategic Partners sell, deliver and operate the platform in their markets.",
   },
 ];
 

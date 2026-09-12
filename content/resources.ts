@@ -39,7 +39,7 @@ export const resources: ResourceDef[] = [
     type: "Whitepaper",
     title: "Every Cloud, One Control Plane: Platform Overview",
     summary:
-      "How 11 modules — inventory, provisioning, observability, migration and more — share one identity and audit tier.",
+      "How nine capability families — management, Whalenomics, security, governance, Whale AI, migration, observability, tenancy and sovereign operations — share one identity, policy and audit plane.",
     meta: "10 min read",
     topic: "Platform",
   },

@@ -11,9 +11,12 @@ export const cloudLogoNames = [
   "azure",
   "gcp",
   "oracle",
-  "ibm",
   "alibaba",
+  "huawei",
   "vmware",
+  "hyperv",
+  "nutanix",
+  "openshift",
   "kubernetes",
 ] as const;
 
@@ -91,12 +94,54 @@ export function CloudLogo({
         </span>
       );
 
-    case "ibm":
+    case "huawei":
       return (
-        <span className={wrap} aria-label="IBM Cloud">
-          <span className={cn(word, "text-[18px] tracking-tight")} style={{ color: "#0F62FE" }}>
-            IBM
-          </span>
+        <span className={wrap} aria-label="Huawei Cloud">
+          <svg viewBox="0 0 20 20" className="h-5 w-5" aria-hidden>
+            {/* eight-petal flower mark, simplified */}
+            {Array.from({ length: 8 }, (_, i) => {
+              const a = (i * 45 * Math.PI) / 180;
+              const x = 10 + 6.2 * Math.cos(a);
+              const y = 10 + 6.2 * Math.sin(a);
+              return <ellipse key={i} cx={x} cy={y} rx="2.1" ry="3.4" transform={`rotate(${i * 45} ${x} ${y})`} fill="#CF0A2C" />;
+            })}
+          </svg>
+          <span className={cn(word, "text-slate-700")}>Huawei Cloud</span>
+        </span>
+      );
+
+    case "hyperv":
+      return (
+        <span className={wrap} aria-label="Microsoft Hyper-V">
+          <svg viewBox="0 0 20 20" className="h-5 w-5" aria-hidden>
+            <rect width="9" height="9" fill="#F25022" />
+            <rect x="11" width="9" height="9" fill="#7FBA00" />
+            <rect y="11" width="9" height="9" fill="#00A4EF" />
+            <rect x="11" y="11" width="9" height="9" fill="#FFB900" />
+          </svg>
+          <span className={cn(word, "text-slate-700")}>Hyper-V</span>
+        </span>
+      );
+
+    case "nutanix":
+      return (
+        <span className={wrap} aria-label="Nutanix">
+          <svg viewBox="0 0 20 20" className="h-5 w-5" aria-hidden>
+            <path d="M2 4 L9 10 L2 16 Z" fill="#024DA1" />
+            <path d="M11 4 L18 10 L11 16 Z" fill="#024DA1" fillOpacity="0.55" />
+          </svg>
+          <span className={cn(word, "text-slate-700")}>Nutanix</span>
+        </span>
+      );
+
+    case "openshift":
+      return (
+        <span className={wrap} aria-label="Red Hat OpenShift">
+          <svg viewBox="0 0 20 20" className="h-5 w-5" aria-hidden>
+            <circle cx="10" cy="10" r="7.5" fill="none" stroke="#EE0000" strokeWidth="2.4" strokeDasharray="30 8" />
+            <circle cx="10" cy="10" r="3" fill="#EE0000" />
+          </svg>
+          <span className={cn(word, "text-slate-700")}>OpenShift</span>
         </span>
       );
 

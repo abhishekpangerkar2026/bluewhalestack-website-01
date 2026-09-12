@@ -7,46 +7,33 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
-import { modules, moduleGroups, type ModuleGroup } from "@/content/modules";
+import {
+  modules,
+  moduleGroups,
+  moduleGroupOrder,
+  type ModuleGroup,
+} from "@/content/modules";
 
-const GROUP_ORDER: ModuleGroup[] = [
-  "foundation",
-  "operations",
-  "builder",
-  "datacenter",
-  "ai",
-];
-
-/** Clean, product-matched icon tile — consistent accent per category. */
-const GROUP_COLOR: Record<ModuleGroup, string> = {
-  foundation: "bg-[var(--bg-active)] text-accent ring-line",
-  operations: "bg-[var(--bg-active)] text-accent ring-line",
-  builder: "bg-[var(--bg-active)] text-accent ring-line",
-  datacenter: "bg-[var(--bg-active)] text-accent ring-line",
-  ai: "bg-[var(--bg-active)] text-accent ring-line",
-};
-
-/** Curated "Featured" set — a spread across all groups (all real module slugs). */
+/** Curated "Featured" set — one module from each family that ships today. */
 const FEATURED = [
   "cloud-connectors",
   "finops",
   "identity",
-  "inventory",
-  "migration",
-  "itsm",
-  "landing-zone",
+  "cloud-audit",
   "whale-ai",
+  "inventory",
+  "observe",
+  "sovereign-operations",
 ];
 
 type Tab = "featured" | ModuleGroup;
 
-// Only offer tabs for groups that actually contain modules — an empty tab is a dead end.
+// Only offer tabs for families that actually contain modules — an empty tab is a dead end.
 const TABS: { key: Tab; label: string }[] = [
   { key: "featured", label: "Featured" },
-  ...GROUP_ORDER.filter((g) => modules.some((m) => m.group === g)).map((g) => ({
-    key: g,
-    label: moduleGroups[g],
-  })),
+  ...moduleGroupOrder
+    .filter((g) => modules.some((m) => m.group === g))
+    .map((g) => ({ key: g, label: moduleGroups[g] })),
 ];
 
 export function ProductCatalog() {
@@ -67,18 +54,18 @@ export function ProductCatalog() {
             eyebrow="The platform"
             title={
               <>
-                Eleven modules.
+                Nine capability families.
                 <br />
                 <span className="text-faint">One control plane.</span>
               </>
             }
-            description="Adopt what you need today, switch on the rest as you grow. Every module shares one identity, one audit trail, and one data tier."
+            description="54 capabilities across nine families, under one console, one identity, one policy and one bill. Adopt what you need today, switch on the rest as you grow — every family reads from and writes to the same inventory, identity and policy plane."
           />
         </Reveal>
 
         {/* Tabs — left-aligned, magazine-style filter row */}
         <Reveal delay={60}>
-          <div className="mt-12 flex flex-wrap gap-x-7 gap-y-2 border-b border-line">
+          <div className="mt-12 flex flex-wrap gap-x-6 gap-y-2 border-b border-line">
             {TABS.map((t) => {
               const active = t.key === tab;
               return (
@@ -113,7 +100,7 @@ export function ProductCatalog() {
                 >
                   <div className="flex items-start justify-between">
                     <span
-                      className={`grid place-items-center rounded-xl ring-1 ring-inset ${GROUP_COLOR[m.group]} ${
+                      className={`grid place-items-center rounded-xl bg-[var(--bg-active)] text-accent ring-1 ring-inset ring-line ${
                         featured ? "h-14 w-14" : "h-12 w-12"
                       }`}
                     >

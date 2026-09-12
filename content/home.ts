@@ -1,11 +1,11 @@
 /** Home page content blocks. */
 
 export const hero = {
-  badge: "Hyperscaler-neutral cloud management",
+  badge: "Digital Experience Platform — One Platform. Every Industry. Every Estate.",
   title: "Every cloud. One control plane.",
   highlight: "One control plane",
   description:
-    "BlueWhale Stack unifies inventory, AI-native provisioning, bundled observability, migration and governance across public cloud, on-prem and hybrid — one control plane, with BYOC and sovereign options.",
+    "Every estate you run — public clouds, private datacenters, virtualization, hybrid and sovereign stacks, edge — arrives with its own console, identity, bill and audit story. BlueWhale Stack replaces that sprawl with one governed layer: a single console, one identity fabric, one policy engine and one explainable bill across everything.",
   primaryCta: { label: "Book a Demo", href: "/contact" },
   secondaryCta: { label: "Explore the Platform", href: "/platform" },
 };
@@ -13,8 +13,8 @@ export const hero = {
 export const problems = [
   {
     icon: "Network",
-    title: "Cloud sprawl",
-    body: "Teams run AWS, Azure, GCP, Oracle and on-prem in separate consoles. Nobody has one map of the estate.",
+    title: "Every estate its own island",
+    body: "Public cloud, private DC, virtualization, edge and sovereign sites — four consoles, four identities, four bills. Nobody has one map of the estate.",
   },
   {
     icon: "TrendingUp",
@@ -23,14 +23,14 @@ export const problems = [
   },
   {
     icon: "ShieldAlert",
-    title: "Sovereignty & audit drag",
-    body: "Regulators want to know where data lives and who can touch it — across disconnected, region-specific tooling.",
+    title: "Audit assembled by hand",
+    body: "Regulators want to know where data lives and who can touch it — and every inspection is assembled estate by estate, after the fact.",
   },
 ];
 
 export const promise = {
-  title: "Every cloud, governed from one control plane.",
-  body: "BlueWhale Stack unifies inventory, provisioning, ITSM, observability, migration and governance into one hyperscaler-neutral platform — so you can see everything, govern centrally, and run it as SaaS, BYOC or fully sovereign.",
+  title: "The layer that makes the estate answerable.",
+  body: "One console, one identity, one policy, one bill — evidence generated continuously across every estate, all the time. Estates are multiplying faster than governance; BlueWhale Stack makes governance the layer that arrives first, not the retrofit that arrives after the audit.",
 };
 
 /** Why-BlueWhale differentiators — the four reasons teams choose the platform. */
@@ -43,22 +43,22 @@ export const whyBluewhale = {
     {
       icon: "Boxes",
       title: "Unified, not stitched",
-      body: "Inventory, provisioning, ITSM, observability and migration share one identity model, one audit trail, and one data tier — so nothing falls between tools.",
+      body: "Nine capability families read from and write to the same inventory, identity and policy plane — so one console answers questions that used to take four tools and a spreadsheet.",
     },
     {
       icon: "Sparkles",
-      title: "AI-native, not bolted on",
-      body: "Whale AI runs across every module in tiers — Spark, Tide, Abyss — with 50+ use cases, answering questions and drafting work where it already happens. Powered by Anthropic Claude.",
+      title: "AI-native — including offline",
+      body: "Whale AI runs across every family in tiers — Spark, Tide, Abyss — with 50+ use cases for operations, documentation and compliance. Your choice of model, able to run fully inside the perimeter.",
     },
     {
       icon: "Cloud",
-      title: "Hyperscaler-neutral",
-      body: "Six public clouds — AWS, Azure, GCP, Oracle, IBM, Alibaba — plus on-prem and hybrid under one pane of glass. No single-vendor lock-in.",
+      title: "Every estate, six platform classes",
+      body: "Six public clouds — AWS, Azure, GCP, Oracle, Alibaba, Huawei — plus private and virtualization estates, hybrid and sovereign stacks, and edge sites under one pane of glass. No single-vendor lock-in.",
     },
     {
       icon: "ShieldCheck",
-      title: "Sovereign-ready",
-      body: "SaaS, BYOC, or fully air-gapped with in-region AI models and provable data residency — built for governments, banks and defense.",
+      title: "Sovereign by architecture",
+      body: "SaaS, BYOC, on-premise, fully air-gapped or at the edge — with in-region AI models and provable data residency. Built for governments, banks and defense.",
     },
   ],
 };

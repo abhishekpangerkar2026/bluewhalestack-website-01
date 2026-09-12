@@ -190,7 +190,7 @@ export const industries: IndustryDef[] = [
       { value: "3", label: "Deployment models: SaaS · BYOC · Sovereign" },
     ],
     why: [
-      "Manage AWS, Azure, GCP, Oracle, IBM, Alibaba & on-prem in one place",
+      "Manage AWS, Azure, GCP, Oracle, Alibaba, Huawei & on-prem in one place",
       "Standardize provisioning with governed catalogs",
       "Run bundled observability without extra contracts",
       "Assess workloads for migration with 6R analysis",
@@ -359,7 +359,7 @@ export const industries: IndustryDef[] = [
       },
       {
         title: "Metered colo billing, white-labeled",
-        body: "Meter tenant usage and bill it through the Partner Portal under your own brand — logo, colours and domain — with Whale Nomics behind the numbers.",
+        body: "Meter tenant usage and bill it through the Partner Portal under your own brand — logo, colours and domain — with Whalenomics behind the numbers.",
         modules: ["finops", "identity"],
       },
       {

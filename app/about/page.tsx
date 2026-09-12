@@ -20,6 +20,8 @@ import {
   principles,
   milestones,
   productFamily,
+  services,
+  servicesNote,
   leadership,
   trustPoints,
 } from "@/content/about";
@@ -246,14 +248,14 @@ export default function AboutPage() {
           <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
             <Reveal>
               <SectionHeading
-                eyebrow="What we build"
-                title="The BlueWhale Stack family"
-                description="A core cloud-management platform, surrounded by tools and ventures that extend it."
+                eyebrow="Product offerings"
+                title="The platform and what ships inside it"
+                description="One control plane across public, private, virtualization, hybrid and edge — and the families, engines and initiatives built on it."
               />
             </Reveal>
             <Reveal delay={80}>
-              <Button href="/editions" variant="secondary" className="shrink-0">
-                Explore editions
+              <Button href="/platform" variant="secondary" className="shrink-0">
+                Explore the platform
                 <ArrowRight className="h-4 w-4" />
               </Button>
             </Reveal>
@@ -283,6 +285,37 @@ export default function AboutPage() {
               </Reveal>
             ))}
           </div>
+        </Container>
+      </section>
+
+      {/* ── Service offerings: consulting and implementation ── */}
+      <section className="border-t border-line bg-canvas py-24 sm:py-32">
+        <Container>
+          <Reveal>
+            <SectionHeading
+              eyebrow="Service offerings"
+              title="Consulting and implementation — with or without the platform"
+              description="The practices the company was founded on in 2018, delivered globally — and the field experience the platform is built from."
+            />
+          </Reveal>
+          <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {services.map((s, i) => (
+              <Reveal key={s.name} delay={(i % 4) * 80}>
+                <Card className="flex h-full flex-col border-l-4 border-l-primary">
+                  <span className="grid h-11 w-11 place-items-center rounded-lg bg-[var(--bg-active)] text-accent">
+                    <Icon name={s.icon} className="h-5 w-5" />
+                  </span>
+                  <h3 className="mt-5 text-lg font-bold text-ink">{s.name}</h3>
+                  <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">{s.body}</p>
+                </Card>
+              </Reveal>
+            ))}
+          </div>
+          <Reveal delay={120}>
+            <p className="mx-auto mt-10 max-w-3xl rounded-lg border border-amber-300 bg-surface px-6 py-4 text-center text-sm font-semibold text-ink shadow-sm">
+              {servicesNote}
+            </p>
+          </Reveal>
         </Container>
       </section>
 
