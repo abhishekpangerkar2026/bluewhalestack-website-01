@@ -3,11 +3,11 @@ import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { ArchitectureDiagram } from "@/components/diagrams/ArchitectureDiagram";
 import { IndustryVisual } from "@/components/diagrams/IndustryVisual";
+import { ClosingCTA } from "@/components/sections/ClosingCTA";
 import { getIndustries, getEdition } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -33,15 +33,13 @@ export default function IndustriesPage() {
                   <span className="eyebrow text-accent">Industry solutions</span>
                 </div>
                 <h1 className="display-1 text-ink">
-                  Purpose-built for{" "}
-                  <span className="text-accent">your sector.</span>
+                  Seven sectors, and the regimes each one answers to.
                 </h1>
                 <p className="mt-6 text-lg leading-relaxed text-muted">
-                  BlueWhale Stack adapts to the governance, regulatory, and
-                  commercial realities of every industry — the same platform,
-                  shaped to how each one runs. Standard, Enterprise and
-                  Government editions are generally available today; the Telco
-                  &amp; Datacenter Edition is in preview ahead of GA in Q4 2026.
+                  Every industry page names the regulators and frameworks that sector actually faces — RBI and
+                  CERT-In, DPDP and GDPR, accreditation and air-gap mandates, carrier SLAs — and the platform control
+                  that answers each. Standard, Enterprise and Government editions are generally available today; the
+                  Telco &amp; Datacenter Edition is in preview ahead of GA in Q4 2026.
                 </p>
               </div>
             </Reveal>
@@ -174,32 +172,22 @@ export default function IndustriesPage() {
         </Container>
       </section>
 
-      {/* ── Closing statement band ── */}
-      <section className="relative overflow-hidden bg-brand-900 py-20 sm:py-24">
-        <Container className="relative">
-          <Reveal>
-            <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-              <div className="max-w-2xl">
-                <p className="eyebrow text-brand-200">
-                  Don&apos;t see your sector?
-                </p>
-                <h2 className="mt-5 text-3xl font-bold leading-[1.05] tracking-tight text-white sm:text-4xl">
-                  The platform is neutral. The{" "}
-                  <span className="text-brand-100">configuration is yours.</span>
-                </h2>
-                <p className="mt-5 text-lg leading-relaxed text-white/70">
-                  Every industry runs the same control plane — we shape governance,
-                  compliance, and deployment to your regulatory reality.
-                </p>
-              </div>
-              <Button href="/contact" size="lg" variant="white" className="shrink-0">
-                Talk to us
-                <ArrowRight className="h-4 w-4" />
-              </Button>
-            </div>
-          </Reveal>
-        </Container>
-      </section>
+      <ClosingCTA
+        eyebrow="Don't see your sector?"
+        title="Every sector runs the same control plane; the regime mapping is what changes."
+        body="Manufacturing, utilities, education, media — tell us the regulators and frameworks you answer to and we come back with the control mapping and the edition that fits, before any commercial conversation."
+        primary={{
+          label: "Request a control mapping for your sector",
+          href: "/contact?intent=resource",
+          note: "Name your regimes; we map each obligation to a platform control",
+        }}
+        secondary={{
+          label: "Book a working session",
+          href: "/contact?intent=demo",
+          note: "45 minutes · one of your accounts connected read-only",
+        }}
+        tertiary={{ label: "Read the case studies", href: "/case-studies", note: "banking, government, operators, media" }}
+      />
     </>
   );
 }

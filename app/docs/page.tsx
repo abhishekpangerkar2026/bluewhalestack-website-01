@@ -33,7 +33,7 @@ export default function DocsPage() {
         <Container>
           <div className="grid gap-x-16 gap-y-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
             <Reveal>
-              <div>
+              <div className="max-w-2xl">
                 <div className="mb-5 flex items-center gap-3">
                   <span aria-hidden className="h-px w-8 bg-accent/50" />
                   <span className="eyebrow text-accent">
@@ -41,17 +41,12 @@ export default function DocsPage() {
                   </span>
                 </div>
                 <h1 className="display-1 text-ink">
-                  Everything you need to{" "}
-                  <span className="text-accent">build &amp; deploy</span>.
+                  Connect an account, federate your IdP, call the API.
                 </h1>
-              </div>
-            </Reveal>
-            <Reveal delay={90}>
-              <div>
-                <Iso name="app-window" className="mb-6 max-w-[320px]" title="Technical documentation and API reference" />
-                <p className="text-lg leading-relaxed text-muted">
-                  Full technical reference, API docs, quick-start guides and
-                  integration tutorials for every edition.
+                <p className="mt-6 text-lg leading-relaxed text-muted">
+                  Six guides written for the engineer doing the work: the exact IAM role, app registration or service
+                  account each cloud needs, the Edge Agent&apos;s outbound-only path on port 443, SSO and SCIM setup,
+                  the service catalog, and the REST API with webhooks and events.
                 </p>
                 <p className="eyebrow mt-8 text-faint">
                   Jump to
@@ -67,6 +62,11 @@ export default function DocsPage() {
                     </Link>
                   ))}
                 </div>
+              </div>
+            </Reveal>
+            <Reveal delay={90}>
+              <div className="mx-auto w-full max-w-[380px]">
+                <Iso name="app-window" title="Technical documentation and API reference" />
               </div>
             </Reveal>
           </div>

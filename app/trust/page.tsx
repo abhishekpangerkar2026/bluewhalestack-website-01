@@ -40,12 +40,10 @@ export default function TrustPage() {
                   <span className="text-brand-200">independently verified.</span>
                 </h1>
                 <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/70">
-                  BlueWhale Stack holds nine certifications and compliance
-                  attestations across information security, privacy, cloud
-                  security, and business continuity — independently audited
-                  ISO certifications, a CSA STAR self-assessment, and a SOC 2
-                  Type II readiness assessment — all current, with eight
-                  signed certificates downloadable below.
+                  Five ISO management-system certifications — 27001, 27017, 27018, 27701 and 22301 — audited by
+                  accredited third-party bodies, plus a CSA STAR Level 1 self-assessment, a GDPR compliance
+                  assessment and a SOC 2 Type II readiness assessment. All current, with eight signed certificates
+                  downloadable below and full audit reports available to customers under NDA.
                 </p>
                 <div className="mt-8 flex flex-wrap gap-3">
                   <Button href="#certifications" size="lg">
@@ -110,8 +108,8 @@ export default function TrustPage() {
           <Reveal>
             <SectionHeading
               eyebrow="Certifications"
-              title="Nine certifications. All current."
-              description="ISO certifications are independently audited by accredited third-party bodies. CSA STAR Level 1 is a self-assessment and SOC 2 Type II is a readiness assessment — not a CPA-issued audit opinion. Signed certificate PDFs are available for download below; full audit reports and attestation letters are available to Enterprise customers under NDA."
+              title="Five ISO certifications, independently audited. Three assessments, stated as such."
+              description="ISO certifications are audited by accredited third-party bodies and carry certificate numbers you can verify. CSA STAR Level 1 is a self-assessment, GDPR is a compliance assessment, and SOC 2 Type II is a readiness assessment — not a CPA-issued audit opinion. Signed certificate PDFs are below; full audit reports and attestation letters are available to Enterprise customers under NDA."
             />
           </Reveal>
 

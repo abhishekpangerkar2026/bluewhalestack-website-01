@@ -8,10 +8,10 @@ import { LocationVisual } from "@/components/diagrams/LocationVisual";
 import { Iso } from "@/components/illustrations/Iso";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
-import { Stat } from "@/components/ui/Stat";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { LeadershipMini } from "@/components/sections/LeadershipCard";
+import { ClosingCTA } from "@/components/sections/ClosingCTA";
 import { regions, compliance, offices, headlineStats } from "@/content/company";
 import {
   aboutHero,
@@ -33,10 +33,10 @@ export const metadata: Metadata = {
 };
 
 const numbers = [
-  { value: headlineStats[0].value, label: headlineStats[0].label },
-  { value: `${regions.length}`, label: "Global regions" },
-  { value: "4", label: "Platform editions" },
-  { value: `${compliance.length}`, label: "Compliance frameworks" },
+  { value: "3 entities", label: "Pvt Ltd (Mumbai, CIN U74999MH2018PTC306172) · FZE LLC (Ajman) · Inc (Delaware)" },
+  { value: "5 ISO certifications", label: "27001 · 27017 · 27018 · 27701 · 22301 — independently audited, certificates downloadable" },
+  { value: `${regions.length} SaaS regions`, label: regions.map((r) => r.city).join(" · ") },
+  { value: `${headlineStats[0].value} capabilities`, label: "In nine families across four editions" },
 ];
 
 const announcedLeaders = leadership.filter((l) => l.name);
@@ -47,9 +47,9 @@ export default function AboutPage() {
       {/* ── Hero: editorial split, oversized statement left ── */}
       <section className="border-b border-line bg-surface py-20 sm:py-28">
         <Container>
-          <div className="grid gap-x-16 gap-y-10 lg:grid-cols-[1.25fr_0.75fr] lg:items-center">
+          <div className="grid gap-x-16 gap-y-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
             <Reveal>
-              <div>
+              <div className="max-w-2xl">
                 <div className="mb-5 flex items-center gap-3">
                   <span aria-hidden className="h-px w-8 bg-accent/50" />
                   <span className="eyebrow text-accent">
@@ -57,26 +57,28 @@ export default function AboutPage() {
                   </span>
                 </div>
                 <h1 className="display-1 text-ink">
-                  The command center for{" "}
-                  <span className="text-accent">every cloud</span> you run.
+                  A consulting firm that turned eight years of field work into a platform.
                 </h1>
+                <p className="mt-6 text-lg leading-relaxed text-muted">
+                  BlueWhale Stack was founded in Mumbai in 2018 as a cloud consultancy. After eight years of migrations,
+                  audits and datacenter modernisations for telcos, banks, governments and hospitals in India and the GCC,
+                  the same gap kept appearing — no single view of the estate — and in 2026 we shipped the platform that
+                  closes it. Three entities today: India, the UAE and the United States.
+                </p>
+                <div className="mt-8 flex flex-wrap gap-3">
+                  <Button href="/contact?intent=demo" size="lg">
+                    Talk to the team
+                    <ArrowRight className="h-4 w-4" />
+                  </Button>
+                  <Button href="/about/leadership" size="lg" variant="secondary">
+                    Meet the leadership
+                  </Button>
+                </div>
               </div>
             </Reveal>
             <Reveal delay={90}>
-              <div className="lg:pb-2">
-                <Iso name="edge" className="mb-6 max-w-[300px]" title="A global platform company — India, UAE, United States" />
-                <p className="text-lg leading-relaxed text-muted">
-                  {aboutHero.mission}
-                </p>
-                <div className="mt-8 flex flex-wrap gap-3">
-                  <Button href="/contact" size="lg">
-                    Book a demo
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
-                  <Button href="/careers" size="lg" variant="secondary">
-                    See careers
-                  </Button>
-                </div>
+              <div className="mx-auto w-full max-w-[380px]">
+                <Iso name="edge" title="A global platform company — India, UAE, United States" />
               </div>
             </Reveal>
           </div>
@@ -181,7 +183,8 @@ export default function AboutPage() {
           <Reveal>
             <SectionHeading
               eyebrow="What we stand for"
-              title="Four principles guide everything we build"
+              title="Four design principles"
+              description="Each one is a property you can check in the product — not a value statement."
             />
           </Reveal>
           <div className="mt-14 grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
@@ -215,8 +218,8 @@ export default function AboutPage() {
           <Reveal>
             <SectionHeading
               eyebrow="Our journey"
-              title="From a conviction to a platform"
-              description="How BlueWhale Stack has grown — and where it's headed."
+              title="2018 to today"
+              description="Founded as a consultancy, productised in 2026, now sold and delivered through partners in three markets."
             />
           </Reveal>
           <div className="mt-14 grid gap-x-12 gap-y-10 sm:grid-cols-2">
@@ -320,13 +323,17 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* ── By the numbers: stats on brand band ── */}
-      <section className="bg-brand-500 py-20 text-white">
+      {/* ── Proof we're real: entities, registrations, certificates ── */}
+      <section className="bg-brand-900 py-16 text-white">
         <Container>
-          <div className="grid grid-cols-2 gap-x-8 gap-y-12 lg:grid-cols-4">
+          <p className="eyebrow text-brand-200">On the record</p>
+          <div className="mt-6 grid gap-px overflow-hidden rounded-lg border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
             {numbers.map((n, i) => (
               <Reveal key={n.label} delay={i * 70}>
-                <Stat value={n.value} label={n.label} inverse />
+                <div className="h-full bg-brand-900 px-5 py-5">
+                  <p className="text-xl font-bold text-white">{n.value}</p>
+                  <p className="mt-1 text-sm leading-snug text-white/60">{n.label}</p>
+                </div>
               </Reveal>
             ))}
           </div>
@@ -410,7 +417,8 @@ export default function AboutPage() {
               <div>
                 <SectionHeading
                   eyebrow="Certifications & trust"
-                  title="Earning trust, by design"
+                  title="What is certified, and what is assessed"
+                  description="Five ISO management-system certifications audited by accredited bodies, plus three assessments — stated exactly as the certification bodies allow."
                 />
                 <ul className="mt-10 space-y-4">
                   {trustPoints.map((t) => (
@@ -460,6 +468,19 @@ export default function AboutPage() {
           </div>
         </Container>
       </section>
+
+      <ClosingCTA
+        eyebrow="Two doors"
+        title="Work with us, or work here."
+        body="Customers and partners start with a working session on their own estate. Engineers, architects and go-to-market people start with the open roles across Mumbai, Ajman and Wilmington."
+        primary={{
+          label: "Book a working session",
+          href: "/contact?intent=demo",
+          note: "45 minutes · a solutions engineer · one of your accounts connected read-only",
+        }}
+        secondary={{ label: "See open roles", href: "/careers", note: "Engineering, product, sales and delivery" }}
+        tertiary={{ label: "Become a partner", href: "/partners", note: "three partner tracks" }}
+      />
     </>
   );
 }

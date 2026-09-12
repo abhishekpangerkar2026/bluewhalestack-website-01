@@ -490,7 +490,7 @@ export const scenes = {
     "width": 1997,
     "height": 814,
     "title": "Whalenomics · FinOps",
-    "tagline": "Spend explained. Decomposed. Owned.",
+    "tagline": "Every dollar resolves to a workload and an owner.",
     "cableTargets": [
       [
         0.2521,
@@ -559,7 +559,7 @@ export const scenes = {
     "width": 1997,
     "height": 814,
     "title": "Migration Engine",
-    "tagline": "Entry, movement and exit — industrialized.",
+    "tagline": "Entry, movement and exit — scored and rehearsed.",
     "cableTargets": [
       [
         0.2521,
@@ -973,7 +973,7 @@ export const scenes = {
     "width": 1997,
     "height": 814,
     "title": "Sovereign Operations",
-    "tagline": "Sovereignty demonstrated, not asserted.",
+    "tagline": "Sovereignty as a property of the architecture.",
     "cableTargets": [
       [
         0.2521,
@@ -1042,7 +1042,7 @@ export const scenes = {
     "width": 1997,
     "height": 814,
     "title": "Government",
-    "tagline": "Sovereign & audited.",
+    "tagline": "Sovereign operations, air-gapped when required.",
     "cableTargets": [
       [
         0.2521,
@@ -1111,7 +1111,7 @@ export const scenes = {
     "width": 1997,
     "height": 814,
     "title": "BFSI",
-    "tagline": "Compliant. Governed. Audited.",
+    "tagline": "Answer an inspection from a system of record.",
     "cableTargets": [
       [
         0.2521,
@@ -1180,7 +1180,7 @@ export const scenes = {
     "width": 1997,
     "height": 814,
     "title": "Healthcare",
-    "tagline": "Secure. Private. In-region.",
+    "tagline": "Clinical systems governed in-country.",
     "cableTargets": [
       [
         0.2521,
@@ -1249,7 +1249,7 @@ export const scenes = {
     "width": 1997,
     "height": 814,
     "title": "Regulated Enterprise",
-    "tagline": "Governed at scale.",
+    "tagline": "Six clouds and the datacenter floor, one estate.",
     "cableTargets": [
       [
         0.2521,
@@ -1318,7 +1318,7 @@ export const scenes = {
     "width": 1997,
     "height": 814,
     "title": "SaaS & Digital Native",
-    "tagline": "Ship fast. Spend less.",
+    "tagline": "Governed from the first account.",
     "cableTargets": [
       [
         0.2521,

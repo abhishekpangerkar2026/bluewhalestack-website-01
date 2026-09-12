@@ -137,12 +137,12 @@ export const docPages: DocPageDef[] = [
               {
                 icon: "Activity",
                 title: "Observe, bundled",
-                body: "Logs, metrics, traces and SLOs with burn-rate alerts — no separate Datadog contract.",
+                body: "Logs, metrics, traces and SLOs with burn-rate alerts — included in the licence, no separate observability contract.",
               },
               {
                 icon: "Sparkles",
                 title: "AI-native by design",
-                body: "Whale AI (powered by Anthropic Claude) spans every module with 50+ use cases — not bolted on.",
+                body: "Whale AI (powered by Anthropic Claude) spans every module with 50+ use cases, grounded in your live inventory, billing and tickets.",
               },
             ],
           },

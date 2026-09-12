@@ -7,6 +7,7 @@ import { ProductScene } from "@/components/scenes/ProductScene";
 import { Card } from "@/components/ui/Card";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
+import { ClosingCTA } from "@/components/sections/ClosingCTA";
 import { modules } from "@/content/modules";
 
 export const metadata: Metadata = {
@@ -119,18 +120,18 @@ const HOW_STEPS = [
 const DIFFERENTIATORS = [
   {
     icon: "Layers",
-    title: "Native, not bolted on",
-    body: "Whale AI was designed as a first-class architectural component. Every module exposes its data as grounding providers, and every screen has an Ask Whale entry point — the AI has access to everything the platform knows about your estate.",
+    title: "Built into every module",
+    body: "Every module exposes its data as a grounding provider, and every screen has an Ask Whale entry point — so the AI reads everything the platform knows about your estate, from the screen you are on.",
   },
   {
     icon: "DatabaseBackup",
-    title: "Grounded in your live data",
-    body: "Whale AI never fabricates numbers. Before answering, the grounding layer queries your actual cost facts, real resource inventory, open incidents, and security findings — the AI reasons over your data, not training-time approximations.",
+    title: "Grounded in your live data, with citations",
+    body: "Every use case declares the providers it reads. Before the model answers, the grounding layer queries the live database — resource_inventory, cost_summary, cost_recommendations, scanner_findings, open_incidents, tenant_metadata — and appends your tenant's real rows to the context. Numbers come from the platform, and the answer cites them.",
   },
   {
     icon: "Lock",
     title: "Enterprise security model",
-    body: "Complete tenant isolation — every AI call is scoped to the authenticated tenant. No cross-tenant data leakage is architecturally possible. Spend caps enforced per tenant. Conversations persisted under your data residency region.",
+    body: "Every AI call is scoped to the authenticated tenant, and tenant isolation is enforced at the database layer with Postgres row-level security. Spend caps are enforced per tenant, and conversations are persisted in your data-residency region.",
   },
   {
     icon: "Zap",
@@ -175,26 +176,30 @@ export default function WhaleAIPage() {
               </span>
             </div>
             <h1 className="display-1 text-white">
-              Your cloud operations{" "}
-              <span className="text-[#a5b4fc]">intelligence co-pilot</span>
+              AI that answers from{" "}
+              <span className="text-[#a5b4fc]">your live estate</span>
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/70">
-              Whale AI is not a chatbot bolted onto a dashboard. It is a deeply integrated
-              intelligence layer woven into every module — grounded in your live data, reasoning
-              over your real estate, and acting within your governance boundaries.
+              Whale AI is an intelligence layer inside every module of the platform. Each of its 50+ use cases
+              declares the live data it reads — inventory, billing, tickets, findings — and cites it in the answer.
+              It runs in three tiers by task complexity, on hosted models, your own model, or fully offline inside
+              the perimeter for sovereign estates.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Button href="/contact" size="lg" variant="white">
-                Book a demo
-                <ArrowRight className="h-4 w-4" />
-              </Button>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <div>
+                <Button href="/contact?intent=demo" size="lg" variant="white">
+                  See it on your estate
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+                <p className="mt-2 text-xs text-white/50">45 minutes · one account connected read-only · ask it about your own bill</p>
+              </div>
               <Button
-                href="/platform"
+                href="/modules/whale-ai"
                 size="lg"
                 variant="outline"
                 className="border-white/30 text-white hover:border-white hover:bg-white/10 hover:text-white"
               >
-                See the platform
+                Module page and FAQ
                 <ArrowRight className="h-4 w-4" />
               </Button>
             </div>
@@ -222,29 +227,24 @@ export default function WhaleAIPage() {
               <div>
                 <SectionHeading
                   eyebrow="What is Whale AI"
-                  title="AI that knows your cloud — not just cloud AI"
+                  title="Questions about your resources, your spend and your incidents"
+                  description="Whale AI answers about the estate you have connected — pulled live at question time, scoped to your tenant and your permissions."
                 />
-                <p className="mt-4 text-base leading-relaxed text-muted">
-                  Most enterprise AI tools answer generic questions. Whale AI answers questions
-                  about <em>your</em> actual resources, <em>your</em> real spend, <em>your</em>{" "}
-                  open incidents — pulled live from your connected estate.
-                </p>
                 <h3 className="mt-8 text-xl font-bold text-ink">
-                  A horizontal fabric, not a feature
+                  A layer every module feeds
                 </h3>
                 <p className="mt-3 text-base leading-relaxed text-muted">
-                  Whale AI is architected as a horizontal intelligence layer that runs across every
-                  vertical module. It is not another module — it is the connective tissue between
-                  all of them. Every module contributes grounding data: FinOps feeds live cost
-                  facts, Inventory feeds resource state, ITSM feeds open incidents, Scanner feeds
-                  security findings.
+                  Whale AI runs across every module rather than beside them. Each module contributes grounding
+                  data: Whalenomics feeds live cost facts, Inventory feeds resource state, ITSM feeds open incidents,
+                  the scanner feeds security findings — and the assistant drawer on each screen already knows what
+                  you are looking at.
                 </p>
-                <h3 className="mt-6 text-xl font-bold text-ink">Grounded, not hallucinating</h3>
+                <h3 className="mt-6 text-xl font-bold text-ink">Grounded before it reasons</h3>
                 <p className="mt-3 text-base leading-relaxed text-muted">
-                  Every use case declares its data dependencies. Before generating a response, the
-                  grounding layer queries the live database, appends your real tenant data to the
-                  context window, and only then reasons over it. There is no guessing, no
-                  fabrication of numbers.
+                  Every use case declares its data dependencies. Before generating a response, the grounding layer
+                  queries the live database, appends your real tenant rows to the context window, and only then
+                  reasons over them — so the numbers in an answer are the platform&apos;s numbers, and the answer
+                  cites where each one came from.
                 </p>
               </div>
             </Reveal>
@@ -451,6 +451,7 @@ export default function WhaleAIPage() {
             <SectionHeading
               eyebrow="How it works"
               title="From question to grounded answer"
+              description="Four stages, the same for every use case: the question, the live grounding query, tier selection and reasoning, then a streamed, exportable answer."
             />
           </Reveal>
           <div className="relative mt-14 grid gap-0 sm:grid-cols-4">
@@ -483,7 +484,8 @@ export default function WhaleAIPage() {
           <Reveal>
             <SectionHeading
               eyebrow="Key differentiators"
-              title="What makes Whale AI different"
+              title="Four properties you can verify in the product"
+              description="Where the data comes from, how tenants are isolated, and what the answer looks like — each one is observable in the console, not a claim."
             />
           </Reveal>
           <div className="mt-12 grid gap-6 sm:grid-cols-2">
@@ -511,8 +513,9 @@ export default function WhaleAIPage() {
         <Container>
           <Reveal>
             <SectionHeading
-              eyebrow="Market comparison"
-              title="Whale AI vs. point solutions"
+              eyebrow="Compared by category"
+              title="Whale AI against the three usual alternatives"
+              description="A general-purpose assistant, an APM vendor's AI and an ITSM vendor's AI each ground in one slice of the estate. The comparison is by category, based on public documentation as of September 2026."
             />
           </Reveal>
           <Reveal delay={80}>
@@ -523,7 +526,7 @@ export default function WhaleAIPage() {
                     <th className="py-3 pl-5 pr-4 text-left text-xs font-semibold text-white/80">
                       Capability
                     </th>
-                    {["Whale AI", "Generic AI", "Dynatrace Davis", "ServiceNow"].map((h) => (
+                    {["Whale AI", "General-purpose assistant", "APM-native AI", "ITSM-native AI"].map((h) => (
                       <th
                         key={h}
                         className={`px-4 py-3 text-center text-xs font-semibold ${h === "Whale AI" ? "text-white" : "text-white/60"}`}
@@ -568,39 +571,22 @@ export default function WhaleAIPage() {
         </Container>
       </section>
 
-      {/* ── CTA ── */}
-      <section className="py-20 sm:py-24">
-        <Container>
-          <Reveal>
-            <div className="overflow-hidden rounded-2xl bg-primary px-8 py-14 text-center text-primary-fg sm:px-14">
-              <span className="mx-auto mb-4 grid h-12 w-12 place-items-center rounded-full bg-white/15 text-white">
-                <Icon name="Sparkles" className="h-6 w-6" />
-              </span>
-              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-                Ready to explore Whale AI?
-              </h2>
-              <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed opacity-80">
-                Start with a demo to see Whale AI reasoning over your live cloud estate — cost,
-                security, incidents, and beyond.
-              </p>
-              <div className="mt-8 flex flex-wrap justify-center gap-3">
-                <Button href="/contact" size="lg" variant="white">
-                  Book a demo
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-                <Button
-                  href="/platform"
-                  size="lg"
-                  variant="ghost"
-                  className="text-white hover:bg-white/10"
-                >
-                  See the platform
-                </Button>
-              </div>
-            </div>
-          </Reveal>
-        </Container>
-      </section>
+      <ClosingCTA
+        eyebrow="Next step"
+        title="Ask Whale AI about your own bill."
+        body="In a 45-minute working session we connect one of your accounts read-only and put a real question to Whale AI — why a cost line rose, what a finding means, which instances to rightsize — and you see the grounding and the citations behind the answer."
+        primary={{
+          label: "Book a working session",
+          href: "/contact?intent=demo",
+          note: "45 minutes · read-only credentials · your data stays in your region",
+        }}
+        secondary={{
+          label: "Start the 90-day prototype",
+          href: "/platform#prototype",
+          note: "One AI use case on your estate is part of the prototype scope.",
+        }}
+        tertiary={{ label: "Whale AI module page", href: "/modules/whale-ai", note: "capabilities, tiers and FAQ" }}
+      />
     </>
   );
 }

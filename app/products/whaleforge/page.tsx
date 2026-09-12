@@ -132,7 +132,7 @@ export default function WhaleForge() {
       {/* ── Hero ── */}
       <section className="border-b border-line bg-surface py-20 sm:py-28">
         <Container>
-          <div className="grid gap-x-16 gap-y-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
+          <div className="grid gap-x-16 gap-y-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
             <Reveal>
               <div>
                 <div className="mb-5 flex items-center gap-3">
@@ -154,7 +154,41 @@ export default function WhaleForge() {
             </Reveal>
             <Reveal delay={90}>
               <div className="flex flex-col gap-4 lg:pb-2">
-                <Iso name="app-window" className="max-w-[300px] self-center" title="YAML in, Terraform and live diagrams out" />
+                {/* the DSL itself — a marketing page for a language should show the language */}
+                <div className="overflow-hidden rounded-xl border border-slate-800 bg-slate-950 shadow-lg">
+                  <div className="flex items-center justify-between border-b border-slate-800 px-4 py-2">
+                    <span className="font-mono text-[11px] text-slate-400">stack.yaml</span>
+                    <span className="font-mono text-[11px] text-emerald-400">→ terraform/main.tf · hld.pdf</span>
+                  </div>
+                  <pre className="overflow-x-auto p-4 font-mono text-[12px] leading-relaxed text-slate-200">
+{`stack: payments-core
+provider: aws
+region: ap-south-1
+
+network:
+  vpc: 10.40.0.0/16
+  subnets:
+    - { name: private-a, cidr: 10.40.1.0/24, az: a }
+    - { name: private-b, cidr: 10.40.2.0/24, az: b }
+
+compute:
+  app:
+    type: autoscaling
+    instance: m6i.large
+    min: 2
+    max: 6
+
+data:
+  primary:
+    engine: postgres
+    size: db.r6g.large
+    encrypted: true      # customer-managed key
+
+policies:
+  residency: in-country
+  tags: [owner, cost-centre]`}
+                  </pre>
+                </div>
                 <div className="rounded-xl border border-line bg-sunken p-5">
                   <p className="eyebrow text-faint">
                     What you get today

@@ -73,6 +73,7 @@ export default async function CaseStudyPage({
                 <h1 className="display-1 mt-6 text-white">{story.headline}</h1>
                 <p className="mt-4 text-lg font-semibold text-brand-100">{story.org}</p>
                 {story.note && <p className="mt-1 text-sm text-white/60">{story.note}</p>}
+                <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/70">{story.summary}</p>
                 <div className="mt-8 flex flex-wrap gap-3">
                   <Button href="/contact?intent=demo" size="lg" variant="white">
                     Discuss a similar estate
@@ -169,6 +170,8 @@ export default async function CaseStudyPage({
                         <span className="font-semibold text-ink">{story.person.role}</span>
                         {" · "}
                         {story.org}
+                        {" · "}
+                        <span className="text-faint">as reported by the customer</span>
                       </span>
                     </figcaption>
                   </figure>
@@ -206,7 +209,8 @@ export default async function CaseStudyPage({
                     )}
                   </dl>
                   <div className="mt-5 flex flex-col gap-2">
-                    <Button href="/contact?intent=demo">Book the discovery workshop</Button>
+                    <Button href="/contact?intent=demo">Discuss a similar estate</Button>
+                    <p className="text-xs text-faint">45 minutes with a solutions engineer, on your own accounts</p>
                     <Button href="/case-studies" variant="secondary">
                       All case studies
                     </Button>
@@ -222,7 +226,11 @@ export default async function CaseStudyPage({
       <section className="border-t border-line bg-sunken py-20 sm:py-24">
         <Container>
           <Reveal>
-            <SectionHeading eyebrow="More case studies" title="Other estates, other outcomes" />
+            <SectionHeading
+              eyebrow="More case studies"
+              title="Other estates, other outcomes"
+              description="Three more delivered engagements — banking, government, operators and media — written up the same way: situation, work, outcome."
+            />
           </Reveal>
           <div className="mt-10 grid gap-5 md:grid-cols-3">
             {others.map((s, i) => (

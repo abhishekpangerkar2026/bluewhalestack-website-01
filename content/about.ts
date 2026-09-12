@@ -57,22 +57,22 @@ export const principles = [
   {
     icon: "Boxes",
     title: "Unified",
-    body: "One control plane, not ten consoles. Everything in one place, governed consistently.",
+    body: "Nine families read from and write to one inventory, one identity fabric and one policy plane, so a finding, a cost anomaly and a ticket point at the same workload and owner.",
   },
   {
     icon: "Sparkles",
     title: "AI-native",
-    body: "Whale AI runs across every module — intelligence built in, not bolted on.",
+    body: "Whale AI is a layer every module exposes data to and every screen can ask — grounded in live inventory, billing and tickets, with citations.",
   },
   {
     icon: "Layers",
     title: "Open",
-    body: "Helm-deployable anywhere, hyperscaler-neutral. No lock-in, ever.",
+    body: "Helm-deployable on your own Kubernetes; the same build runs as SaaS, BYOC, on-premises, air-gapped or at the edge. Six public clouds are first-class and none is a dependency.",
   },
   {
     icon: "Landmark",
     title: "Sovereign-ready",
-    body: "Air-gapped and in-region by design, for the most regulated environments on earth.",
+    body: "Deployed air-gapped for defence and interior ministries and in-country for banks under two regulators — with in-region AI and a WORM-backed audit log where the mandate requires it.",
   },
 ];
 
@@ -104,14 +104,14 @@ export const productFamily: { name: string; badge: string; href: string; body: s
     badge: "Family",
     href: "/modules/migration",
     iso: "migration",
-    body: "Assessment, dependency mapping, rehearsed waves and cutover across six platforms — entry, movement and exit industrialized.",
+    body: "6R assessment live today — auto-classification, cost, effort and blocker scoring, dependency-aware waves with rollback. Execution hooks in development.",
   },
   {
     name: "Cloud Audit & Evidence",
     badge: "Family",
     href: "/modules/cloud-audit",
     iso: "audit",
-    body: "Controls monitored continuously — examiner-grade reports on demand, for the board, the auditor and the regulator.",
+    body: "Controls monitored continuously across every estate; the report the board, the auditor and the regulator ask for, generated per regime on demand.",
   },
   {
     name: "BlueWhale Stack Fabric",
@@ -163,7 +163,7 @@ export const milestones = [
   {
     year: "2018–2025",
     title: "Consulting at scale",
-    body: "Engagements across telecom, banking and financial services, government, healthcare, manufacturing and datacenter modernization in India and the GCC — the challenges define the product. The platform is built from field experience, not designed in the abstract.",
+    body: "Engagements across telecom, banking and financial services, government, healthcare, manufacturing and datacenter modernization in India and the GCC. The same problem surfaced in every one — no single view of the estate — and it defined the product.",
   },
   {
     year: "2026",
@@ -231,8 +231,8 @@ export const leadership: LeadershipMember[] = [
 ];
 
 export const trustPoints = [
-  "ISO 27001:2022 certified",
-  "SOC 2 Type II readiness assessment complete",
-  "Data-residency commitments: DPDP, GDPR, PDPA, NCA-ECC",
+  "ISO/IEC 27001:2022, 27017, 27018, 27701 and ISO 22301 certified — independently audited",
+  "SOC 2 Type II readiness assessment complete; CSA STAR Level 1 self-assessment; GDPR compliance assessment",
+  "SaaS residency in Singapore, Mumbai, Frankfurt and Los Angeles; in-country by BYOC, on-prem or air-gapped elsewhere",
   "Air-gapped & in-region deployment for sovereign customers",
 ];

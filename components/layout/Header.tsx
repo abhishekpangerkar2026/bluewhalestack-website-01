@@ -161,7 +161,7 @@ export function Header() {
             Login
           </a>
           <ThemeToggle className="ml-1" />
-          <Button href="/contact" size="sm" className="ml-1">
+          <Button href="/contact?intent=demo" size="sm" className="ml-1">
             Book a demo
           </Button>
         </div>

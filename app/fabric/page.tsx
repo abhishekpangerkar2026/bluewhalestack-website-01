@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
+import { ClosingCTA } from "@/components/sections/ClosingCTA";
 import { Badge } from "@/components/ui/Badge";
 import { Stat } from "@/components/ui/Stat";
 import { Icon } from "@/components/ui/Icon";
@@ -58,7 +59,7 @@ export default function FabricPage() {
                 {fabricHero.description}
               </p>
               <div className="mt-9 flex flex-wrap gap-3">
-                <Button href="/contact" size="lg" variant="white">
+                <Button href="/contact?intent=demo" size="lg" variant="white">
                   Request a fabric workshop
                   <ArrowRight className="h-4 w-4" />
                 </Button>
@@ -294,6 +295,7 @@ export default function FabricPage() {
             <SectionHeading
               eyebrow="Phased delivery"
               title="From anchor to institutionalized, in four phases"
+              description="Each phase has a month range and an exit criterion; the fabric expands on customer pull, with operators joining as demand for their tier appears."
             />
           </Reveal>
           <div className="relative mt-14 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
@@ -322,7 +324,11 @@ export default function FabricPage() {
           <div className="grid gap-x-16 gap-y-14 lg:grid-cols-[1fr_1fr]">
             <Reveal>
               <div>
-                <SectionHeading eyebrow="At a glance" title="The fabric, summarized" />
+                <SectionHeading
+                  eyebrow="At a glance"
+                  title="The fabric, summarized"
+                  description="The facts a board or a regulator asks for first — what it is, who operates it, where it launches and how it is consumed."
+                />
                 <dl className="mt-10 flex flex-col">
                   {fabricAtAGlance.map((row) => (
                     <div
@@ -372,39 +378,22 @@ export default function FabricPage() {
         </Container>
       </section>
 
-      {/* ── Closing CTA ── */}
-      <section className="relative overflow-hidden bg-brand-900 py-20 sm:py-24">
-        <Container className="relative">
-          <Reveal>
-            <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-              <div className="max-w-xl">
-                <p className="eyebrow text-brand-200">
-                  No market needs another datacenter
-                </p>
-                <h2 className="display-2 mt-5 text-white">
-                  It needs a fabric that lets buyers{" "}
-                  <span className="whitespace-nowrap text-brand-100">pick a policy.</span>
-                </h2>
-              </div>
-              <div className="flex shrink-0 flex-wrap gap-3">
-                <Button href="/contact" size="lg" variant="white">
-                  Request a fabric workshop
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-                <Button
-                  href="/industries/datacenter"
-                  size="lg"
-                  variant="outline"
-                  className="border-white/30 text-white hover:border-white hover:bg-white/10 hover:text-white"
-                >
-                  For datacenter operators
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-              </div>
-            </div>
-          </Reveal>
-        </Container>
-      </section>
+      <ClosingCTA
+        eyebrow="No market needs another datacenter"
+        title="It needs a fabric that lets buyers pick a policy."
+        body="The fabric workshop takes one week: your market's operator roster, residency regime and sovereign classes mapped onto the fabric plane, and a 90-day pilot scoped — two workloads, two operator regions, one DR scenario, no platform-licence cost."
+        primary={{
+          label: "Request a fabric workshop",
+          href: "/contact?intent=demo",
+          note: "One week · operators, regulators and anchor buyers in the room · pilot scoped at the end",
+        }}
+        secondary={{
+          label: "Telco & Datacenter Edition",
+          href: "/editions/telco-datacenter",
+          note: "The operator edition the fabric runs on — preview, GA Q4 2026.",
+        }}
+        tertiary={{ label: "For datacenter operators", href: "/industries/datacenter", note: "DCIM beside the cloud estate" }}
+      />
     </>
   );
 }

@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
@@ -47,11 +46,14 @@ export function Hero() {
               {hero.description}
             </p>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Button href={hero.primaryCta.href} size="lg">
-                {hero.primaryCta.label}
-                <ArrowRight className="h-4 w-4" />
-              </Button>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <div>
+                <Button href={hero.primaryCta.href} size="lg">
+                  {hero.primaryCta.label}
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+                <p className="mt-2 text-xs text-faint">{hero.primaryNote}</p>
+              </div>
               <Button href={hero.secondaryCta.href} size="lg" variant="outline">
                 {hero.secondaryCta.label}
               </Button>

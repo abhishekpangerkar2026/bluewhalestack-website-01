@@ -22,6 +22,8 @@ export interface CustomerStory {
   /** small caption under the org name, e.g. confidentiality note */
   note?: string;
   headline: string;
+  /** one-sentence hero description: the estate, the change, the result */
+  summary: string;
   challenge: string;
   solution: string;
   quote: string;
@@ -40,12 +42,14 @@ export const customerStories: CustomerStory[] = [
     imageAlt:
       "Bank compliance and IT teams reviewing multi-jurisdiction audit dashboards",
     headline: "Audit-ready across two regulatory regimes",
+    summary:
+      "Two banks running public cloud, private infrastructure and on-premises systems under MAS and Qatar central-bank supervision moved from weeks of manual evidence assembly per inspection to reports generated from one policy layer — and rehearsed the exit plans they had only ever documented.",
     challenge:
       "A digital-first bank in Singapore and a prominent bank in Qatar ran channels on public cloud, analytics on private infrastructure and core-adjacent systems on-premises. Every supervisory touchpoint — MAS technology-risk norms in Singapore, central-bank requirements in Qatar — triggered weeks of manual evidence assembly, and their mandated exit strategies had never been tested.",
     solution:
-      "One policy layer was enforced across every environment in both jurisdictions, mapped to each regime's controls so supervisory requests became report parameters instead of manual assembly. The Migration Engine turned the exit annexure into a dependency-mapped, rehearsed annual drill, and Whalenomics gave both CFOs a cloud bill decomposable by business unit and jurisdiction.",
+      "One policy layer was enforced across every environment in both jurisdictions and mapped to each regime's controls, so a supervisory request became report parameters — regime, period, scope — rather than a manual assembly exercise. The Migration Engine's assessment and dependency mapping turned the exit annexure into a rehearsed annual drill with evidence on file, and Whalenomics cost visibility gave both CFOs a cloud bill they could decompose by business unit and jurisdiction.",
     quote:
-      "Inspection preparation went from weeks to days in both banks — and our exit-plan compliance is now demonstrated with actual drill evidence, not just a document on file.",
+      "The last supervisory request took three days. Before, it took three weeks of five people pulling screenshots. And the exit plan has now been run as a drill, with the evidence filed.",
     person: { name: "Representative", role: "Chief Compliance Officer", initials: "RA" },
     metrics: [
       { value: "Weeks → days", label: "Inspection prep" },
@@ -63,12 +67,14 @@ export const customerStories: CustomerStory[] = [
     imageAlt:
       "Government security operations center with sovereign, air-gapped infrastructure",
     headline: "Sovereign, air-gapped — with AI that never leaves the perimeter",
+    summary:
+      "Two ministries with disconnected, air-gapped estates across many directorates deployed the Government Edition fully in-country, put every directorate under one security baseline and central policy, and began answering audit queries from a system of record in minutes.",
     challenge:
       "A Ministry of Defence and a Ministry of Interior operated highly sensitive digital estates across directorates and agencies — with strict sovereignty mandates, disconnected and air-gapped environments, no uniform security baseline across units, and audit responses assembled directorate by directorate under national-security-grade scrutiny.",
     solution:
       "Government Edition was deployed fully in-country with air-gapped classes for the most sensitive estates, enforcing directorate-level segregation under central policy — autonomy inside national guardrails. Whale AI operated entirely inside the perimeter, and continuous activity trails delivered examiner-grade reporting across every directorate.",
     quote:
-      "Sovereignty is demonstrated by our architecture now, not just asserted — and audit queries that used to take days get answered from a system of record in minutes.",
+      "An audit query used to take days, directorate by directorate. It is now answered from one system of record in minutes — and the residency and segregation evidence is in the architecture itself.",
     person: { name: "Representative", role: "Head of IT Security", initials: "RB" },
     metrics: [
       { value: "Air-gapped", label: "Every sensitive estate" },
@@ -79,19 +85,21 @@ export const customerStories: CustomerStory[] = [
   {
     slug: "telco-datacenter-qatar-ksa-safrica",
     org: "Telco & DC operators — Qatar, KSA, South Africa",
-    note: "Anonymized — delivered engagements",
+    note: "Anonymized — delivered engagements · Telco & Datacenter Edition preview programme",
     industry: "Telco & Datacenter",
     edition: "Telco & Datacenter Edition",
     image: "/customers/telco-datacenter-banner.png",
     imageAlt:
       "Telecom and datacenter operator facilities being converted into a white-label cloud platform",
     headline: "Rent per megawatt became revenue per tenant",
+    summary:
+      "Three operators that sold only space, power and links deployed the platform as their own white-label cloud service — multi-tenant, metered into their existing BSS — and reached first cloud-services revenue on capacity they already owned within months.",
     challenge:
       "Three operators — a leading Qatar telecom operator, a Saudi datacenter group and a South African telecom — held strong facilities and connectivity but sold only space, power and links, while cloud services revenue accrued to global providers. Each faced the same build-vs-buy verdict: a multi-tenant cloud platform was a multi-year software programme none of them could staff.",
     solution:
-      "The Telco & Datacenter Edition was deployed as each operator's own white-label cloud platform, with native multi-tenancy, service catalogs and per-tenant metering feeding each operator's existing BSS and billing. OSS/BSS integration put the platform inside their existing commercial machinery, and a marketplace opened to ISVs — with SLA accountability and tenant-health visibility driving renewals.",
+      "As design partners in the Telco & Datacenter Edition preview, each operator deployed the platform as its own white-label cloud service, with native multi-tenancy, service catalogs and per-tenant metering feeding its existing BSS and billing. OSS/BSS integration put the platform inside their existing commercial machinery, and a marketplace opened to ISVs — with SLA accountability and tenant-health visibility driving renewals.",
     quote:
-      "We went live with cloud services revenue on capacity we already owned — in months, not years, without building or staffing a platform team.",
+      "We had cloud-services revenue on capacity we already owned within months. Building the platform ourselves had been scoped as a three-year programme we could not staff.",
     person: { name: "Representative", role: "VP Cloud Products", initials: "RC" },
     metrics: [
       { value: "3", label: "Markets, one platform" },
@@ -109,12 +117,14 @@ export const customerStories: CustomerStory[] = [
     imageAlt:
       "Global newsroom and broadcast operations center governed under one security policy",
     headline: "A global newsroom governed as one estate",
+    summary:
+      "A Doha-headquartered media network put broadcast, streaming, archive and worldwide bureaus under one governance plane, ran Whale AI on its own models inside the perimeter for archive intelligence and transcription, and decomposed production cost per channel and programme.",
     challenge:
       "A Doha-headquartered global media network ran broadcast, streaming, decades of archive and worldwide bureaus across many estates — under sustained, sophisticated cyber threat, and with a professional obligation particular to journalism: newsroom material, sources and unpublished work must never reach external AI services.",
     solution:
-      "One governance plane spanned broadcast, digital, archive and bureau estates, with worldwide bureaus managed as offline-tolerant edge sites under headquarters-grade policy and scanning. Whale AI ran fully inside the perimeter for Arabic-English archive intelligence, transcription and research on the network's own models, while Whalenomics decomposed streaming and production cost per channel, platform and program.",
+      "One governance plane spanned broadcast, digital, archive and bureau estates, with worldwide bureaus managed as offline-tolerant edge sites under headquarters-grade policy and scanning. Whale AI ran fully inside the perimeter for Arabic-English archive intelligence, transcription and research on the network's own models, while Whalenomics cost visibility decomposed streaming and production cost per channel, platform and programme.",
     quote:
-      "We adopted modern AI across the newsroom with zero external data exposure — sources and unpublished work never leave our own systems.",
+      "The newsroom now uses AI for archive search and transcription every day, and every prompt and every document stays on our own systems. Sources and unpublished work have never left the building.",
     person: { name: "Representative", role: "Head of Technology", initials: "RD" },
     metrics: [
       { value: "Zero", label: "External AI data exposure" },

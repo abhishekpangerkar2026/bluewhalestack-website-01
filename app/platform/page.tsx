@@ -10,9 +10,10 @@ import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { ControlPlaneMap } from "@/components/diagrams/ControlPlaneMap";
 import { ArchitectureDiagram } from "@/components/diagrams/ArchitectureDiagram";
-import { ModuleExplorer } from "@/components/sections/ModuleExplorer";
 import { ProductShowcase } from "@/components/sections/ProductShowcase";
 import { PrototypeOffer } from "@/components/sections/PrototypeOffer";
+import { FAQ } from "@/components/sections/FAQ";
+import { ClosingCTA } from "@/components/sections/ClosingCTA";
 import { Iso, FAMILY_ISO, DEPLOY_ISO } from "@/components/illustrations/Iso";
 import { ProductScene } from "@/components/scenes/ProductScene";
 import { compliance, estates } from "@/content/company";
@@ -39,6 +40,8 @@ import {
   whaleTiers,
   trustPillars,
   securityPosture,
+  whatItReplaces,
+  platformFaq,
 } from "@/content/platform";
 
 export const metadata: Metadata = {
@@ -73,13 +76,16 @@ export default function PlatformPage() {
               <p className="mt-5 text-base font-semibold text-ink">
                 {platformHero.tagline}
               </p>
-              <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-                <Button href="/contact?intent=demo" size="lg" variant="primary">
-                  Book the discovery workshop
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-                <Button href="/editions" size="lg" variant="outline">
-                  See the four editions
+              <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                <div>
+                  <Button href="/contact?intent=demo" size="lg" variant="primary">
+                    Book the discovery workshop
+                    <ArrowRight className="h-4 w-4" />
+                  </Button>
+                  <p className="mt-2 text-xs text-faint">Half a day · your technology and finance leads · success criteria agreed</p>
+                </div>
+                <Button href="#replaces" size="lg" variant="outline">
+                  What it replaces
                 </Button>
               </div>
             </div>
@@ -132,7 +138,46 @@ export default function PlatformPage() {
           </div>
           <Reveal delay={120}>
             <div className="mt-8 rounded-lg border-l-4 border-amber-400 bg-sunken p-5 text-sm leading-relaxed text-ink">
-              <span className="font-bold">The one-line answer to “why now”:</span> {whyNow}
+              <span className="font-bold">Why now:</span> {whyNow}
+            </div>
+          </Reveal>
+        </Container>
+      </section>
+
+      {/* ── What it replaces ── */}
+      <section id="replaces" className="scroll-mt-20 border-t border-line bg-sunken py-20 sm:py-24">
+        <Container>
+          <Reveal>
+            <SectionHeading
+              eyebrow="What it replaces"
+              title="Seven tool categories, one licence"
+              description="The consolidation arithmetic, tool by tool — with the honest status of each replacement, so you can plan which contracts retire this year and which next."
+            />
+          </Reveal>
+          <Reveal delay={100}>
+            <div className="mt-12 overflow-x-auto rounded-lg border border-line bg-surface shadow-sm">
+              <table className="w-full min-w-[720px] border-collapse text-sm">
+                <thead>
+                  <tr className="bg-primary text-left text-primary-fg">
+                    <th className="px-5 py-3 font-semibold">You run today</th>
+                    <th className="px-5 py-3 font-semibold">In BlueWhale Stack</th>
+                    <th className="px-5 py-3 font-semibold">Status</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-line">
+                  {whatItReplaces.map((r) => (
+                    <tr key={r.category} className="align-top">
+                      <td className="w-64 px-5 py-4 font-semibold text-ink">{r.category}</td>
+                      <td className="px-5 py-4 leading-relaxed text-muted">{r.answer}</td>
+                      <td className="w-56 px-5 py-4">
+                        <Badge tone={r.status === "GA" ? "success" : r.status.startsWith("Enterprise") ? "neutral" : "warning"}>
+                          {r.status}
+                        </Badge>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </Reveal>
         </Container>
@@ -383,8 +428,8 @@ export default function PlatformPage() {
           <Reveal>
             <SectionHeading
               eyebrow="See the product"
-              title="One console for every team"
-              description="The same control plane — from cost to inventory to security."
+              title="The console, by job"
+              description="Cost, inventory and security posture — three of the screens teams live in. Every module page shows its own screen alongside how it works."
             />
           </Reveal>
           <Reveal delay={100}>
@@ -395,32 +440,14 @@ export default function PlatformPage() {
         </Container>
       </section>
 
-      {/* ── Module explorer ── */}
-      <section className="border-t border-line bg-sunken py-20 sm:py-24">
-        <Container>
-          <Reveal>
-            <SectionHeading
-              eyebrow="Modules"
-              title="Explore the modules, family by family"
-              description="A shared platform, gated per edition. Switch families to see the modules that ship in each."
-            />
-          </Reveal>
-          <Reveal delay={100}>
-            <div className="mt-12">
-              <ModuleExplorer />
-            </div>
-          </Reveal>
-        </Container>
-      </section>
-
       {/* ── Included in every edition ── */}
-      <section className="py-20 sm:py-24">
+      <section className="border-t border-line py-20 sm:py-24">
         <Container>
           <Reveal>
             <SectionHeading
               eyebrow="Editions"
-              title="Four editions, one architecture"
-              description="An upgrade is a licence change, not a migration. Whatever the edition, five things are always included."
+              title="Five things every edition includes"
+              description="Whatever the licence — Standard at $24,000 a year through Government — these five are always on, and moving up is a licence change on the same deployment."
             />
           </Reveal>
           <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
@@ -477,8 +504,8 @@ export default function PlatformPage() {
           <Reveal>
             <SectionHeading
               eyebrow="Support & service model"
-              title="Run with you, not at you"
-              description="Tiered support, implementation by BlueWhale practices or certified partners, and a roadmap shaped by customer councils."
+              title="Who runs it with you after go-live"
+              description="L1/L2 with you or your partner and L3 with BlueWhale, a 24×7 critical bridge at 99.9%, quarterly releases, and no forced upgrades on sovereign estates."
             />
           </Reveal>
           <div className="mt-12 grid gap-5 md:grid-cols-3">
@@ -569,35 +596,29 @@ export default function PlatformPage() {
         </Container>
       </section>
 
-      {/* ── Final CTA ── */}
-      <section className="bg-sunken py-20 sm:py-24">
-        <Container>
-          <Reveal>
-            <div className="overflow-hidden rounded-2xl bg-primary px-8 py-14 text-center text-primary-fg sm:px-14">
-              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-                Let&apos;s put your estate on one control plane.
-              </h2>
-              <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed opacity-80">
-                Start with the discovery workshop — and bring your hardest audit finding.
-              </p>
-              <div className="mt-8 flex flex-wrap justify-center gap-3">
-                <Button href="/contact?intent=demo" size="lg" variant="white">
-                  Book the discovery workshop
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-                <Button
-                  href="/editions"
-                  size="lg"
-                  variant="ghost"
-                  className="text-white hover:bg-white/10"
-                >
-                  See editions
-                </Button>
-              </div>
-            </div>
-          </Reveal>
-        </Container>
-      </section>
+      <FAQ
+        items={platformFaq}
+        title="What buyers ask about the platform"
+        description="Permissions, deployment modes, what is GA and what is not, and where Whale AI sends your data."
+        tinted
+      />
+
+      <ClosingCTA
+        eyebrow="Next step"
+        title="See the platform on one of your own accounts."
+        body="A 45-minute working session with a solutions engineer: one cloud account connected read-only, the inventory, cost and audit screens on your real resources, and the export left with you. Bring your hardest audit finding."
+        primary={{
+          label: "Book a working session",
+          href: "/contact?intent=demo",
+          note: "45 minutes · read-only credentials · nothing installed on your side",
+        }}
+        secondary={{
+          label: "Start the 90-day prototype",
+          href: "#prototype",
+          note: "Half-day discovery workshop, then 90 days on your estate with no licence cost.",
+        }}
+        tertiary={{ label: "Compare the four editions", href: "/editions", note: "quotas, SLAs and prices side by side" }}
+      />
     </>
   );
 }

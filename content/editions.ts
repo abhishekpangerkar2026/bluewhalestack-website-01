@@ -38,6 +38,11 @@ export interface EditionDef {
   gaTarget?: string;
   diagram: string;
   architectureId?: string;
+  /** who should buy this edition — and who should not; the exclusion is what makes it credible */
+  fitFor: string[];
+  notFor: string[];
+  /** edition and licensing objections, answered */
+  faq: { q: string; a: string }[];
   /** for the Telco & Datacenter edition: how each operator persona monetizes it */
   operatorModel?: {
     profiles: {
@@ -90,6 +95,21 @@ export const editions: EditionDef[] = [
     ],
     diagram: "Standard: SaaS control plane over AWS / Azure / GCP, single region",
     architectureId: "edition-standard",
+    fitFor: [
+      "One organisation on AWS, Azure and/or GCP with up to 5 cloud accounts and about 1,000 resources",
+      "Teams that need one inventory, a provisioning catalog and cost visibility before sprawl sets in",
+      "SaaS companies and departmental IT answering their first customer security questionnaires",
+    ],
+    notFor: [
+      "Estates with on-prem VMware, Hyper-V or Nutanix — the Edge Agent is Enterprise & up",
+      "Oracle, Alibaba or Huawei Cloud accounts, or more than one tenant",
+      "Migration programmes, continuous audit evidence or IaC generation — those families are Enterprise & up",
+    ],
+    faq: [
+      { q: "What exactly is included at $24,000 a year?", a: "Inventory & Discovery, Cloud Connectors for AWS, Azure and GCP, Identity & Access, the Service Catalog, basic ITSM, Observe, Whalenomics essentials and Whale AI Spark with 1M tokens a month — for 5 cloud accounts, 1,000 managed resources and 10 users, on SaaS or BYOC." },
+      { q: "What happens when we outgrow it?", a: "Upgrading to Enterprise is a licence change on the same deployment: the extra clouds, the Edge Agent, the Migration Engine, Cloud Audit & Evidence, WhaleForge and the full Whale AI tiers switch on. Nothing is migrated." },
+      { q: "Is there a discount for longer terms?", a: "Yes — 10% on a 2-year term and 15% on a 3-year term, on the published price." },
+    ],
   },
   {
     slug: "enterprise",
@@ -114,8 +134,8 @@ export const editions: EditionDef[] = [
     aiTier: "Whale AI — Spark · Tide · Abyss (100M tokens / month)",
     highlights: [
       "Everything in Standard, across all 6 public clouds + private, hybrid & edge",
-      "Migration Engine, Observe, Whalenomics · FinOps, WhaleForge IaC, Landing Zone Builder",
-      "Cloud Audit & Evidence — controls monitored continuously, examiner-grade reports on demand",
+      "Migration Engine (assessment live), Observe, Whalenomics · FinOps, WhaleForge IaC (beta), Landing Zone Builder (beta)",
+      "Cloud Audit & Evidence — controls monitored continuously, the auditor's report generated on demand",
       "Whale IAM-PAM, advanced ITSM + Edge Agent for hybrid & on-prem · multi-tenant, four regions",
       "Whale AI Spark · Tide · Abyss — 50+ grounded use cases, 100M tokens / month, offline-capable",
     ],
@@ -136,6 +156,21 @@ export const editions: EditionDef[] = [
     featured: true,
     diagram: "Enterprise: multi-cloud control plane, 4 regions, SaaS / BYOC / Sovereign",
     architectureId: "edition-enterprise",
+    fitFor: [
+      "Multi-cloud enterprises with on-prem or virtualised estates alongside public cloud",
+      "Banks, insurers and regulated companies that need continuous control evidence and a rehearsed exit plan",
+      "Organisations that want the control plane in their own accounts (BYOC) or fully sovereign",
+    ],
+    notFor: [
+      "A single AWS, Azure or GCP estate with no on-prem — Standard covers it at a fifth of the price",
+      "Operators who need multi-tenant white-label portals and per-tenant billing — that is the Telco & Datacenter Edition",
+      "Air-gapped classified estates with mandatory PAM and WORM audit — that is the Government Edition",
+    ],
+    faq: [
+      { q: "What does $120,000 a year cover?", a: "All twelve modules in the edition for 100 cloud accounts, up to 1,000,000 managed resources and 1,000 users, with Whale AI Spark, Tide and Abyss at 100M tokens a month, 24×7 support and a dedicated CSM. Regional pricing is available on request." },
+      { q: "Which parts are still beta or in progress?", a: "WhaleForge and Landing Zone Builder are beta. The Migration Engine's assessment and wave planning are live with execution hooks in progress; the Whalenomics backend is in progress with its Whale AI use cases live. Everything else in the edition is generally available." },
+      { q: "Can we run the control plane in our own cloud?", a: "Yes. BYOC deploys the platform into your AWS, Azure or GCP accounts; Sovereign deploys it on-premises or air-gapped. Both run the same build as SaaS." },
+    ],
   },
   {
     slug: "telco-datacenter",
@@ -161,7 +196,7 @@ export const editions: EditionDef[] = [
     highlights: [
       "Full Enterprise platform base, extended for infrastructure operators",
       "Telco: VNF/CNF, 5G core, NFVI/VIM discovery & MEC fleet management",
-      "Telco: OSS/BSS connectors (Amdocs, Netcracker, Ericsson, Nokia, TM Forum), five-nines SLA",
+      "Telco: OSS/BSS connectors (Amdocs, Netcracker, Ericsson, Nokia, TM Forum), SLA by service class up to 99.999%",
       "Datacenter: rack/row/cage inventory at U-position level, power & cooling (DCIM)",
       "Datacenter: colo tenant billing (metered) via Partner Portal",
       "Native multi-tenancy & white-label branding for both operator types",
@@ -185,6 +220,20 @@ export const editions: EditionDef[] = [
     gaTarget: "Q4 2026",
     diagram: "Telco & Datacenter: multi-tenant control plane with NFV/5G network fabric and physical DCIM",
     architectureId: "edition-telco-datacenter",
+    fitFor: [
+      "Telecom operators and MVNOs that want to sell governed cloud services on their own network and edge",
+      "Colocation and datacenter operators converting space-and-power tenants into cloud customers",
+      "Carrier-grade MSPs that need native multi-tenancy, white-label portals and metering into their BSS",
+    ],
+    notFor: [
+      "Enterprises consuming cloud for their own use — Enterprise covers that without the operator layer",
+      "Operators that need the network fabric or DCIM features in production before Q4 2026 — those are in preview with design partners",
+    ],
+    faq: [
+      { q: "What is in preview and what runs today?", a: "The Enterprise platform base, white-label resale through the Partner Portal and per-tenant isolation run today. Tenancy & Monetization, VNF/CNF and 5G discovery, MEC fleet management, OSS/BSS connectors and DCIM are in the preview programme, GA Q4 2026." },
+      { q: "How is it priced?", a: "Operator licensing shaped to the business: metered per network element for telcos or per rack for datacenter operators, with revenue-share models available. Pricing is agreed per operator, not published." },
+      { q: "What does joining the preview involve?", a: "Design partners deploy the edition on their own infrastructure with BlueWhale engineers, shape the roadmap through the customer council, and move to GA licensing on a pre-agreed basis." },
+    ],
     operatorModel: {
       profiles: [
         {
@@ -271,6 +320,20 @@ export const editions: EditionDef[] = [
     ],
     diagram: "Government: air-gapped sovereign control plane, FIPS crypto, in-region AI",
     architectureId: "edition-government",
+    fitFor: [
+      "Ministries, agencies and defence estates with air-gap, residency or accreditation mandates",
+      "Central banks and critical-infrastructure operators that must show sovereignty as a property of the architecture",
+      "National and state governments segregating directorates under one central policy",
+    ],
+    notFor: [
+      "Public-sector bodies on commercial cloud with no air-gap or accreditation requirement — Enterprise on BYOC or Sovereign usually fits",
+      "Organisations that need Whale AI on hosted models — the Government Edition runs in-region models only",
+    ],
+    faq: [
+      { q: "How is it procured and priced?", a: "Tender- and empanelment-ready on 3–5 year fixed-bid terms, priced as the Enterprise base plus the sovereignty layer, directly or through accredited implementation partners." },
+      { q: "How do updates reach an air-gapped deployment?", a: "As signed release bundles transferred through your approved process and verified on import. There is no call-home and no forced upgrade on sovereign estates." },
+      { q: "Which accreditations does it support?", a: "Compliance pack export produces evidence for FedRAMP-, IRAP- and StateRAMP-style accreditation; the platform itself holds ISO/IEC 27001, 27017, 27018, 27701 and ISO 22301 certifications." },
+    ],
   },
 ];
 

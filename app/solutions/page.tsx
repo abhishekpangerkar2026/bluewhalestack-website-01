@@ -8,8 +8,9 @@ import { Badge } from "@/components/ui/Badge";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
-import { Iso, SOLUTION_ISO, INDUSTRY_ISO } from "@/components/illustrations/Iso";
+import { Iso, SOLUTION_ISO } from "@/components/illustrations/Iso";
 import { StoryVisual } from "@/components/sections/CustomerStories";
+import { ClosingCTA } from "@/components/sections/ClosingCTA";
 import { getSolutions, getIndustries, getEdition } from "@/lib/content";
 import { customerStories } from "@/content/customers";
 
@@ -40,20 +41,22 @@ export default function SolutionsPage() {
                   <span className="eyebrow text-accent">Solutions</span>
                 </div>
                 <h1 className="display-1 text-ink">
-                  Cloud challenges,{" "}
-                  <span className="text-accent">solved.</span>
+                  Six things teams buy the platform for.
                 </h1>
                 <p className="mt-6 text-lg leading-relaxed text-muted">
-                  Six outcome-focused solutions, each with a real reference
-                  architecture — then the industry solutions built on them, and
-                  the customer stories and case studies that prove them in
-                  regulated, multi-cloud estates.
+                  One inventory across every cloud, provisioning without console access, observability included in
+                  the licence, a scored migration plan, one identity fabric with continuous audit evidence, and a
+                  sovereign deployment that proves where data lives. Each solution page shows the data path, the
+                  console, the modules involved and a delivered engagement.
                 </p>
-                <div className="mt-8 flex flex-wrap gap-3">
-                  <Button href="/contact?intent=demo" size="lg">
-                    Talk to an architect
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                  <div>
+                    <Button href="/contact?intent=demo" size="lg">
+                      See it on your estate
+                      <ArrowRight className="h-4 w-4" />
+                    </Button>
+                    <p className="mt-2 text-xs text-faint">45 minutes · one of your accounts, connected read-only</p>
+                  </div>
                   <Button href="/case-studies" size="lg" variant="outline">
                     Read the case studies
                   </Button>
@@ -76,7 +79,7 @@ export default function SolutionsPage() {
             <SectionHeading
               eyebrow="By outcome"
               title="Six solutions, one control plane"
-              description="Unified inventory, governed provisioning, bundled observability, cloud migration, security & compliance and sovereign cloud — across every deployment mode."
+              description="Five are generally available today; Cloud Migration ships its assessment now and execution hooks next. Each links to its reference architecture, the modules it uses and the editions that include it."
             />
           </Reveal>
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -95,8 +98,9 @@ export default function SolutionsPage() {
                     </div>
                     <h3 className="mt-4 text-lg font-bold text-ink">{s.name}</h3>
                     <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">{s.summary}</p>
-                    <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-accent">
-                      View architecture
+                    <p className="mt-3 text-xs font-medium text-faint">{s.facts[0].value} · {s.facts[0].label}</p>
+                    <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-accent">
+                      How it works
                       <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover/card:translate-x-0.5" />
                     </span>
                   </Card>
@@ -213,31 +217,22 @@ export default function SolutionsPage() {
         </Container>
       </section>
 
-      {/* ── CTA ── */}
-      <section className="bg-canvas py-20 sm:py-24">
-        <Container>
-          <Reveal>
-            <div className="flex flex-col gap-8 rounded-2xl bg-primary px-8 py-12 text-primary-fg lg:flex-row lg:items-center lg:justify-between sm:px-12">
-              <div className="flex items-center gap-6">
-                <div className="hidden w-40 shrink-0 sm:block">
-                  <Iso name={INDUSTRY_ISO.Government} variant="dark" />
-                </div>
-                <div>
-                  <h2 className="text-2xl font-bold sm:text-3xl">Bring your hardest problem.</h2>
-                  <p className="mt-2 max-w-xl opacity-80">
-                    Half a day with your technology and finance leaders — we map your estate to
-                    the solutions above and show it running on your estate&apos;s shape.
-                  </p>
-                </div>
-              </div>
-              <Button href="/contact?intent=demo" size="lg" variant="white" className="shrink-0">
-                Book the discovery workshop
-                <ArrowRight className="h-4 w-4" />
-              </Button>
-            </div>
-          </Reveal>
-        </Container>
-      </section>
+      <ClosingCTA
+        eyebrow="Next step"
+        title="Bring your hardest problem to a working session."
+        body="We connect one of your accounts read-only, map your estate to the solutions above, and walk the one that matters most on your real resources — before any commercial conversation."
+        primary={{
+          label: "Book a working session",
+          href: "/contact?intent=demo",
+          note: "45 minutes · a solutions engineer, not a sales deck · nothing installed on your side",
+        }}
+        secondary={{
+          label: "Start the 90-day prototype",
+          href: "/platform#prototype",
+          note: "Half-day discovery workshop, then 90 days on your estate with no licence cost.",
+        }}
+        tertiary={{ label: "Compare the four editions", href: "/editions", note: "which edition includes which solution" }}
+      />
     </>
   );
 }

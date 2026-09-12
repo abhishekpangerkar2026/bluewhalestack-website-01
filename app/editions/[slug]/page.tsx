@@ -8,13 +8,15 @@ import { ProductScene } from "@/components/scenes/ProductScene";
 import { EDITION_3D } from "@/content/product3d";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
-import { Card } from "@/components/ui/Card";
-import { Placeholder } from "@/components/ui/Placeholder";
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { ArchitectureDiagram } from "@/components/diagrams/ArchitectureDiagram";
+import { FAQ } from "@/components/sections/FAQ";
+import { ClosingCTA } from "@/components/sections/ClosingCTA";
 import { getEditions, getEdition, getModulesForEdition } from "@/lib/content";
 import { editions, editionSpecs } from "@/content/editions";
+import { moduleDetails } from "@/content/moduleDetails";
 
 export function generateStaticParams() {
   return getEditions().map((e) => ({ slug: e.slug }));
@@ -74,7 +76,12 @@ export default async function EditionDetailPage({
           className="pointer-events-none absolute -left-20 top-0 h-80 w-80 rounded-full bg-brand-500/30 blur-[110px]"
         />
         <Container className="relative">
-          <div className="grid items-center gap-12 py-20 sm:py-28 lg:grid-cols-[1.15fr_0.85fr]">
+          <Breadcrumbs
+            inverse
+            className="pt-10"
+            items={[{ label: "Editions", href: "/editions" }, { label: `${edition.name} Edition` }]}
+          />
+          <div className="grid items-center gap-12 py-12 sm:py-16 lg:grid-cols-[1.15fr_0.85fr]">
           <div className="max-w-3xl">
             <div className="flex flex-wrap items-center gap-3">
               <Badge tone="neutral" className="bg-white/10 text-white">
@@ -156,26 +163,66 @@ export default async function EditionDetailPage({
         </Container>
       </section>
 
-      {/* ── Reference architecture ── */}
-      <section className="bg-canvas py-20 sm:py-28">
+      {/* ── Who it is for — and who should not buy it ── */}
+      <section className="bg-canvas py-20 sm:py-24">
         <Container>
           <Reveal>
             <SectionHeading
-              eyebrow="Reference architecture"
-              title={`How ${edition.name} is deployed`}
+              eyebrow="Fit"
+              title="Who should buy this edition — and who should not"
+              description="The exclusions matter as much as the inclusions: most mis-sized deals start with the wrong edition."
             />
           </Reveal>
-          <Reveal delay={100}>
-            <div className="mt-12">
-              {edition.architectureId ? (
-                <ArchitectureDiagram id={edition.architectureId} />
-              ) : (
-                <Placeholder label={edition.diagram} ratio="21/9" tone="brand" />
-              )}
-            </div>
-          </Reveal>
+          <div className="mt-12 grid gap-6 md:grid-cols-2">
+            <Reveal>
+              <div className="h-full rounded-lg border border-line border-l-4 border-l-[var(--success-fg)] bg-surface p-7 shadow-sm">
+                <p className="eyebrow text-[var(--success-fg)]">A good fit</p>
+                <ul className="mt-4 space-y-3">
+                  {edition.fitFor.map((f) => (
+                    <li key={f} className="flex items-start gap-3 text-sm leading-relaxed text-ink">
+                      <Check className="mt-1 h-4 w-4 shrink-0 text-[var(--success-fg)]" />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Reveal>
+            <Reveal delay={80}>
+              <div className="h-full rounded-lg border border-line border-l-4 border-l-line-strong bg-sunken p-7">
+                <p className="eyebrow text-faint">Look elsewhere if</p>
+                <ul className="mt-4 space-y-3">
+                  {edition.notFor.map((f) => (
+                    <li key={f} className="flex items-start gap-3 text-sm leading-relaxed text-muted">
+                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-line-strong" />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Reveal>
+          </div>
         </Container>
       </section>
+
+      {/* ── Reference architecture ── */}
+      {edition.architectureId && (
+        <section className="border-t border-line bg-canvas py-20 sm:py-28">
+          <Container>
+            <Reveal>
+              <SectionHeading
+                eyebrow="Reference architecture"
+                title={`How ${edition.name} is deployed`}
+                description={`${edition.diagram}. Deployment options for this edition: ${edition.deploy.join(", ")}.`}
+              />
+            </Reveal>
+            <Reveal delay={100}>
+              <div className="mt-12">
+                <ArchitectureDiagram id={edition.architectureId} />
+              </div>
+            </Reveal>
+          </Container>
+        </section>
+      )}
 
       {/* ── What's included + quotas: editorial split on tinted band ── */}
       <section className="border-y border-line bg-sunken py-20 sm:py-28">
@@ -187,6 +234,7 @@ export default async function EditionDetailPage({
                 <SectionHeading
                   eyebrow="What's included"
                   title={`Inside ${edition.name}`}
+                  description={`${edition.highlights.length} headline inclusions; the full quota, SLA and support terms are in the panel alongside.`}
                 />
                 <ul className="mt-10 flex flex-col">
                   {edition.highlights.map((h, i) => (
@@ -240,25 +288,32 @@ export default async function EditionDetailPage({
             <SectionHeading
               eyebrow="Modules"
               title={`Modules in ${edition.name}`}
-              description={`Every edition runs the same platform — these ${mods.length} modules are included by default.`}
+              description={`${mods.length} modules are included by default; each card carries the module's current maturity and links to its page.`}
             />
           </Reveal>
           <div className="mt-14 grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
-            {mods.map((m, i) => (
-              <Reveal key={m.slug} delay={(i % 3) * 60}>
-                <div className="flex h-full flex-col bg-surface p-7">
-                  <div className="grid h-11 w-11 place-items-center rounded-lg bg-brand-50 text-accent">
-                    <Icon name={m.icon} className="h-5 w-5" />
-                  </div>
-                  <h3 className="mt-4 text-lg font-bold text-ink">
-                    {m.name}
-                  </h3>
-                  <p className="mt-1.5 text-sm leading-relaxed text-muted">
-                    {m.tagline}
-                  </p>
-                </div>
-              </Reveal>
-            ))}
+            {mods.map((m, i) => {
+              const status = moduleDetails[m.slug]?.status;
+              return (
+                <Reveal key={m.slug} delay={(i % 3) * 60}>
+                  <Link href={`/modules/${m.slug}`} className="group flex h-full flex-col bg-surface p-7 transition-colors hover:bg-sunken">
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="grid h-11 w-11 place-items-center rounded-lg bg-brand-50 text-accent">
+                        <Icon name={m.icon} className="h-5 w-5" />
+                      </div>
+                      {status && <Badge tone={status.tone}>{status.label.split(" — ")[0].split(" · ")[0]}</Badge>}
+                    </div>
+                    <h3 className="mt-4 text-lg font-bold text-ink group-hover:text-accent">{m.name}</h3>
+                    <p className="mt-1.5 flex-1 text-sm leading-relaxed text-muted">
+                      {m.tagline.replace(/\s*\([^)]*\)\s*$/, "")}
+                    </p>
+                    <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-accent">
+                      Module page <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+                    </span>
+                  </Link>
+                </Reveal>
+              );
+            })}
             {/* filler so the hairline grid never ends on a blank grey cell */}
             {mods.length % 3 !== 0 && (
               <Link
@@ -422,6 +477,37 @@ export default async function EditionDetailPage({
           </div>
         </Container>
       </section>
+
+      <FAQ
+        items={edition.faq}
+        title="Licensing and deployment questions"
+        description={`What is included at ${edition.priceAnchor.toLowerCase()}, what is still beta, and how the edition is deployed.`}
+      />
+
+      <ClosingCTA
+        eyebrow={edition.comingSoon ? `In preview — GA ${edition.gaTarget}` : "Next step"}
+        title={
+          edition.comingSoon
+            ? `Run the ${edition.name} Edition on your own infrastructure as a design partner.`
+            : `Size the ${edition.name} Edition against your actual estate.`
+        }
+        body={
+          edition.comingSoon
+            ? "Design partners deploy the edition with BlueWhale engineers, run it on real tenants, and move to general-availability licensing on a pre-agreed basis."
+            : "Bring your account count, resource count and deployment constraints. We map them to the quotas above, show the platform on one of your accounts, and come back with a written proposal."
+        }
+        primary={
+          edition.comingSoon
+            ? { label: "Join the preview programme", href: "/contact?intent=preview", note: "Design-partner terms · your infrastructure · GA licensing agreed up front" }
+            : { label: "Get a proposal for your estate", href: "/contact?intent=sales", note: "Account and resource counts in, a written proposal out — usually within a week" }
+        }
+        secondary={{
+          label: "Start the 90-day prototype",
+          href: "/platform#prototype",
+          note: "Half-day discovery workshop, then 90 days on your estate with no licence cost.",
+        }}
+        tertiary={{ label: "Published pricing and quotas", href: "/pricing", note: "all four editions side by side" }}
+      />
     </>
   );
 }

@@ -87,9 +87,9 @@ export default function NewsroomPage() {
       {/* ── Hero ── */}
       <section className="border-b border-line bg-surface py-20 sm:py-28">
         <Container>
-          <div className="grid gap-x-16 gap-y-10 lg:grid-cols-[1.25fr_0.75fr] lg:items-end">
+          <div className="grid gap-x-16 gap-y-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
             <Reveal>
-              <div>
+              <div className="max-w-2xl">
                 <div className="mb-5 flex items-center gap-3">
                   <span aria-hidden className="h-px w-8 bg-accent/50" />
                   <span className="eyebrow text-accent">
@@ -97,17 +97,11 @@ export default function NewsroomPage() {
                   </span>
                 </div>
                 <h1 className="display-1 text-ink">
-                  News &amp; announcements from{" "}
-                  <span className="text-accent">BlueWhale Stack</span>.
+                  Releases, certifications and milestones — dated.
                 </h1>
-              </div>
-            </Reveal>
-            <Reveal delay={90}>
-              <div className="lg:pb-2">
-                <Iso name="audit" className="mb-6 max-w-[300px]" title="Announcements and certifications" />
-                <p className="text-lg leading-relaxed text-muted">
-                  Product launches, certifications, partnerships and company milestones.
-                  For press enquiries, reach us at{" "}
+                <p className="mt-6 text-lg leading-relaxed text-muted">
+                  What shipped and when: edition general availability, new cloud connectors, module betas and the
+                  certification audits as they complete. For press enquiries, reach us at{" "}
                   <a
                     href="mailto:contact@bluewhalestack.com"
                     className="font-semibold text-accent underline-offset-2 hover:underline"
@@ -125,6 +119,11 @@ export default function NewsroomPage() {
                     Trust Center
                   </Button>
                 </div>
+              </div>
+            </Reveal>
+            <Reveal delay={90}>
+              <div className="mx-auto w-full max-w-[360px]">
+                <Iso name="audit" title="Announcements and certifications" />
               </div>
             </Reveal>
           </div>

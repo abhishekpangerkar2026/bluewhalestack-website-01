@@ -63,10 +63,10 @@ export const moduleGroupBlurbs: Record<ModuleGroup, string> = {
   security:
     "One identity fabric (SAML/OIDC), least-privilege access, continuous scanning — uniform posture everywhere.",
   governance:
-    "Policy as configuration; controls monitored continuously; examiner-grade evidence on demand.",
+    "Policy as configuration; controls monitored continuously; the auditor's report generated on demand.",
   ai: "AI for operations, documentation and compliance — your choice of model, able to run fully inside the perimeter.",
   migration:
-    "Inventory, dependency mapping and rehearsed waves with rollback — entry, movement and exit industrialized.",
+    "Inventory, dependency mapping and rehearsed waves with rollback — for entry, movement between estates, and exit.",
   observability:
     "Health, events and service operations — integrated with ServiceNow, Jira and existing tooling.",
   tenancy:
@@ -174,9 +174,9 @@ export const modules: ModuleDef[] = [
     icon: "KeyRound",
     tagline: "One identity fabric — federate your IdP and auto-provision access everywhere. (GA)",
     description:
-      "One identity fabric (SAML/OIDC) across every estate: federate 9+ identity providers — Entra / Azure AD, Google IAM, AWS Identity Center, Okta, Auth0, OneLogin, on-prem AD, plus Oracle, Alibaba and Huawei IAM — with auto-provisioning and least-privilege, role-based access, so the right people get the right access across every connected cloud.",
+      "One identity fabric (SAML/OIDC) across every estate: federate ten identity providers — Entra / Azure AD, Google IAM, AWS Identity Center, Okta, Auth0, OneLogin, on-prem AD, plus Oracle, Alibaba and Huawei IAM — with SCIM auto-provisioning and least-privilege, role-based access, so the right people get the right access across every connected cloud.",
     features: [
-      "9+ IdP adapters (Entra, Okta, Auth0, AWS Identity Center & more)",
+      "10 IdP adapters (Entra, Okta, Auth0, AWS Identity Center, AD & more)",
       "On-prem Active Directory support",
       "Auto-provisioning of users & least-privilege access",
       "Role-based access across all clouds · continuous scanning",
@@ -188,13 +188,13 @@ export const modules: ModuleDef[] = [
     name: "Cloud Audit & Evidence",
     group: "governance",
     icon: "FileCheck",
-    tagline: "Controls monitored continuously — examiner-grade evidence on demand.",
+    tagline: "Controls monitored continuously — the auditor's report generated on demand. (Enterprise & up)",
     description:
-      "Policy as configuration: controls are monitored continuously across every estate, so evidence is generated all the time rather than assembled per inspection — the supervisory request becomes report parameters, not a war room. Examiner-grade reports on demand for the board, the auditor and the regulator, with regulatory obligations mapped to platform controls per regime.",
+      "Policy as configuration: residency, encryption, access, logging and tagging controls are defined once and evaluated continuously against every estate, so evidence exists all the time rather than being assembled before each inspection. The report the board, the auditor or the regulator asks for is generated per regime on demand, with obligations mapped to platform controls.",
     features: [
       "Policy as configuration across every estate",
-      "Continuous control monitoring — evidence generated continuously",
-      "Examiner-grade reports on demand for board, auditor and regulator",
+      "Continuous control monitoring — findings routed to owners through ITSM",
+      "Reports on demand for board, auditor and regulator, from a system of record",
       "Obligations mapped per regime (DPDP · GDPR · RBI · CERT-In · SEBI) and state-audit evidence",
     ],
   },
@@ -237,7 +237,7 @@ export const modules: ModuleDef[] = [
     icon: "MoveRight",
     tagline: "6R assessment, rehearsed waves & rollback for cloud migration. (Coming — assessment live)",
     description:
-      "Auto-classify on-prem workloads and run a 6R assessment with cost, effort and blocker analysis, then plan rehearsed migration waves with rollback across six platforms, with Whale AI guidance — entry, movement and exit industrialized. Assessment is live today; execution hooks are in progress.",
+      "Auto-classify on-prem workloads and run a 6R assessment with cost, effort and blocker analysis, then plan rehearsed migration waves with rollback across six platforms, with Whale AI guidance. Assessment and wave planning are live today; execution hooks are in progress.",
     features: [
       "Auto-classification of on-prem workloads",
       "6R assessment with cost, effort & blockers",
@@ -253,12 +253,12 @@ export const modules: ModuleDef[] = [
     icon: "Activity",
     tagline: "Production APM — logs, metrics, traces & SLOs, bundled. (GA)",
     description:
-      "Production-grade observability bundled into the platform — logs, metrics, traces, SLOs with burn-rate alerts, synthetics, usage metering, and notification channels — so you get full observability without a separate Datadog contract.",
+      "Production-grade observability bundled into the platform — logs, metrics, traces, SLOs with burn-rate alerts, synthetics, usage metering, and notification channels — so you get full observability without a separate monitoring contract.",
     features: [
-      "Logs, metrics & traces in one place",
+      "Logs, metrics & traces in one place, correlated to the inventory",
       "SLOs with burn-rate alerting",
       "Synthetics & usage metering",
-      "Bundled — no separate Datadog needed",
+      "Included in the platform licence — no separate observability contract",
     ],
   },
   {

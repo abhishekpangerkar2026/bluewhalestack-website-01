@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { Iso } from "@/components/illustrations/Iso";
+import { ClosingCTA } from "@/components/sections/ClosingCTA";
 import { getEditions } from "@/lib/content";
 import { modules } from "@/content/modules";
 
@@ -39,7 +40,15 @@ const faqs = [
   },
   {
     q: "Is there a proof-of-concept option?",
-    a: "We run structured POCs (30–60 days, fixed scope, pre-agreed conversion price) for Enterprise, Telco & Datacenter, and Government evaluations. Book a demo and we'll scope one with you.",
+    a: "Yes — the 90-day prototype. A half-day discovery workshop agrees the success criteria, then the platform runs on your own estate for 90 days with no licence cost and is scored on those criteria before any licensing decision. Conversion pricing is agreed up front.",
+  },
+  {
+    q: "Which currencies and procurement routes do you support?",
+    a: "USD list prices; INR and AED invoicing through the Indian and UAE entities; USD through the Delaware entity. Government buys through tender or empanelment on 3–5 year fixed-bid terms; partners can transact through the Partner Portal.",
+  },
+  {
+    q: "What about the DPA and security review?",
+    a: "A DPA covering GDPR Article 28 and DPDP is standard. Five ISO certifications, a SOC 2 Type II readiness assessment and a CSA STAR Level 1 self-assessment are downloadable from the Trust Center; full audit reports are available under NDA.",
   },
 ];
 
@@ -50,9 +59,9 @@ export default function PricingPage() {
       {/* ── Hero: editorial split, oversized statement left ── */}
       <section className="border-b border-line bg-surface py-20 sm:py-28">
         <Container>
-          <div className="grid gap-x-16 gap-y-10 lg:grid-cols-[1.25fr_0.75fr] lg:items-end">
+          <div className="grid gap-x-16 gap-y-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
             <Reveal>
-              <div>
+              <div className="max-w-2xl">
                 <div className="mb-5 flex items-center gap-3">
                   <span aria-hidden className="h-px w-8 bg-accent/50" />
                   <span className="eyebrow text-accent">
@@ -60,21 +69,33 @@ export default function PricingPage() {
                   </span>
                 </div>
                 <h1 className="display-1 text-ink">
-                  Priced to how you{" "}
-                  <span className="text-accent">operate</span>, not how
-                  big you are.
+                  Two published prices. Two shaped to the estate.
                 </h1>
+                <p className="mt-6 text-lg leading-relaxed text-muted">
+                  Standard is $24,000 a year and Enterprise is $120,000 a year — flat, published, on 1-, 3- or 5-year
+                  terms with 10% off for two years and 15% off for three. The Telco &amp; Datacenter and Government
+                  editions are priced per operator or per contract, because they are metered on network elements, racks or
+                  sovereignty scope rather than on cloud accounts.
+                </p>
+                <p className="mt-4 text-sm leading-relaxed text-muted">
+                  <span className="font-semibold text-ink">The unit:</span> a Managed Resource Unit (MRU) is one discovered
+                  resource under management — an instance, a bucket, a database, a VM. Standard includes 1,000; Enterprise
+                  includes up to 1,000,000 across 100 cloud accounts.
+                </p>
+                <div className="mt-8 flex flex-wrap gap-3">
+                  <Button href="/contact?intent=sales" size="lg">
+                    Get a quote for your resource count
+                    <ArrowRight className="h-4 w-4" />
+                  </Button>
+                  <Button href="#compare" size="lg" variant="outline">
+                    Module-by-edition matrix
+                  </Button>
+                </div>
               </div>
             </Reveal>
             <Reveal delay={90}>
-              <div className="lg:pb-2">
-                <Iso name="chart" className="mb-6 max-w-[320px]" title="Whalenomics — spend explained, decomposed, owned" />
-                <p className="text-lg leading-relaxed text-muted">
-                  Standard and Enterprise have flat, published list prices —
-                  $24,000 and $120,000 a year. Telco & Datacenter and
-                  Government are contact-sales — shaped around your scale,
-                  region and regulatory requirements.
-                </p>
+              <div className="mx-auto w-full max-w-[380px]">
+                <Iso name="chart" title="Whalenomics — spend explained, decomposed, owned" />
               </div>
             </Reveal>
           </div>
@@ -133,14 +154,22 @@ export default function PricingPage() {
                         {e.priceSub}
                       </p>
                     )}
-                    <p className="mt-3 flex-1 text-sm leading-relaxed text-muted">
-                      {e.headline}
+                    <p className="mt-3 text-sm leading-relaxed text-muted">
+                      <span className="font-semibold text-ink">For:</span> {e.audience}
                     </p>
+                    <ul className="mt-3 flex-1 space-y-1.5">
+                      {e.includes.map((x) => (
+                        <li key={x} className="flex items-start gap-2 text-sm text-ink">
+                          <Check className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+                          {x}
+                        </li>
+                      ))}
+                    </ul>
                     <div className="mt-4 text-xs text-faint">
                       {e.deploy.join(" · ")}
                     </div>
                     <Button
-                      href="/contact"
+                      href={e.comingSoon ? "/contact?intent=preview" : "/contact?intent=sales"}
                       size="sm"
                       variant={e.featured ? "primary" : "secondary"}
                       className="mt-5"
@@ -148,8 +177,8 @@ export default function PricingPage() {
                       {e.comingSoon
                         ? "Join the preview"
                         : ["standard", "enterprise"].includes(e.slug)
-                        ? "Get started"
-                        : "Contact sales"}
+                        ? "Get a quote"
+                        : "Talk to sales"}
                     </Button>
                     <Link
                       href={`/editions/${e.slug}`}
@@ -165,13 +194,48 @@ export default function PricingPage() {
         </Container>
       </section>
 
+      {/* ── What drives the price ── */}
+      <section className="border-t border-line bg-canvas py-20 sm:py-24">
+        <Container>
+          <Reveal>
+            <SectionHeading
+              eyebrow="What drives the price"
+              title="Four inputs, and a worked example"
+              description="Every proposal is built from the same four numbers. Bring them to the quote and the answer comes back in days, not a procurement cycle."
+            />
+          </Reveal>
+          <div className="mt-12 grid gap-px overflow-hidden rounded-lg border border-line bg-line md:grid-cols-2 lg:grid-cols-4">
+            {[
+              { k: "Managed resources", v: "Discovered resources under management (MRU). Standard 1,000 · Enterprise up to 1,000,000." },
+              { k: "Cloud accounts", v: "Standard 5 · Enterprise 100. On-prem sites connect through the Edge Agent and count by resource." },
+              { k: "Deployment mode", v: "SaaS in four regions, BYOC in your accounts, on-premises, sovereign air-gapped or edge." },
+              { k: "Operator or sovereign scope", v: "Telco & Datacenter is metered per network element or per rack; Government per contract and accreditation scope." },
+            ].map((d) => (
+              <div key={d.k} className="bg-surface p-6">
+                <p className="font-bold text-ink">{d.k}</p>
+                <p className="mt-2 text-sm leading-relaxed text-muted">{d.v}</p>
+              </div>
+            ))}
+          </div>
+          <Reveal delay={100}>
+            <div className="mt-8 rounded-lg border-l-4 border-amber-400 bg-sunken p-6 text-sm leading-relaxed text-ink">
+              <span className="font-bold">Worked example:</span> a bank with 60 AWS and Azure accounts, 180,000 discovered
+              resources and two VMware sites, deployed BYOC in its own accounts, fits inside Enterprise at $120,000 a year —
+              all twelve modules, 1,000 users and Whale AI at 100M tokens a month included. On a three-year term the list
+              price is $102,000 a year.
+            </div>
+          </Reveal>
+        </Container>
+      </section>
+
       {/* ── Comparison matrix ── */}
-      <section className="bg-sunken py-20 sm:py-24">
+      <section id="compare" className="scroll-mt-20 bg-sunken py-20 sm:py-24">
         <Container>
           <Reveal>
             <SectionHeading
               eyebrow="Compare"
               title="Every module, mapped to every edition"
+              description="Fourteen modules across four editions. A tick means included in the licence; the module pages carry each one's current maturity."
             />
           </Reveal>
           <Reveal delay={80}>
@@ -233,10 +297,10 @@ export default function PricingPage() {
                 <SectionHeading
                   eyebrow="FAQ"
                   title="Pricing questions, answered"
-                  description="Still unsure which edition fits? Book a demo and we'll scope it with you."
+                  description="Licensing unit, upgrade path, Whale AI allowances, sovereign deployment and proof-of-concept terms."
                 />
-                <Button href="/contact" variant="secondary" className="mt-8">
-                  Talk to sales
+                <Button href="/contact?intent=sales" variant="secondary" className="mt-8">
+                  Get a quote for your resource count
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </div>
@@ -246,7 +310,7 @@ export default function PricingPage() {
                 <Reveal key={f.q} delay={i * 70}>
                   <div className="group flex items-start gap-6 border-t border-line py-7 first:border-t-0 first:pt-0">
                     <span className="num text-2xl font-bold text-accent/40">
-                      0{i + 1}
+                      {String(i + 1).padStart(2, "0")}
                     </span>
                     <div>
                       <h3 className="text-lg font-bold text-ink">
@@ -263,6 +327,23 @@ export default function PricingPage() {
           </div>
         </Container>
       </section>
+
+      <ClosingCTA
+        eyebrow="Two ways to buy"
+        title="A proposal for your estate, or a prototype on it."
+        body="Send your account and resource counts and a written proposal comes back within the week. Or start with the 90-day prototype and decide on evidence."
+        primary={{
+          label: "Get a proposal for your estate",
+          href: "/contact?intent=sales",
+          note: "Account and resource counts in, a written proposal out — usually within a week",
+        }}
+        secondary={{
+          label: "Start the 90-day prototype",
+          href: "/platform#prototype",
+          note: "Half-day discovery workshop, then 90 days on your estate with no licence cost.",
+        }}
+        tertiary={{ label: "Trust Center", href: "/trust", note: "certificates and the DPA for procurement" }}
+      />
     </>
   );
 }

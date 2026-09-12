@@ -28,9 +28,9 @@ export default function CareersPage() {
       {/* ── Hero: editorial split, oversized statement left ── */}
       <section className="border-b border-line bg-surface py-20 sm:py-28">
         <Container>
-          <div className="grid gap-x-16 gap-y-10 lg:grid-cols-[1.25fr_0.75fr] lg:items-center">
+          <div className="grid gap-x-16 gap-y-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
             <Reveal>
-              <div>
+              <div className="max-w-2xl">
                 <div className="mb-5 flex items-center gap-3">
                   <span aria-hidden className="h-px w-8 bg-accent/50" />
                   <span className="eyebrow text-accent">
@@ -38,25 +38,28 @@ export default function CareersPage() {
                   </span>
                 </div>
                 <h1 className="display-1 text-ink">
-                  Build the future of{" "}
-                  <span className="text-accent">cloud infrastructure</span>.
+                  Build the control plane that banks, ministries and operators run on.
                 </h1>
-              </div>
-            </Reveal>
-            <Reveal delay={90}>
-              <div>
-                <Iso name="network" className="mb-6 max-w-[300px]" title="A distributed team, one platform" />
-                <p className="text-lg leading-relaxed text-muted">
-                  We&apos;re a team of engineers, architects and product thinkers
-                  solving enterprise cloud management at scale — for governments,
-                  telcos and the world&apos;s leading enterprises.
+                <p className="mt-6 text-lg leading-relaxed text-muted">
+                  We are engineers, architects and product people in Mumbai, Ajman and Wilmington, building one platform
+                  across six public clouds, virtualised estates and air-gapped sites. The work is concrete — connectors,
+                  discovery engines, policy evaluation, an AI layer that runs offline — and it ships quarterly to customers
+                  who audit what we build.
                 </p>
-                <div className="mt-8">
+                <div className="mt-8 flex flex-wrap gap-3">
                   <Button href="#roles" size="lg">
                     View open roles
                     <ArrowRight className="h-4 w-4" />
                   </Button>
+                  <Button href="/about/leadership" size="lg" variant="secondary">
+                    Who you would work with
+                  </Button>
                 </div>
+              </div>
+            </Reveal>
+            <Reveal delay={90}>
+              <div className="mx-auto w-full max-w-[360px]">
+                <Iso name="network" title="A distributed team, one platform" />
               </div>
             </Reveal>
           </div>

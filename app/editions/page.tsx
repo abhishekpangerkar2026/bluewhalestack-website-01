@@ -9,6 +9,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { getEditions } from "@/lib/content";
 import { modules } from "@/content/modules";
 import { Iso, EDITION_ISO } from "@/components/illustrations/Iso";
+import { ClosingCTA } from "@/components/sections/ClosingCTA";
 
 export const metadata: Metadata = {
   title: "Editions",
@@ -36,10 +37,11 @@ export default function EditionsPage() {
                   <span className="text-faint">One architecture.</span>
                 </h1>
                 <p className="mt-6 text-lg leading-relaxed text-muted">
-                  Each edition targets its industries and adds the capability
-                  families they need — an upgrade is a licence change, not a
-                  migration. One console, one identity, one policy, one bill
-                  and an API-first surface are included in every edition.
+                  Standard at $24,000 a year for a single AWS, Azure or GCP estate; Enterprise at $120,000 a year for
+                  every cloud and every estate; the Telco &amp; Datacenter Edition for operators who sell governed
+                  cloud services; the Government Edition for air-gapped, accredited estates. All four run the same
+                  deployment — moving up is a licence change, and each edition page says who it is for and who it is
+                  not.
                 </p>
               </div>
             </Reveal>
@@ -133,7 +135,7 @@ export default function EditionsPage() {
             <SectionHeading
               eyebrow="Compare"
               title="Modules by edition"
-              description="Every edition runs the same platform — these are the modules included by default. One architecture: an upgrade is a licence change, not a migration."
+              description="Fourteen modules across four editions. Standard carries eight, Enterprise twelve, and the operator and government editions add Tenancy & Monetization and Sovereign Operations respectively."
             />
           </Reveal>
           <Reveal delay={100}>
@@ -182,6 +184,23 @@ export default function EditionsPage() {
           </Reveal>
         </Container>
       </section>
+
+      <ClosingCTA
+        eyebrow="Not sure which edition?"
+        title="Send your account and resource counts; the edition falls out of the numbers."
+        body="Cloud accounts, discovered resources, on-prem sites and the deployment mode you need decide the edition. A written proposal comes back within the week — or start with the 90-day prototype and decide on evidence."
+        primary={{
+          label: "Get a proposal for your estate",
+          href: "/contact?intent=sales",
+          note: "Account and resource counts in, a written proposal out — usually within a week",
+        }}
+        secondary={{
+          label: "Start the 90-day prototype",
+          href: "/platform#prototype",
+          note: "Half-day discovery workshop, then 90 days on your estate with no licence cost.",
+        }}
+        tertiary={{ label: "Published pricing", href: "/pricing", note: "quotas, terms and FAQ" }}
+      />
     </>
   );
 }

@@ -36,22 +36,31 @@ export default async function ContactPage({
             eyebrow: "Resource access",
             title: requestedResource
               ? `Request “${requestedResource.title}”`
-              : "Request a resource",
-            body: "Tell us who you are and we'll send the document straight to your inbox — usually within one business day.",
+              : "Request a resource or control mapping",
+            body: "Tell us who you are and which document or regime mapping you need. We send it directly — usually within one business day.",
             formTitle: "Request access",
             formBody: requestedResource
               ? `You're requesting: ${requestedResource.title} (${requestedResource.type}).`
-              : "Tell us which resource you're after.",
+              : "Tell us which resource, datasheet or regime control mapping you're after.",
             submitLabel: "Request access",
           }
-        : {
-            eyebrow: "Contact Us",
-            title: "Let's talk about your cloud",
-            body: "Book a guided demo, discuss your cloud strategy, or get a tailored evaluation. Our solutions team replies within one business day.",
-            formTitle: "Book a demo",
-            formBody: "Tell us a little about your environment and goals.",
-            submitLabel: "Book a demo",
-          };
+        : intent === "preview"
+          ? {
+              eyebrow: "Preview programme",
+              title: "Join the Telco & Datacenter Edition preview",
+              body: "Design partners deploy the edition on their own infrastructure with BlueWhale engineers, run it on real tenants, and move to general-availability licensing (Q4 2026) on a pre-agreed basis.",
+              formTitle: "Apply for the preview",
+              formBody: "Tell us about your facilities, network and the tenants you would run first.",
+              submitLabel: "Apply for the preview",
+            }
+          : {
+              eyebrow: "Working session",
+              title: "See the platform on one of your own accounts",
+              body: "A 45-minute working session with a solutions engineer: one cloud account connected read-only, the inventory, cost and audit screens on your real resources, and the export left with you. Nothing is installed on your side.",
+              formTitle: "Book a working session",
+              formBody: "Tell us which clouds you run and what you would like to see first.",
+              submitLabel: "Book a working session",
+            };
 
   return (
     <>

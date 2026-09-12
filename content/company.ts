@@ -143,20 +143,20 @@ export const primaryNav: NavItem[] = [
       {
         heading: "Editions",
         links: [
-          { label: "Standard", href: "/editions/standard" },
-          { label: "Enterprise", href: "/editions/enterprise" },
-          { label: "Telco & Datacenter", href: "/editions/telco-datacenter" },
-          { label: "Government", href: "/editions/government" },
+          { label: "Standard", href: "/editions/standard", desc: "AWS · Azure · GCP, single tenant — $24,000 / yr" },
+          { label: "Enterprise", href: "/editions/enterprise", desc: "All nine families, every estate — $120,000 / yr" },
+          { label: "Telco & Datacenter", href: "/editions/telco-datacenter", desc: "Operators sell governed cloud — preview, GA Q4 2026" },
+          { label: "Government", href: "/editions/government", desc: "Air-gapped, FIPS, WORM audit, in-region AI" },
         ],
       },
       {
         heading: "Modules",
         links: [
-          { label: "Inventory & Discovery", href: "/modules/inventory" },
-          { label: "Migration Engine", href: "/modules/migration" },
-          { label: "Whalenomics · FinOps", href: "/modules/finops" },
-          { label: "Cloud Audit & Evidence", href: "/modules/cloud-audit" },
-          { label: "All nine families", href: "/modules" },
+          { label: "Inventory & Discovery", href: "/modules/inventory", desc: "One live map of every resource" },
+          { label: "Migration Engine", href: "/modules/migration", desc: "6R assessment and rehearsed waves" },
+          { label: "Whalenomics · FinOps", href: "/modules/finops", desc: "A bill that resolves to an owner" },
+          { label: "Cloud Audit & Evidence", href: "/modules/cloud-audit", desc: "Controls monitored continuously" },
+          { label: "All nine families", href: "/modules", desc: "14 modules, gated per edition" },
         ],
       },
       {
@@ -164,8 +164,8 @@ export const primaryNav: NavItem[] = [
         featured: true,
         links: [
           { label: "Compare editions", href: "/editions", desc: "Standard → Government matrix" },
-          { label: "All modules", href: "/modules" },
-          { label: "Pricing", href: "/pricing" },
+          { label: "All modules", href: "/modules", desc: "Nine families, 14 modules" },
+          { label: "Pricing", href: "/pricing", desc: "Published list prices" },
         ],
       },
     ],
@@ -177,23 +177,23 @@ export const primaryNav: NavItem[] = [
       {
         heading: "By outcome",
         links: [
-          { label: "Unified Cloud Inventory", href: "/solutions/unified-cloud-inventory" },
-          { label: "AI-Native Provisioning", href: "/solutions/ai-native-provisioning" },
-          { label: "Bundled Observability", href: "/solutions/bundled-observability" },
-          { label: "Cloud Migration", href: "/solutions/cloud-migration" },
-          { label: "Security & Compliance", href: "/solutions/security-compliance" },
-          { label: "Sovereign Cloud", href: "/solutions/sovereign-cloud" },
+          { label: "Unified Cloud Inventory", href: "/solutions/unified-cloud-inventory", desc: "Six clouds and on-prem in one map" },
+          { label: "AI-Native Provisioning", href: "/solutions/ai-native-provisioning", desc: "Governed catalog, no console access" },
+          { label: "Bundled Observability", href: "/solutions/bundled-observability", desc: "Logs, metrics, traces, SLOs — included" },
+          { label: "Cloud Migration", href: "/solutions/cloud-migration", desc: "6R assessment, dependency-aware waves" },
+          { label: "Security & Compliance", href: "/solutions/security-compliance", desc: "One identity fabric, one audit trail" },
+          { label: "Sovereign Cloud", href: "/solutions/sovereign-cloud", desc: "In-country, air-gapped, in-region AI" },
         ],
       },
       {
         heading: "Industry solutions",
         links: [
-          { label: "Government", href: "/industries/government" },
-          { label: "BFSI", href: "/industries/bfsi" },
-          { label: "Healthcare", href: "/industries/healthcare" },
-          { label: "Telco & MSP", href: "/industries/telco" },
-          { label: "Datacenter & Colocation", href: "/industries/datacenter" },
-          { label: "All industry solutions", href: "/solutions#industries" },
+          { label: "Government", href: "/industries/government", desc: "Sovereign, air-gapped operations" },
+          { label: "BFSI", href: "/industries/bfsi", desc: "RBI, CERT-In, SEBI, DPDP at the platform layer" },
+          { label: "Healthcare", href: "/industries/healthcare", desc: "Clinical systems governed in-country" },
+          { label: "Telco & MSP", href: "/industries/telco", desc: "Governed cloud on your network" },
+          { label: "Datacenter & Colocation", href: "/industries/datacenter", desc: "Racks to the U position, beside your clouds" },
+          { label: "All industry solutions", href: "/solutions#industries", desc: "Seven sectors" },
         ],
       },
       {
@@ -221,25 +221,25 @@ export const primaryNav: NavItem[] = [
       {
         heading: "Regulated",
         links: [
-          { label: "Government", href: "/industries/government" },
-          { label: "BFSI", href: "/industries/bfsi" },
-          { label: "Healthcare", href: "/industries/healthcare" },
+          { label: "Government", href: "/industries/government", desc: "Sovereign, air-gapped operations" },
+          { label: "BFSI", href: "/industries/bfsi", desc: "Inspection evidence from a system of record" },
+          { label: "Healthcare", href: "/industries/healthcare", desc: "Patient data in-country, access from the directory" },
         ],
       },
       {
-        heading: "Operators",
+        heading: "Operators & enterprise",
         links: [
-          { label: "Telco & MSP", href: "/industries/telco" },
-          { label: "Datacenter & Colocation", href: "/industries/datacenter" },
-          { label: "Regulated Enterprise", href: "/industries/regulated-enterprise" },
-          { label: "SaaS & Digital Native", href: "/industries/saas" },
+          { label: "Telco & MSP", href: "/industries/telco", desc: "Governed cloud services on your network" },
+          { label: "Datacenter & Colocation", href: "/industries/datacenter", desc: "DCIM beside the cloud estate" },
+          { label: "Regulated Enterprise", href: "/industries/regulated-enterprise", desc: "Six clouds and the floor, one estate" },
+          { label: "SaaS & Digital Native", href: "/industries/saas", desc: "Governed from the first account" },
         ],
       },
       {
         heading: "Deployment",
         links: [
-          { label: "Sovereign / air-gapped", href: "/editions/government" },
-          { label: "All industries", href: "/industries" },
+          { label: "Sovereign / air-gapped", href: "/editions/government", desc: "Government Edition" },
+          { label: "All industries", href: "/industries", desc: "Seven sectors, one control plane" },
         ],
       },
       {
@@ -298,25 +298,25 @@ export const primaryNav: NavItem[] = [
       {
         heading: "Company",
         links: [
-          { label: "Our story & mission", href: "/about" },
-          { label: "Leadership & team", href: "/about/leadership" },
-          { label: "The BlueWhale family", href: "/about#family" },
+          { label: "Our story & mission", href: "/about", desc: "Founded 2018, platform launched 2026" },
+          { label: "Leadership & team", href: "/about/leadership", desc: "Mumbai · Ajman · Wilmington" },
+          { label: "The BlueWhale family", href: "/about#family", desc: "Platform, families, Fabric and services" },
         ],
       },
       {
         heading: "Connect",
         links: [
-          { label: "Careers", href: "/careers" },
-          { label: "Newsroom", href: "/newsroom" },
-          { label: "Contact", href: "/contact" },
+          { label: "Careers", href: "/careers", desc: "Open roles across three offices" },
+          { label: "Newsroom", href: "/newsroom", desc: "Releases and certifications" },
+          { label: "Contact", href: "/contact", desc: "Sales, partners and support" },
         ],
       },
       {
         heading: "Trust",
         links: [
           { label: "Trust Center", href: "/trust", desc: "Certifications & compliance" },
-          { label: "Privacy policy", href: "/legal/privacy" },
-          { label: "Terms of service", href: "/legal/terms" },
+          { label: "Privacy policy", href: "/legal/privacy", desc: "GDPR Art. 28 and DPDP" },
+          { label: "Terms of service", href: "/legal/terms", desc: "Licensing terms" },
         ],
       },
       {
@@ -324,7 +324,7 @@ export const primaryNav: NavItem[] = [
         featured: true,
         links: [
           { label: "We're hiring", href: "/careers", desc: "Open roles across the team" },
-          { label: "Trust Center", href: "/trust", desc: "9 certifications — all current" },
+          { label: "Trust Center", href: "/trust", desc: "Five ISO certifications, independently audited" },
         ],
       },
     ],
@@ -338,48 +338,51 @@ export const utilityNav: NavLink[] = [
 
 export const footerNav = [
   {
-    heading: "Platform",
+    heading: "Product",
     links: [
-      { label: "Overview", href: "/platform" },
+      { label: "Platform overview", href: "/platform" },
       { label: "Modules", href: "/modules" },
-      { label: "Editions", href: "/editions" },
-      { label: "Pricing", href: "/pricing" },
-      { label: "Solutions", href: "/solutions" },
+      { label: "Whale AI", href: "/products/whale-ai" },
+      { label: "WhaleForge IaC", href: "/products/whaleforge" },
+      { label: "Editions & pricing", href: "/pricing" },
       { label: "BlueWhale Stack Fabric", href: "/fabric" },
     ],
   },
   {
-    heading: "Editions",
+    heading: "Solutions",
     links: [
-      { label: "Standard", href: "/editions/standard" },
-      { label: "Enterprise", href: "/editions/enterprise" },
-      { label: "Telco & Datacenter", href: "/editions/telco-datacenter" },
-      { label: "Government", href: "/editions/government" },
-    ],
-  },
-  {
-    heading: "Industries",
-    links: [
+      { label: "By outcome", href: "/solutions" },
       { label: "Government", href: "/industries/government" },
       { label: "BFSI", href: "/industries/bfsi" },
       { label: "Healthcare", href: "/industries/healthcare" },
-      { label: "Regulated Enterprise", href: "/industries/regulated-enterprise" },
-      { label: "SaaS & Digital Native", href: "/industries/saas" },
       { label: "Telco & MSP", href: "/industries/telco" },
       { label: "Datacenter & Colocation", href: "/industries/datacenter" },
+      { label: "Customer stories", href: "/customers" },
+      { label: "Case studies", href: "/case-studies" },
+    ],
+  },
+  {
+    heading: "Developers",
+    links: [
+      { label: "Documentation", href: "/docs" },
+      { label: "Quick start", href: "/docs/quick-start" },
+      { label: "Cloud integration", href: "/docs/cloud-integration" },
+      { label: "Identity & access", href: "/docs/identity-access" },
+      { label: "API reference", href: "/docs/api-reference" },
+      { label: "Partner Portal", href: "https://partners.bluewhalestack.com" },
     ],
   },
   {
     heading: "Company",
     links: [
-      { label: "About Us", href: "/about" },
-      { label: "Customer stories", href: "/customers" },
-      { label: "Case studies", href: "/case-studies" },
+      { label: "About us", href: "/about" },
+      { label: "Leadership", href: "/about/leadership" },
       { label: "Careers", href: "/careers" },
       { label: "Partners", href: "/partners" },
+      { label: "Newsroom", href: "/newsroom" },
       { label: "Resources", href: "/resources" },
-      { label: "Contact", href: "/contact" },
       { label: "Trust Center", href: "/trust" },
+      { label: "Contact", href: "/contact" },
     ],
   },
 ] as const;

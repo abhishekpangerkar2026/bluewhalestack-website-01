@@ -33,8 +33,7 @@ export default function CaseStudiesPage() {
                   <span className="eyebrow text-white/80">Case studies</span>
                 </div>
                 <h1 className="display-1 text-white">
-                  The situation, the work,{" "}
-                  <span className="text-brand-200">the outcome.</span>
+                  Four estates, written up the way an architect reads them.
                 </h1>
                 <p className="mt-6 text-lg leading-relaxed text-white/70">
                   Four delivered engagements, written up the way an architect
@@ -44,7 +43,7 @@ export default function CaseStudiesPage() {
                 </p>
                 <div className="mt-8 flex flex-wrap gap-3">
                   <Button href="/contact?intent=demo" size="lg" variant="white">
-                    Book the discovery workshop
+                    Discuss a similar estate
                     <ArrowRight className="h-4 w-4" />
                   </Button>
                   <Button

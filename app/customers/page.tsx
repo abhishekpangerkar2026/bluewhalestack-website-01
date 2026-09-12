@@ -38,8 +38,7 @@ export default function CustomersPage() {
                   <span className="eyebrow text-accent">Customer success stories</span>
                 </div>
                 <h1 className="display-1 text-ink">
-                  Proven where it&apos;s{" "}
-                  <span className="text-accent">hardest to prove.</span>
+                  Banks, ministries, operators and a newsroom — what changed for each.
                 </h1>
                 <p className="mt-6 text-lg leading-relaxed text-muted">
                   Banks under two regulators, defence ministries with air-gapped

@@ -83,9 +83,9 @@ export default function LeadershipPage() {
       {/* ── Hero ── */}
       <section className="border-b border-line bg-surface py-20 sm:py-28">
         <Container>
-          <div className="grid gap-x-16 gap-y-10 lg:grid-cols-[1.25fr_0.75fr] lg:items-end">
+          <div className="grid gap-x-16 gap-y-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
             <Reveal>
-              <div>
+              <div className="max-w-2xl">
                 <div className="mb-5 flex items-center gap-3">
                   <span aria-hidden className="h-px w-8 bg-accent/50" />
                   <span className="eyebrow text-accent">
@@ -93,19 +93,19 @@ export default function LeadershipPage() {
                   </span>
                 </div>
                 <h1 className="display-1 text-ink">
-                  The team building the command center for{" "}
-                  <span className="text-accent">every cloud</span>.
+                  Founder-led, with delivery leaders who have run the estates we sell into.
                 </h1>
+                <p className="mt-6 text-lg leading-relaxed text-muted">
+                  The leadership team combines the founder who started the consultancy in 2018, an 18-year product
+                  and platform engineering lead, and go-to-market and delivery leaders with decades in Gulf
+                  infrastructure, utilities, government and defence programmes. Based across Mumbai, Ajman and
+                  Wilmington.
+                </p>
               </div>
             </Reveal>
             <Reveal delay={90}>
               <div className="lg:pb-2">
-                <p className="text-lg leading-relaxed text-muted">
-                  Engineers, architects and product thinkers solving enterprise cloud management at scale —
-                  for governments, telcos and the world&apos;s leading enterprises.
-                  Based across Mumbai, Ajman and Wilmington, working globally.
-                </p>
-                <div className="mt-8 flex flex-wrap gap-3">
+                <div className="flex flex-wrap gap-3">
                   <Button href="/careers" size="lg">
                     Join the team
                     <ArrowRight className="h-4 w-4" />

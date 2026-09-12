@@ -4,11 +4,13 @@ import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Card } from "@/components/ui/Card";
+import { Badge } from "@/components/ui/Badge";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
 import { Iso, FAMILY_ISO } from "@/components/illustrations/Iso";
 import { SceneThumb } from "@/components/scenes/ProductScene";
+import { moduleDetails } from "@/content/moduleDetails";
 import {
   modules,
   moduleGroups,
@@ -47,11 +49,10 @@ export default function ModulesPage() {
                   <span className="text-accent">platform core.</span>
                 </h1>
                 <p className="mt-7 max-w-2xl text-lg leading-relaxed text-muted sm:text-xl">
-                  Nine capability families under one console, one identity,
-                  one policy and one bill — 54 capabilities, gated per
-                  edition. These are the modules that ship inside each family
-                  today; the full capability list with edition mapping is in
-                  the technical datasheet, on request.
+                  Fourteen modules across nine families, gated per edition — each with its own page showing what it
+                  does, how it works, the console screen, where it fits and the questions buyers ask. Maturity is
+                  stated on every card: GA, beta, preview or in progress. The full 54-capability list with edition
+                  mapping is in the technical datasheet, on request.
                 </p>
               </div>
             </Reveal>
@@ -130,10 +131,15 @@ export default function ModulesPage() {
                             {m.name}
                           </h3>
                           <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">
-                            {m.tagline}
+                            {m.tagline.replace(/\s*\([^)]*\)\s*$/, "")}
                           </p>
-                          <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-accent">
-                            Explore module
+                          {moduleDetails[m.slug] && (
+                            <span className="mt-3">
+                              <Badge tone={moduleDetails[m.slug].status.tone}>{moduleDetails[m.slug].status.label}</Badge>
+                            </span>
+                          )}
+                          <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-accent">
+                            What it does, how it works, FAQ
                             <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/card:translate-x-1" />
                           </span>
                         </Card>
