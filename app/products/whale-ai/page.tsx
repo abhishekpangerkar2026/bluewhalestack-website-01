@@ -3,7 +3,7 @@ import { ArrowRight, Check } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
-import { Product3D } from "@/components/media/Product3D";
+import { ProductScene } from "@/components/scenes/ProductScene";
 import { Card } from "@/components/ui/Card";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
@@ -199,7 +199,7 @@ export default function WhaleAIPage() {
               </Button>
             </div>
           </div>
-          <Product3D name="whale-ai" priority className="mx-auto w-full max-w-[600px] border-white/20" />
+          <ProductScene scene="whale-ai" variant="dark" priority className="mx-auto w-full max-w-[660px]" />
           </div>
 
           {/* Stats strip */}

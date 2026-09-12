@@ -54,10 +54,15 @@
 (async function () {
   const q = new URLSearchParams(location.search);
   const key = q.get("module") || "inventory";
+  // mode=hero: objects only on a transparent stage (no HTML, cables, edge box or
+  // feature pucks) plus label anchors in window.__anchors — for the native
+  // ProductScene component on the website.
+  const HERO = q.get("mode") === "hero";
   const W = 2400, H = 1350;
   const stage = document.getElementById("stage");
   const ui = document.getElementById("ui");
   const svg = document.getElementById("cables");
+  if (HERO) { stage.style.background = "transparent"; document.body.style.background = "transparent"; document.documentElement.style.background = "transparent"; stage.querySelectorAll(".dots,.ring").forEach((e) => e.remove()); }
 
   /* ─── icons (inline SVG paths, 24-unit grid) ─── */
   const ICON = {
@@ -135,6 +140,78 @@
       edge: "Edge site",
       right: { title: "Connected capabilities", items: [["shield", "Security & Identity"], ["doc", "Cloud Audit & Evidence"], ["server", "Inventory & Discovery"], ["bars", "Observability & ITSM"], ["db", "Whalenomics · FinOps"], ["users", "Tenancy & Monetization"]] },
       features: [["globe", "In-country deployment"], ["lock", "Directorate segregation"], ["refresh", "Offline-tolerant edge"], ["docs", "State-audit evidence"]],
+    },
+    "cloud-connectors": {
+      title: "Cloud Connectors", tagline: "Connect once. Govern everywhere.", footer: "Six public clouds, private and virtualization estates, hybrid and sovereign stacks, edge",
+      ui: { title: "Cloud Connectors — estates", search: "Search accounts, subscriptions, sites…", buttons: ["Connect", "Verify", "Sync"] },
+      groups: ["Public cloud", "Private & virtual", "Edge Agent"], center: "connectors",
+      left: [{ icon: "plug", title: "Outbound-only HTTPS", sub: "Credentials stay on-site." }, { icon: "server", title: "Edge Agent", sub: "VMware · Hyper-V · Nutanix · KVM." }],
+      edge: "Edge Agent",
+      right: { title: "Connected capabilities", items: [["server", "Inventory & Discovery"], ["gear", "Provisioning"], ["db", "Whalenomics · FinOps"], ["shield", "Security & Identity"], ["bars", "Observability"], ["sparkle", "Whale AI"]] },
+      features: [["cubes", "6 public clouds live"], ["refresh", "Private & hybrid via Edge Agent"], ["lock", "No inbound firewall changes"], ["docs", "Business & ITSM connectors"]],
+    },
+    provisioning: {
+      title: "Service Catalog", tagline: "Approved resources. No consoles.", footer: "Governed self-service provisioning with approval workflows and Whale AI sizing",
+      ui: { title: "Service Catalog — request", search: "Search catalog items, blueprints…", buttons: ["Request", "Approve", "Deploy"] },
+      groups: ["Catalog", "Approvals", "Deployed"], center: "provisioning",
+      left: [{ icon: "gear", title: "Guardrails built in", sub: "Approved sizes, tags, regions." }, { icon: "sparkle", title: "Whale AI sizing", sub: "Right-sized before it ships." }],
+      edge: "Edge Agent",
+      right: { title: "Connected capabilities", items: [["server", "Inventory & Discovery"], ["move", "Landing Zone Builder"], ["db", "Whalenomics · FinOps"], ["shield", "Security & Identity"], ["bars", "Observability"], ["sparkle", "Whale AI"]] },
+      features: [["cubes", "AWS live · Azure & GCP items"], ["refresh", "Approval workflows"], ["shield", "Policy guardrails"], ["sparkle", "Whale AI sizing"]],
+    },
+    "landing-zone": {
+      title: "Landing Zone Builder", tagline: "Compliant foundations, designed visually.", footer: "AWS Control Tower · Azure CLZ · GCP foundations → multi-account baseline HCL",
+      ui: { title: "Landing Zone Builder — design", search: "Search accounts, OUs, guardrails…", buttons: ["Design", "Generate", "Apply"] },
+      groups: ["Accounts", "Guardrails", "Baseline"], center: "landing-zone",
+      left: [{ icon: "shield", title: "Guardrails first", sub: "Policy before the first workload." }, { icon: "move", title: "Baseline HCL", sub: "Multi-account, versioned." }],
+      edge: "Edge Agent",
+      right: { title: "Connected capabilities", items: [["move", "WhaleForge IaC"], ["gear", "Provisioning"], ["shield", "Security & Identity"], ["doc", "Cloud Audit & Evidence"], ["arrows", "Migration Engine"], ["sparkle", "Whale AI"]] },
+      features: [["cubes", "AWS · Azure · GCP designers"], ["docs", "Multi-account baseline HCL"], ["shield", "Guardrails built in"], ["refresh", "Diagram-driven"]],
+    },
+    whaleforge: {
+      title: "WhaleForge IaC", tagline: "YAML in. Terraform and diagrams out.", footer: "Live HLD / LLD / TOGAF diagrams · PDF export · Git import",
+      ui: { title: "WhaleForge — compile", search: "stack.yaml — 3 modules, 14 resources", buttons: ["Compile", "Diagram", "Export"] },
+      groups: ["YAML", "Terraform", "Diagrams"], center: "whaleforge",
+      left: [{ icon: "doc", title: "Plain YAML DSL", sub: "Readable by the whole team." }, { icon: "move", title: "Real Terraform HCL", sub: "AWS · Azure · GCP." }],
+      edge: "Git import",
+      right: { title: "Connected capabilities", items: [["move", "Landing Zone Builder"], ["gear", "Provisioning"], ["server", "Inventory & Discovery"], ["shield", "Security & Identity"], ["doc", "Cloud Audit & Evidence"], ["sparkle", "Whale AI"]] },
+      features: [["docs", "YAML → Terraform HCL"], ["cubes", "Live HLD / LLD / TOGAF"], ["refresh", "PDF export & Git import"], ["sparkle", "Deployment runner — coming"]],
+    },
+    identity: {
+      title: "Identity & Access", tagline: "One identity fabric. Every estate.", footer: "9+ identity providers · auto-provisioning · least-privilege RBAC",
+      ui: { title: "Identity & Access — fabric", search: "Search users, roles, providers…", buttons: ["Federate", "Provision", "Review"] },
+      groups: ["Providers", "Roles", "Access"], center: "identity",
+      left: [{ icon: "shield", title: "SAML / OIDC fabric", sub: "Entra · Okta · Auth0 · AD & more." }, { icon: "lock", title: "Least privilege", sub: "Role-based, continuously scanned." }],
+      edge: "On-prem AD",
+      right: { title: "Connected capabilities", items: [["server", "Inventory & Discovery"], ["gear", "Provisioning"], ["doc", "Cloud Audit & Evidence"], ["bars", "Observability & ITSM"], ["users", "Tenancy & Monetization"], ["sparkle", "Whale AI"]] },
+      features: [["shield", "9+ IdP adapters"], ["refresh", "Auto-provisioning"], ["lock", "RBAC across all clouds"], ["docs", "Access reviews & evidence"]],
+    },
+    observe: {
+      title: "Observe", tagline: "Logs, metrics, traces, SLOs — bundled.", footer: "Production APM without a separate Datadog contract",
+      ui: { title: "Observe — service health", search: "Search services, SLOs, traces…", buttons: ["Metrics", "Traces", "SLOs"] },
+      groups: ["Logs", "Metrics & traces", "SLOs"], center: "observe",
+      left: [{ icon: "eye", title: "Burn-rate alerting", sub: "SLOs that page the right team." }, { icon: "bars", title: "Synthetics & metering", sub: "Usage-aware observability." }],
+      edge: "Edge Agent",
+      right: { title: "Connected capabilities", items: [["server", "Inventory & Discovery"], ["db", "Whalenomics · FinOps"], ["shield", "Security & Compliance"], ["arrows", "ITSM"], ["doc", "Cloud Audit & Evidence"], ["sparkle", "Whale AI"]] },
+      features: [["chart", "Logs · metrics · traces"], ["refresh", "SLOs with burn-rate alerts"], ["magnifier", "Synthetics"], ["docs", "Notification channels"]],
+    },
+    itsm: {
+      title: "ITSM", tagline: "Service management, cloud-ops native.", footer: "P0–P4 SLAs · change · problem · CMDB · ServiceNow & Jira integration",
+      ui: { title: "ITSM — incidents & changes", search: "Search incidents, changes, CIs…", buttons: ["Incidents", "Changes", "CMDB"] },
+      groups: ["Incidents", "Changes", "CMDB"], center: "itsm",
+      left: [{ icon: "arrows", title: "P0–P4 SLAs", sub: "Breach detection built in." }, { icon: "doc", title: "Full audit trail", sub: "Every ticket, every action." }],
+      edge: "Edge Agent",
+      right: { title: "Connected capabilities", items: [["bars", "Observe"], ["server", "Inventory & Discovery"], ["shield", "Security & Identity"], ["doc", "Cloud Audit & Evidence"], ["db", "Whalenomics · FinOps"], ["sparkle", "Whale AI"]] },
+      features: [["docs", "Incident · change · problem"], ["cubes", "CMDB & kanban"], ["refresh", "ServiceNow / Jira"], ["magnifier", "SLA breach detection"]],
+    },
+    tenancy: {
+      title: "Tenancy & Monetization", tagline: "Revenue per tenant, on capacity you own.", footer: "Telco & Datacenter Edition — preview, GA Q4 2026",
+      ui: { title: "Tenancy — operator services", search: "Search tenants, catalogs, meters…", buttons: ["Tenants", "Catalog", "Billing"] },
+      groups: ["Tenants", "Marketplace", "Metering"], center: "tenancy",
+      left: [{ icon: "users", title: "Native multi-tenancy", sub: "Isolation and quotas per tenant." }, { icon: "wallet", title: "Billing feeds", sub: "Into your own BSS." }],
+      edge: "White-label portal",
+      right: { title: "Connected capabilities", items: [["db", "Whalenomics · FinOps"], ["gear", "Provisioning"], ["shield", "Security & Identity"], ["bars", "Observability & ITSM"], ["doc", "Cloud Audit & Evidence"], ["sparkle", "Whale AI"]] },
+      features: [["cubes", "Tenant isolation & quotas"], ["docs", "White-label catalog"], ["coins", "Per-tenant metering"], ["refresh", "OSS / BSS integration"]],
     },
     platform: {
       title: "Digital Experience Platform", tagline: "One Platform. Every Industry. Every Estate.", footer: "54 capabilities · 9 families · 4 editions · 6 platform classes",
@@ -285,8 +362,34 @@
     audit() { docs(GX[0], GZ); shield3d(GX[1], GZ, 1.05); lock3d(GX[2] - 0.4, GZ + 0.3, 0.8); magnifier(GX[2] + 1.0, objY + 1.2, GZ + 1.2, 0.9); },
     sovereign() { lock3d(GX[0], GZ, 1.0); globe3d(GX[1], GZ); rackStack(GX[2] - 0.5, GZ - 0.1, 4, 1.1, 0.85); cloud3d(GX[2] + 1.3, objY + 1.6, GZ + 0.6, 0.55); },
     platform() { cloud3d(GX[0] - 0.4, objY + 1.2, GZ, 0.7); cloud3d(GX[0] + 0.7, objY + 0.7, GZ + 0.6, 0.5); rackStack(GX[1] - 0.6, GZ - 0.1, 4, 1.1, 0.85); dbStack(GX[1] + 0.7, GZ + 0.4, 2, 0.45); stackMini(GX[2], GZ); },
+    connectors() { cloud3d(GX[0] - 0.5, objY + 1.1, GZ - 0.2, 0.75); cloud3d(GX[0] + 0.7, objY + 0.6, GZ + 0.6, 0.5); rackStack(GX[1] - 0.6, GZ - 0.1, 4, 1.1, 0.85); rackStack(GX[1] + 0.7, GZ + 0.4, 3, 1.0, 0.8); const e = new THREE.Group(); box(0, 0.3, 0, 1.6, 0.6, 1.1, M.chrome, e); box(0, 0.3, 0.56, 1.3, 0.35, 0.02, M.slot, e); box(0.45, 0.3, 0.58, 0.1, 0.1, 0.02, M.led, e); e.position.set(GX[2], objY, GZ); scene.add(e); },
+    provisioning() { docs(GX[0], GZ); cubeCluster(GX[1], GZ, 0.55); stackMini(GX[2], GZ); },
+    "landing-zone"() { stackMini(GX[0], GZ); shield3d(GX[1], GZ, 1.0); cubeCluster(GX[2], GZ, 0.5); },
+    whaleforge() { docs(GX[0], GZ); arrow3d([GX[0] + 0.9, objY + 1.0, GZ], [GX[1] - 0.7, objY + 1.0, GZ]); cubeCluster(GX[1], GZ, 0.5); arrow3d([GX[1] + 0.8, objY + 1.0, GZ], [GX[2] - 0.8, objY + 1.0, GZ]); stackMini(GX[2], GZ); },
+    identity() { nodes(GX[0], GZ, 6); shield3d(GX[1], GZ, 1.05); lock3d(GX[2], GZ, 1.0); },
+    observe() { docs(GX[0], GZ - 0.2); bars(GX[1], GZ, [0.5, 1.0, 1.5]); nodes(GX[2], GZ, 5); magnifier(GX[2] + 1.15, objY + 1.0, GZ + 1.4, 0.8); },
+    itsm() { docs(GX[0], GZ); rackStack(GX[1] - 0.5, GZ - 0.1, 4, 1.1, 0.85); dbStack(GX[1] + 0.7, GZ + 0.4, 2, 0.42); cubeCluster(GX[2], GZ, 0.5); },
+    tenancy() { [GX[0] - 0.55, GX[0] + 0.55].forEach((x, i) => { slab(x, objY, GZ + (i ? 0.5 : -0.4), 1.0, 1.0, 0.16, 0.15, M.glass, 0.03); box(x, objY + 0.16 + 0.28, GZ + (i ? 0.5 : -0.4), 0.5, 0.5, 0.5, i ? M.chrome : M.blue); }); docs(GX[1], GZ); coinStack(GX[2] - 0.5, GZ - 0.2, 4); coinStack(GX[2] + 0.5, GZ + 0.4, 2); },
   };
   (CENTER[mod.center] || CENTER.inventory)();
+
+  if (HERO) {
+    // Objects only: tighter framing on the console, then export label anchors.
+    camera.position.set(0, 12.2, 29); camera.lookAt(0, 2.2, 0.3);
+    renderer.render(scene, camera);
+    const vv = new THREE.Vector3();
+    const P = (x, y, z) => { vv.set(x, y, z).project(camera); return [(vv.x + 1) / 2 * W, (1 - vv.y) / 2 * H]; };
+    const targets = [-4.2, -2.9, -1.6, 0, 1.6, 2.9, 4.2];
+    window.__anchors = {
+      cableTargets: targets.map((x) => P(x, shelfY + 0.26 + 2.7, -1.75)),
+      groups: GX.map((x, i) => ({ label: mod.groups[i], at: P(x, gy + 0.02, GZ + 1.35) })),
+      tag: P(0, 0.15, BD / 2 + 0.3),
+      panelTop: P(0, shelfY + 0.26 + 2.7, -1.75),
+      tagline: mod.tagline, title: mod.title,
+    };
+    window.__done = true;
+    return;
+  }
 
   /* edge agent box (left front) */
   const edge = new THREE.Group(); box(0, 0.42, 0, 3.0, 0.8, 1.8, M.chrome, edge); box(0, 0.42, 0.91, 2.6, 0.5, 0.02, M.slot, edge); box(1.0, 0.42, 0.93, 0.12, 0.12, 0.02, M.led, edge); box(1.25, 0.42, 0.93, 0.12, 0.12, 0.02, M.led, edge); edge.position.set(-9.6, 0, 3.6); edge.rotation.y = 0.35; scene.add(edge);

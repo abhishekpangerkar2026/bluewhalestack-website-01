@@ -14,7 +14,7 @@ import { ModuleExplorer } from "@/components/sections/ModuleExplorer";
 import { ProductShowcase } from "@/components/sections/ProductShowcase";
 import { PrototypeOffer } from "@/components/sections/PrototypeOffer";
 import { Iso, FAMILY_ISO, DEPLOY_ISO } from "@/components/illustrations/Iso";
-import { Product3D } from "@/components/media/Product3D";
+import { ProductScene } from "@/components/scenes/ProductScene";
 import { compliance, estates } from "@/content/company";
 import {
   modules,
@@ -84,7 +84,7 @@ export default function PlatformPage() {
               </div>
             </div>
             <Reveal delay={100}>
-              <Product3D name="platform" priority className="mx-auto w-full max-w-[680px]" />
+              <ProductScene scene="platform" priority className="mx-auto w-full max-w-[720px]" />
             </Reveal>
           </div>
 

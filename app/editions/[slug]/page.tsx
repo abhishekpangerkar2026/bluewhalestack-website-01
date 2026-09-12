@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { ArrowRight, Check, Clock } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Product3D } from "@/components/media/Product3D";
+import { ProductScene } from "@/components/scenes/ProductScene";
 import { EDITION_3D } from "@/content/product3d";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
@@ -140,7 +140,7 @@ export default async function EditionDetailPage({
               )}
             </div>
           </div>
-          <Product3D name={EDITION_3D[edition.slug]} priority className="mx-auto w-full max-w-[600px] border-white/20" />
+          <ProductScene scene={EDITION_3D[edition.slug]} variant="dark" priority className="mx-auto w-full max-w-[660px]" />
           </div>
         </Container>
       </section>

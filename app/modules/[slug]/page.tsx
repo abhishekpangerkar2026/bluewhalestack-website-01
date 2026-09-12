@@ -10,7 +10,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { getModules, getModule } from "@/lib/content";
 import { moduleGroups } from "@/content/modules";
 import { editions } from "@/content/editions";
-import { Product3D } from "@/components/media/Product3D";
+import { ProductScene } from "@/components/scenes/ProductScene";
 
 export function generateStaticParams() {
   return getModules().map((m) => ({ slug: m.slug }));
@@ -70,7 +70,7 @@ export default async function ModuleDetailPage({
               </div>
             </div>
             <Reveal delay={80}>
-              <Product3D name={mod.slug} priority />
+              <ProductScene scene={mod.slug} priority className="mx-auto w-full max-w-[720px]" />
             </Reveal>
           </div>
         </Container>

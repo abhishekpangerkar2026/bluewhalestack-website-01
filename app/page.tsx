@@ -14,7 +14,7 @@ import { GlobalInfra } from "@/components/sections/GlobalInfra";
 import { CustomerStories } from "@/components/sections/CustomerStories";
 import { PrototypeOffer } from "@/components/sections/PrototypeOffer";
 import { Iso, EDITION_ISO } from "@/components/illustrations/Iso";
-import { Product3D } from "@/components/media/Product3D";
+import { ProductScene } from "@/components/scenes/ProductScene";
 import { problems, promise, whyBluewhale, howItWorks } from "@/content/home";
 import { headlineStats } from "@/content/company";
 import { CloudLogo, cloudLogoNames } from "@/components/brand/CloudLogos";
@@ -76,7 +76,7 @@ export default function HomePage() {
           </div>
           <Reveal delay={120}>
             <div className="mt-8 grid items-center gap-8 rounded-xl border border-line bg-sunken p-6 sm:p-8 lg:grid-cols-[1.15fr_0.85fr]">
-              <Product3D name="platform" className="w-full" />
+              <ProductScene scene="platform" className="w-full" />
               <div>
                 <h3 className="text-2xl font-bold text-ink">{promise.title}</h3>
                 <p className="mt-3 max-w-2xl text-muted">{promise.body}</p>

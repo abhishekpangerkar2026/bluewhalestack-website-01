@@ -9,7 +9,7 @@ import { Stat } from "@/components/ui/Stat";
 import { Placeholder } from "@/components/ui/Placeholder";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
-import { Product3D } from "@/components/media/Product3D";
+import { ProductScene } from "@/components/scenes/ProductScene";
 import { SOLUTION_3D } from "@/content/product3d";
 import { ArchitectureDiagram } from "@/components/diagrams/ArchitectureDiagram";
 import { getSolutions, getSolution, getModule, getEdition } from "@/lib/content";
@@ -77,7 +77,7 @@ export default async function SolutionDetailPage({
             </div>
           </div>
           <Reveal delay={100}>
-            <Product3D name={SOLUTION_3D[solution.slug] ?? "platform"} priority className="mx-auto w-full max-w-[620px]" />
+            <ProductScene scene={SOLUTION_3D[solution.slug] ?? "platform"} priority className="mx-auto w-full max-w-[660px]" />
           </Reveal>
           </div>
         </Container>

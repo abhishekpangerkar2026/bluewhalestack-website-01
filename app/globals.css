@@ -304,6 +304,20 @@ body {
 .animate-fade-up {
   animation: fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
+/* Native 3D product scenes (components/scenes/ProductScene.tsx) */
+@keyframes scene-flow {
+  to { stroke-dashoffset: -40; }
+}
+@keyframes scene-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+.scene-flow { animation: scene-flow 1.6s linear infinite; }
+.scene-float { animation: scene-float 5s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .scene-flow, .scene-float { animation: none; }
+}
+
 .animate-marquee {
   /* Longhand (not the `animation` shorthand) so it doesn't also set
      animation-play-state: running — that would sit outside Tailwind's
