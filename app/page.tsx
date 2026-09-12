@@ -251,13 +251,14 @@ export default function HomePage() {
                 BlueWhale Stack Fabric
               </p>
               <h2 className="mt-5 text-3xl font-bold leading-[1.05] tracking-tight sm:text-4xl">
-                All of India&apos;s datacenters.{" "}
+                Every datacenter.{" "}
                 <span className="text-brand-100">One fabric.</span>
               </h2>
               <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/70">
-                39 operators, 132 facilities, all three tiers — unified on one
-                platform and consumed as a single sovereign cloud. One
-                catalog, one identity, one bill.
+                A market&apos;s datacenter capacity — every operator, every
+                tier — unified on one platform and consumed as a single
+                sovereign cloud. One catalog, one identity, one bill.
+                Launching in India, built for every country.
               </p>
             </div>
             <Button href="/fabric" size="lg" variant="white" className="shrink-0">

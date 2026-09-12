@@ -21,12 +21,13 @@ import {
   fabricPhases,
   fabricAtAGlance,
   fabricGettingStarted,
+  fabricMarkets,
 } from "@/content/fabric";
 
 export const metadata: Metadata = {
   title: "BlueWhale Stack Fabric",
   description:
-    "India's datacenter capacity — 39 operators, 132 facilities, all three tiers — unified on one platform and consumed as a single sovereign cloud. One catalog, one identity, one bill.",
+    "A market's datacenter capacity — every operator, every tier — unified on one platform and consumed as a single sovereign cloud. One catalog, one identity, one bill. Launching in India, built for every country.",
 };
 
 export default function FabricPage() {
@@ -93,7 +94,6 @@ export default function FabricPage() {
               </Reveal>
             ))}
           </div>
-          <p className="mt-6 text-xs text-faint">{fabricStatsNote}</p>
         </Container>
       </section>
 
@@ -104,7 +104,7 @@ export default function FabricPage() {
             <SectionHeading
               eyebrow="Why now"
               title="Strong datacenters, fragmented consumption"
-              description="India built world-class datacenter capacity fast — but for the buyer, it arrives fragmented: every operator is its own island, with its own portal, contract, billing and compliance posture."
+              description="Every growing market builds world-class datacenter capacity fast — but for the buyer, it arrives fragmented: every operator is its own island, with its own portal, contract, billing and compliance posture."
             />
           </Reveal>
           <div className="mt-14 grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-2">
@@ -144,13 +144,13 @@ export default function FabricPage() {
       </section>
 
       {/* ── Supply: three tiers ── */}
-      <section className="bg-canvas py-20 sm:py-28">
+      <section className="border-t border-line bg-canvas py-20 sm:py-28">
         <Container>
           <Reveal>
             <SectionHeading
               eyebrow="The supply"
-              title="39 operators, 132 facilities, all three tiers"
-              description="Roughly 39 operators run 132 facilities today, with 84 more under construction, and national capacity growing toward 1.7 GW — concentrated in Mumbai, Chennai, Hyderabad, Bengaluru and Noida."
+              title="Every operator, every tier — federated per market"
+              description="In any market the datacenter sector sorts into three tiers. The fabric federates all three, so the buyer's policy can land on hyperscale, national or regional capacity — and move between them."
             />
           </Reveal>
           <div className="mt-14 grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-3">
@@ -171,10 +171,57 @@ export default function FabricPage() {
             ))}
           </div>
           <p className="mt-6 text-xs italic text-faint">
-            Tier structure and counts are illustrative of the Indian
-            datacenter market; specific operator names, agreements and
-            federations are confirmed individually and are not implied here.
+            Tier structure is illustrative; specific operator names, agreements
+            and federations are confirmed individually per market and are not
+            implied here.
           </p>
+        </Container>
+      </section>
+
+      {/* ── Where the fabric runs ── */}
+      <section className="border-t border-line bg-sunken py-20 sm:py-28">
+        <Container>
+          <Reveal>
+            <SectionHeading
+              eyebrow="Where the fabric runs"
+              title="Launching in India. Built for every market."
+              description="The fabric plane is the same everywhere — what changes per market is the operator roster, the residency regime and the sovereign classes. India is the launch market; the Gulf and the United States follow from BlueWhale's own entities there."
+            />
+          </Reveal>
+          <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+            {fabricMarkets.map((m, i) => (
+              <Reveal key={m.name} delay={i * 80}>
+                <div
+                  className={`flex h-full flex-col rounded-lg border bg-surface p-6 shadow-sm ${
+                    i === 0 ? "border-amber-300 ring-1 ring-amber-200" : "border-line"
+                  }`}
+                >
+                  <span
+                    className={`self-start rounded-full px-2.5 py-0.5 text-xs font-semibold ${
+                      i === 0 ? "bg-amber-100 text-amber-800" : "bg-[var(--bg-active)] text-accent"
+                    }`}
+                  >
+                    {m.status}
+                  </span>
+                  <h3 className="mt-4 text-lg font-bold text-ink">{m.name}</h3>
+                  <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">{m.body}</p>
+                  {m.stats && (
+                    <dl className="mt-5 grid grid-cols-2 gap-3 border-t border-line pt-4">
+                      {m.stats.map((s) => (
+                        <div key={s.label}>
+                          <dt className="text-[11px] font-semibold uppercase tracking-wider text-faint">
+                            {s.label}
+                          </dt>
+                          <dd className="num text-xl font-bold text-accent">{s.value}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  )}
+                </div>
+              </Reveal>
+            ))}
+          </div>
+          <p className="mt-6 text-xs text-faint">{fabricStatsNote}</p>
         </Container>
       </section>
 
@@ -338,7 +385,7 @@ export default function FabricPage() {
             <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
               <div className="max-w-xl">
                 <p className="eyebrow text-brand-200">
-                  India doesn&apos;t need another datacenter
+                  No market needs another datacenter
                 </p>
                 <h2 className="display-2 mt-5 text-white">
                   It needs a fabric that lets buyers{" "}

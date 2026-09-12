@@ -118,7 +118,7 @@ export const productFamily: { name: string; badge: string; href: string; body: s
     badge: "Flagship initiative",
     href: "/fabric",
     iso: "datacenter",
-    body: "India — datacenter capacity unified on one platform: operator monetization plus a sovereign cloud.",
+    body: "A market's datacenter capacity — every operator, every tier — unified into one sovereign cloud: operator monetization plus a sovereign fabric. Launching in India, built for every country.",
   },
 ];
 
@@ -173,7 +173,7 @@ export const milestones = [
   {
     year: "2026",
     title: "Global footprint",
-    body: "Three registered entities — United States (Delaware), United Arab Emirates (Ajman) and India (Mumbai) — product, sovereign focus and delivery. The Telco & Datacenter Edition reaches general availability in Q4 2026, alongside BlueWhale Stack Fabric for India's datacenters.",
+    body: "Three registered entities — United States (Delaware), United Arab Emirates (Ajman) and India (Mumbai) — product, sovereign focus and delivery. The Telco & Datacenter Edition reaches general availability in Q4 2026, alongside BlueWhale Stack Fabric — the multi-operator sovereign cloud fabric, launching in India and built for every market.",
   },
   {
     year: "Today",

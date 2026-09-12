@@ -1,33 +1,65 @@
 /**
- * BlueWhale Stack Fabric — the national datacenter fabric.
- * India's datacenter capacity, unified on one platform and sold to
- * Indian customers as a single sovereign cloud. Runs on the Telco &
+ * BlueWhale Stack Fabric — the multi-operator sovereign cloud fabric.
+ * A market's datacenter capacity — every operator, every tier — unified on
+ * one platform and consumed as a single sovereign cloud. Delivered per
+ * country or region: India is the launch market; the same fabric plane
+ * deploys anywhere with two or more operators. Runs on the Telco &
  * Datacenter and Government editions (see content/editions.ts).
  *
- * Operator tiers are described generically (counts, not names) —
- * the source material names specific candidate operators under an
- * explicit "no partnership, agreement or endorsement exists or is
- * implied" disclaimer, so real company names are deliberately left
- * out of this public-facing copy pending confirmation.
+ * Operator tiers are described generically (counts, not names) — the source
+ * material names specific candidate operators under an explicit "no
+ * partnership, agreement or endorsement exists or is implied" disclaimer,
+ * so real company names are deliberately left out of this public copy.
  */
 
 export const fabricHero = {
   eyebrow: "BlueWhale Stack Fabric",
-  title: "All of India's datacenters. One fabric.",
+  title: "Every datacenter. One fabric.",
   description:
-    "India's datacenter capacity — 39 operators, 132 facilities, all three tiers — unified on one platform and consumed by every kind of Indian customer as a single sovereign cloud: one catalog, one identity, one bill. Public cloud stays at the edge; the fabric's core is India.",
+    "A market's datacenter capacity — every operator, every tier — unified on one platform and consumed by every kind of customer as a single sovereign cloud: one catalog, one identity, one bill. Public cloud stays at the edge; the fabric's core stays in-country. Delivered per market — launching in India, built for every country.",
 };
 
+/** The fabric model, independent of market. */
 export const fabricStats: { value: string; label: string }[] = [
-  { value: "39", label: "Datacenter operators" },
-  { value: "132", label: "Facilities, all three tiers" },
-  { value: "84", label: "More facilities under construction" },
-  { value: "1.7 GW", label: "National capacity, projected" },
+  { value: "1", label: "Governed fabric per country or region" },
+  { value: "3", label: "Operator tiers federated — hyperscale, national, regional" },
+  { value: "In-country", label: "Core stays sovereign; public cloud at the edge" },
+  { value: "90 days", label: "Pilot on the fabric — no platform-licence cost" },
 ];
 
-/** Footnote under the market stats — the counts are industry estimates, not audited figures. */
+/** Where the fabric runs — the launch market and where it goes next. */
+export const fabricMarkets: { name: string; status: string; body: string; stats?: { value: string; label: string }[] }[] = [
+  {
+    name: "India",
+    status: "Launch market",
+    body: "The first national fabric: a datacenter sector of roughly 39 operators and 132 facilities across all three tiers, 84 more under construction and capacity growing toward 1.7 GW — concentrated in Mumbai, Chennai, Hyderabad, Bengaluru and Noida.",
+    stats: [
+      { value: "39", label: "Operators" },
+      { value: "132", label: "Facilities" },
+      { value: "84", label: "Under construction" },
+      { value: "1.7 GW", label: "Projected capacity" },
+    ],
+  },
+  {
+    name: "Gulf & Middle East",
+    status: "Priority market",
+    body: "Sovereign classes for the UAE and the wider GCC — in-country residency under the local regime, operators federated per emirate or region, government and regulated-enterprise pursuits from the Ajman entity.",
+  },
+  {
+    name: "United States",
+    status: "Priority market",
+    body: "Regional, multi-operator fabrics with state-level residency for regulated enterprise and public sector, from the Delaware entity.",
+  },
+  {
+    name: "Any market",
+    status: "On request",
+    body: "The fabric plane deploys per market on the Telco & Datacenter and Government editions — any country or region with two or more datacenter operators can run one.",
+  },
+];
+
+/** Footnote under the launch-market figures — industry estimates, not audited figures. */
 export const fabricStatsNote =
-  "Market figures are 2025 industry estimates for the Indian datacenter sector.";
+  "India market figures are 2025 industry estimates for the Indian datacenter sector.";
 
 export const fabricProblems: { title: string; body: string }[] = [
   {
@@ -51,18 +83,18 @@ export const fabricProblems: { title: string; body: string }[] = [
 export const fabricTiers: { name: string; label: string; body: string }[] = [
   {
     name: "Tier 1",
-    label: "Hyperscale anchors · ~10 operators",
-    body: "Hyperscale campuses, GPU estates, national scale — the fabric's capacity backbone.",
+    label: "Hyperscale anchors",
+    body: "Hyperscale campuses, GPU estates, national scale — the fabric's capacity backbone in any market.",
   },
   {
     name: "Tier 2",
-    label: "National & regional · ~10 operators",
+    label: "National & regional operators",
     body: "Breadth of regions, sovereign classes and enterprise heritage — the fabric's coverage layer.",
   },
   {
     name: "Tier 3",
-    label: "The long tail · 20+ operators",
-    body: "Regional and Tier-2/3-city facilities across India — the fabric supplies platform and national reach the day they join.",
+    label: "The long tail",
+    body: "Regional and second-city facilities — the fabric supplies platform and national reach the day they join.",
   },
 ];
 
@@ -84,9 +116,9 @@ export const fabricStakeholders: {
     icon: "Building2",
     title: "Industry — the verticals",
     points: [
-      "Native cloud, made in India — compute, storage, K8s, GPU, backup, DR consumed in-country",
+      "Native cloud, made in-market — compute, storage, K8s, GPU, backup, DR consumed in-country",
       "Industry catalogs — BFSI, government, manufacturing, healthcare patterns with compliance inherited",
-      "DPDP by default — residency and audit enforced as fabric policy",
+      "Residency by default — DPDP, GDPR, NCA or the local regime, enforced as fabric policy",
     ],
   },
   {
@@ -150,29 +182,30 @@ export const fabricPhases: { name: string; timeframe: string; body: string }[] =
   {
     name: "Anchor",
     timeframe: "Months 1–3",
-    body: "Fabric plane live; first two operator federations signed and integrated; catalog v1 (compute + GPU + sovereign classes); two lighthouse customers placed.",
+    body: "Fabric plane live in the market; first two operator federations signed and integrated; catalog v1 (compute + GPU + sovereign classes); two lighthouse customers placed.",
   },
   {
     name: "Prove",
     timeframe: "Months 3–6",
-    body: "Cross-operator DR scenario in production; Whalenomics pass-through billing verified end-to-end; partner resale motion opened; fabric brand launched to Indian customers.",
+    body: "Cross-operator DR scenario in production; Whalenomics pass-through billing verified end-to-end; partner resale motion opened; the fabric brand launched to the market's customers.",
   },
   {
     name: "Scale",
     timeframe: "Months 6–12",
-    body: "Tier 2 operators federated; BlueWhale-native cloud services launched; government/PSU pursuits on sovereign classes; ISV and operator catalog listings begin.",
+    body: "Tier 2 operators federated; BlueWhale-native cloud services launched; government and public-sector pursuits on sovereign classes; ISV and operator catalog listings begin.",
   },
   {
     name: "Institutionalize",
     timeframe: "Year 2",
-    body: "Tier 3 long tail onboarded at scale; the fabric becomes the default way India buys Indian capacity; the operator roster and catalog expand on pull, not push.",
+    body: "Tier 3 long tail onboarded at scale; the fabric becomes the default way a market buys its own capacity; the operator roster and catalog expand on pull, not push.",
   },
 ];
 
 export const fabricAtAGlance: { label: string; value: string }[] = [
   { label: "Model", value: "Platform fee + transparent capacity pass-through" },
-  { label: "Supply", value: "39 operators · 132 facilities · 3 tiers" },
-  { label: "Sovereignty", value: "In-India · DPDP-aligned · air-gap capable" },
+  { label: "Supply", value: "Every operator, every tier — federated per market" },
+  { label: "Sovereignty", value: "In-country core · local regime (DPDP · GDPR · NCA) · air-gap capable" },
+  { label: "Footprint", value: "India (launch) · Gulf & Middle East · United States · any market on request" },
   { label: "Route", value: "Direct and via authorized partners" },
 ];
 

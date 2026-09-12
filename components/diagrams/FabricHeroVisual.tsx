@@ -1,5 +1,5 @@
 /**
- * Hero illustration for /fabric — three tiers of Indian datacenter capacity
+ * Hero illustration for /fabric — three tiers of a market's datacenter capacity
  * converging into one fabric plane. Pure inline SVG on the dark hero, drawn
  * in the same oblique "slab" language as ArchitectureStack3D so it reads as
  * part of one system. Server component, no assets.
@@ -17,7 +17,7 @@ export function FabricHeroVisual() {
     <svg
       viewBox="0 0 560 380"
       role="img"
-      aria-label="Three tiers of Indian datacenter facilities converging into one BlueWhale Stack fabric plane"
+      aria-label="Three tiers of a market's datacenter facilities converging into one BlueWhale Stack fabric plane"
       className="h-auto w-full"
     >
       <defs>
@@ -153,7 +153,7 @@ export function FabricHeroVisual() {
 
       {/* base caption */}
       <text x="280" y="356" textAnchor="middle" fill="#ffffff" fillOpacity="0.55" fontSize="11" style={{ fontFamily: "inherit" }}>
-        39 operators · 132 facilities · all three tiers, governed as one estate
+        Every operator · every tier · one market, governed as one estate
       </text>
     </svg>
   );

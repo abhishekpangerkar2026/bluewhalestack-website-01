@@ -975,10 +975,10 @@ export const diagrams: Record<string, ArchDiagram> = {
   fabric: {
     kind: "stack",
     caption:
-      "One catalog and one identity sit above India's datacenter capacity — placement by policy, per-customer metering, and uniform governance across every underlying facility.",
+      "One catalog and one identity sit above a market's datacenter capacity — placement by policy, per-customer metering, and uniform governance across every underlying facility.",
     layers: [
       {
-        title: "Demand — every kind of Indian customer",
+        title: "Demand — every kind of customer in the market",
         tone: "source",
         nodes: [
           { label: "Enterprise & BFSI", icon: "Building2" },
@@ -1002,7 +1002,7 @@ export const diagrams: Record<string, ArchDiagram> = {
         ],
       },
       {
-        title: "Indian datacenter capacity, all three tiers",
+        title: "The market's datacenter capacity, all three tiers",
         tone: "data",
         nodes: [
           { label: "Tier 1 — hyperscale anchors", icon: "Server" },
@@ -1018,7 +1018,7 @@ export const diagrams: Record<string, ArchDiagram> = {
           { label: "One bill, one contract", icon: "CreditCard" },
           { label: "No lock-in — re-placement is a policy", icon: "RefreshCw" },
           { label: "Sovereign DR across operators", icon: "ShieldCheck" },
-          { label: "In-India by construction", icon: "Globe" },
+          { label: "In-country by construction", icon: "Globe" },
         ],
       },
     ],
