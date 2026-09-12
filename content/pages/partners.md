@@ -23,7 +23,7 @@ System Implementation Partner, and Strategic (country) Partner.
    (Registered/Silver/Gold/Platinum — Strategic Partners sit above Platinum
    via bespoke agreement).
 6. CTA — Become a partner / Partner login (both external, to
-   partner.bluewhalestack.com).
+   partners.bluewhalestack.com).
 
 ## Components
 - `components/sections/PartnerTracks.tsx` — the 3-track showcase.

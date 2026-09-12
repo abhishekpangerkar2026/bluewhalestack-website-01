@@ -305,11 +305,20 @@ body {
   animation: fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 .animate-marquee {
-  animation: marquee 36s linear infinite;
+  /* Longhand (not the `animation` shorthand) so it doesn't also set
+     animation-play-state: running — that would sit outside Tailwind's
+     `@layer utilities` and beat the group-hover pause utility regardless
+     of specificity, since unlayered rules always win over layered ones. */
+  animation-name: marquee;
+  animation-duration: 36s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
 }
 @media (prefers-reduced-motion: reduce) {
-  .animate-fade-up,
-  .animate-marquee {
+  /* .animate-marquee is deliberately excluded: it's a purely decorative,
+     slow linear logo scroll (not an interface transition), so it keeps
+     running even for visitors who've asked the OS to reduce motion. */
+  .animate-fade-up {
     animation: none;
   }
   html {

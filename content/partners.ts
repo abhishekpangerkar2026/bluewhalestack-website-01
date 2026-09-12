@@ -1,7 +1,7 @@
 /**
  * Partner programme + Partner Portal marketing content.
  * The Partner Portal is a separate, already-built product at
- * partner.bluewhalestack.com — this content only describes & links to it.
+ * partners.bluewhalestack.com — this content only describes & links to it.
  *
  * Three partner tracks, by how a partner engages with BlueWhale Stack:
  *  - LSP          — resells licenses, owns the commercial relationship.

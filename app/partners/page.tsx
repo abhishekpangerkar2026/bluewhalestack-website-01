@@ -14,7 +14,7 @@ import { portalFeatures, tiers, tiersNote, whyPartner } from "@/content/partners
 export const metadata: Metadata = {
   title: "Partners",
   description:
-    "Three ways to partner with BlueWhale Stack — License Service Provider, System Implementation Partner, or Strategic (country) Partner. Apply and run your business through the Partner Portal at partner.bluewhalestack.com.",
+    "Three ways to partner with BlueWhale Stack — License Service Provider, System Implementation Partner, or Strategic (country) Partner. Apply and run your business through the Partner Portal at partners.bluewhalestack.com.",
 };
 
 export default function PartnersPage() {
@@ -137,7 +137,7 @@ export default function PartnersPage() {
               <SectionHeading
                 eyebrow="Partner Portal"
                 title="Run your reselling business in one place"
-                description="Deal registration, two-sided invoicing, margins, payments and provisioning — live at partner.bluewhalestack.com."
+                description="Deal registration, two-sided invoicing, margins, payments and provisioning — live at partners.bluewhalestack.com."
               />
             </Reveal>
             <Reveal delay={80}>

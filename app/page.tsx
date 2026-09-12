@@ -36,10 +36,14 @@ export default function HomePage() {
             One control plane for every major cloud, hypervisor &amp; private platform
           </p>
         </Container>
-        <div className="relative mt-7 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
-          <div className="flex w-max animate-marquee items-center gap-14 pr-14">
+        <div className="group relative mt-7 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+          <div className="flex w-max animate-marquee items-center gap-14 pr-14 will-change-transform group-hover:[animation-play-state:paused]">
             {marquee.map((c, i) => (
-              <CloudLogo key={`${c}-${i}`} name={c} className="shrink-0" />
+              <CloudLogo
+                key={`${c}-${i}`}
+                name={c}
+                className="shrink-0 opacity-80 transition-all duration-300 hover:scale-110 hover:opacity-100"
+              />
             ))}
           </div>
         </div>

@@ -146,7 +146,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── Mission & Vision: brand-tinted statement band ── */}
-      <section className="border-y border-line bg-brand-50 py-24 sm:py-32">
+      <section className="border-y border-line bg-surface py-24 sm:py-32">
         <Container>
           <div className="grid gap-x-16 gap-y-12 lg:grid-cols-2">
             <Reveal>
@@ -164,7 +164,7 @@ export default function AboutPage() {
                 <p className="eyebrow text-accent">
                   Our vision
                 </p>
-                <p className="mt-6 text-2xl font-bold leading-[1.25] tracking-tight text-muted sm:text-3xl">
+                <p className="mt-6 text-2xl font-bold leading-[1.25] tracking-tight text-ink sm:text-3xl">
                   {missionVision.vision}
                 </p>
               </div>
@@ -438,7 +438,7 @@ export default function AboutPage() {
                     </span>
                   ))}
                 </div>
-                <div className="mt-7 rounded-lg border border-line bg-brand-50 p-5">
+                <div className="mt-7 rounded-lg border border-line bg-[var(--bg-active)] p-5">
                   <div className="flex items-center gap-2 text-sm font-bold text-accent">
                     Join us
                     <ArrowUpRight className="h-4 w-4" />
