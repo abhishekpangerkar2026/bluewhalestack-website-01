@@ -1,0 +1,361 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>BlueWhale Stack — 3D product infographic</title>
+<style>
+  html, body { margin: 0; background: #fff; font-family: "Segoe UI", Inter, Arial, sans-serif; }
+  #stage { position: relative; width: 2400px; height: 1350px; overflow: hidden;
+    background: radial-gradient(ellipse 80% 70% at 50% 40%, #ffffff 0%, #f5f8fe 55%, #e9eefb 100%); }
+  #stage .dots { position: absolute; inset: 0; background-image: radial-gradient(#0b2a7a 1.4px, transparent 1.4px); background-size: 40px 40px; opacity: .06; }
+  #cables { position: absolute; inset: 0; }
+  canvas { position: absolute; inset: 0; }
+  #ui { position: absolute; inset: 0; pointer-events: none; }
+  .title { position: absolute; left: 0; right: 0; top: 34px; text-align: center; }
+  .title h1 { margin: 0; font-size: 92px; line-height: 1; font-weight: 900; letter-spacing: -2px; color: #0b2a7a; }
+  .title h2 { margin: 6px 0 0; font-size: 54px; line-height: 1; font-weight: 800; letter-spacing: -1px; color: #1a47c9; }
+  .pills { position: absolute; left: 0; right: 0; top: 232px; display: flex; justify-content: center; gap: 26px; }
+  .pill { padding: 22px 44px; border-radius: 16px; background: linear-gradient(180deg, #ffffff, #eef3ff); border: 2px solid rgba(26,71,201,.22);
+    box-shadow: 0 12px 30px rgba(11,42,122,.14), inset 0 1px 0 #fff; font-size: 30px; font-weight: 800; color: #0b2a7a; white-space: nowrap; }
+  .card { position: absolute; width: 520px; padding: 30px 34px; border-radius: 24px; background: linear-gradient(160deg, rgba(255,255,255,.96), rgba(236,242,255,.92));
+    border: 2px solid rgba(26,71,201,.18); box-shadow: 0 24px 60px rgba(11,42,122,.16), inset 0 1px 0 #fff; display: flex; gap: 26px; align-items: center; }
+  .card .ico { width: 96px; height: 96px; border-radius: 22px; background: linear-gradient(160deg, #2f62e6, #0b2a7a); display: grid; place-items: center; flex: none;
+    box-shadow: 0 14px 30px rgba(11,42,122,.35), inset 0 2px 0 rgba(255,255,255,.35); }
+  .card .ico svg { width: 56px; height: 56px; }
+  .card h3 { margin: 0; font-size: 38px; line-height: 1.05; font-weight: 900; color: #0b2a7a; letter-spacing: -.5px; }
+  .card p { margin: 8px 0 0; font-size: 22px; color: #3a4a6b; font-weight: 500; }
+  .panel { position: absolute; width: 520px; padding: 30px 30px 22px; border-radius: 28px; background: linear-gradient(160deg, rgba(255,255,255,.96), rgba(236,242,255,.9));
+    border: 2px solid rgba(26,71,201,.18); box-shadow: 0 28px 70px rgba(11,42,122,.18), inset 0 1px 0 #fff; }
+  .panel h3 { margin: 0 0 16px; font-size: 36px; font-weight: 900; color: #0b2a7a; letter-spacing: -.5px; }
+  .panel .row { display: flex; align-items: center; gap: 20px; padding: 14px 18px; margin-bottom: 12px; border-radius: 16px; background: rgba(255,255,255,.9);
+    border: 1.5px solid rgba(26,71,201,.14); box-shadow: 0 8px 18px rgba(11,42,122,.08); font-size: 27px; font-weight: 700; color: #0b2a7a; }
+  .panel .row .dot { width: 46px; height: 46px; border-radius: 12px; background: linear-gradient(160deg, #2f62e6, #1a47c9); display: grid; place-items: center; flex: none; }
+  .panel .row .dot svg { width: 26px; height: 26px; }
+  .tag { position: absolute; padding: 20px 60px; border-radius: 22px; background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(236,242,255,.94));
+    border: 2px solid rgba(26,71,201,.2); box-shadow: 0 18px 50px rgba(11,42,122,.16); font-size: 42px; font-weight: 800; color: #0b2a7a; white-space: nowrap; transform: translateX(-50%); }
+  .lbl { position: absolute; transform: translateX(-50%); padding: 10px 26px; border-radius: 14px; background: rgba(255,255,255,.9); border: 1.5px solid rgba(26,71,201,.16);
+    box-shadow: 0 8px 18px rgba(11,42,122,.10); font-size: 26px; font-weight: 800; color: #0b2a7a; white-space: nowrap; }
+  .feat { position: absolute; transform: translateX(-50%); text-align: center; font-size: 34px; font-weight: 800; color: #0b2a7a; white-space: nowrap; letter-spacing: -.3px; }
+  .footer { position: absolute; left: 0; right: 0; bottom: 10px; text-align: center; font-size: 28px; color: #6b7a99; font-weight: 500; }
+  .footer span { position: relative; padding: 0 30px; }
+  .footer span:before, .footer span:after { content: ""; position: absolute; top: 50%; width: 520px; height: 2px; background: rgba(11,42,122,.14); }
+  .footer span:before { right: 100%; } .footer span:after { left: 100%; }
+  .vline { position: absolute; width: 2px; background: rgba(11,42,122,.12); }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+<div id="stage">
+  <div class="dots"></div>
+  <svg id="cables" xmlns="http://www.w3.org/2000/svg"></svg>
+  <div id="ui"></div>
+</div>
+<script>
+(async function () {
+  const q = new URLSearchParams(location.search);
+  const key = q.get("module") || "inventory";
+  const W = 2400, H = 1350;
+  const stage = document.getElementById("stage");
+  const ui = document.getElementById("ui");
+  const svg = document.getElementById("cables");
+
+  /* ─── icons (inline SVG paths, 24-unit grid) ─── */
+  const ICON = {
+    plug: '<path d="M8 3v5M16 3v5M6 8h12v3a6 6 0 0 1-12 0V8zM12 17v4" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>',
+    shield: '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z" fill="none" stroke="#fff" stroke-width="2.2" stroke-linejoin="round"/><path d="M8.5 12l2.5 2.5 4.5-5" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>',
+    server: '<rect x="4" y="4" width="16" height="6" rx="1.5" fill="none" stroke="#fff" stroke-width="2.2"/><rect x="4" y="14" width="16" height="6" rx="1.5" fill="none" stroke="#fff" stroke-width="2.2"/><circle cx="8" cy="7" r="1" fill="#fff"/><circle cx="8" cy="17" r="1" fill="#fff"/>',
+    gear: '<circle cx="12" cy="12" r="3" fill="none" stroke="#fff" stroke-width="2.2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>',
+    db: '<ellipse cx="12" cy="5.5" rx="7" ry="2.5" fill="none" stroke="#fff" stroke-width="2.2"/><path d="M5 5.5v13c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-13M5 12c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5" fill="none" stroke="#fff" stroke-width="2.2"/>',
+    bars: '<rect x="4" y="12" width="4" height="8" fill="#fff"/><rect x="10" y="7" width="4" height="13" fill="#fff"/><rect x="16" y="3" width="4" height="17" fill="#fff"/>',
+    arrows: '<path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><path d="M18 3v4h-4M6 21v-4h4" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>',
+    sparkle: '<path d="M12 3c1 5 4 8 9 9-5 1-8 4-9 9-1-5-4-8-9-9 5-1 8-4 9-9z" fill="#fff"/>',
+    eye: '<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z" fill="none" stroke="#fff" stroke-width="2.2"/><circle cx="12" cy="12" r="3" fill="#fff"/>',
+    lock: '<rect x="5" y="10" width="14" height="10" rx="2" fill="none" stroke="#fff" stroke-width="2.2"/><path d="M8 10V7a4 4 0 0 1 8 0v3" fill="none" stroke="#fff" stroke-width="2.2"/>',
+    doc: '<path d="M6 3h8l5 5v13H6z" fill="none" stroke="#fff" stroke-width="2.2" stroke-linejoin="round"/><path d="M14 3v5h5M9 13h7M9 17h7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>',
+    globe: '<circle cx="12" cy="12" r="9" fill="none" stroke="#fff" stroke-width="2.2"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18" fill="none" stroke="#fff" stroke-width="2"/>',
+    wallet: '<rect x="3" y="6" width="18" height="13" rx="2.5" fill="none" stroke="#fff" stroke-width="2.2"/><path d="M3 10h18M16 14h2" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>',
+    move: '<path d="M4 12h14M13 6l6 6-6 6" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>',
+    users: '<circle cx="9" cy="8" r="3.5" fill="none" stroke="#fff" stroke-width="2.2"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6M16 4.5a3.5 3.5 0 0 1 0 7M21 20c0-3-1.8-5.2-4.5-5.8" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>',
+  };
+  const ico = (n) => `<svg viewBox="0 0 24 24">${ICON[n] || ICON.gear}</svg>`;
+
+  /* ─── module definitions ─── */
+  const PROVIDERS = ["AWS", "Azure", "Google Cloud", "Oracle", "Alibaba", "Huawei", "On-prem & Hybrid"];
+  const MODULES = {
+    inventory: {
+      title: "Unified Cloud Inventory", tagline: "One inventory. Every cloud. Full control.", footer: "One portal for your cloud and on-premises estate",
+      ui: { title: "Unified Cloud Inventory", search: "Search assets, workloads, tags…", buttons: ["Discover", "Manage", "Retire"] },
+      groups: ["Compute", "Databases", "Storage"], center: "inventory",
+      left: [{ icon: "plug", title: "Cloud Connectors", sub: "Secure. Flexible. Broad coverage." }, { icon: "shield", title: "Identity & Access", sub: "Unify identities. Enforce control." }],
+      edge: "Edge Agent",
+      right: { title: "Connected capabilities", items: [["gear", "Provisioning"], ["db", "Whalenomics · FinOps"], ["shield", "Security & Compliance"], ["bars", "Observability"], ["arrows", "Migration"], ["sparkle", "Whale AI"]] },
+      features: [["magnifier", "Auto-discover assets"], ["cubes", "Group by workload"], ["refresh", "Live lifecycle actions"], ["docs", "Export PDF / Excel / CSV"]],
+    },
+    whalenomics: {
+      title: "Whalenomics · FinOps", tagline: "Spend explained. Decomposed. Owned.", footer: "Budgets, forecasts and chargeback across every estate",
+      ui: { title: "Whalenomics — cost intelligence", search: "Search accounts, tenants, workloads…", buttons: ["Forecast", "Allocate", "Optimize"] },
+      groups: ["Budgets", "Chargeback", "Optimization"], center: "whalenomics",
+      left: [{ icon: "db", title: "Cost ingestion", sub: "Every cloud bill, normalized." }, { icon: "sparkle", title: "Whale AI FinOps", sub: "Anomalies and advice, explained." }],
+      edge: "Edge Agent",
+      right: { title: "Connected capabilities", items: [["server", "Inventory & Discovery"], ["gear", "Provisioning"], ["bars", "Observability"], ["doc", "Cloud Audit & Evidence"], ["users", "Tenancy & Monetization"], ["sparkle", "Whale AI"]] },
+      features: [["chart", "Budgets & forecasts"], ["coins", "Chargeback per tenant"], ["magnifier", "Anomaly detection"], ["docs", "Commitment advice"]],
+    },
+    "whale-ai": {
+      title: "Whale AI — including offline", tagline: "AI in every family. Inside the perimeter.", footer: "Your choice of model — Spark · Tide · Abyss — fully offline when it must be",
+      ui: { title: "Whale AI — ask anything about your estate", search: "Why did Frankfurt spend rise 18% this month?", buttons: ["Spark", "Tide", "Abyss"] },
+      groups: ["Operations", "Documentation", "Compliance"], center: "whale-ai",
+      left: [{ icon: "lock", title: "Runs inside the perimeter", sub: "Zero external data exposure." }, { icon: "server", title: "Grounded in live data", sub: "Inventory, cost, tickets, findings." }],
+      edge: "In-region model",
+      right: { title: "Connected capabilities", items: [["server", "Inventory & Discovery"], ["db", "Whalenomics · FinOps"], ["shield", "Security & Compliance"], ["bars", "Observability & ITSM"], ["arrows", "Migration"], ["doc", "Cloud Audit & Evidence"]] },
+      features: [["sparkle", "50+ grounded use cases"], ["lock", "Offline & in-region"], ["cubes", "Three intelligence tiers"], ["docs", "Cited, auditable answers"]],
+    },
+    migration: {
+      title: "Migration Engine", tagline: "Entry, movement and exit — industrialized.", footer: "Assessment, dependency mapping, rehearsed waves and rollback across six platforms",
+      ui: { title: "Migration Engine — wave planner", search: "Search workloads, dependencies, waves…", buttons: ["Assess", "Plan waves", "Execute"] },
+      groups: ["Discover", "6R assess", "Waves"], center: "migration",
+      left: [{ icon: "server", title: "Inventory & Discovery", sub: "Dependency-mapped estate." }, { icon: "sparkle", title: "Whale AI guidance", sub: "6R scores, effort and blockers." }],
+      edge: "Edge Agent",
+      right: { title: "Connected capabilities", items: [["gear", "Landing Zone Builder"], ["move", "WhaleForge IaC"], ["db", "Whalenomics · FinOps"], ["shield", "Security & Compliance"], ["bars", "Observability"], ["doc", "Cloud Audit & Evidence"]] },
+      features: [["magnifier", "Auto-classify workloads"], ["cubes", "6R with cost & blockers"], ["refresh", "Rehearsed waves & rollback"], ["docs", "Exit evidence on file"]],
+    },
+    "cloud-audit": {
+      title: "Cloud Audit & Evidence", tagline: "Controls monitored continuously. Evidence on demand.", footer: "Examiner-grade reports for the board, the auditor and the regulator",
+      ui: { title: "Cloud Audit & Evidence — control monitor", search: "Search controls, regimes, evidence…", buttons: ["Controls", "Evidence", "Report"] },
+      groups: ["Policies", "Controls", "Evidence"], center: "audit",
+      left: [{ icon: "shield", title: "Policy as configuration", sub: "One policy engine, every estate." }, { icon: "eye", title: "Continuous monitoring", sub: "Evidence generated, not assembled." }],
+      edge: "Edge Agent",
+      right: { title: "Connected capabilities", items: [["server", "Inventory & Discovery"], ["lock", "Security & Identity"], ["bars", "Observability & ITSM"], ["db", "Whalenomics · FinOps"], ["sparkle", "Whale AI"], ["globe", "Sovereign Operations"]] },
+      features: [["shield", "Regime-mapped controls"], ["docs", "Examiner-grade reports"], ["refresh", "Continuous evidence"], ["lock", "Tamper-evident trail"]],
+    },
+    "sovereign-operations": {
+      title: "Sovereign Operations", tagline: "Sovereignty demonstrated, not asserted.", footer: "In-country · segregated · air-gap capable · offline-tolerant edge",
+      ui: { title: "Sovereign Operations — national estate", search: "Search directorates, zones, classes…", buttons: ["In-country", "Air-gapped", "Edge"] },
+      groups: ["Zones", "Directorates", "Edge sites"], center: "sovereign",
+      left: [{ icon: "lock", title: "Air-gapped classes", sub: "No call-home. Offline updates." }, { icon: "sparkle", title: "Whale AI inside", sub: "Models never leave the perimeter." }],
+      edge: "Edge site",
+      right: { title: "Connected capabilities", items: [["shield", "Security & Identity"], ["doc", "Cloud Audit & Evidence"], ["server", "Inventory & Discovery"], ["bars", "Observability & ITSM"], ["db", "Whalenomics · FinOps"], ["users", "Tenancy & Monetization"]] },
+      features: [["globe", "In-country deployment"], ["lock", "Directorate segregation"], ["refresh", "Offline-tolerant edge"], ["docs", "State-audit evidence"]],
+    },
+    platform: {
+      title: "Digital Experience Platform", tagline: "One Platform. Every Industry. Every Estate.", footer: "54 capabilities · 9 families · 4 editions · 6 platform classes",
+      ui: { title: "BlueWhale Stack — one console", search: "Search estates, tenants, policies, bills…", buttons: ["Govern", "Observe", "Bill"] },
+      groups: ["Public cloud", "Private & virtual", "Hybrid & edge"], center: "platform",
+      left: [{ icon: "users", title: "Digital Experience Layer", sub: "White-label portals, catalogs, metering." }, { icon: "shield", title: "One identity. One policy.", sub: "SAML/OIDC fabric, governance as config." }],
+      edge: "Edge Agent",
+      right: { title: "Nine capability families", items: [["gear", "Management & Delivery"], ["db", "Whalenomics · FinOps"], ["lock", "Security & Identity"], ["doc", "Governance & Audit"], ["sparkle", "Whale AI — incl. offline"], ["arrows", "Migration & Discovery"]] },
+      features: [["cubes", "One console"], ["shield", "One identity & policy"], ["coins", "One bill"], ["refresh", "API-first"]],
+    },
+  };
+  const mod = MODULES[key] || MODULES.inventory;
+
+  /* ─── three.js ─── */
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+  renderer.setPixelRatio(1); renderer.setSize(W, H);
+  renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.outputEncoding = THREE.sRGBEncoding; renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.0;
+  renderer.physicallyCorrectLights = true;
+  stage.insertBefore(renderer.domElement, ui);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(21, W / H, 0.1, 200);
+  camera.position.set(0, 14.6, 36.8); camera.lookAt(0, 2.45, 1.4);
+
+  // studio environment for chrome/glass reflections
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  const env = new THREE.Scene(); env.background = new THREE.Color(0xdfe6f4);
+  const panel = (x, y, z, w, h, col, rot) => { const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: col, side: THREE.DoubleSide })); m.position.set(x, y, z); m.rotation.set(...rot); env.add(m); };
+  panel(0, 10, 0, 30, 30, 0xffffff, [Math.PI / 2, 0, 0]);
+  panel(0, -6, 0, 30, 30, 0x8fa3c8, [Math.PI / 2, 0, 0]);
+  panel(-12, 4, 0, 12, 10, 0xbfd2ff, [0, Math.PI / 2, 0]);
+  panel(12, 4, 0, 12, 10, 0xffffff, [0, -Math.PI / 2, 0]);
+  panel(0, 4, -12, 20, 10, 0x2f62e6, [0, 0, 0]);
+  panel(0, 4, 12, 20, 10, 0xffffff, [0, Math.PI, 0]);
+  scene.environment = pmrem.fromScene(env, 0.02).texture;
+
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x9fb4e0, 0.55));
+  const keyL = new THREE.DirectionalLight(0xffffff, 2.1); keyL.position.set(-6, 14, 10); keyL.castShadow = true;
+  keyL.shadow.mapSize.set(4096, 4096); Object.assign(keyL.shadow.camera, { left: -14, right: 14, top: 12, bottom: -12, near: 1, far: 60 }); keyL.shadow.radius = 5; keyL.shadow.bias = -0.0005; scene.add(keyL);
+  const fillL = new THREE.DirectionalLight(0xbfd2ff, 0.6); fillL.position.set(10, 6, 8); scene.add(fillL);
+  const backL = new THREE.DirectionalLight(0x4a7cf0, 0.5); backL.position.set(0, 6, -12); scene.add(backL);
+
+  const ground = new THREE.Mesh(new THREE.PlaneGeometry(80, 80), new THREE.ShadowMaterial({ opacity: 0.16 })); ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; scene.add(ground);
+
+  const M = {
+    base: new THREE.MeshPhysicalMaterial({ color: 0x0e3bd0, roughness: 0.2, metalness: 0.05, clearcoat: 1, clearcoatRoughness: 0.08 }),
+    baseDeep: new THREE.MeshPhysicalMaterial({ color: 0x0c2f9e, roughness: 0.3, metalness: 0.05, clearcoat: 0.8 }),
+    chrome: new THREE.MeshPhysicalMaterial({ color: 0xe6ebf3, roughness: 0.14, metalness: 1.0, clearcoat: 1 }),
+    steel: new THREE.MeshPhysicalMaterial({ color: 0xb8c2d3, roughness: 0.28, metalness: 0.9 }),
+    glass: new THREE.MeshPhysicalMaterial({ color: 0xf2f6ff, roughness: 0.06, metalness: 0, transmission: 0.82, thickness: 0.5, ior: 1.42, transparent: true, clearcoat: 1 }),
+    frost: new THREE.MeshPhysicalMaterial({ color: 0xf6f9ff, roughness: 0.35, metalness: 0, transmission: 0.35, thickness: 0.3, transparent: true, opacity: 0.96 }),
+    blue: new THREE.MeshPhysicalMaterial({ color: 0x2f62e6, roughness: 0.22, metalness: 0.1, clearcoat: 1 }),
+    blueLight: new THREE.MeshPhysicalMaterial({ color: 0x7fb3ff, roughness: 0.25, metalness: 0.05, clearcoat: 1 }),
+    led: new THREE.MeshStandardMaterial({ color: 0x4a9eff, emissive: 0x2f7dff, emissiveIntensity: 2.2, roughness: 0.3 }),
+    slot: new THREE.MeshStandardMaterial({ color: 0x1b2540, roughness: 0.6, metalness: 0.3 }),
+    white: new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.7 }),
+    gold: new THREE.MeshPhysicalMaterial({ color: 0xf2c14e, roughness: 0.2, metalness: 0.95 }),
+    green: new THREE.MeshPhysicalMaterial({ color: 0x1f9d55, roughness: 0.3, clearcoat: 1 }),
+    navy: new THREE.MeshStandardMaterial({ color: 0x0b2a7a, roughness: 0.5 }),
+  };
+  // keep the white studio env from washing the saturated blues out
+  Object.entries(M).forEach(([k, m]) => { if ("envMapIntensity" in m) m.envMapIntensity = k === "chrome" || k === "steel" ? 0.9 : k === "glass" || k === "frost" ? 0.5 : 0.3; });
+  renderer.toneMappingExposure = 0.9;
+
+  function roundedRect(w, d, r) { const s = new THREE.Shape(); const x = -w / 2, y = -d / 2; s.moveTo(x + r, y); s.lineTo(x + w - r, y); s.quadraticCurveTo(x + w, y, x + w, y + r); s.lineTo(x + w, y + d - r); s.quadraticCurveTo(x + w, y + d, x + w - r, y + d); s.lineTo(x + r, y + d); s.quadraticCurveTo(x, y + d, x, y + d - r); s.lineTo(x, y + r); s.quadraticCurveTo(x, y, x + r, y); return s; }
+  function slab(x, y, z, w, d, h, r, mat, bevel = 0.06) {
+    const g = new THREE.ExtrudeGeometry(roundedRect(w, d, r), { depth: h, bevelEnabled: true, bevelThickness: bevel, bevelSize: bevel, bevelSegments: 5, curveSegments: 24 });
+    g.rotateX(-Math.PI / 2); g.translate(0, bevel, 0);
+    const m = new THREE.Mesh(g, mat); m.position.set(x, y, z); m.castShadow = true; m.receiveShadow = true; scene.add(m); return m;
+  }
+  function box(x, y, z, w, h, d, mat, parent = scene) { const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat); m.position.set(x, y, z); m.castShadow = true; m.receiveShadow = true; parent.add(m); return m; }
+  function cyl(x, y, z, r, h, mat, parent = scene, seg = 48) { const m = new THREE.Mesh(new THREE.CylinderGeometry(r, r, h, seg), mat); m.position.set(x, y, z); m.castShadow = true; m.receiveShadow = true; parent.add(m); return m; }
+  function textTexture(draw, w = 2048, h = 512) { const c = document.createElement("canvas"); c.width = w; c.height = h; const g = c.getContext("2d"); draw(g, w, h); const t = new THREE.CanvasTexture(c); t.encoding = THREE.sRGBEncoding; t.anisotropy = 8; return t; }
+  function textPlane(x, y, z, w, h, tex, rot = [0, 0, 0]) { const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ map: tex, transparent: true })); m.position.set(x, y, z); m.rotation.set(...rot); scene.add(m); return m; }
+
+  /* base + chrome rim + label */
+  const BW = 14.5, BD = 8.2, BH = 1.35;
+  slab(0, 0.28, 0, BW, BD, BH, 0.9, M.base, 0.12);
+  slab(0, 0, 0, BW + 0.5, BD + 0.5, 0.28, 1.0, M.chrome, 0.08);
+  textPlane(0, 0.9, BD / 2 + 0.13, 7, 0.875, textTexture((g, w, h) => { g.fillStyle = "#ffffff"; g.font = "900 225px 'Segoe UI', Inter, Arial, sans-serif"; g.textAlign = "center"; g.textBaseline = "middle"; g.shadowColor = "rgba(0,0,0,.35)"; g.shadowBlur = 24; g.fillText("BlueWhale Stack", w / 2, h / 2 + 10); }));
+
+  /* console: glass shelf + UI panel */
+  const shelfY = BH + 0.28 + 0.12;
+  slab(0, shelfY, 0.9, 10.2, 5.2, 0.26, 0.5, M.glass, 0.05);
+  const uiPanel = slab(0, shelfY + 0.26, -1.65, 10.2, 0.32, 2.6, 0.25, M.frost, 0.04); // rotated: we build a standing panel instead
+  uiPanel.geometry.dispose(); scene.remove(uiPanel);
+  const pnl = new THREE.Mesh(new THREE.ExtrudeGeometry(roundedRect(10.2, 2.7, 0.3), { depth: 0.22, bevelEnabled: true, bevelThickness: 0.04, bevelSize: 0.04, bevelSegments: 4, curveSegments: 24 }), M.frost);
+  pnl.position.set(0, shelfY + 0.26 + 1.35, -1.75); pnl.castShadow = true; scene.add(pnl);
+  const uiTex = textTexture((g, w, h) => {
+    g.fillStyle = "rgba(255,255,255,0)"; g.fillRect(0, 0, w, h);
+    g.fillStyle = "#0b2a7a"; g.textAlign = "left"; g.textBaseline = "middle";
+    let fs = 120; do { g.font = `900 ${fs}px 'Segoe UI', Inter, Arial, sans-serif`; fs -= 4; } while (g.measureText(mod.ui.title).width > 2360 && fs > 60);
+    g.fillText(mod.ui.title, 90, 120);
+    // search bar
+    const r = 46; const sx = 90, sy = 210, sw = 1180, sh = 130;
+    g.fillStyle = "#ffffff"; g.strokeStyle = "rgba(26,71,201,.3)"; g.lineWidth = 6;
+    g.beginPath(); g.moveTo(sx + r, sy); g.arcTo(sx + sw, sy, sx + sw, sy + sh, r); g.arcTo(sx + sw, sy + sh, sx, sy + sh, r); g.arcTo(sx, sy + sh, sx, sy, r); g.arcTo(sx, sy, sx + sw, sy, r); g.closePath(); g.fill(); g.stroke();
+    g.save(); g.beginPath(); g.rect(sx, sy, sw - 30, sh); g.clip();
+    g.fillStyle = "#6b7a99"; g.font = "600 66px 'Segoe UI', Inter, Arial, sans-serif"; g.fillText("🔍  " + mod.ui.search, sx + 50, sy + sh / 2 + 4); g.restore();
+    // buttons
+    let bx = 1360; mod.ui.buttons.forEach((b, i) => { const bw = 360, bh = 130; g.fillStyle = i === 0 ? "#1a47c9" : "#ffffff"; g.strokeStyle = "rgba(26,71,201,.35)"; g.beginPath(); g.moveTo(bx + 30, sy); g.arcTo(bx + bw, sy, bx + bw, sy + bh, 30); g.arcTo(bx + bw, sy + bh, bx, sy + bh, 30); g.arcTo(bx, sy + bh, bx, sy, 30); g.arcTo(bx, sy, bx + bw, sy, 30); g.closePath(); g.fill(); g.stroke(); g.fillStyle = i === 0 ? "#ffffff" : "#0b2a7a"; g.font = "800 62px 'Segoe UI', Inter, Arial, sans-serif"; g.textAlign = "center"; g.fillText(b, bx + bw / 2, sy + bh / 2 + 4); g.textAlign = "left"; bx += bw + 40; });
+  }, 2560, 680);
+  textPlane(0, shelfY + 0.26 + 1.35, -1.75 + 0.22 + 0.04 + 0.03, 9.6, 2.55, uiTex);
+
+  /* mini shelves for the three groups */
+  const GX = [-3.3, 0, 3.3]; const GZ = 0.95; const gy = shelfY + 0.26;
+  GX.forEach((x) => slab(x, gy, GZ, 2.7, 2.6, 0.16, 0.35, M.glass, 0.04));
+  const objY = gy + 0.16 + 0.04;
+
+  /* object builders */
+  function rackStack(x, z, units = 5, w = 1.25, d = 0.95) {
+    const g = new THREE.Group(); for (let i = 0; i < units; i++) { const y = 0.15 + i * 0.3; const u = box(0, y, 0, w, 0.24, d, M.chrome, g); box(0, y, d / 2 + 0.005, w * 0.8, 0.07, 0.02, M.slot, g); box(w * 0.36, y, d / 2 + 0.012, 0.09, 0.06, 0.02, M.led, g); } g.position.set(x, objY, z); scene.add(g); return g;
+  }
+  function dbStack(x, z, n = 3, r = 0.55) {
+    const g = new THREE.Group(); for (let i = 0; i < n; i++) { const y = 0.22 + i * 0.5; cyl(0, y, 0, r, 0.38, M.chrome, g); cyl(0, y + 0.235, 0, r * 0.94, 0.07, M.led, g, 48); } g.position.set(x, objY, z); scene.add(g); return g;
+  }
+  function cubeCluster(x, z, s = 0.62) {
+    const g = new THREE.Group(); const pos = [[-0.5, 0, 0.2], [0.35, 0, 0.35], [0.1, 0, -0.55], [-0.15, 1, -0.05], [0.55, 1, -0.4], [0.2, 2, -0.2]];
+    pos.forEach(([px, py, pz], i) => box(px * s, s / 2 + py * s, pz * s, s, s, s, i % 3 === 1 ? M.chrome : i % 3 === 2 ? M.blueLight : M.blue, g));
+    g.position.set(x, objY, z); scene.add(g); return g;
+  }
+  function magnifier(x, y, z, s = 1) {
+    const g = new THREE.Group(); const ring = new THREE.Mesh(new THREE.TorusGeometry(0.75, 0.11, 24, 96), M.chrome); ring.castShadow = true; g.add(ring);
+    const lens = new THREE.Mesh(new THREE.CylinderGeometry(0.68, 0.68, 0.06, 64), M.glass); lens.rotation.x = Math.PI / 2; g.add(lens);
+    const handle = cyl(0, -1.25, 0, 0.11, 1.1, M.blue, g); handle.position.set(0.72, -1.05, 0); handle.rotation.z = Math.PI / 4;
+    g.scale.setScalar(s); g.position.set(x, y, z); g.rotation.set(-0.5, -0.35, 0.3); scene.add(g); return g;
+  }
+  function coinStack(x, z, n = 3, r = 0.42) { const g = new THREE.Group(); for (let i = 0; i < n; i++) cyl(0, 0.05 + i * 0.11, 0, r, 0.09, M.gold, g); g.position.set(x, objY, z); scene.add(g); return g; }
+  function bars(x, z, hs = [0.6, 1.1, 1.7]) { const g = new THREE.Group(); hs.forEach((h, i) => box((i - 1) * 0.62, h / 2, 0, 0.42, h, 0.42, i === 2 ? M.blue : M.chrome, g)); g.position.set(x, objY, z); scene.add(g); return g; }
+  function aiCube(x, z, s = 1.5) { const g = new THREE.Group(); box(0, s / 2, 0, s, s, s, M.blue, g); const tex = textTexture((gg, w, h) => { gg.fillStyle = "#fff"; gg.font = "900 290px 'Segoe UI', Inter, Arial, sans-serif"; gg.textAlign = "center"; gg.textBaseline = "middle"; gg.fillText("AI", w / 2, h / 2); }, 512, 512); const f = new THREE.Mesh(new THREE.PlaneGeometry(s * 0.9, s * 0.9), new THREE.MeshBasicMaterial({ map: tex, transparent: true })); f.position.set(0, s / 2, s / 2 + 0.01); g.add(f); g.position.set(x, objY, z); scene.add(g); return g; }
+  function nodes(x, z, n = 6) { const g = new THREE.Group(); for (let i = 0; i < n; i++) { const a = (i / n) * Math.PI * 2; const px = Math.cos(a) * 0.9, pz = Math.sin(a) * 0.9; const s = new THREE.Mesh(new THREE.SphereGeometry(0.16, 24, 24), i % 2 ? M.chrome : M.led); s.position.set(px, 0.3 + (i % 2) * 0.5, pz); s.castShadow = true; g.add(s); const c = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 1, 8), M.blueLight); c.position.set(px / 2, 0.4, pz / 2); c.lookAt(new THREE.Vector3(px, 0.3 + (i % 2) * 0.5, pz)); c.rotateX(Math.PI / 2); g.add(c); } g.position.set(x, objY, z); scene.add(g); return g; }
+  function shield3d(x, z, s = 1, baseY = objY) { const sh = new THREE.Shape(); sh.moveTo(0, 1); sh.lineTo(0.8, 0.65); sh.lineTo(0.8, 0); sh.quadraticCurveTo(0.8, -0.6, 0, -1); sh.quadraticCurveTo(-0.8, -0.6, -0.8, 0); sh.lineTo(-0.8, 0.65); sh.closePath(); const g = new THREE.Group(); const back = new THREE.Mesh(new THREE.ExtrudeGeometry(sh, { depth: 0.16, bevelEnabled: true, bevelThickness: 0.03, bevelSize: 0.03, bevelSegments: 3 }), M.chrome); back.scale.set(1.1, 1.1, 1); g.add(back); const front = new THREE.Mesh(new THREE.ExtrudeGeometry(sh, { depth: 0.2, bevelEnabled: true, bevelThickness: 0.03, bevelSize: 0.03, bevelSegments: 3 }), M.blue); front.position.z = 0.08; g.add(front); const chk = new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3([new THREE.Vector3(-0.38, -0.05, 0.36), new THREE.Vector3(-0.1, -0.32, 0.36), new THREE.Vector3(0.42, 0.36, 0.36)]), 24, 0.07, 12, false), M.white); g.add(chk); g.children.forEach((c) => (c.castShadow = true)); g.scale.setScalar(s); g.position.set(x, baseY + 1.05 * s, z); scene.add(g); return g; }
+  function docs(x, z) { const g = new THREE.Group(); [0, 1, 2].forEach((i) => { const d = box(i * 0.25, 0.7, -i * 0.22, 1.1, 1.4, 0.05, M.white, g); [0.35, 0.12, -0.11, -0.34].forEach((ly, k) => box(i * 0.25 + (k === 0 ? -0.15 : 0), 0.7 + ly, -i * 0.22 + 0.035, k === 0 ? 0.55 : 0.8, 0.06, 0.02, M.blueLight, g)); }); g.position.set(x, objY, z); scene.add(g); return g; }
+  function lock3d(x, z, s = 1, baseY = objY) { const g = new THREE.Group(); box(0, 0.4, 0, 1.0, 0.8, 0.5, M.gold, g); const sh = new THREE.Mesh(new THREE.TorusGeometry(0.32, 0.08, 16, 48, Math.PI), M.chrome); sh.position.y = 0.8; g.add(sh); g.scale.setScalar(s); g.position.set(x, baseY, z); scene.add(g); return g; }
+  function globe3d(x, z, r = 0.95, baseY = objY) { const g = new THREE.Group(); const s = new THREE.Mesh(new THREE.SphereGeometry(r, 48, 48), M.blue); s.castShadow = true; g.add(s); const lm = new THREE.MeshBasicMaterial({ color: 0xdbe6ff, transparent: true, opacity: 0.6 }); for (let i = 0; i < 3; i++) { const t = new THREE.Mesh(new THREE.TorusGeometry(r * 1.006, 0.012, 8, 96), lm); t.rotation.y = (i * Math.PI) / 3; g.add(t); } [-0.45, 0, 0.45].forEach((ly) => { const rr = Math.sqrt(r * r - ly * ly); const t = new THREE.Mesh(new THREE.TorusGeometry(rr, 0.012, 8, 96), lm); t.rotation.x = Math.PI / 2; t.position.y = ly; g.add(t); }); const stand = cyl(0, -r - 0.1, 0, 0.5, 0.12, M.chrome, g); g.position.set(x, baseY + r + 0.22, z); scene.add(g); return g; }
+  function miniPlatform(x, z, mat) { slab(x, objY, z, 1.6, 1.6, 0.18, 0.2, mat, 0.03); }
+  function arrow3d(from, to, mat = M.blue) { const mid = [(from[0] + to[0]) / 2, Math.max(from[1], to[1]) + 0.7, (from[2] + to[2]) / 2]; const m = new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3([new THREE.Vector3(...from), new THREE.Vector3(...mid), new THREE.Vector3(...to)]), 48, 0.07, 12, false), mat); m.castShadow = true; scene.add(m); const c = new THREE.Mesh(new THREE.ConeGeometry(0.2, 0.45, 24), mat); c.position.set(...to); c.lookAt(new THREE.Vector3(...mid)); c.rotateX(-Math.PI / 2); scene.add(c); }
+  function stackMini(x, z) { slab(x, objY, z, 2.0, 2.0, 0.22, 0.25, M.baseDeep, 0.03); slab(x, objY + 0.5, z, 1.4, 1.4, 0.2, 0.2, M.blue, 0.03); slab(x, objY + 0.95, z, 0.85, 0.85, 0.16, 0.15, M.glass, 0.03); }
+  function cloud3d(x, y, z, s = 0.6) { const g = new THREE.Group(); [[0, 0, 0, 0.42], [0.4, 0.12, 0, 0.32], [-0.38, 0.06, 0.05, 0.3], [0.1, 0.28, -0.05, 0.3]].forEach(([cx, cy, cz, r]) => { const m = new THREE.Mesh(new THREE.SphereGeometry(r, 32, 24), M.white); m.position.set(cx, cy, cz); m.castShadow = true; g.add(m); }); g.scale.setScalar(s); g.position.set(x, y, z); scene.add(g); }
+
+  /* centre object sets per module */
+  const CENTER = {
+    inventory() { rackStack(GX[0] - 0.55, GZ - 0.1); rackStack(GX[0] + 0.75, GZ + 0.35, 4); dbStack(GX[1] - 0.6, GZ - 0.2); dbStack(GX[1] + 0.55, GZ + 0.45, 2, 0.45); cubeCluster(GX[2] - 0.2, GZ - 0.2); magnifier(GX[2] + 1.15, objY + 1.0, GZ + 1.5, 0.85); },
+    whalenomics() { coinStack(GX[0] - 0.5, GZ - 0.2, 4); coinStack(GX[0] + 0.5, GZ + 0.4, 2); bars(GX[1], GZ); cubeCluster(GX[2], GZ, 0.5); magnifier(GX[2] + 1.6, objY + 1.2, GZ + 1.3, 0.9); },
+    "whale-ai"() { rackStack(GX[0], GZ, 4, 1.1, 0.85); aiCube(GX[1], GZ); nodes(GX[1], GZ - 0.1); lock3d(GX[2], GZ, 0.9); docs(GX[2] + 0.2, GZ - 0.6); },
+    migration() { rackStack(GX[0], GZ, 4, 1.1, 0.85); miniPlatform(GX[1] - 0.3, GZ + 0.2, M.baseDeep); cubeCluster(GX[1] - 0.3, GZ + 0.2, 0.42); stackMini(GX[2], GZ); arrow3d([GX[1] + 0.4, objY + 0.9, GZ], [GX[2] - 0.5, objY + 1.3, GZ]); },
+    audit() { docs(GX[0], GZ); shield3d(GX[1], GZ, 1.05); lock3d(GX[2] - 0.4, GZ + 0.3, 0.8); magnifier(GX[2] + 1.0, objY + 1.2, GZ + 1.2, 0.9); },
+    sovereign() { lock3d(GX[0], GZ, 1.0); globe3d(GX[1], GZ); rackStack(GX[2] - 0.5, GZ - 0.1, 4, 1.1, 0.85); cloud3d(GX[2] + 1.3, objY + 1.6, GZ + 0.6, 0.55); },
+    platform() { cloud3d(GX[0] - 0.4, objY + 1.2, GZ, 0.7); cloud3d(GX[0] + 0.7, objY + 0.7, GZ + 0.6, 0.5); rackStack(GX[1] - 0.6, GZ - 0.1, 4, 1.1, 0.85); dbStack(GX[1] + 0.7, GZ + 0.4, 2, 0.45); stackMini(GX[2], GZ); },
+  };
+  (CENTER[mod.center] || CENTER.inventory)();
+
+  /* edge agent box (left front) */
+  const edge = new THREE.Group(); box(0, 0.42, 0, 3.0, 0.8, 1.8, M.chrome, edge); box(0, 0.42, 0.91, 2.6, 0.5, 0.02, M.slot, edge); box(1.0, 0.42, 0.93, 0.12, 0.12, 0.02, M.led, edge); box(1.25, 0.42, 0.93, 0.12, 0.12, 0.02, M.led, edge); edge.position.set(-9.6, 0, 3.6); edge.rotation.y = 0.35; scene.add(edge);
+
+  /* bottom feature pucks + icons */
+  const FX = [-6.6, -2.2, 2.2, 6.6], FZ = 8.0;
+  const FEAT_ICON = {
+    magnifier(x, z) { magnifier(x, 0.95, z, 0.75); },
+    cubes(x, z) { const g = new THREE.Group(); [[-0.3, 0, 0], [0.32, 0, 0.1], [0, 1, -0.05]].forEach(([px, py, pz], i) => box(px * 0.52, 0.26 + py * 0.52, pz * 0.52, 0.5, 0.5, 0.5, i === 1 ? M.chrome : M.blue, g)); g.position.set(x, 0.1, z); scene.add(g); },
+    refresh(x, z) { const g = new THREE.Group(); const t1 = new THREE.Mesh(new THREE.TorusGeometry(0.62, 0.11, 16, 64, Math.PI * 1.35), M.blue); t1.rotation.x = -0.3; g.add(t1); const c1 = new THREE.Mesh(new THREE.ConeGeometry(0.22, 0.42, 24), M.blue); c1.position.set(0.62, 0.05, 0); c1.rotation.z = Math.PI; g.add(c1); g.children.forEach((c) => (c.castShadow = true)); g.position.set(x, 0.85, z); scene.add(g); },
+    docs(x, z) { const g = new THREE.Group(); box(-0.15, 0.6, 0, 0.9, 1.15, 0.05, M.white, g); [0.3, 0.1, -0.1, -0.3].forEach((ly) => box(-0.15, 0.6 + ly, 0.035, 0.6, 0.05, 0.02, M.blueLight, g)); box(0.45, 0.32, 0.25, 0.5, 0.5, 0.5, M.green, g); g.position.set(x, 0.1, z); scene.add(g); },
+    chart(x, z) { const g = new THREE.Group(); [0.45, 0.8, 1.2].forEach((h, i) => box((i - 1) * 0.42, h / 2, 0, 0.3, h, 0.3, i === 2 ? M.blue : M.chrome, g)); g.position.set(x, 0.1, z); scene.add(g); },
+    coins(x, z) { const g = new THREE.Group(); for (let i = 0; i < 4; i++) cyl(0, 0.06 + i * 0.12, 0, 0.45, 0.1, M.gold, g); cyl(0.5, 0.06, 0.4, 0.3, 0.1, M.gold, g); g.position.set(x, 0.1, z); scene.add(g); },
+    sparkle(x, z) { const sh = new THREE.Shape(); sh.moveTo(0, 1); sh.quadraticCurveTo(0.12, 0.12, 1, 0); sh.quadraticCurveTo(0.12, -0.12, 0, -1); sh.quadraticCurveTo(-0.12, -0.12, -1, 0); sh.quadraticCurveTo(-0.12, 0.12, 0, 1); const m = new THREE.Mesh(new THREE.ExtrudeGeometry(sh, { depth: 0.12, bevelEnabled: false }), M.gold); m.scale.setScalar(0.7); m.position.set(x, 0.85, z); m.castShadow = true; scene.add(m); },
+    lock(x, z) { lock3d(x, z, 0.75, 0.1); },
+    shield(x, z) { shield3d(x, z, 0.62, 0.1); },
+    globe(x, z) { globe3d(x, z, 0.58, 0.1); },
+  };
+  FX.forEach((x, i) => { cyl(x, 0.05, FZ, 0.85, 0.1, M.chrome); const [ic] = mod.features[i]; (FEAT_ICON[ic] || FEAT_ICON.cubes)(x, FZ); });
+  // override objY-based builders used above for pucks: they place at objY; re-anchor those to the puck height
+  scene.traverse((o) => { if (o.userData.puck) o.position.y = 0.1; });
+
+  renderer.render(scene, camera);
+
+  /* ─── HTML overlay, placed by projecting 3D anchors ─── */
+  const v = new THREE.Vector3();
+  const proj = (x, y, z) => { v.set(x, y, z).project(camera); return { x: (v.x + 1) / 2 * W, y: (1 - v.y) / 2 * H }; };
+  const add = (html) => { const d = document.createElement("div"); d.innerHTML = html; const el = d.firstElementChild; ui.appendChild(el); return el; };
+
+  add(`<div class="title"><h1>BlueWhale Stack</h1><h2>${mod.title}</h2></div>`);
+  const pillsEl = add(`<div class="pills">${PROVIDERS.map((p) => `<div class="pill">${p}</div>`).join("")}</div>`);
+  // group labels on the mini shelves
+  mod.groups.forEach((gname, i) => { const p = proj(GX[i], gy + 0.02, GZ + 1.35); add(`<div class="lbl" style="left:${p.x}px;top:${p.y - 26}px">${gname}</div>`); });
+  // left cards
+  const leftX = 60; mod.left.forEach((c, i) => add(`<div class="card" style="left:${leftX}px;top:${470 + i * 205}px"><div class="ico">${ico(c.icon)}</div><div><h3>${c.title}</h3><p>${c.sub}</p></div></div>`));
+  // edge label
+  { const p = proj(-9.6, 0, 4.7); add(`<div class="lbl" style="left:${p.x}px;top:${p.y + 16}px;font-size:30px;padding:12px 30px">${mod.edge}</div>`); }
+  // right panel
+  add(`<div class="panel" style="right:60px;top:440px"><h3>${mod.right.title}</h3>${mod.right.items.map(([ic2, t]) => `<div class="row"><span class="dot">${ico(ic2)}</span>${t}</div>`).join("")}</div>`);
+  // tagline pill under the base
+  { const p = proj(0, 0.15, BD / 2 + 0.3); add(`<div class="tag" style="left:${p.x}px;top:${p.y - 36}px">${mod.tagline}</div>`); }
+  // feature labels under pucks + dividers
+  FX.forEach((x, i) => { const p = proj(x, 0, FZ + 0.85); add(`<div class="feat" style="left:${p.x}px;top:${p.y + 4}px">${mod.features[i][1]}</div>`); if (i < 3) { const q2 = proj((x + FX[i + 1]) / 2, 0, FZ); add(`<div class="vline" style="left:${q2.x}px;top:${q2.y - 110}px;height:170px"></div>`); } });
+  add(`<div class="footer"><span>${mod.footer}</span></div>`);
+
+  /* ─── cables (SVG under the canvas) ─── */
+  await new Promise((r) => requestAnimationFrame(r));
+  const NS = "http://www.w3.org/2000/svg";
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  const defs = document.createElementNS(NS, "defs");
+  defs.innerHTML = `<filter id="glow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="9" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7fb3ff"/><stop offset="1" stop-color="#1a47c9"/></linearGradient>`;
+  svg.appendChild(defs);
+  const cable = (x1, y1, x2, y2, bend = 0.5) => {
+    const d = `M${x1} ${y1} C ${x1} ${y1 + (y2 - y1) * bend}, ${x2} ${y2 - (y2 - y1) * bend}, ${x2} ${y2}`;
+    for (const [w, op, col, f] of [[26, 0.18, "#4a7cf0", "url(#glow)"], [11, 0.95, "url(#cg)", ""], [4, 0.9, "#dbe6ff", ""]]) {
+      const p = document.createElementNS(NS, "path"); p.setAttribute("d", d); p.setAttribute("fill", "none"); p.setAttribute("stroke", col); p.setAttribute("stroke-width", w); p.setAttribute("stroke-opacity", op); p.setAttribute("stroke-linecap", "round"); if (f) p.setAttribute("filter", f); svg.appendChild(p);
+    }
+  };
+  const stageRect = stage.getBoundingClientRect();
+  const pills = [...pillsEl.children];
+  const targets = [-4.2, -2.9, -1.6, 0, 1.6, 2.9, 4.2];
+  pills.forEach((pl, i) => { const r = pl.getBoundingClientRect(); const t = proj(targets[i], shelfY + 0.26 + 2.7, -1.75); cable(r.left - stageRect.left + r.width / 2, r.bottom - stageRect.top, t.x, t.y, 0.55); });
+  // side cables: left cards → console left edge, right panel rows → console right edge
+  [...ui.querySelectorAll(".card")].forEach((c, i) => { const r = c.getBoundingClientRect(); const t = proj(-5.1, shelfY + 0.26 + 1.2 - i * 0.6, -1.0); cable(r.right - stageRect.left, r.top - stageRect.top + r.height / 2, t.x, t.y, 0.0); });
+  [...ui.querySelectorAll(".panel .row")].slice(0, 6).forEach((rw, i) => { const r = rw.getBoundingClientRect(); const t = proj(5.1, shelfY + 0.26 + 2.2 - i * 0.42, -1.0 + i * 0.1); cable(r.left - stageRect.left, r.top - stageRect.top + r.height / 2, t.x, t.y, 0.0); });
+
+  window.__done = true;
+})();
+</script>
+</body>
+</html>
