@@ -74,7 +74,7 @@ export function Hero() {
 
           {/* Right: the platform, natively — objects on the page surface, pills and cables in HTML */}
           <div className="relative min-w-0">
-            <ProductScene scene="platform" priority className="mx-auto w-full max-w-[680px]" />
+            <ProductScene scene="estate" priority className="mx-auto w-full max-w-[680px]" />
           </div>
         </div>
       </Container>

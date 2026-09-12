@@ -11,7 +11,7 @@ import { ProductScene } from "./ProductScene";
  * permanently where WebGL is unavailable.
  */
 function Fallback() {
-  return <ProductScene scene="platform" tilt={false} className="mx-auto w-full max-w-[680px]" />;
+  return <ProductScene scene="estate" live={false} className="mx-auto w-full max-w-[680px]" />;
 }
 
 const SolutionsScene = dynamic(() => import("./SolutionsScene").then((m) => m.SolutionsScene), {
