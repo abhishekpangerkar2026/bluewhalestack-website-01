@@ -12,9 +12,13 @@ import { scenes, type SceneKey } from "@/content/scenes.generated";
 
 const PROVIDERS = ["AWS", "Azure", "Google Cloud", "Oracle", "Alibaba", "Huawei", "On-prem & Hybrid"];
 
+/** Module slugs whose scene is keyed differently. */
+const ALIAS: Record<string, SceneKey> = { finops: "whalenomics" };
+const resolve = (key: string) => scenes[(key in scenes ? key : ALIAS[key]) as SceneKey];
+
 /** Compact card thumbnail: the objects on a soft brand tile, no pills or labels. */
 export function SceneThumb({ scene, className }: { scene: SceneKey | string; className?: string }) {
-  const s = scenes[scene as SceneKey];
+  const s = resolve(scene);
   if (!s) return null;
   return (
     <div
@@ -55,7 +59,7 @@ export function ProductScene({
   className?: string;
   priority?: boolean;
 }) {
-  const s = scenes[scene as SceneKey];
+  const s = resolve(scene);
   if (!s) return null;
   const dark = variant === "dark";
   const ratio = s.width / s.height;
