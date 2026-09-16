@@ -3,7 +3,7 @@ import { ArrowRight, Check } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
-import { ProductScene } from "@/components/scenes/ProductScene";
+import { HeroArt, HeroArtMobile } from "@/components/scenes/ProductScene";
 import { Card } from "@/components/ui/Card";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
@@ -157,17 +157,14 @@ export default function WhaleAIPage() {
   return (
     <>
       {/* ── Hero: dark brand band ── */}
-      <section className="relative overflow-hidden bg-[var(--brand-deep)] text-white">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -right-32 top-0 h-[500px] w-[500px] rounded-full bg-[#6366f1]/20 blur-[120px]"
-        />
+      <section className="relative overflow-hidden bg-brand-900 text-white">
         <div
           aria-hidden
           className="pointer-events-none absolute -bottom-20 -left-20 h-[300px] w-[300px] rounded-full bg-[#0ea5e9]/15 blur-[100px]"
         />
-        <Container className="relative py-20 sm:py-28">
-          <div className="grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr]">
+        <HeroArt scene="whale-ai" variant="dark" />
+        <Container className="pointer-events-none relative py-20 sm:py-28">
+          <div className="pointer-events-auto lg:max-w-[48%]">
           <div className="max-w-3xl">
             <div className="mb-5 flex items-center gap-3">
               <span aria-hidden className="h-px w-8 bg-white/40" />
@@ -204,11 +201,15 @@ export default function WhaleAIPage() {
               </Button>
             </div>
           </div>
-          <ProductScene scene="whale-ai" variant="dark" priority className="mx-auto w-full max-w-[660px]" />
           </div>
+          <HeroArtMobile scene="whale-ai" variant="dark" />
+        </Container>
+      </section>
 
-          {/* Stats strip */}
-          <div className="mt-14 grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-white/15 bg-white/10 sm:grid-cols-4">
+      {/* Stats strip */}
+      <section className="bg-brand-900 pb-14 text-white">
+        <Container>
+          <div className="grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-white/15 bg-white/10 sm:grid-cols-4">
             {STATS.map((s) => (
               <div key={s.label} className="px-5 py-4">
                 <p className="text-2xl font-bold text-white num">{s.value}</p>

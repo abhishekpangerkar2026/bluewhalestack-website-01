@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { ArrowRight, Check, Clock } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { ProductScene } from "@/components/scenes/ProductScene";
+import { HeroArt, HeroArtMobile } from "@/components/scenes/ProductScene";
 import { EDITION_3D } from "@/content/product3d";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
@@ -75,13 +75,14 @@ export default async function EditionDetailPage({
           aria-hidden
           className="pointer-events-none absolute -left-20 top-0 h-80 w-80 rounded-full bg-brand-500/30 blur-[110px]"
         />
-        <Container className="relative">
+        <HeroArt scene={EDITION_3D[edition.slug]} variant="dark" />
+        <Container className="pointer-events-none relative">
           <Breadcrumbs
             inverse
-            className="pt-10"
+            className="pointer-events-auto pt-10"
             items={[{ label: "Editions", href: "/editions" }, { label: `${edition.name} Edition` }]}
           />
-          <div className="grid items-center gap-12 py-12 sm:py-16 lg:grid-cols-[1.15fr_0.85fr]">
+          <div className="pointer-events-auto py-12 sm:py-16 lg:max-w-[48%]">
           <div className="max-w-3xl">
             <div className="flex flex-wrap items-center gap-3">
               <Badge tone="neutral" className="bg-white/10 text-white">
@@ -147,8 +148,8 @@ export default async function EditionDetailPage({
               )}
             </div>
           </div>
-          <ProductScene scene={EDITION_3D[edition.slug]} variant="dark" priority className="mx-auto w-full max-w-[660px]" />
           </div>
+          <HeroArtMobile scene={EDITION_3D[edition.slug]} variant="dark" className="pb-12" />
         </Container>
       </section>
 

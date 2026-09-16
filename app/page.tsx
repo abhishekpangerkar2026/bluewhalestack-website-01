@@ -100,8 +100,8 @@ export default function HomePage() {
             ))}
           </div>
           <Reveal delay={120}>
-            <div className="mt-8 grid items-center gap-8 rounded-xl border border-line bg-sunken p-6 sm:p-8 lg:grid-cols-[1.15fr_0.85fr]">
-              <ProductScene scene="architecture" className="w-full" />
+            <div className="mt-8 grid items-center gap-8 rounded-xl border border-line bg-white p-6 sm:p-8 lg:grid-cols-[1.15fr_0.85fr]">
+              <ProductScene scene="architecture" className="w-full aspect-[16/11]" />
               <div>
                 <h3 className="text-2xl font-bold text-ink">{promise.title}</h3>
                 <p className="mt-3 max-w-2xl text-muted">{promise.body}</p>

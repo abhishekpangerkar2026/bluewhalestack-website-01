@@ -11,7 +11,7 @@ import { FactStrip } from "@/components/ui/FactStrip";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { ModuleDiagram } from "@/components/diagrams/ModuleDiagram";
-import { ProductScene } from "@/components/scenes/ProductScene";
+import { HeroArt, HeroArtMobile } from "@/components/scenes/ProductScene";
 import { ConsoleMockup } from "@/components/sections/mockups/ConsoleMockup";
 import { FAQ } from "@/components/sections/FAQ";
 import { ClosingCTA } from "@/components/sections/ClosingCTA";
@@ -69,16 +69,18 @@ export default async function ModuleDetailPage({
   return (
     <>
       {/* ── Hero ── */}
-      <section className="border-b border-line bg-sunken py-12 sm:py-16">
-        <Container>
+      <section className="relative overflow-hidden border-b border-line bg-white py-12 sm:py-16 lg:min-h-[620px]">
+        <HeroArt scene={mod.slug} />
+        <Container className="pointer-events-none relative">
           <Breadcrumbs
+            className="pointer-events-auto"
             items={[
               { label: "Platform", href: "/platform" },
               { label: moduleGroups[mod.group], href: `/modules#${mod.group}` },
               { label: mod.name },
             ]}
           />
-          <div className="mt-10 grid items-center gap-12 lg:grid-cols-[1fr_1fr]">
+          <div className="pointer-events-auto mt-10 lg:max-w-[46%]">
             <div>
               <div className="flex flex-wrap items-center gap-2">
                 <Badge tone={detail.status.tone}>{detail.status.label}</Badge>
@@ -106,12 +108,14 @@ export default async function ModuleDetailPage({
                 )}
               </div>
             </div>
-            <Reveal delay={80} className="min-w-0">
-              <ProductScene scene={mod.slug} priority className="mx-auto w-full max-w-[680px]" />
-            </Reveal>
           </div>
+          <HeroArtMobile scene={mod.slug} />
+        </Container>
+      </section>
+      <section className="border-b border-line bg-sunken py-8">
+        <Container>
           <Reveal delay={120}>
-            <FactStrip facts={detail.facts} className="mt-12" />
+            <FactStrip facts={detail.facts} />
           </Reveal>
         </Container>
       </section>

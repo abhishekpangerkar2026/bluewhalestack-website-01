@@ -90,7 +90,7 @@ export default function PlatformPage() {
               </div>
             </div>
             <Reveal delay={100}>
-              <ProductScene scene="architecture" priority className="mx-auto w-full max-w-[720px]" />
+              <ProductScene scene="architecture" priority tagline className="w-full aspect-[4/3]" />
             </Reveal>
           </div>
 

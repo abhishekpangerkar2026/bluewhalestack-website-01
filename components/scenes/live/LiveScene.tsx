@@ -8,14 +8,19 @@ import { SCENES } from "./registry";
 import { buildScene, makeMaterials, type BuiltScene } from "./build";
 
 /**
- * Live, rotating version of a product scene. Drag to rotate (springs back),
- * gentle idle sway, pulses travelling down the provider cables. Also drives
- * the static captures (scripts/capture-scenes.mjs) through /scene-capture,
- * where it renders one frame at a fixed angle on a transparent canvas.
+ * Live, rotating version of a product scene in a white (or navy) CGI studio:
+ * infinite reflective floor, soft shadows, fog to the horizon. Drag to rotate
+ * (springs back), gentle idle sway, pulses travelling down the provider
+ * cables. Also drives the static posters (scripts/capture-scenes.mjs) and the
+ * video clips through /scene-capture, where it renders fixed frames.
  */
+export type Studio = "light" | "dark";
+
 export interface LiveSceneProps {
   sceneKey: string;
   className?: string;
+  /** white or navy studio (background, floor, fog) */
+  studio?: Studio;
   /** pointer drag rotates the model */
   interactive?: boolean;
   /** idle sway + cable pulses */
@@ -28,8 +33,13 @@ export interface LiveSceneProps {
   onReady?: () => void;
 }
 
-export function Studio() {
-  // the same six-panel studio the offline renderer uses for chrome and glass reflections
+export const STUDIO_BG: Record<Studio, string> = { light: "#ffffff", dark: "#00156b" };
+
+/** Horizontal half-angle of the framing: the platform spans ~78% of the width in any aspect ratio. */
+const TAN_HALF_H = 0.41;
+
+export function StudioEnvironment() {
+  // a six-panel studio for chrome and glass reflections: white ceiling, bright walls, a blue back wall
   const panel = (p: [number, number, number], r: [number, number, number], w: number, h: number, color: string, key: string) => (
     <mesh position={p} rotation={r} key={key}>
       <planeGeometry args={[w, h]} />
@@ -38,47 +48,66 @@ export function Studio() {
   );
   return (
     <Environment resolution={256} frames={1}>
-      <mesh><sphereGeometry args={[40, 16, 16]} /><meshBasicMaterial color="#dfe6f4" side={THREE.BackSide} /></mesh>
+      <mesh><sphereGeometry args={[40, 16, 16]} /><meshBasicMaterial color="#eef2f8" side={THREE.BackSide} /></mesh>
       {panel([0, 10, 0], [Math.PI / 2, 0, 0], 30, 30, "#ffffff", "top")}
-      {panel([0, -6, 0], [Math.PI / 2, 0, 0], 30, 30, "#8fa3c8", "floor")}
-      {panel([-12, 4, 0], [0, Math.PI / 2, 0], 12, 10, "#bfd2ff", "left")}
+      {panel([0, -6, 0], [Math.PI / 2, 0, 0], 30, 30, "#b7c4d8", "floor")}
+      {panel([-12, 4, 0], [0, Math.PI / 2, 0], 12, 10, "#dfe8f7", "left")}
       {panel([12, 4, 0], [0, -Math.PI / 2, 0], 12, 10, "#ffffff", "right")}
-      {panel([0, 4, -12], [0, 0, 0], 20, 10, "#2f62e6", "back")}
+      {panel([0, 8.5, -12], [0, 0, 0], 16, 5, "#4f83f2", "back")}
       {panel([0, 4, 12], [0, Math.PI, 0], 20, 10, "#ffffff", "front")}
     </Environment>
   );
 }
 
-export function StageLights() {
+export function StageLights({ studio }: { studio: Studio }) {
+  const dark = studio === "dark";
   return (
     <>
-      <hemisphereLight args={[0xffffff, 0x9fb4e0, 0.55]} />
+      <hemisphereLight args={[0xffffff, dark ? 0x1b3a9a : 0xa9bde6, dark ? 0.45 : 0.5]} />
       <directionalLight
-        position={[-6, 14, 10]}
-        intensity={2.1}
+        position={[-6, 15, 10]}
+        intensity={dark ? 2.0 : 2.3}
         castShadow
         shadow-mapSize={[2048, 2048]}
-        shadow-camera-left={-12}
-        shadow-camera-right={12}
-        shadow-camera-top={12}
-        shadow-camera-bottom={-12}
+        shadow-camera-left={-13}
+        shadow-camera-right={13}
+        shadow-camera-top={13}
+        shadow-camera-bottom={-13}
         shadow-camera-near={1}
         shadow-camera-far={60}
-        shadow-bias={-0.0005}
-        shadow-radius={5}
+        shadow-bias={-0.0004}
+        shadow-normalBias={0.02}
+        shadow-radius={6}
       />
-      <directionalLight position={[10, 6, 8]} intensity={0.6} color={0xbfd2ff} />
-      <directionalLight position={[0, 6, -12]} intensity={0.5} color={0x4a7cf0} />
+      <directionalLight position={[10, 6, 8]} intensity={0.55} color={0xd6e4ff} />
+      <directionalLight position={[0, 6, -12]} intensity={0.6} color={0x4a7cf0} />
     </>
   );
 }
 
+/** Keeps the horizontal field of view constant, whatever the canvas aspect ratio. */
+function FitCamera({ lookY }: { lookY: number }) {
+  const camera = useThree((s) => s.camera) as THREE.PerspectiveCamera;
+  const size = useThree((s) => s.size);
+  const invalidate = useThree((s) => s.invalidate);
+  useEffect(() => {
+    const aspect = Math.max(0.5, size.width / Math.max(1, size.height));
+    camera.fov = (2 * Math.atan(TAN_HALF_H / aspect) * 180) / Math.PI;
+    camera.aspect = aspect;
+    camera.updateProjectionMatrix();
+    camera.lookAt(0, lookY, 0);
+    invalidate();
+  }, [camera, size.width, size.height, lookY, invalidate]);
+  return null;
+}
+
 type Controls = { dragging: boolean; targetX: number; targetY: number; reduced: boolean };
 
-function Model({ sceneKey, controls, angle, animate, onReady }: { sceneKey: string; controls: React.MutableRefObject<Controls>; angle?: number; animate: boolean; onReady?: () => void }) {
+function Model({ sceneKey, controls, angle, animate, studio, onReady }: { sceneKey: string; controls: React.MutableRefObject<Controls>; angle?: number; animate: boolean; studio: Studio; onReady?: () => void }) {
   const rig = useRef<THREE.Group>(null);
   const [built, setBuilt] = useState<BuiltScene | null>(null);
   const invalidate = useThree((s) => s.invalidate);
+  const dark = studio === "dark";
 
   useEffect(() => {
     const def = SCENES[sceneKey];
@@ -87,17 +116,42 @@ function Model({ sceneKey, controls, angle, animate, onReady }: { sceneKey: stri
     let scene: BuiltScene | null = null;
     const M = makeMaterials();
     const family = getComputedStyle(document.body).fontFamily || "Inter, system-ui, sans-serif";
-    const ready = (document.fonts?.load(`800 100px ${family}`).then(() => document.fonts.ready) ?? Promise.resolve()) as Promise<unknown>;
-    ready.then(
-      () => { if (!alive) return; scene = buildScene(def, M, family); setBuilt(scene); },
-      () => { if (!alive) return; scene = buildScene(def, M, family); setBuilt(scene); },
-    );
+    // Canvas text drawn while a web font is still loading comes out invisible, and the textures are drawn
+    // once — so wait for the page's fonts to settle (with a cap), and rebuild once if we had to build early.
+    const fonts = document.fonts;
+    const settled: Promise<unknown> = fonts
+      ? fonts.load(`800 100px ${family}`).catch(() => undefined).then(() => fonts.ready)
+      : Promise.resolve();
+    const cap = new Promise<void>((r) => setTimeout(r, 6000));
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const build = () => {
+      if (!alive) return;
+      scene?.dispose();
+      scene = buildScene(def, M, family);
+      setBuilt(scene);
+    };
+    Promise.race([settled, cap]).then(() => {
+      build();
+      if (fonts && fonts.status === "loading") fonts.ready.then(() => { if (alive) timer = setTimeout(build, 50); });
+    });
     return () => {
       alive = false;
+      if (timer) clearTimeout(timer);
       scene?.dispose();
       Object.values(M).forEach((m) => m.dispose());
     };
   }, [sceneKey]);
+
+  // the floor reflection: a mirrored copy of the model under a translucent floor
+  const mirror = useMemo(() => {
+    if (!built) return null;
+    const m = built.group.clone(true);
+    m.traverse((o) => {
+      const mesh = o as THREE.Mesh;
+      if (mesh.isMesh) { mesh.castShadow = false; mesh.receiveShadow = false; mesh.renderOrder = -1; }
+    });
+    return m;
+  }, [built]);
 
   useEffect(() => {
     if (!built) return;
@@ -138,25 +192,31 @@ function Model({ sceneKey, controls, angle, animate, onReady }: { sceneKey: stri
   return (
     <group ref={rig} position={[0, -1.9, 0]}>
       {built && <primitive object={built.group} />}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.01, 0]} receiveShadow>
-        <planeGeometry args={[80, 80]} />
-        <shadowMaterial opacity={0.16} />
+      {mirror && (
+        <group scale={[1, -1, 0.999]} position={[0, -0.002, 0]}>
+          <primitive object={mirror} />
+        </group>
+      )}
+      {/* the studio floor: white (or navy), glossy, translucent so the mirrored model shows through as a reflection */}
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow renderOrder={0}>
+        <planeGeometry args={[400, 400]} />
+        <meshStandardMaterial color={dark ? 0x081d66 : 0xffffff} roughness={dark ? 0.55 : 0.35} metalness={0} transparent opacity={dark ? 0.86 : 0.8} envMapIntensity={0} />
       </mesh>
     </group>
   );
 }
 
-export function LiveScene({ sceneKey, className, interactive = true, animate = true, angle, still = false, dpr = [1, 1.75], onReady }: LiveSceneProps) {
+export function LiveScene({ sceneKey, className, studio = "light", interactive = true, animate = true, angle, still = false, dpr = [1, 1.75], onReady }: LiveSceneProps) {
   const controls = useRef<Controls>({ dragging: false, targetX: 0, targetY: 0, reduced: false });
   const drag = useRef<{ x: number; y: number; ry: number; rx: number } | null>(null);
-  // tight framing: the slab fills the 16:9 canvas so the static capture and the live view line up;
-  // the six-layer stack is taller, so it sits a little further back
+  // the six-layer stack is taller, so its camera sits a little higher and further back
   const stack = SCENES[sceneKey]?.layout === "stack";
   const camera = useMemo(
-    () => ({ fov: 24, position: (stack ? [0, 10.4, 24.6] : [0, 9.3, 22.1]) as [number, number, number], near: 0.1, far: 200 }),
+    () => ({ fov: 24, position: (stack ? [0, 11.6, 25.2] : [0, 10.2, 22.4]) as [number, number, number], near: 0.1, far: 300 }),
     [stack],
   );
-  const lookY = stack ? 2.6 : 1.15;
+  const lookY = stack ? 2.7 : 1.4;
+  const bg = STUDIO_BG[studio];
 
   useEffect(() => {
     controls.current.reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
@@ -181,24 +241,27 @@ export function LiveScene({ sceneKey, className, interactive = true, animate = t
     : {};
 
   return (
-    <div className={className} style={{ touchAction: "pan-y" }} {...handlers}>
+    <div className={className} style={{ touchAction: "pan-y", background: bg }} {...handlers}>
       <Canvas
         dpr={dpr}
         shadows={{ type: THREE.PCFShadowMap }}
         frameloop={still ? "demand" : "always"}
-        gl={{ alpha: true, antialias: true, powerPreference: "high-performance", preserveDrawingBuffer: still }}
+        gl={{ alpha: false, antialias: true, powerPreference: "high-performance", preserveDrawingBuffer: still }}
         camera={camera}
         onCreated={({ gl, camera: cam }) => {
           gl.toneMapping = THREE.ACESFilmicToneMapping;
-          gl.toneMappingExposure = 0.9;
-          gl.setClearColor(0x000000, 0);
+          gl.toneMappingExposure = 1.0;
+          gl.setClearColor(bg, 1);
           cam.lookAt(0, lookY, 0);
         }}
-        style={{ background: "transparent" }}
+        style={{ background: bg }}
       >
-        <StageLights />
-        <Studio />
-        <Model sceneKey={sceneKey} controls={controls} angle={angle} animate={animate && !still} onReady={onReady} />
+        <color attach="background" args={[bg]} />
+        <fog attach="fog" args={[bg, 34, 78]} />
+        <FitCamera lookY={lookY} />
+        <StageLights studio={studio} />
+        <StudioEnvironment />
+        <Model sceneKey={sceneKey} controls={controls} angle={angle} animate={animate && !still} studio={studio} onReady={onReady} />
       </Canvas>
     </div>
   );

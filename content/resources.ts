@@ -14,6 +14,8 @@ export interface ResourceDef {
   summary: string;
   meta: string;
   topic: string;
+  /** key of the 3D scene used as the cover art */
+  scene: string;
   href: string;
   pdf: string;
 }
@@ -27,6 +29,7 @@ export const resources: ResourceDef[] = documents.map((d) => ({
   summary: d.summary,
   meta: d.meta,
   topic: d.topic,
+  scene: d.scene,
   href: `/resources/${d.slug}`,
   pdf: `/docs/${d.slug}.pdf`,
 }));

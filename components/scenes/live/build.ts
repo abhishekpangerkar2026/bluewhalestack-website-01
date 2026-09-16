@@ -1,58 +1,74 @@
 /**
- * Builds a product scene as a three.js group from its SceneDef — a port of the
- * offline renderer (scripts/render-3d/infographic.html) so the live WebGL
- * scenes and the static captures share one definition. Pure three.js; no
- * React. Text is drawn to canvas textures in the page's own Inter face.
+ * Builds a product scene as a three.js group from its SceneDef. Pure three.js;
+ * no React. One definition drives the live WebGL scene, the static posters and
+ * the video clips.
+ *
+ * Look: a white CGI studio — brushed-silver platforms with blue LED edges,
+ * glass and chrome, graphite server racks with blue LEDs, white clouds on
+ * floating chrome pucks, glowing ribbon cables — after the official
+ * "Product 3D Images" set. Text is drawn to canvas textures in the page's own
+ * Inter face, sized to stay legible at hero width.
  */
 import * as THREE from "three";
 import { DEFAULT_PROVIDERS, type SceneDef } from "./registry";
 
-/* ── geometry constants (units follow the offline renderer) ─────── */
+/* ── geometry constants (rig space: the floor is y = 0) ─────────── */
 export const BW = 14.5, BD = 8.2, BH = 1.35;
-const SHELF_Y = BH + 0.28 + 0.12; // 1.75 — top of the base slab
+const PLINTH = 0.28;
+const SLAB_TOP = PLINTH + BH + 0.24; // 1.87 — the base slab's top surface
+const SHELF_Y = PLINTH + BH + 0.12; // 1.75 — where things stand on the slab
 const GX = [-3.3, 0, 3.3];
 const GZ = 0.95;
-const GY = SHELF_Y + 0.26; // mini shelves sit on the console shelf
+const GY = SHELF_Y + 0.26;
 const OBJ_Y = GY + 0.16 + 0.04;
-const PANEL_Z = -1.75;
-const PANEL_TOP_Y = SHELF_Y + 0.26 + 2.7;
-const PILL_Y = 6.85, PILL_Z = -1.3;
+const SCREEN_Z = -1.5;
+const SCREEN_TILT = -0.42;
+const SCREEN_W = 10.2, SCREEN_H = 2.9;
+const PILL_Y = 6.3, PILL_Z = -1.6;
 export const CABLE_TARGETS_X = [-4.2, -2.9, -1.6, 0, 1.6, 2.9, 4.2];
 
 export type Materials = ReturnType<typeof makeMaterials>;
 
+const phys = (color: number, p: Partial<THREE.MeshPhysicalMaterialParameters>) => new THREE.MeshPhysicalMaterial({ color, ...p });
+
 export function makeMaterials() {
   const mats = {
-    base: new THREE.MeshPhysicalMaterial({ color: 0x0e3bd0, roughness: 0.2, metalness: 0.05, clearcoat: 1, clearcoatRoughness: 0.08 }),
-    baseDeep: new THREE.MeshPhysicalMaterial({ color: 0x0c2f9e, roughness: 0.3, metalness: 0.05, clearcoat: 0.8 }),
-    chrome: new THREE.MeshPhysicalMaterial({ color: 0xe6ebf3, roughness: 0.14, metalness: 1.0, clearcoat: 1 }),
-    steel: new THREE.MeshPhysicalMaterial({ color: 0xb8c2d3, roughness: 0.28, metalness: 0.9 }),
-    glass: new THREE.MeshPhysicalMaterial({ color: 0xf2f6ff, roughness: 0.08, metalness: 0, transparent: true, opacity: 0.62, clearcoat: 1 }),
-    frost: new THREE.MeshPhysicalMaterial({ color: 0xf6f9ff, roughness: 0.32, metalness: 0, transparent: true, opacity: 0.96 }),
-    blue: new THREE.MeshPhysicalMaterial({ color: 0x2f62e6, roughness: 0.22, metalness: 0.1, clearcoat: 1 }),
-    blueLight: new THREE.MeshPhysicalMaterial({ color: 0x7fb3ff, roughness: 0.25, metalness: 0.05, clearcoat: 1 }),
-    led: new THREE.MeshStandardMaterial({ color: 0x4a9eff, emissive: 0x2f7dff, emissiveIntensity: 2.2, roughness: 0.3 }),
-    slot: new THREE.MeshStandardMaterial({ color: 0x1b2540, roughness: 0.6, metalness: 0.3 }),
-    white: new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.7 }),
-    gold: new THREE.MeshPhysicalMaterial({ color: 0xf2c14e, roughness: 0.2, metalness: 0.95 }),
-    green: new THREE.MeshPhysicalMaterial({ color: 0x1f9d55, roughness: 0.3, clearcoat: 1 }),
+    /* platforms */
+    base: phys(0xe4e8ee, { roughness: 0.3, metalness: 0.62, clearcoat: 1, clearcoatRoughness: 0.2 }),
+    baseDeep: phys(0x0d2f8f, { roughness: 0.32, metalness: 0.1, clearcoat: 0.9, clearcoatRoughness: 0.1 }),
+    chrome: phys(0xeef2f8, { roughness: 0.1, metalness: 1.0, clearcoat: 1 }),
+    steel: phys(0xb8c2d3, { roughness: 0.3, metalness: 0.9 }),
+    graphite: phys(0x222a38, { roughness: 0.38, metalness: 0.6, clearcoat: 0.7, clearcoatRoughness: 0.2 }),
+    glass: phys(0xd8e6ff, { roughness: 0.04, metalness: 0, transparent: true, opacity: 0.4, clearcoat: 1, depthWrite: false }),
+    frost: phys(0xf2f6ff, { roughness: 0.22, metalness: 0, transparent: true, opacity: 0.92, clearcoat: 1 }),
+    /* accents */
+    blue: phys(0x1d5ce6, { roughness: 0.22, metalness: 0.15, clearcoat: 1 }),
+    blueLight: phys(0x7fb3ff, { roughness: 0.25, metalness: 0.05, clearcoat: 1 }),
+    cloud: phys(0xf9fbff, { roughness: 0.32, metalness: 0, clearcoat: 0.9, clearcoatRoughness: 0.35 }),
+    white: new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.6 }),
+    gold: phys(0xe4bf66, { roughness: 0.28, metalness: 0.9 }),
+    green: phys(0x2e9c5a, { roughness: 0.4, clearcoat: 0.6 }),
+    leaf: new THREE.MeshStandardMaterial({ color: 0x3e9a48, roughness: 0.75 }),
     navy: new THREE.MeshStandardMaterial({ color: 0x0b2a7a, roughness: 0.5 }),
+    slot: new THREE.MeshStandardMaterial({ color: 0x10182a, roughness: 0.5, metalness: 0.4 }),
     ring: new THREE.MeshBasicMaterial({ color: 0xdbe6ff, transparent: true, opacity: 0.6 }),
-    cableCore: new THREE.MeshBasicMaterial({ color: 0xdbe6ff, transparent: true, opacity: 0.95, toneMapped: false }),
-    cableGlow: new THREE.MeshBasicMaterial({ color: 0x4a7cf0, transparent: true, opacity: 0.22, toneMapped: false, depthWrite: false }),
+    /* lights — unlit so they stay saturated in the white studio */
+    led: new THREE.MeshBasicMaterial({ color: 0x6fb4ff, toneMapped: false }),
+    ledGlow: new THREE.MeshBasicMaterial({ color: 0x2f7dff, transparent: true, opacity: 0.5, depthWrite: false, toneMapped: false }),
+    cableCore: new THREE.MeshBasicMaterial({ color: 0xeaf4ff, toneMapped: false }),
+    cableGlow: new THREE.MeshBasicMaterial({ color: 0x2f7dff, transparent: true, opacity: 0.55, depthWrite: false, toneMapped: false }),
     pulse: new THREE.MeshBasicMaterial({ color: 0xffffff, toneMapped: false }),
   };
-  // keep the white studio environment from washing the saturated blues out
   (Object.entries(mats) as [string, THREE.Material][]).forEach(([k, m]) => {
     if ("envMapIntensity" in m) {
       (m as THREE.MeshStandardMaterial).envMapIntensity =
-        k === "chrome" || k === "steel" ? 0.9 : k === "glass" || k === "frost" ? 0.5 : 0.3;
+        k === "chrome" || k === "steel" || k === "base" ? 1.0 : k === "glass" || k === "frost" || k === "cloud" ? 0.6 : 0.35;
     }
   });
   return mats;
 }
 
-/* ── text textures (drawn in the site's Inter face) ─────────────── */
+/* ── canvas textures (drawn in the site's Inter face) ───────────── */
 export type FontFamily = string;
 
 function texture(draw: (g: CanvasRenderingContext2D, w: number, h: number) => void, w: number, h: number) {
@@ -62,7 +78,7 @@ function texture(draw: (g: CanvasRenderingContext2D, w: number, h: number) => vo
   const g = c.getContext("2d")!;
   draw(g, w, h);
   // debug hook for scripts: the last console-panel canvas drawn
-  if (w === 2560 && h === 680) (window as unknown as { __uiCanvas?: HTMLCanvasElement }).__uiCanvas = c;
+  if (w === 2560 && h === 640) (window as unknown as { __uiCanvas?: HTMLCanvasElement }).__uiCanvas = c;
   const t = new THREE.CanvasTexture(c);
   t.colorSpace = THREE.SRGBColorSpace;
   t.anisotropy = 8;
@@ -81,43 +97,73 @@ function roundRectPath(g: CanvasRenderingContext2D, x: number, y: number, w: num
   g.closePath();
 }
 
-/** A chip: rounded background, hairline border, centred text. Returns the texture and its aspect. */
-function chipTexture(text: string, family: FontFamily, opts: { bg: string; fg: string; border: string; px: number; weight: number; padX: number; h: number }) {
+/** A nameplate: brushed plate, hairline border, centred text. Returns the texture and its aspect. */
+function chipTexture(text: string, family: FontFamily, opts: { style: "plate" | "dark"; px: number; weight: number; padX: number; h: number }) {
   const probe = document.createElement("canvas").getContext("2d")!;
   probe.font = `${opts.weight} ${opts.px}px ${family}`;
   const tw = Math.ceil(probe.measureText(text).width);
   const w = tw + opts.padX * 2;
   const h = opts.h;
   const tex = texture((g) => {
-    g.shadowColor = "rgba(11,42,122,0.18)";
+    const plate = opts.style === "plate";
+    g.shadowColor = "rgba(11,42,122,0.22)";
     g.shadowBlur = h * 0.12;
     g.shadowOffsetY = h * 0.04;
-    g.fillStyle = opts.bg;
-    roundRectPath(g, 2, 2, w - 4, h - 4, h * 0.28);
+    const grad = g.createLinearGradient(0, 0, 0, h);
+    if (plate) { grad.addColorStop(0, "#ffffff"); grad.addColorStop(1, "#e4eaf3"); }
+    else { grad.addColorStop(0, "#123a9e"); grad.addColorStop(1, "#0b2a7a"); }
+    g.fillStyle = grad;
+    roundRectPath(g, 2, 2, w - 4, h - 4, h * 0.26);
     g.fill();
     g.shadowColor = "transparent";
     g.lineWidth = Math.max(2, h * 0.02);
-    g.strokeStyle = opts.border;
+    g.strokeStyle = plate ? "rgba(11,42,122,0.28)" : "rgba(255,255,255,0.3)";
     g.stroke();
-    g.fillStyle = opts.fg;
+    // LED underline on the plate
+    g.fillStyle = plate ? "rgba(47,125,255,0.85)" : "rgba(140,200,255,0.9)";
+    roundRectPath(g, w * 0.18, h - h * 0.14, w * 0.64, h * 0.045, h * 0.02);
+    g.fill();
+    g.fillStyle = plate ? "#0b2a7a" : "#ffffff";
     g.font = `${opts.weight} ${opts.px}px ${family}`;
     g.textAlign = "center";
     g.textBaseline = "middle";
-    g.fillText(text, w / 2, h / 2 + opts.px * 0.05);
+    g.fillText(text, w / 2, h / 2 - opts.px * 0.02);
   }, w, h);
   return { tex, aspect: w / h };
 }
 
-function chipMesh(text: string, family: FontFamily, height: number, style: "light" | "dark" = "light", px = 96) {
-  const { tex, aspect } = chipTexture(text, family, {
-    bg: style === "dark" ? "rgba(11,42,122,0.92)" : "#ffffff",
-    fg: style === "dark" ? "#ffffff" : "#0b2a7a",
-    border: style === "dark" ? "rgba(255,255,255,0.25)" : "rgba(26,71,201,0.25)",
-    px, weight: 700, padX: px * 0.7, h: px * 2.1,
-  });
+function chipMesh(text: string, family: FontFamily, height: number, style: "plate" | "dark" = "plate", px = 96) {
+  const { tex, aspect } = chipTexture(text, family, { style, px, weight: 700, padX: px * 0.7, h: px * 2.1 });
   const m = new THREE.Mesh(new THREE.PlaneGeometry(height * aspect, height), new THREE.MeshBasicMaterial({ map: tex, transparent: true, toneMapped: false }));
   m.renderOrder = 2;
   return m;
+}
+
+/** Faint circuit traces for the platform top — a grid with a few brighter runs and pads. */
+function traceTexture() {
+  return texture((g, w, h) => {
+    g.clearRect(0, 0, w, h);
+    g.strokeStyle = "rgba(47,125,255,0.14)"; g.lineWidth = 2;
+    for (let x = 0; x <= w; x += 64) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, h); g.stroke(); }
+    for (let y = 0; y <= h; y += 64) { g.beginPath(); g.moveTo(0, y); g.lineTo(w, y); g.stroke(); }
+    g.strokeStyle = "rgba(47,125,255,0.42)"; g.lineWidth = 5; g.lineCap = "round";
+    const runs: [number, number, number, number][] = [[96, 160, 96, 620], [96, 620, 420, 620], [w - 96, 160, w - 96, 700], [w - 96, 700, w - 380, 700], [520, 80, 520, 260], [w - 520, 80, w - 520, 260], [300, h - 90, w - 300, h - 90]];
+    runs.forEach(([x1, y1, x2, y2]) => { g.beginPath(); g.moveTo(x1, y1); g.lineTo(x2, y2); g.stroke(); });
+    g.fillStyle = "rgba(47,125,255,0.5)";
+    [[96, 160], [420, 620], [w - 96, 160], [w - 380, 700], [520, 260], [w - 520, 260], [300, h - 90], [w - 300, h - 90]].forEach(([x, y]) => { g.beginPath(); g.arc(x, y, 9, 0, Math.PI * 2); g.fill(); });
+  }, 2048, 1152);
+}
+
+/** Radial glow disc (blue → transparent) for LED underlight on the floor. */
+function glowTexture() {
+  return texture((g, w, h) => {
+    const grad = g.createRadialGradient(w / 2, h / 2, 0, w / 2, h / 2, w / 2);
+    grad.addColorStop(0, "rgba(47,125,255,0.55)");
+    grad.addColorStop(0.55, "rgba(47,125,255,0.2)");
+    grad.addColorStop(1, "rgba(47,125,255,0)");
+    g.fillStyle = grad;
+    g.fillRect(0, 0, w, h);
+  }, 512, 512);
 }
 
 /* ── primitive builders ─────────────────────────────────────────── */
@@ -144,6 +190,19 @@ function slab(c: Ctx, x: number, y: number, z: number, w: number, d: number, h: 
   parent.add(m);
   return m;
 }
+/** Blue LED strip running around a slab's top edge (core + soft glow). */
+function ledRim(c: Ctx, x: number, y: number, z: number, w: number, d: number, r: number, inset: number, parent: THREE.Object3D = c.scene, radius = 0.045) {
+  const pts = roundedRect(w - inset * 2, d - inset * 2, Math.max(0.05, r - inset)).getPoints(40).map((p) => new THREE.Vector3(p.x, 0, -p.y));
+  const curve = new THREE.CatmullRomCurve3(pts, true, "catmullrom", 0.01);
+  const g = new THREE.Group();
+  g.position.set(x, y, z);
+  g.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 160, radius, 8, true), c.M.led));
+  const glow = new THREE.Mesh(new THREE.TubeGeometry(curve, 160, radius * 3.2, 8, true), c.M.ledGlow);
+  glow.renderOrder = 1;
+  g.add(glow);
+  parent.add(g);
+  return g;
+}
 function box(c: Ctx, x: number, y: number, z: number, w: number, h: number, d: number, mat: THREE.Material, parent: THREE.Object3D = c.scene) {
   const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
   m.position.set(x, y, z); m.castShadow = true; m.receiveShadow = true; parent.add(m); return m;
@@ -159,16 +218,26 @@ function group(c: Ctx, x: number, y: number, z: number) {
 /* ── object sets ─────────────────────────────────────────────────── */
 function rackStack(c: Ctx, x: number, z: number, units = 4, w = 1.25, d = 0.95) {
   const g = group(c, x, OBJ_Y, z);
-  box(c, 0, units * 0.36 / 2, 0, w, units * 0.36, d, c.M.chrome, g);
+  const h = units * 0.36;
+  box(c, 0, h / 2, 0, w, h, d, c.M.graphite, g);
+  // chrome frame: corner posts and a cap
+  [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(([sx, sz]) => box(c, sx * (w / 2 - 0.03), h / 2, sz * (d / 2 - 0.03), 0.07, h + 0.02, 0.07, c.M.chrome, g));
+  box(c, 0, h + 0.02, 0, w + 0.02, 0.05, d + 0.02, c.M.chrome, g);
   for (let i = 0; i < units; i++) {
-    box(c, 0, 0.18 + i * 0.36, d / 2 + 0.01, w - 0.18, 0.2, 0.02, c.M.slot, g);
-    box(c, w / 2 - 0.2, 0.18 + i * 0.36, d / 2 + 0.03, 0.08, 0.08, 0.02, i % 2 ? c.M.led : c.M.green, g);
+    const y = 0.18 + i * 0.36;
+    box(c, 0, y, d / 2 + 0.01, w - 0.22, 0.24, 0.02, c.M.slot, g);
+    box(c, -w / 2 + 0.3, y + 0.06, d / 2 + 0.03, 0.34, 0.035, 0.01, c.M.led, g);
+    box(c, -w / 2 + 0.3, y - 0.04, d / 2 + 0.03, 0.22, 0.035, 0.01, c.M.led, g);
+    box(c, w / 2 - 0.24, y, d / 2 + 0.03, 0.07, 0.07, 0.02, i % 2 ? c.M.led : c.M.green, g);
   }
   return g;
 }
 function dbStack(c: Ctx, x: number, z: number, n = 3, r = 0.55) {
   const g = group(c, x, OBJ_Y, z);
-  for (let i = 0; i < n; i++) { cyl(c, 0, 0.16 + i * 0.36, 0, r, 0.3, i === n - 1 ? c.M.blue : c.M.chrome, g); }
+  for (let i = 0; i < n; i++) {
+    cyl(c, 0, 0.16 + i * 0.36, 0, r, 0.3, i === n - 1 ? c.M.blue : c.M.chrome, g);
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(r + 0.005, 0.018, 8, 48), c.M.led); ring.rotation.x = Math.PI / 2; ring.position.y = 0.16 + i * 0.36 - 0.12; g.add(ring);
+  }
   return g;
 }
 function cubeCluster(c: Ctx, x: number, z: number, s = 0.62) {
@@ -181,7 +250,7 @@ function magnifier(c: Ctx, x: number, y: number, z: number, s = 1) {
   const g = new THREE.Group();
   const ring = new THREE.Mesh(new THREE.TorusGeometry(0.42, 0.08, 16, 48), c.M.chrome); ring.castShadow = true; g.add(ring);
   const lens = new THREE.Mesh(new THREE.CircleGeometry(0.36, 32), c.M.glass); g.add(lens);
-  const handle = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 0.8, 16), c.M.blue); handle.position.set(0.58, -0.58, 0); handle.rotation.z = Math.PI / 4; handle.castShadow = true; g.add(handle);
+  const handle = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 0.8, 16), c.M.graphite); handle.position.set(0.58, -0.58, 0); handle.rotation.z = Math.PI / 4; handle.castShadow = true; g.add(handle);
   g.rotation.set(0.35, -0.5, 0); g.scale.setScalar(s); g.position.set(x, y, z); c.scene.add(g); return g;
 }
 function coinStack(c: Ctx, x: number, z: number, n = 3, r = 0.42) {
@@ -200,6 +269,7 @@ function aiCube(c: Ctx, x: number, z: number, s = 1.2) {
   const tex = texture((gg, w, h) => { gg.fillStyle = "#fff"; gg.font = `900 ${Math.round(h * 0.56)}px ${c.family}`; gg.textAlign = "center"; gg.textBaseline = "middle"; gg.fillText("AI", w / 2, h / 2 + h * 0.03); }, 512, 512);
   const f = new THREE.Mesh(new THREE.PlaneGeometry(s * 0.9, s * 0.9), new THREE.MeshBasicMaterial({ map: tex, transparent: true }));
   f.position.set(0, s / 2, s / 2 + 0.01); g.add(f);
+  ledRim(c, 0, s + 0.01, 0, s, s, 0.08, 0.06, g, 0.03);
   return g;
 }
 function nodes(c: Ctx, x: number, z: number, n = 6) {
@@ -250,22 +320,24 @@ function arrow3d(c: Ctx, from: [number, number, number], to: [number, number, nu
   const cone = new THREE.Mesh(new THREE.ConeGeometry(0.2, 0.45, 24), mat); cone.position.set(...to); cone.lookAt(mid); cone.rotateX(-Math.PI / 2); c.scene.add(cone);
 }
 function stackMini(c: Ctx, x: number, z: number) {
-  slab(c, x, OBJ_Y, z, 2.0, 2.0, 0.22, 0.25, c.M.baseDeep, 0.03);
+  slab(c, x, OBJ_Y, z, 2.0, 2.0, 0.22, 0.25, c.M.base, 0.03);
+  ledRim(c, x, OBJ_Y + 0.25, z, 2.0, 2.0, 0.25, 0.08, c.scene, 0.025);
   slab(c, x, OBJ_Y + 0.5, z, 1.4, 1.4, 0.2, 0.2, c.M.blue, 0.03);
   slab(c, x, OBJ_Y + 0.95, z, 0.85, 0.85, 0.16, 0.15, c.M.frost, 0.03);
 }
-function cloud3d(c: Ctx, x: number, y: number, z: number, s = 0.6) {
+function cloud3d(c: Ctx, x: number, y: number, z: number, s = 0.6, parent: THREE.Object3D = c.scene) {
   const g = new THREE.Group();
-  ([[0, 0, 0, 0.42], [0.4, 0.12, 0, 0.32], [-0.38, 0.06, 0.05, 0.3], [0.1, 0.28, -0.05, 0.3]] as const).forEach(([cx, cy, cz, r]) => {
-    const m = new THREE.Mesh(new THREE.SphereGeometry(r, 28, 20), c.M.white); m.position.set(cx, cy, cz); m.castShadow = true; g.add(m);
+  ([[0, 0, 0, 0.42], [0.4, 0.12, 0, 0.32], [-0.38, 0.06, 0.05, 0.3], [0.1, 0.28, -0.05, 0.3], [0.02, -0.12, 0.2, 0.26]] as const).forEach(([cx, cy, cz, r]) => {
+    const m = new THREE.Mesh(new THREE.SphereGeometry(r, 28, 20), c.M.cloud); m.position.set(cx, cy, cz); m.castShadow = true; g.add(m);
   });
-  g.scale.setScalar(s); g.position.set(x, y, z); c.scene.add(g); return g;
+  g.scale.setScalar(s); g.position.set(x, y, z); parent.add(g); return g;
 }
 function edgeBox(c: Ctx, x: number, z: number, w = 1.6) {
   const g = group(c, x, OBJ_Y, z);
   box(c, 0, 0.3, 0, w, 0.6, 1.1, c.M.chrome, g);
   box(c, 0, 0.3, 0.56, w - 0.3, 0.35, 0.02, c.M.slot, g);
   box(c, w / 2 - 0.35, 0.3, 0.58, 0.1, 0.1, 0.02, c.M.led, g);
+  box(c, -w / 2 + 0.45, 0.3, 0.58, 0.4, 0.04, 0.01, c.M.led, g);
   return g;
 }
 function antenna(c: Ctx, x: number, z: number, h = 1.9) {
@@ -281,6 +353,17 @@ function tenantTiles(c: Ctx, x: number, z: number) {
     slab(c, tx, OBJ_Y, z + (i ? 0.5 : -0.4), 1.0, 1.0, 0.16, 0.15, c.M.glass, 0.03);
     box(c, tx, OBJ_Y + 0.16 + 0.28, z + (i ? 0.5 : -0.4), 0.5, 0.5, 0.5, i ? c.M.chrome : c.M.blue);
   });
+}
+/** A studio planter: chrome pot with a leafy shrub. */
+function planter(c: Ctx, x: number, z: number, s = 1) {
+  const g = group(c, x, 0, z);
+  cyl(c, 0, 0.3, 0, 0.42, 0.6, c.M.chrome, g);
+  cyl(c, 0, 0.6, 0, 0.36, 0.04, c.M.slot, g);
+  ([[0, 0.95, 0, 0.34], [0.26, 0.85, 0.1, 0.26], [-0.25, 0.9, -0.06, 0.28], [0.05, 1.22, -0.12, 0.26], [-0.08, 0.78, 0.26, 0.22], [0.2, 1.12, 0.18, 0.2]] as const).forEach(([px, py, pz, r]) => {
+    const m = new THREE.Mesh(new THREE.SphereGeometry(r, 18, 14), c.M.leaf); m.position.set(px, py, pz); m.scale.set(1, 1.25, 1); m.castShadow = true; g.add(m);
+  });
+  g.scale.setScalar(s);
+  return g;
 }
 
 /* ── centre object sets ──────────────────────────────────────────── */
@@ -302,7 +385,6 @@ const CENTER: Record<string, (c: Ctx) => void> = {
   datacenter: (c) => { rackStack(c, GX[0] - 0.6, GZ - 0.1, 4, 1.1, 0.85); rackStack(c, GX[0] + 0.6, GZ + 0.4, 4, 1.0, 0.8); rackStack(c, GX[1], GZ, 4, 1.3, 1.0); cloud3d(c, GX[1] + 1.1, OBJ_Y + 2.1, GZ - 0.6, 0.45); coinStack(c, GX[2] - 0.5, GZ - 0.2, 4); coinStack(c, GX[2] + 0.5, GZ + 0.4, 2); },
   fabric: (c) => { rackStack(c, GX[0] - 0.55, GZ - 0.1, 4, 1.2, 0.9); rackStack(c, GX[0] + 0.7, GZ + 0.4, 4, 1.2, 0.9); rackStack(c, GX[1] - 0.5, GZ - 0.1, 4, 1.05, 0.8); rackStack(c, GX[1] + 0.6, GZ + 0.4, 3, 1.0, 0.8); rackStack(c, GX[2] - 0.4, GZ, 3, 0.9, 0.7); cloud3d(c, GX[2] + 0.9, OBJ_Y + 1.4, GZ + 0.4, 0.55); },
   tenancy: (c) => { tenantTiles(c, GX[0], GZ); docs(c, GX[1], GZ); coinStack(c, GX[2] - 0.5, GZ - 0.2, 4); coinStack(c, GX[2] + 0.5, GZ + 0.4, 2); },
-  // new compositions
   estate: (c) => { cloud3d(c, GX[0] - 0.5, OBJ_Y + 1.25, GZ - 0.1, 0.75); cloud3d(c, GX[0] + 0.7, OBJ_Y + 0.65, GZ + 0.6, 0.5); rackStack(c, GX[1] - 0.6, GZ - 0.1, 4, 1.1, 0.85); dbStack(c, GX[1] + 0.7, GZ + 0.45, 2, 0.45); edgeBox(c, GX[2] - 0.35, GZ - 0.2, 1.4); antenna(c, GX[2] + 0.85, GZ + 0.55, 1.3); },
   standard: (c) => { cloud3d(c, GX[0], OBJ_Y + 0.95, GZ, 0.7); cloud3d(c, GX[1], OBJ_Y + 0.95, GZ, 0.7); cloud3d(c, GX[2], OBJ_Y + 0.95, GZ, 0.7); coinStack(c, GX[1] + 0.9, GZ + 0.6, 3, 0.3); },
   enterprise: (c) => { cloud3d(c, GX[0] - 0.4, OBJ_Y + 1.2, GZ, 0.7); cloud3d(c, GX[0] + 0.7, OBJ_Y + 0.7, GZ + 0.6, 0.5); rackStack(c, GX[1] - 0.6, GZ - 0.1, 4, 1.1, 0.85); shield3d(c, GX[1] + 0.75, GZ + 0.45, 0.62); edgeBox(c, GX[2] - 0.2, GZ + 0.4, 1.4); globe3d(c, GX[2] + 0.7, GZ - 0.5, 0.5); },
@@ -316,35 +398,32 @@ const CENTER: Record<string, (c: Ctx) => void> = {
   "sol-sovereign": (c) => { globe3d(c, GX[0], GZ, 0.62); edgeBox(c, GX[1] - 0.2, GZ + 0.2, 1.5); lock3d(c, GX[1] + 0.9, GZ - 0.4, 0.6); aiCube(c, GX[2], GZ, 1.1); },
 };
 
-/* ── console UI panel texture ────────────────────────────────────── */
+/* ── console screen texture ──────────────────────────────────────── */
 function uiPanelTexture(def: SceneDef, family: FontFamily) {
-  const W = 2560, H = 680;
+  const W = 2560, H = 640;
   return texture((g) => {
     g.clearRect(0, 0, W, H);
     // sizes are chosen so the smallest words are still ~14px tall at a 640px-wide hero
     g.fillStyle = "#0b2a7a"; g.textAlign = "left"; g.textBaseline = "middle";
-    let fs = 150;
+    let fs = 140;
     do { g.font = `800 ${fs}px ${family}`; fs -= 4; } while (g.measureText(def.ui.title).width > W - 180 && fs > 70);
-    g.fillText(def.ui.title, 90, 120);
+    g.fillText(def.ui.title, 90, 108);
     // buttons first, sized to their labels, right-aligned; the search bar takes what is left
     g.font = `700 92px ${family}`;
     const bw = def.ui.buttons.map((b) => Math.ceil(g.measureText(b).width) + 140);
     const gap = 36;
     const totalB = bw.reduce((a, b) => a + b, 0) + gap * Math.max(0, bw.length - 1);
-    const sy = 225, sh = 190, sx = 90;
+    const sy = 205, sh = 180, sx = 90;
     let bx = W - 90 - totalB;
     const sw = Math.max(600, bx - 60 - sx);
     g.fillStyle = "#ffffff"; g.strokeStyle = "rgba(26,71,201,.3)"; g.lineWidth = 6;
-    roundRectPath(g, sx, sy, sw, sh, 60); g.fill(); g.stroke();
-    g.fillStyle = "#6b7a99"; g.font = `600 92px ${family}`;
-    // magnifier glyph
-    g.strokeStyle = "#6b7a99"; g.lineWidth = 11; g.beginPath(); g.arc(sx + 92, sy + sh / 2 - 10, 32, 0, Math.PI * 2); g.stroke();
-    g.beginPath(); g.moveTo(sx + 115, sy + sh / 2 + 13); g.lineTo(sx + 144, sy + sh / 2 + 42); g.stroke();
-    // placeholder text, ellipsised to the bar rather than clipped mid-letter
+    roundRectPath(g, sx, sy, sw, sh, 56); g.fill(); g.stroke();
+    g.fillStyle = "#6b7a99"; g.font = `600 88px ${family}`;
+    g.strokeStyle = "#6b7a99"; g.lineWidth = 11; g.beginPath(); g.arc(sx + 92, sy + sh / 2 - 10, 30, 0, Math.PI * 2); g.stroke();
+    g.beginPath(); g.moveTo(sx + 114, sy + sh / 2 + 12); g.lineTo(sx + 142, sy + sh / 2 + 40); g.stroke();
     let search = def.ui.search.replace(/…$/, "...");
     const maxW = sw - 300;
     while (search.length > 3 && g.measureText(search).width > maxW) search = search.replace(/\.\.\.$/, "").slice(0, -1).trimEnd() + "...";
-    // a placeholder cut inside its first word reads worse than the plain verb
     if (search.length < 12) search = "Search";
     g.fillText(search, sx + 180, sy + sh / 2 + 5);
     def.ui.buttons.forEach((b, i) => {
@@ -356,21 +435,25 @@ function uiPanelTexture(def: SceneDef, family: FontFamily) {
       bx += w + gap;
     });
     // a hint of a table under the toolbar
-    g.fillStyle = "rgba(26,71,201,0.12)";
-    [460, 560].forEach((y) => { roundRectPath(g, 90, y, W - 180, 64, 20); g.fill(); });
+    g.fillStyle = "rgba(26,71,201,0.10)";
+    [430, 522].forEach((y) => { roundRectPath(g, 90, y, W - 180, 62, 20); g.fill(); });
     g.fillStyle = "rgba(26,71,201,0.35)";
-    [[130, 460, 520], [130, 560, 380], [1300, 460, 420], [1300, 560, 640]].forEach(([x, y, w]) => { roundRectPath(g, x, y + 17, w, 30, 10); g.fill(); });
+    [[130, 430, 520], [130, 522, 380], [1300, 430, 420], [1300, 522, 640]].forEach(([x, y, w]) => { roundRectPath(g, x, y + 16, w, 30, 10); g.fill(); });
+    g.fillStyle = "#22c55e"; [[2280, 430], [2280, 522]].forEach(([x, y]) => { g.beginPath(); g.arc(x, y + 31, 13, 0, Math.PI * 2); g.fill(); });
   }, W, H);
 }
 
 /* ── scene assembly ──────────────────────────────────────────────── */
 export interface BuiltScene {
   group: THREE.Group;
-  /** glowing cable curves (pill → console) for the pulse animation */
+  /** glowing cable curves (provider puck → platform) for the pulse animation */
   cables: THREE.CatmullRomCurve3[];
   pulses: THREE.Mesh[];
   dispose(): void;
 }
+
+const PROVIDER_KIND = (name: string): "cloud" | "rack" | "edge" =>
+  /on-prem|rack|air-gapped|power|cooling|national|regional|gpu|tier|core/i.test(name) ? "rack" : /edge|mec|agent|site/i.test(name) ? "edge" : "cloud";
 
 export function buildScene(def: SceneDef, M: Materials, family: FontFamily): BuiltScene {
   const root = new THREE.Group();
@@ -378,34 +461,62 @@ export function buildScene(def: SceneDef, M: Materials, family: FontFamily): Bui
   const cables: THREE.CatmullRomCurve3[] = [];
   const pulses: THREE.Mesh[] = [];
 
-  /* base + chrome rim + label */
-  slab(c, 0, 0.28, 0, BW, BD, BH, 0.9, M.base, 0.12);
-  slab(c, 0, 0, 0, BW + 0.5, BD + 0.5, 0.28, 1.0, M.chrome, 0.08);
+  /* floor underlight, chrome plinth, brushed-silver base with an LED edge and the wordmark */
+  {
+    const glow = new THREE.Mesh(new THREE.PlaneGeometry(BW * 1.5, BD * 1.9), new THREE.MeshBasicMaterial({ map: glowTexture(), transparent: true, depthWrite: false, toneMapped: false }));
+    glow.rotation.x = -Math.PI / 2; glow.position.y = 0.012; glow.renderOrder = 1; root.add(glow);
+  }
+  slab(c, 0, 0, 0, BW + 0.5, BD + 0.5, PLINTH, 1.0, M.chrome, 0.08);
+  ledRim(c, 0, PLINTH + 0.16 - 0.05, 0, BW + 0.5, BD + 0.5, 1.0, 0.09, root, 0.035);
+  slab(c, 0, PLINTH, 0, BW, BD, BH, 0.9, M.base, 0.12);
+  ledRim(c, 0, SLAB_TOP - 0.06, 0, BW, BD, 0.9, 0.1, root, 0.06);
+  {
+    // circuit traces on the platform top
+    const traces = new THREE.Mesh(new THREE.PlaneGeometry(BW - 0.6, BD - 0.6), new THREE.MeshBasicMaterial({ map: traceTexture(), transparent: true, depthWrite: false, toneMapped: false }));
+    traces.rotation.x = -Math.PI / 2; traces.position.set(0, SLAB_TOP + 0.004, 0); traces.renderOrder = 1; root.add(traces);
+  }
   {
     const label = def.baseLabel ?? "BlueWhale Stack";
     const tex = texture((g, w, h) => {
-      g.fillStyle = "#ffffff"; g.textAlign = "center"; g.textBaseline = "middle";
+      g.fillStyle = "#0b2a7a"; g.textAlign = "center"; g.textBaseline = "middle";
       let fs = 230; do { g.font = `800 ${fs}px ${family}`; fs -= 6; } while (g.measureText(label).width > w - 80 && fs > 90);
-      g.shadowColor = "rgba(0,0,0,.35)"; g.shadowBlur = 24; g.fillText(label, w / 2, h / 2 + 10);
+      g.fillText(label, w / 2, h / 2 + 10);
     }, 2560, 512);
     const plane = new THREE.Mesh(new THREE.PlaneGeometry(def.baseLabel ? 11.5 : 7, def.baseLabel ? 2.3 : 1.4), new THREE.MeshBasicMaterial({ map: tex, transparent: true, toneMapped: false }));
-    plane.position.set(0, 0.28 + BH * 0.62, BD / 2 + 0.13);
+    plane.position.set(0, PLINTH + BH * 0.62, BD / 2 + 0.13);
     root.add(plane);
   }
+  planter(c, -(BW / 2 + 1.05), -2.9, 1.05);
+  planter(c, BW / 2 + 1.05, -2.9, 1.05);
 
   if (def.layout === "stack") {
     buildStack(c, def);
   } else {
-    /* console: glass shelf + standing frosted panel with the UI */
+    /* console: glass shelf, a tilted chrome-framed screen with the product UI */
     slab(c, 0, SHELF_Y, 0.9, 10.2, 5.2, 0.26, 0.5, M.glass, 0.05);
-    const pnl = new THREE.Mesh(new THREE.ExtrudeGeometry(roundedRect(10.2, 2.7, 0.3), { depth: 0.22, bevelEnabled: true, bevelThickness: 0.04, bevelSize: 0.04, bevelSegments: 4, curveSegments: 16 }), M.frost);
-    pnl.position.set(0, SHELF_Y + 0.26 + 1.35, PANEL_Z); pnl.castShadow = true; root.add(pnl);
-    const ui = new THREE.Mesh(new THREE.PlaneGeometry(9.6, 2.55), new THREE.MeshBasicMaterial({ map: uiPanelTexture(def, family), transparent: true, toneMapped: false }));
-    ui.position.set(0, SHELF_Y + 0.26 + 1.35, PANEL_Z + 0.22 + 0.04 + 0.03); root.add(ui);
+    {
+      const scr = new THREE.Group();
+      scr.position.set(0, SHELF_Y, SCREEN_Z);
+      scr.rotation.x = SCREEN_TILT;
+      const bezel = new THREE.Mesh(new THREE.ExtrudeGeometry(roundedRect(SCREEN_W, SCREEN_H, 0.28), { depth: 0.14, bevelEnabled: true, bevelThickness: 0.03, bevelSize: 0.03, bevelSegments: 3, curveSegments: 16 }), M.chrome);
+      bezel.position.set(0, SCREEN_H / 2, 0); bezel.castShadow = true; scr.add(bezel);
+      const inner = new THREE.Mesh(new THREE.ExtrudeGeometry(roundedRect(SCREEN_W - 0.3, SCREEN_H - 0.3, 0.2), { depth: 0.03, bevelEnabled: false, curveSegments: 12 }), M.graphite);
+      inner.position.set(0, SCREEN_H / 2, 0.165); scr.add(inner);
+      const face = new THREE.Mesh(new THREE.PlaneGeometry(SCREEN_W - 0.5, SCREEN_H - 0.5), M.frost);
+      face.position.set(0, SCREEN_H / 2, 0.2); scr.add(face);
+      const ui = new THREE.Mesh(new THREE.PlaneGeometry(9.6, 2.4), new THREE.MeshBasicMaterial({ map: uiPanelTexture(def, family), transparent: true, toneMapped: false }));
+      ui.position.set(0, SCREEN_H / 2, 0.215); scr.add(ui);
+      // a thin LED line along the bottom of the bezel
+      box(c, 0, 0.09, 0.22, SCREEN_W - 1.2, 0.03, 0.02, M.led, scr);
+      root.add(scr);
+      // chrome stand behind the screen
+      [-3.2, 3.2].forEach((sx) => { const leg = box(c, sx, SHELF_Y + 1.0, SCREEN_Z - 0.75, 0.16, 2.0, 0.16, M.chrome); leg.rotation.x = 0.35; });
+    }
 
     /* three mini shelves, each with a nameplate standing at its front edge, facing the camera */
     GX.forEach((x, i) => {
-      slab(c, x, GY, GZ, 2.7, 2.6, 0.16, 0.35, M.glass, 0.04);
+      slab(c, x, GY, GZ, 2.7, 2.6, 0.16, 0.35, M.base, 0.04);
+      ledRim(c, x, GY + 0.2, GZ, 2.7, 2.6, 0.35, 0.09, root, 0.025);
       const chip = chipMesh(def.groups[i], family, 0.78);
       const w = (chip.geometry as THREE.PlaneGeometry).parameters.width;
       const s = Math.min(1, 3.15 / w); // never wider than the shelf spacing allows
@@ -417,40 +528,55 @@ export function buildScene(def: SceneDef, M: Materials, family: FontFamily): Bui
 
     (CENTER[def.center] ?? CENTER.inventory)(c);
 
-    /* provider pills above the console, cabled into its top edge — sized so the row always fits */
+    /* providers: clouds (or racks / edge boxes) on floating chrome pucks above the console,
+       nameplate under each, a glowing ribbon down behind the screen into the platform */
     const providers = def.providers ?? DEFAULT_PROVIDERS;
     const n = providers.length;
-    const pills = providers.map((p) => chipMesh(p, family, 0.85, "light", 90));
-    const gap = 0.3;
-    const natural = pills.reduce((a, m) => a + (m.geometry as THREE.PlaneGeometry).parameters.width, 0) + gap * (n - 1);
-    const maxSpan = 13.8;
+    const plates = providers.map((p) => chipMesh(p, family, 0.6, "plate", 90));
+    const gap = 0.36;
+    const natural = plates.reduce((a, m) => a + Math.max(1.55, (m.geometry as THREE.PlaneGeometry).parameters.width), 0) + gap * (n - 1);
+    const maxSpan = 13.6;
     const scale = Math.min(1, maxSpan / natural);
     const rowW = natural * scale;
     let cursor = -rowW / 2;
     providers.forEach((p, i) => {
-      const pill = pills[i];
-      const w = (pill.geometry as THREE.PlaneGeometry).parameters.width * scale;
-      const x = cursor + w / 2;
-      cursor += w + gap * scale;
-      pill.scale.setScalar(scale);
-      pill.position.set(x, PILL_Y, PILL_Z); root.add(pill);
+      const plate = plates[i];
+      const slotW = Math.max(1.55, (plate.geometry as THREE.PlaneGeometry).parameters.width) * scale;
+      const x = cursor + slotW / 2;
+      cursor += slotW + gap * scale;
+      const puck = new THREE.Group();
+      puck.position.set(x, PILL_Y, PILL_Z);
+      puck.scale.setScalar(scale);
+      cyl(c, 0, 0, 0, 0.74, 0.14, M.chrome, puck);
+      const ring = new THREE.Mesh(new THREE.TorusGeometry(0.74, 0.03, 8, 48), M.led); ring.rotation.x = Math.PI / 2; ring.position.y = 0.04; puck.add(ring);
+      const kind = PROVIDER_KIND(p);
+      if (kind === "cloud") cloud3d(c, 0, 0.55, 0, 0.66, puck);
+      else if (kind === "rack") { const r = rackStack(c, 0, 0, 2, 0.72, 0.56); r.position.set(0, 0.07, 0); puck.add(r); }
+      else { const e = edgeBox(c, 0, 0, 1.0); e.position.set(0, 0.07, 0); e.scale.setScalar(0.85); puck.add(e); }
+      plate.rotation.x = -0.3;
+      plate.position.set(0, -0.5, 0.35);
+      puck.add(plate);
+      root.add(puck);
       const tx = CABLE_TARGETS_X[Math.round((i / Math.max(1, n - 1)) * 6)];
+      const y0 = PILL_Y - 0.85 * scale;
       const curve = new THREE.CatmullRomCurve3([
-        new THREE.Vector3(x, PILL_Y - 0.43 * scale, PILL_Z),
-        new THREE.Vector3(x * 0.85, PILL_Y - 1.1, PILL_Z - 0.1),
-        new THREE.Vector3(tx, PANEL_TOP_Y + 0.5, PANEL_Z),
-        new THREE.Vector3(tx, PANEL_TOP_Y - 0.05, PANEL_Z),
+        new THREE.Vector3(x, y0, PILL_Z),
+        new THREE.Vector3(x * 0.92, y0 - 0.9, PILL_Z - 0.5),
+        new THREE.Vector3(tx, SHELF_Y + 1.3, -3.7),
+        new THREE.Vector3(tx, SHELF_Y + 0.05, -3.8),
       ]);
       cables.push(curve);
-      root.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 32, 0.035, 8, false), M.cableCore));
-      root.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 32, 0.11, 8, false), M.cableGlow));
-      const pulse = new THREE.Mesh(new THREE.SphereGeometry(0.075, 12, 12), M.pulse);
+      root.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 40, 0.04, 8, false), M.cableCore));
+      const glow = new THREE.Mesh(new THREE.TubeGeometry(curve, 40, 0.19, 8, false), M.cableGlow); glow.renderOrder = 1; root.add(glow);
+      const pulse = new THREE.Mesh(new THREE.SphereGeometry(0.09, 12, 12), M.pulse);
       pulse.userData.offset = (i * 0.37) % 1;
       pulses.push(pulse); root.add(pulse);
     });
   }
 
-  root.traverse((o) => { if ((o as THREE.Mesh).isMesh) { o.castShadow = true; o.receiveShadow = true; } });
+  root.traverse((o) => { if ((o as THREE.Mesh).isMesh && !(o as THREE.Mesh).userData.noShadow) { o.castShadow = true; o.receiveShadow = true; } });
+  // unlit light strips and glows never cast shadows
+  root.traverse((o) => { const m = o as THREE.Mesh; if (m.isMesh && (m.material === M.led || m.material === M.ledGlow || m.material === M.cableGlow || m.material === M.cableCore || m.material === M.pulse)) { m.castShadow = false; m.receiveShadow = false; } });
   return {
     group: root,
     cables,
@@ -472,23 +598,26 @@ export function buildScene(def: SceneDef, M: Materials, family: FontFamily): Bui
 /* ── the six-layer architecture stack ───────────────────────────── */
 function buildStack(c: Ctx, def: SceneDef) {
   const layers = def.layers ?? [];
-  const mats = [c.M.baseDeep, c.M.blue, c.M.frost, c.M.base, c.M.frost, c.M.blueLight];
+  const mats = [c.M.base, c.M.blue, c.M.base, c.M.baseDeep, c.M.base, c.M.blueLight];
   const sizes: [number, number][] = [[12.6, 6.8], [11.5, 6.2], [10.4, 5.6], [9.3, 5.0], [8.2, 4.4], [7.1, 3.8]];
   const H = 0.64, GAP = 0.5;
   let y = SHELF_Y + 0.05;
   layers.forEach((name, i) => {
     const [w, d] = sizes[i] ?? [7, 3.8];
+    const silver = mats[i % mats.length] === c.M.base;
     slab(c, 0, y, 0, w, d, H, 0.45, mats[i % mats.length], 0.05);
+    if (silver) ledRim(c, 0, y + H + 0.06, 0, w, d, 0.45, 0.09, c.scene, 0.03);
     // nameplate on the front face
-    const chip = chipMesh(name, c.family, 0.6, i === 2 || i === 4 ? "light" : "dark", 84);
+    const chip = chipMesh(name, c.family, 0.6, silver ? "plate" : "dark", 84);
     chip.position.set(0, y + H / 2 + 0.06, d / 2 + 0.12);
     c.scene.add(chip);
     if (i === 3) {
-      // the nine capability families as gold pucks on the core layer
+      // the nine capability families as chrome pucks with an LED ring on the core layer
       for (let k = 0; k < 9; k++) {
         const px = -3.2 + (k % 5) * 1.6 + (k >= 5 ? 0.8 : 0);
         const pz = k < 5 ? -0.9 : 0.7;
-        cyl(c, px, y + H + 0.16, pz, 0.34, 0.18, c.M.gold);
+        cyl(c, px, y + H + 0.16, pz, 0.34, 0.18, c.M.chrome);
+        const ring = new THREE.Mesh(new THREE.TorusGeometry(0.34, 0.02, 8, 40), c.M.led); ring.rotation.x = Math.PI / 2; ring.position.set(px, y + H + 0.22, pz); c.scene.add(ring);
       }
     }
     if (i === 1) {

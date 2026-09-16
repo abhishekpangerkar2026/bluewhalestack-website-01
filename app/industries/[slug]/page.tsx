@@ -11,7 +11,7 @@ import { FactStrip } from "@/components/ui/FactStrip";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { ArchitectureDiagram } from "@/components/diagrams/ArchitectureDiagram";
-import { ProductScene } from "@/components/scenes/ProductScene";
+import { HeroArt, HeroArtMobile } from "@/components/scenes/ProductScene";
 import { StoryVisual } from "@/components/sections/CustomerStories";
 import { FAQ } from "@/components/sections/FAQ";
 import { ClosingCTA } from "@/components/sections/ClosingCTA";
@@ -52,10 +52,11 @@ export default async function IndustryDetailPage({
   return (
     <>
       {/* ── Hero ── */}
-      <section className="relative overflow-hidden border-b border-line bg-sunken py-12 sm:py-16">
-        <Container>
-          <Breadcrumbs items={[{ label: "Industries", href: "/industries" }, { label: industry.name }]} />
-          <div className="mt-10 grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+      <section className="relative overflow-hidden border-b border-line bg-white py-12 sm:py-16 lg:min-h-[620px]">
+        <HeroArt scene={INDUSTRY_3D[industry.slug] ?? "platform"} />
+        <Container className="pointer-events-none relative">
+          <Breadcrumbs items={[{ label: "Industries", href: "/industries" }, { label: industry.name }]} className="pointer-events-auto" />
+          <div className="pointer-events-auto mt-10 lg:max-w-[46%]">
             <div>
               <div className="flex flex-wrap items-center gap-2">
                 <span className="grid h-11 w-11 place-items-center rounded-lg bg-primary text-primary-fg">
@@ -92,12 +93,14 @@ export default async function IndustryDetailPage({
                 )}
               </div>
             </div>
-            <Reveal delay={100} className="min-w-0">
-              <ProductScene scene={INDUSTRY_3D[industry.slug] ?? "platform"} priority className="mx-auto w-full max-w-[640px]" />
-            </Reveal>
           </div>
+          <HeroArtMobile scene={INDUSTRY_3D[industry.slug] ?? "platform"} />
+        </Container>
+      </section>
+      <section className="border-b border-line bg-sunken py-8">
+        <Container>
           <Reveal delay={120}>
-            <FactStrip facts={industry.kpis} className="mt-12" />
+            <FactStrip facts={industry.kpis} />
           </Reveal>
         </Container>
       </section>

@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Reveal } from "@/components/ui/Reveal";
-import { ProductScene } from "@/components/scenes/ProductScene";
+import { HeroArt, HeroArtMobile } from "@/components/scenes/ProductScene";
 import { DocumentView, sectionHeading, sectionId } from "@/components/documents/DocumentView";
 import { ClosingCTA } from "@/components/sections/ClosingCTA";
 import { documents, documentsBySlug } from "@/content/documents";
@@ -33,11 +33,13 @@ export default async function ResourceDocumentPage({ params }: { params: Promise
 
   return (
     <>
-      <section className="border-b border-line bg-sunken py-12 sm:py-16">
-        <Container>
-          <Breadcrumbs items={[{ label: "Resources", href: "/resources" }, { label: doc.type, href: "/resources" }, { label: doc.title }]} />
-          <div className="mt-10 grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
-            <div>
+      {/* ── Hero: the document's 3D scene as the backdrop, copy over the white studio ── */}
+      <section className="relative overflow-hidden border-b border-line bg-white py-12 sm:py-16 lg:min-h-[600px]">
+        <HeroArt scene={doc.scene} />
+        <Container className="pointer-events-none relative">
+          <Breadcrumbs items={[{ label: "Resources", href: "/resources" }, { label: doc.type, href: "/resources" }, { label: doc.title }]} className="pointer-events-auto" />
+          <div className="pointer-events-auto mt-10 lg:max-w-[48%]">
+            <Reveal>
               <div className="flex flex-wrap items-center gap-2">
                 <Badge tone="brand">{doc.type}</Badge>
                 <Badge tone="neutral">{doc.topic}</Badge>
@@ -60,11 +62,9 @@ export default async function ResourceDocumentPage({ params }: { params: Promise
                   Talk to us about it
                 </Button>
               </div>
-            </div>
-            <Reveal delay={100} className="min-w-0">
-              <ProductScene scene={doc.scene} tagline={false} live={false} priority className="mx-auto w-full max-w-[600px]" />
             </Reveal>
           </div>
+          <HeroArtMobile scene={doc.scene} />
         </Container>
       </section>
 

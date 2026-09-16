@@ -9,7 +9,7 @@ import { Stat } from "@/components/ui/Stat";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { ArchitectureDiagram } from "@/components/diagrams/ArchitectureDiagram";
-import { ProductScene } from "@/components/scenes/ProductScene";
+import { HeroArt, HeroArtMobile } from "@/components/scenes/ProductScene";
 import { editionsBySlug } from "@/content/editions";
 import {
   fabricHero,
@@ -41,8 +41,9 @@ export default function FabricPage() {
           aria-hidden
           className="pointer-events-none absolute -left-20 top-0 h-80 w-80 rounded-full bg-brand-500/30 blur-[110px]"
         />
-        <Container className="relative">
-          <div className="grid items-center gap-12 py-20 sm:py-28 lg:grid-cols-[1.05fr_0.95fr]">
+        <HeroArt scene="fabric" variant="dark" />
+        <Container className="pointer-events-none relative">
+          <div className="pointer-events-auto py-20 sm:py-28 lg:max-w-[48%]">
             <div>
               <div className="flex flex-wrap items-center gap-3">
                 <span className="eyebrow text-white/80">{fabricHero.eyebrow}</span>
@@ -74,8 +75,8 @@ export default function FabricPage() {
                 </Button>
               </div>
             </div>
-            <ProductScene scene="fabric" variant="dark" priority className="mx-auto w-full max-w-[660px]" />
           </div>
+          <HeroArtMobile scene="fabric" variant="dark" className="pb-16" />
         </Container>
       </section>
 

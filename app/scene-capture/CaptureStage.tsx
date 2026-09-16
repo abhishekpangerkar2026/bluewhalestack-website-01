@@ -3,6 +3,7 @@
 import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
+import { STUDIO_BG, type Studio } from "@/components/scenes/live/LiveScene";
 
 const LiveScene = dynamic(() => import("@/components/scenes/live/LiveScene").then((m) => m.LiveScene), { ssr: false });
 
@@ -17,8 +18,9 @@ function Stage() {
   const q = useSearchParams();
   const key = q.get("key") ?? "platform";
   const w = Number(q.get("w") ?? 2000);
-  const h = Number(q.get("h") ?? 1125);
-  const bg = q.get("bg") ?? "transparent";
+  const h = Number(q.get("h") ?? 2000);
+  const studio: Studio = q.get("studio") === "dark" ? "dark" : "light";
+  const bg = STUDIO_BG[studio];
   const [angle, setAngle] = useState(Number(q.get("angle") ?? 0));
   const angleRef = useRef(angle);
   angleRef.current = angle;
@@ -44,7 +46,7 @@ function Stage() {
 
   return (
     <div style={{ width: w, height: h, background: bg }}>
-      <LiveScene sceneKey={key} angle={angle} interactive={false} animate={false} still={still} dpr={1} onReady={onReady} className="h-full w-full" />
+      <LiveScene sceneKey={key} studio={studio} angle={angle} interactive={false} animate={false} still={still} dpr={1} onReady={onReady} className="h-full w-full" />
     </div>
   );
 }

@@ -20,7 +20,7 @@ fs.mkdirSync(outDir, { recursive: true });
 
 // software-GL rendering costs a few seconds per frame, so keep the loop short: 3 s at 30 fps
 const W = 1120, H = 630, FPS = 30, N = 90;
-const BG = "linear-gradient(180deg,%23ffffff 0%,%23eef3ff 100%)";
+const STUDIO = "light";
 
 const browser = await puppeteer.launch({
   executablePath: "C:/Program Files/Google/Chrome/Application/chrome.exe",
@@ -36,7 +36,7 @@ for (const key of keys) {
   const frames = path.join(outDir, `.frames-${key}`);
   fs.rmSync(frames, { recursive: true, force: true });
   fs.mkdirSync(frames, { recursive: true });
-  await page.goto(`${base}/scene-capture?key=${key}&w=${W}&h=${H}&angle=0&bg=${BG}`, { waitUntil: "load", timeout: 180_000 });
+  await page.goto(`${base}/scene-capture?key=${key}&w=${W}&h=${H}&angle=0&studio=${STUDIO}`, { waitUntil: "load", timeout: 180_000 });
   await page.waitForFunction(() => window.__sceneReady === true, { timeout: 180_000 });
   for (let i = 0; i < N; i++) {
     const a = 0.3 * Math.sin((2 * Math.PI * i) / N);

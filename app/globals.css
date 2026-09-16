@@ -305,6 +305,14 @@ body {
   animation: fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 /* Native 3D product scenes (components/scenes/ProductScene.tsx) */
+/* Soft edges so a studio poster sits in the page as a backdrop, not a framed picture */
+.scene-mask {
+  /* the platform spans ~78% of the frame, so the fade lives in the outer 10% on every side */
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent), linear-gradient(to bottom, transparent, #000 9%, #000 91%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent), linear-gradient(to bottom, transparent, #000 9%, #000 91%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
 @keyframes scene-flow {
   to { stroke-dashoffset: -40; }
 }

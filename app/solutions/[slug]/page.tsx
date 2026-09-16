@@ -10,7 +10,7 @@ import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { FactStrip } from "@/components/ui/FactStrip";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
-import { ProductScene } from "@/components/scenes/ProductScene";
+import { HeroArt, HeroArtMobile } from "@/components/scenes/ProductScene";
 import { SOLUTION_3D } from "@/content/product3d";
 import { ArchitectureDiagram } from "@/components/diagrams/ArchitectureDiagram";
 import { ConsoleMockup } from "@/components/sections/mockups/ConsoleMockup";
@@ -58,38 +58,39 @@ export default async function SolutionDetailPage({
   return (
     <>
       {/* ── Hero ── */}
-      <section className="border-b border-line bg-sunken py-12 sm:py-16">
-        <Container>
-          <Breadcrumbs items={[{ label: "Solutions", href: "/solutions" }, { label: solution.name }]} />
-          <div className="mt-10 grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
-            <div>
-              <div className="flex items-center gap-3">
-                <span className="grid h-11 w-11 place-items-center rounded-lg bg-primary text-primary-fg shadow-sm">
-                  <Icon name={solution.icon} className="h-5 w-5" />
-                </span>
-                <span className="eyebrow text-accent">Solution</span>
-              </div>
-              <h1 className="display-1 mt-6 text-ink">{solution.name}</h1>
-              <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">{solution.description}</p>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <div>
-                  <Button href="/contact?intent=demo" size="lg">
-                    See it on your estate
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
-                  <p className="mt-2 text-xs text-faint">45 minutes · one of your accounts, connected read-only</p>
-                </div>
-                <Button href="#architecture" size="lg" variant="outline">
-                  How it works
-                </Button>
-              </div>
+      <section className="relative overflow-hidden border-b border-line bg-white py-12 sm:py-16 lg:min-h-[620px]">
+        <HeroArt scene={SOLUTION_3D[solution.slug] ?? "platform"} />
+        <Container className="pointer-events-none relative">
+          <Breadcrumbs items={[{ label: "Solutions", href: "/solutions" }, { label: solution.name }]} className="pointer-events-auto" />
+          <div className="pointer-events-auto mt-10 lg:max-w-[46%]">
+            <div className="flex items-center gap-3">
+              <span className="grid h-11 w-11 place-items-center rounded-lg bg-primary text-primary-fg shadow-sm">
+                <Icon name={solution.icon} className="h-5 w-5" />
+              </span>
+              <span className="eyebrow text-accent">Solution</span>
             </div>
-            <Reveal delay={100} className="min-w-0">
-              <ProductScene scene={SOLUTION_3D[solution.slug] ?? "platform"} priority className="mx-auto w-full max-w-[640px]" />
-            </Reveal>
+            <h1 className="display-1 mt-6 text-ink">{solution.name}</h1>
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">{solution.description}</p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <div>
+                <Button href="/contact?intent=demo" size="lg">
+                  See it on your estate
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+                <p className="mt-2 text-xs text-faint">45 minutes · one of your accounts, connected read-only</p>
+              </div>
+              <Button href="#architecture" size="lg" variant="outline">
+                How it works
+              </Button>
+            </div>
           </div>
+          <HeroArtMobile scene={SOLUTION_3D[solution.slug] ?? "platform"} />
+        </Container>
+      </section>
+      <section className="border-b border-line bg-sunken py-8">
+        <Container>
           <Reveal delay={120}>
-            <FactStrip facts={solution.facts} className="mt-12" />
+            <FactStrip facts={solution.facts} />
           </Reveal>
         </Container>
       </section>

@@ -1,17 +1,21 @@
-// Captures the static (transparent WebP) version of every live product scene
-// from the running site (/scene-capture) and writes content/scenes.generated.ts.
-// Usage: node scripts/capture-scenes.mjs [base=http://localhost:3100] [key,key,...|all]
+// Captures the static poster of every live product scene from the running site
+// (/scene-capture) — a square frame of the white studio (and a navy variant for the
+// dark heroes) — and writes content/scenes.generated.ts.
+// Usage: node scripts/capture-scenes.mjs [base=http://localhost:3100] [key,key,...|all] [--light-only]
 import puppeteer from "puppeteer-core";
 import sharp from "sharp";
 import fs from "node:fs";
 
 const base = process.argv[2] || "http://localhost:3100";
 const arg = process.argv[3];
+const lightOnly = process.argv.includes("--light-only");
 const registry = fs.readFileSync("components/scenes/live/registry.ts", "utf8");
 // scene keys are the object keys at exactly two-space indent inside SCENES (skip the interface above it)
 const scenesSrc = registry.slice(registry.indexOf("export const SCENES"));
 const ALL = [...scenesSrc.matchAll(/^ {2}"?([a-z0-9-]+)"?: \{/gm)].map((m) => m[1]);
 const keys = arg && arg !== "all" ? arg.split(",") : [...new Set(ALL)];
+// scenes shown on navy heroes also get a dark-studio poster
+const DARK = new Set(["fabric", "whale-ai", "edition-standard", "edition-enterprise", "edition-telco-datacenter", "edition-government"]);
 const outDir = "public/product-3d/scenes";
 fs.mkdirSync(outDir, { recursive: true });
 const genPath = "content/scenes.generated.ts";
@@ -23,7 +27,9 @@ function readExisting() {
 const defs = {};
 for (const m of scenesSrc.matchAll(/^ {2}"?([a-z0-9-]+)"?: \{[\s\S]*?title: "([^"]+)",\s*tagline: "([^"]+)"/gm)) defs[m[1]] = { title: m[2], tagline: m[3] };
 
-const W = 2000, H = 1125;
+// square posters: every frame on the site (4:3 heroes, 16:9 cards and films) is a centre crop of the same image,
+// and the live scene keeps the same horizontal field of view whatever its aspect ratio
+const W = 2000, H = 2000;
 const browser = await puppeteer.launch({
   executablePath: "C:/Program Files/Google/Chrome/Application/chrome.exe",
   headless: true,
@@ -33,27 +39,37 @@ const page = await browser.newPage();
 await page.setViewport({ width: W, height: H, deviceScaleFactor: 1 });
 page.on("pageerror", (e) => console.log("  page error:", e.message));
 
+async function capture(key, studio) {
+  await page.goto(`${base}/scene-capture?key=${key}&w=${W}&h=${H}&angle=0&studio=${studio}`, { waitUntil: "load", timeout: 180_000 });
+  try {
+    await page.waitForFunction(() => window.__sceneReady === true, { timeout: 120_000 });
+  } catch {
+    return null;
+  }
+  await new Promise((r) => setTimeout(r, 500));
+  const canvas = await page.$("canvas");
+  const png = await canvas.screenshot({ type: "png" });
+  const suffix = studio === "dark" ? "-dark" : "";
+  const file = `${outDir}/${key}${suffix}.webp`;
+  await sharp(png).webp({ quality: 84, effort: 5 }).toFile(file);
+  const small = `${outDir}/${key}${suffix}-800.webp`;
+  await sharp(png).resize({ width: 800 }).webp({ quality: 80 }).toFile(small);
+  return { file, small, kb: Math.round(fs.statSync(file).size / 1024) };
+}
+
 for (const key of keys) {
   const t0 = Date.now();
-  await page.goto(`${base}/scene-capture?key=${key}&w=${W}&h=${H}&angle=0`, { waitUntil: "load", timeout: 180_000 });
-  try {
-    await page.waitForFunction(() => window.__sceneReady === true, { timeout: 90_000 });
-  } catch {
-    console.log(`${key.padEnd(34)} SKIPPED — scene never signalled ready (unknown key or render error)`);
-    continue;
-  }
-  await new Promise((r) => setTimeout(r, 400));
-  const canvas = await page.$("canvas");
-  const png = await canvas.screenshot({ type: "png", omitBackground: true });
-  const trimmed = await sharp(png).trim({ threshold: 8 }).png().toBuffer({ resolveWithObject: true });
-  const { width, height, trimOffsetLeft = 0, trimOffsetTop = 0 } = trimmed.info;
-  const file = `${outDir}/${key}.webp`;
-  await sharp(trimmed.data).webp({ quality: 86, alphaQuality: 90, effort: 5 }).toFile(file);
-  const small = `${outDir}/${key}-800.webp`;
-  await sharp(trimmed.data).resize({ width: 800 }).webp({ quality: 82, alphaQuality: 90 }).toFile(small);
+  const light = await capture(key, "light");
+  if (!light) { console.log(`${key.padEnd(34)} SKIPPED — scene never signalled ready (unknown key or render error)`); continue; }
   const d = defs[key] ?? { title: key, tagline: "" };
-  existing[key] = { src: `/${file.replace(/^public\//, "")}`, src800: `/${small.replace(/^public\//, "")}`, width, height, title: d.title, tagline: d.tagline };
-  console.log(`${key.padEnd(34)} ${width}x${height} @${-trimOffsetLeft},${-trimOffsetTop}  ${Math.round(fs.statSync(file).size / 1024)}KB  (${((Date.now() - t0) / 1000).toFixed(1)}s)`);
+  const rec = { src: `/${light.file.replace(/^public\//, "")}`, src800: `/${light.small.replace(/^public\//, "")}`, width: W, height: H, title: d.title, tagline: d.tagline };
+  let darkKb = "";
+  if (DARK.has(key) && !lightOnly) {
+    const dark = await capture(key, "dark");
+    if (dark) { rec.dark = `/${dark.file.replace(/^public\//, "")}`; rec.dark800 = `/${dark.small.replace(/^public\//, "")}`; darkKb = ` + dark ${dark.kb}KB`; }
+  } else if (existing[key]?.dark) { rec.dark = existing[key].dark; rec.dark800 = existing[key].dark800; }
+  existing[key] = rec;
+  console.log(`${key.padEnd(34)} ${W}x${H}  ${light.kb}KB${darkKb}  (${((Date.now() - t0) / 1000).toFixed(1)}s)`);
 }
 await browser.close();
 
