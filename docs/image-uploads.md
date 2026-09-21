@@ -1,20 +1,19 @@
 # Uploading your own images — no code, no redeploy
 
-This is the self-service path we set up so you can swap a photo yourself
-instead of asking Claude every time. It's live in the code now but **inactive**
-until you finish a two-minute signup — until then the site keeps using the
-files already in the repo, unchanged.
+**Status: live.** The site's leadership photos serve from your Cloudinary
+account (cloud name `mov8hypa`) as of 2026-09-21. The 5 existing photos were
+seeded in already, so nothing changed visually at cutover — replace one
+whenever you're ready, following the steps below.
 
-## One-time setup (you do this, ~2 minutes)
-
-1. Go to **cloudinary.com** and create a free account (their free tier is
-   generous — far more than this site needs).
-2. On the dashboard home screen, find your **Cloud name** (top left, a short
-   slug like `dxyzabc12`). Send it to Claude, or set it yourself as a Railway
-   environment variable: `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME`.
-3. That's it — no API key, no secret, nothing else to configure. The site
-   only ever *reads* public image URLs from your account; nobody needs
-   write credentials for that.
+Setup note for the record: activating this only ever needed the Cloud name
+— no API key or secret is stored in this repo, in Railway's config, or
+anywhere else; the site only *reads* public image URLs. An API key/secret
+was shared once during setup to seed the initial 5 photos programmatically
+(saving a manual re-upload); it was used from an env var on a single local
+command, never written to a file, and the script was deleted immediately
+after. If you're reading this because you're rotating that Cloudinary API
+key as routine hygiene, it's safe to do any time — nothing on the site
+depends on it.
 
 ## Uploading or replacing a photo
 
