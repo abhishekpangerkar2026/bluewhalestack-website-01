@@ -41,7 +41,7 @@ export const SCENES: Record<string, SceneDef> = {
     center: "estate",
   },
   platform: {
-    title: "Digital Experience Platform",
+    title: "Digital Experience Multi-Cloud Platform",
     tagline: "One Platform. Every Industry. Every Estate.",
     ui: { title: "BlueWhale Stack — one console", search: "Search estates, tenants, policies, bills…", buttons: ["Govern", "Observe", "Bill"] },
     groups: ["Public cloud", "Private & virtual", "Hybrid & edge"],

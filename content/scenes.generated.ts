@@ -6,7 +6,7 @@ export const scenes = {
     "src800": "/product-3d/scenes/platform-800.webp",
     "width": 2000,
     "height": 2000,
-    "title": "Digital Experience Platform",
+    "title": "Digital Experience Multi-Cloud Platform",
     "tagline": "One Platform. Every Industry. Every Estate."
   },
   "inventory": {

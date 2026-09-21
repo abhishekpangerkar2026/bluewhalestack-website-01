@@ -5,7 +5,7 @@
  */
 
 export const platformHero = {
-  eyebrow: "Digital Experience Platform",
+  eyebrow: "Digital Experience Multi-Cloud Platform — Cloud & Datacenter",
   title: "One Platform. Every Industry. Every Estate.",
   description:
     "BlueWhale Stack is one control plane over six public clouds, your virtualization estate and your air-gapped sites. It is run by enterprises, by telco and datacenter operators who sell governed services on it, and by governments that must prove where data lives and who touched it. After connecting, every estate reports into one inventory, one identity fabric and one policy engine — and the audit evidence is generated continuously instead of assembled per inspection.",

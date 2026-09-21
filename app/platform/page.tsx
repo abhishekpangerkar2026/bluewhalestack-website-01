@@ -46,7 +46,7 @@ import {
 } from "@/content/platform";
 
 export const metadata: Metadata = {
-  title: "Platform — Digital Experience Platform",
+  title: "Platform — Digital Experience Multi-Cloud Platform",
   description:
     "One Platform. Every Industry. Every Estate. BlueWhale Stack is one control plane for every cloud an organization runs — 54 capabilities in nine families, four editions on one architecture, six platform classes, five deployment modes.",
 };

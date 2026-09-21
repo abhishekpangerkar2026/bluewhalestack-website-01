@@ -2,7 +2,7 @@ import { ArrowRight, ArrowUpRight, ShieldCheck } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { CloudLogo } from "@/components/brand/CloudLogos";
-import { ProductScene } from "@/components/scenes/ProductScene";
+import { HeroProductVisual } from "./HeroProductVisual";
 import { hero } from "@/content/home";
 import styles from "./Home.module.css";
 
@@ -14,7 +14,7 @@ export function Hero() {
       <Container>
         <div className={styles.heroGrid}>
           <div className={styles.heroCopy}>
-            <p className={styles.kicker}><span /> DIGITAL EXPERIENCE PLATFORM</p>
+            <p className={styles.kicker}><span /> {hero.badge}</p>
             <h1 className={styles.heroTitle}>Every cloud.<br /><span>One control<br className={styles.desktopBreak} /> plane.</span></h1>
             <p className={styles.heroDescription}>{hero.description}</p>
             <div className={styles.heroActions}>
@@ -24,7 +24,8 @@ export function Hero() {
             <p className={styles.heroNote}><ShieldCheck size={14} />{hero.primaryNote}</p>
           </div>
           <div className={styles.heroArt}>
-            <ProductScene scene="platform" priority fill className="h-full rounded-none border-0" />
+            <div className={styles.artIndex}><span>LIVE PRODUCT VIEW</span><span>Illustrative interface · sample data</span></div>
+            <HeroProductVisual />
             <div className={styles.artFoot}><span>54 capabilities</span><span>9 families</span><span>4 editions</span></div>
           </div>
         </div>

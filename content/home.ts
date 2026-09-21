@@ -1,7 +1,7 @@
 /** Home page content blocks. */
 
 export const hero = {
-  badge: "Digital Experience Platform · 54 capabilities · 9 families · 4 editions",
+  badge: "Digital Experience Multi-Cloud Platform — Cloud & Datacenter",
   title: "Every cloud. One control plane.",
   highlight: "One control plane",
   description:

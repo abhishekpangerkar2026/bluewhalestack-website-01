@@ -7,7 +7,7 @@ export const company = {
   name: "BlueWhale Stack",
   tagline: "Every cloud. One control plane.",
   metaDescription:
-    "BlueWhale Stack is the Digital Experience Platform for every estate — one control plane across public, private, virtualization, hybrid, sovereign and edge: 54 capabilities in nine families, four editions on one architecture, delivered as SaaS, BYOC, on-premise, sovereign air-gapped or at the edge.",
+    "BlueWhale Stack is the Digital Experience Multi-Cloud Platform for cloud and datacenter estates — one control plane across public, private, virtualization, hybrid, sovereign and edge: 54 capabilities in nine families, four editions on one architecture, delivered as SaaS, BYOC, on-premise, sovereign air-gapped or at the edge.",
   emails: {
     sales: "sales@bluewhalestack.com",
     careers: "careers@bluewhalestack.com",
