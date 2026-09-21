@@ -28,10 +28,10 @@ export function SectionHeading({
         <p
           className={cn(
             "eyebrow mb-5 inline-flex items-center gap-2.5",
-            inverse ? "text-brand-200" : "text-accent",
+            inverse ? "text-[#8b8f97]" : "text-faint",
           )}
         >
-          <span aria-hidden className={cn("h-1.5 w-1.5 rounded-sm", inverse ? "bg-[#83d9ee]" : "bg-accent")} />
+          <span aria-hidden className={cn("h-[5px] w-[5px]", inverse ? "bg-[#6b93ff]" : "bg-[var(--brand-blue)]")} />
           {eyebrow}
         </p>
       )}
@@ -41,7 +41,7 @@ export function SectionHeading({
       {description && (
         <p
           className={cn(
-            "mt-5 text-base leading-[1.8] text-pretty sm:text-[17px]",
+            "mt-4 text-[15px] leading-[1.85] text-pretty sm:text-base",
             inverse ? "text-white/70" : "text-muted",
           )}
         >

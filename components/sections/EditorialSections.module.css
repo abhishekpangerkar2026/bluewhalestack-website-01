@@ -1,15 +1,21 @@
+/* Shared editorial sections — dark console panels, numeral tracks, closing CTA. */
 .global {
   position: relative;
   overflow: hidden;
-  background: #0a1530;
-  color: #fff;
+  background: #0e0f12;
+  color: #f2f2f0;
 }
 .global::before {
   position: absolute;
   inset: 0;
   content: "";
   pointer-events: none;
-  background: radial-gradient(ellipse at 0% 0%, #2458f51c, transparent 55%);
+  opacity: .5;
+  background-image:
+    linear-gradient(to right, #ffffff0a 1px, transparent 1px),
+    linear-gradient(to bottom, #ffffff0a 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse 75% 65% at 78% 18%, black, transparent 72%);
 }
 .regionList { position: relative; }
 .regionList::before {
@@ -19,7 +25,7 @@
   left: 3px;
   width: 1px;
   content: "";
-  background: linear-gradient(#83d9ee77, #2458f555);
+  background: #ffffff22;
 }
 .region {
   display: grid;
@@ -32,48 +38,45 @@
 .region:last-child { border-bottom: 0; }
 .region::before {
   position: absolute;
-  top: 2.6rem;
-  left: 0;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #83d9ee;
-  box-shadow: 0 0 0 6px #83d9ee0b;
+  top: 2.7rem;
+  left: -2px;
+  width: 5px;
+  height: 5px;
+  background: #6b93ff;
   content: "";
 }
 .closing { position: relative; overflow: hidden; isolation: isolate; }
 .closingHeadline {
   max-width: 19ch;
   font-family: var(--font-display);
-  font-size: clamp(2.5rem, 5.7vw, 4.75rem);
-  font-weight: 500;
-  line-height: 1.08;
-  letter-spacing: -.055em;
+  font-size: clamp(2.5rem, 5.5vw, 4.6rem);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.04em;
   text-wrap: balance;
 }
+/* The closing band's backdrop: a fine blueprint grid with one crosshair —
+   engineering-document furniture, not decorative rings. */
 .orbits {
   position: absolute;
   z-index: -1;
-  width: 55rem;
-  aspect-ratio: 1;
-  top: -14rem;
-  right: -26rem;
-  border: 1px solid #ffffff10;
-  border-radius: 50%;
+  inset: 0;
   pointer-events: none;
-  box-shadow: 0 0 0 5rem #ffffff02, 0 0 0 calc(5rem + 1px) #ffffff0d, 0 0 0 10rem #ffffff02, 0 0 0 calc(10rem + 1px) #ffffff09;
+  background-image:
+    linear-gradient(to right, #ffffff09 1px, transparent 1px),
+    linear-gradient(to bottom, #ffffff09 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse 60% 90% at 85% 8%, black, transparent 74%);
 }
 .orbits::before, .orbits::after {
-  position: absolute;
   content: "";
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: #83d9ee;
-  box-shadow: 0 0 24px #83d9ee55;
+  position: absolute;
+  top: 4.4rem;
+  right: 8.8rem;
+  background: #4c5158;
 }
-.orbits::before { top: 20%; left: 10%; }
-.orbits::after { bottom: 12%; left: 16%; width: 5px; height: 5px; background: #648bff; }
+.orbits::before { width: 25px; height: 1px; transform: translateY(12px); }
+.orbits::after { width: 1px; height: 25px; transform: translateX(-12px); }
 .timeline {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -85,16 +88,16 @@
 .stepNumber {
   display: block;
   margin-bottom: 1.4rem;
-  color: var(--text-accent);
-  font-family: var(--font-display);
-  font-size: 3.5rem;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 3rem;
   font-weight: 400;
-  letter-spacing: -.07em;
+  letter-spacing: -0.06em;
   line-height: 1;
 }
 .stepTrack { position: relative; height: 1.8rem; }
 .stepTrack::before { content: ""; position: absolute; top: 4px; left: 0; right: -2rem; height: 1px; background: var(--border-strong); }
-.stepTrack::after { content: ""; position: absolute; top: 0; left: 0; width: 9px; height: 9px; border-radius: 3px; background: var(--text-accent); }
+.stepTrack::after { content: ""; position: absolute; top: 1px; left: 0; width: 7px; height: 7px; background: var(--brand-blue); }
 .step:last-child .stepTrack::before { right: 0; background: linear-gradient(to right, var(--border-strong), transparent); }
 @media (max-width: 1023px) {
   .timeline { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 2.5rem; }
@@ -104,7 +107,7 @@
   .region { gap: 1rem; grid-template-columns: 3rem 1fr; padding-left: 1.35rem; }
   .timeline { grid-template-columns: 1fr; margin-top: 2.5rem; gap: 0; }
   .step { display: grid; grid-template-columns: 3.5rem 1fr; gap: 1.2rem; padding: 1.8rem 0; border-top: 1px solid var(--border-default); }
-  .stepNumber { margin: 0; font-size: 2.5rem; }
+  .stepNumber { margin: 0; font-size: 2.2rem; }
   .stepTrack { display: none; }
-  .orbits { opacity: .6; top: -3rem; right: -39rem; }
+  .orbits::before, .orbits::after { display: none; }
 }

@@ -15,7 +15,7 @@ export function Stat({
     <div className={cn("text-left", className)}>
       <div
         className={cn(
-          "num font-display text-3xl font-semibold leading-tight tracking-[-0.04em] sm:text-[2.75rem]",
+          "num text-3xl font-medium leading-tight sm:text-[2.55rem]",
           inverse ? "text-white" : "text-ink",
         )}
       >

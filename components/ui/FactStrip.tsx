@@ -30,10 +30,10 @@ export function FactStrip({
     >
       {facts.map((f) => (
         <div key={f.label} className={cn("px-5 py-4", inverse ? "bg-brand-900" : "bg-surface")}>
-          <dt className={cn("text-xl font-bold tracking-tight", inverse ? "text-white" : "text-ink")}>
+          <dt className={cn("font-display text-[19px] font-semibold tracking-[-0.02em]", inverse ? "text-white" : "text-ink")}>
             {f.value}
           </dt>
-          <dd className={cn("mt-1 text-sm leading-snug", inverse ? "text-white/60" : "text-muted")}>
+          <dd className={cn("mt-1.5 text-[12.5px] leading-snug", inverse ? "text-white/60" : "text-muted")}>
             {f.label}
           </dd>
         </div>

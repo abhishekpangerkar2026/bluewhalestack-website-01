@@ -24,7 +24,7 @@ export default function TrustPage() {
       <section className="relative overflow-hidden bg-brand-900 py-20 text-white sm:py-28">
         <div
           aria-hidden
-          className="pointer-events-none absolute -left-24 -top-24 h-96 w-96 rounded-full bg-brand-500/30 blur-[120px]"
+          className="pointer-events-none absolute inset-0 bg-dot-grid opacity-[0.13] [mask-image:radial-gradient(ellipse_55%_70%_at_12%_0%,black,transparent_70%)]"
         />
         <Container className="relative">
           <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">

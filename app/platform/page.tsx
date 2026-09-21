@@ -320,7 +320,7 @@ export default function PlatformPage() {
       <section className="relative overflow-hidden bg-brand-900 py-20 text-white sm:py-24">
         <div
           aria-hidden
-          className="pointer-events-none absolute -right-24 top-0 h-80 w-80 rounded-full bg-brand-500/30 blur-[110px]"
+          className="pointer-events-none absolute inset-0 bg-dot-grid opacity-[0.13] [mask-image:radial-gradient(ellipse_55%_70%_at_88%_0%,black,transparent_70%)]"
         />
         <Container className="relative">
           <Reveal>

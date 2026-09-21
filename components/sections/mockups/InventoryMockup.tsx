@@ -69,10 +69,10 @@ export function InventoryMockup() {
             </g>
             {/* nodes */}
             <g>
-              <circle cx="58" cy="48" r="9" fill="#002da1" />
-              <circle cx="150" cy="24" r="6.5" fill="#2ad4d4" />
-              <circle cx="150" cy="48" r="6.5" fill="#2ad4d4" />
-              <circle cx="150" cy="72" r="6.5" fill="#2ad4d4" />
+              <circle cx="58" cy="48" r="9" fill="#1637ac" />
+              <circle cx="150" cy="24" r="6.5" fill="#5f82f7" />
+              <circle cx="150" cy="48" r="6.5" fill="#5f82f7" />
+              <circle cx="150" cy="72" r="6.5" fill="#5f82f7" />
               <circle cx="250" cy="24" r="5.5" fill="#94a3b8" />
               <circle cx="250" cy="60" r="5.5" fill="#94a3b8" />
             </g>

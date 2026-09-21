@@ -57,8 +57,8 @@ export function Header() {
 
   return (
     <header ref={rootRef} className={cn("site-header sticky top-0 z-50 border-b border-line bg-surface/95 backdrop-blur-xl transition-shadow duration-300", scrolled && "shadow-md")}>
-      <div className="container-x relative flex h-20 items-center justify-between gap-5">
-        <div className="shrink-0"><Logo className="h-9 sm:h-10" /></div>
+      <div className="container-x relative flex h-16 items-center justify-between gap-5">
+        <div className="shrink-0"><Logo className="!h-7 sm:!h-8" /></div>
         <nav aria-label="Primary navigation" className="hidden xl:block">
           <ul className="flex items-center gap-0.5">
             {primaryNav.map((item) => (
@@ -106,7 +106,7 @@ export function Header() {
         </div>
       </div>
       {mobileOpen && (
-        <div ref={drawerRef} id="mobile-navigation" role="dialog" aria-modal="true" aria-label="Website navigation" className="fixed inset-x-0 top-20 h-[calc(100dvh-5rem)] overflow-y-auto border-t border-line bg-surface xl:hidden"
+        <div ref={drawerRef} id="mobile-navigation" role="dialog" aria-modal="true" aria-label="Website navigation" className="fixed inset-x-0 top-16 h-[calc(100dvh-4rem)] overflow-y-auto border-t border-line bg-surface xl:hidden"
           onKeyDown={(event) => {
             if (event.key === "Escape") { event.preventDefault(); closeMobile(); }
             if (event.key === "Tab") {
@@ -125,14 +125,14 @@ export function Header() {
 function MegaPanel({ item, onNavigate }: { item: NavItem; onNavigate: () => void }) {
   return (
     <div id={menuId(item.label)} className="absolute inset-x-5 top-full pt-3">
-      <div className="overflow-hidden rounded-2xl border border-line bg-surface shadow-xl">
-        <div className="flex items-center justify-between border-b border-line bg-sunken/60 px-7 py-4">
+      <div className="overflow-hidden rounded-md border border-line bg-surface shadow-lg">
+        <div className="flex items-center justify-between border-b border-line bg-sunken px-7 py-3.5">
           <span className="eyebrow text-faint">Explore {item.label}</span>
           <Link href={item.href} onClick={onNavigate} className="inline-flex items-center gap-2 text-xs font-semibold text-accent">{item.label} overview <ArrowRight aria-hidden className="h-3.5 w-3.5" /></Link>
         </div>
         <div className="grid grid-cols-4 divide-x divide-line p-3">
           {item.columns!.map((column) => (
-            <div key={column.heading} className={cn("p-4", column.featured && "rounded-xl bg-sunken/70")}>
+            <div key={column.heading} className={cn("p-4", column.featured && "rounded bg-sunken")}>
               <h2 className="mb-3 px-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-faint">{column.heading}</h2>
               <ul className="space-y-1">
                 {column.links.map((link) => (

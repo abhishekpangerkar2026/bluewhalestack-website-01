@@ -40,7 +40,7 @@ export default function FabricPage() {
       <section className="relative overflow-hidden bg-brand-900 text-white">
         <div
           aria-hidden
-          className="pointer-events-none absolute -left-20 top-0 h-80 w-80 rounded-full bg-brand-500/30 blur-[110px]"
+          className="pointer-events-none absolute inset-0 bg-dot-grid opacity-[0.13] [mask-image:radial-gradient(ellipse_55%_70%_at_12%_0%,black,transparent_70%)]"
         />
         <HeroArt scene="fabric" variant="dark" />
         <Container className="pointer-events-none relative">

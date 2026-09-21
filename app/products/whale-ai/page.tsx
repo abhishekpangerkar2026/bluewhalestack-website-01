@@ -31,7 +31,7 @@ const TIERS = [
     badge: "Flagship",
     tagline: "For the hardest problems that require multi-step analysis",
     accentColor: "#4f46e5",
-    topGrad: "linear-gradient(90deg,#1e40af,#6366f1)",
+    topGrad: "#2458f5",
     features: [
       "Executive monthly cost narratives with trend analysis",
       "Security root cause analysis across multi-cloud",
@@ -48,7 +48,7 @@ const TIERS = [
     badge: "Balanced",
     tagline: "The daily workhorse for operational intelligence",
     accentColor: "#0284c7",
-    topGrad: "linear-gradient(90deg,#0ea5e9,#14b8a6)",
+    topGrad: "#5f82f7",
     features: [
       "Cost optimization recommendations per account",
       "Capacity planning and right-sizing analysis",
@@ -65,7 +65,7 @@ const TIERS = [
     badge: "Fast",
     tagline: "Instant answers for interactive, conversational use",
     accentColor: "#d97706",
-    topGrad: "linear-gradient(90deg,#f59e0b,#f97316)",
+    topGrad: "#b9cafb",
     features: [
       "Ask Whale drawer — context-aware per resource",
       "Quick resource summaries and state checks",
@@ -161,7 +161,7 @@ export default function WhaleAIPage() {
       <section className="relative overflow-hidden bg-brand-900 text-white">
         <div
           aria-hidden
-          className="pointer-events-none absolute -bottom-20 -left-20 h-[300px] w-[300px] rounded-full bg-[#0ea5e9]/15 blur-[100px]"
+          className="pointer-events-none absolute inset-0 bg-dot-grid opacity-[0.13] [mask-image:radial-gradient(ellipse_55%_70%_at_12%_0%,black,transparent_70%)]"
         />
         <HeroArt scene="whale-ai" variant="dark" />
         <Container className="pointer-events-none relative py-20 sm:py-28">
@@ -175,7 +175,7 @@ export default function WhaleAIPage() {
             </div>
             <h1 className="display-1 text-white">
               AI that answers from{" "}
-              <span className="text-[#a5b4fc]">your live estate</span>
+              <span className="text-[#9db4fb]">your live estate</span>
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/70">
               Whale AI is an intelligence layer inside every module of the platform. Each of its 50+ use cases

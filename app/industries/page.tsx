@@ -192,7 +192,7 @@ export default function IndustriesPage() {
                   href={href}
                   className="group flex h-full flex-col overflow-hidden rounded-lg border border-line bg-surface shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-line-strong hover:shadow-md"
                 >
-                  <div className="bg-[#0a1530] p-7">
+                  <div className="bg-[#101114] p-7">
                     <div className="flex items-center justify-between border-b border-white/15 pb-4">
                       <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-white/55">Reference architecture</p>
                       <span className="font-mono text-[10px] text-white/40">0{i + 1}</span>

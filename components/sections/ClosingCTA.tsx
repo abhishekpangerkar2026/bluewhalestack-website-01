@@ -24,12 +24,12 @@ export function ClosingCTA({ eyebrow = "Next step", title, body, primary, second
 }) {
   const dark = variant === "dark";
   return (
-    <section className={cn(styles.closing, "py-20 sm:py-28 lg:py-32", dark ? "bg-[#0a1530] text-white" : "border-t border-line bg-sunken text-ink")}>
+    <section className={cn(styles.closing, "py-20 sm:py-28 lg:py-32", dark ? "bg-[#0e0f12] text-white" : "border-t border-line bg-sunken text-ink")}>
       {dark && <div aria-hidden className={styles.orbits} />}
       <Container>
         <Reveal>
           <div className="max-w-4xl">
-            <p className={cn("eyebrow mb-6 flex items-center gap-2.5", dark ? "text-[#83d9ee]" : "text-accent")}><span aria-hidden className="h-1.5 w-1.5 rounded-sm bg-current" />{eyebrow}</p>
+            <p className={cn("eyebrow mb-6 flex items-center gap-2.5", dark ? "text-[#8b8f97]" : "text-faint")}><span aria-hidden className="h-[5px] w-[5px] bg-[var(--brand-blue)]" />{eyebrow}</p>
             <h2 className={styles.closingHeadline}>{title}</h2>
             <p className={cn("mt-7 max-w-2xl text-base leading-[1.85] sm:text-[17px]", dark ? "text-slate-300" : "text-muted")}>{body}</p>
           </div>

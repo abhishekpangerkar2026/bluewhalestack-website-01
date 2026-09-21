@@ -2,59 +2,61 @@
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 /* ═══════════════════════════════════════════════════════════════
-   BlueWhale Stack — Marketing site design tokens
-   Ported from the product app (Enterprise apps/web/public/tokens.css)
-   so the website and the product look like one family.
-   Light-first, with dark mode via [data-theme='dark'] + OS preference.
+   BlueWhale Stack — design system
+   "Spec-sheet modernism": warm paper, near-black ink, one signal
+   blue, hairline rules, square corners, IBM Plex Sans + Mono.
+   The site reads like a precision engineering document, because
+   the product is a control plane.
+   Light-first, dark via [data-theme='dark'] + OS preference.
    ═══════════════════════════════════════════════════════════════ */
 
 :root {
-  /* Brand — official logomark */
-  --brand-deep: #2458f5;
-  --brand-blue: #2458f5;
-  --brand-sky: #edf2ff;
-  --brand-ink: #0a1530;
+  /* Brand */
+  --brand-deep: #16389f;  /* pressed / deep brand blue */
+  --brand-blue: #2458f5;  /* the logo's signal blue — used sparingly */
+  --brand-sky: #ebf0fe;
+  --brand-ink: #14161a;
 
-  /* Backgrounds (light) */
-  --bg-canvas: #f8f9fc;
+  /* Backgrounds (light) — warm paper, not cool gray */
+  --bg-canvas: #fafaf8;
   --bg-surface: #ffffff;
   --bg-elevated: #ffffff;
-  --bg-sunken: #f0f3f9;
-  --bg-hover: #f0f3f9;
-  --bg-active: #edf2ff;
+  --bg-sunken: #f1f1ee;
+  --bg-hover: #f1f1ee;
+  --bg-active: #ebf0fe;
 
   /* Text (light) */
-  --text-primary: #0a1530;
-  --text-secondary: #566176;
-  --text-tertiary: #68748a;
+  --text-primary: #14161a;
+  --text-secondary: #4c5158;
+  --text-tertiary: #6e7077; /* ≥4.5:1 on canvas */
   --text-inverse: #ffffff;
-  --text-accent: #2458f5;
-  --text-disabled: #a0aab8;
+  --text-accent: #1e49d2;
+  --text-disabled: #a3a5ab;
 
-  /* Borders (light) */
-  --border-default: #e1e6ef;
-  --border-strong: #c9d2e2;
+  /* Borders (light) — hairlines do the work shadows used to do */
+  --border-default: #e4e3de;
+  --border-strong: #c7c6bf;
   --border-accent: #2458f5;
 
   /* Primary action */
   --primary-bg: #2458f5;
-  --primary-hover: #1946d9;
-  --primary-active: #1539ad;
+  --primary-hover: #1b46db;
+  --primary-active: #16389f;
   --primary-fg: #ffffff;
 
   /* Status */
-  --success-bg: #e6f4ea;
-  --success-fg: #1e6f3e;
-  --success-border: #9fd7b3;
-  --warning-bg: #fef4e0;
-  --warning-fg: #8a5a00;
-  --warning-border: #f3c97a;
-  --danger-bg: #fdecec;
-  --danger-fg: #a9231c;
-  --danger-border: #f0a4a0;
-  --info-bg: #e8f2ff;
-  --info-fg: #1e6fdb;
-  --info-border: #b4d4f7;
+  --success-bg: #e9f3ec;
+  --success-fg: #17683a;
+  --success-border: #a9d4b7;
+  --warning-bg: #faf3e2;
+  --warning-fg: #7d5300;
+  --warning-border: #ecc97a;
+  --danger-bg: #fdeeec;
+  --danger-fg: #ab2418;
+  --danger-border: #f0a8a1;
+  --info-bg: #ebf0fe;
+  --info-fg: #1e49d2;
+  --info-border: #b8caf9;
 
   /* Cloud brand colors */
   --cloud-aws: #ff9900;
@@ -66,93 +68,91 @@
   --cloud-vmware: #607d8b;
   --cloud-nutanix: #024da1;
 
-  /* Elevation */
-  --shadow-sm: 0 2px 6px -2px rgb(10 21 48 / 0.05);
-  --shadow-md: 0 8px 28px -12px rgb(10 21 48 / 0.13);
-  --shadow-lg: 0 18px 50px -20px rgb(10 21 48 / 0.19);
-  --shadow-xl: 0 28px 80px -24px rgb(10 21 48 / 0.22);
-  --shadow-focus: 0 0 0 4px rgb(36 88 245 / 0.18);
+  /* Elevation — barely there; hairlines carry hierarchy */
+  --shadow-sm: 0 1px 2px rgb(20 22 26 / 0.04);
+  --shadow-md: 0 2px 10px -2px rgb(20 22 26 / 0.07);
+  --shadow-lg: 0 10px 32px -12px rgb(20 22 26 / 0.12);
+  --shadow-xl: 0 18px 48px -16px rgb(20 22 26 / 0.16);
+  --shadow-focus: 0 0 0 3px rgb(36 88 245 / 0.22);
 }
 
-/* Dark mode — explicit opt-in */
+/* Dark mode — graphite console, not navy */
 [data-theme="dark"] {
-  --bg-canvas: #0a1628;
-  --bg-surface: #101e36;
-  --bg-elevated: #152747;
-  --bg-sunken: #081226;
-  --bg-hover: #152747;
-  --bg-active: #1a3567;
+  --bg-canvas: #0c0d0f;
+  --bg-surface: #121316;
+  --bg-elevated: #17181c;
+  --bg-sunken: #08090a;
+  --bg-hover: #17181c;
+  --bg-active: #16213f;
 
-  --text-primary: #f3f5f8;
-  --text-secondary: #a8b3c3;
-  --text-tertiary: #93a0b7;
-  --text-accent: #5ea1f2;
-  --text-disabled: #4a5a70;
+  --text-primary: #f2f2f0;
+  --text-secondary: #a7abb2;
+  --text-tertiary: #8b8f97;
+  --text-accent: #85a3ff;
+  --text-disabled: #4c5158;
 
-  --border-default: #21324d;
-  --border-strong: #2e456b;
-  --border-accent: #5ea1f2;
+  --border-default: #26282d;
+  --border-strong: #3a3d44;
+  --border-accent: #85a3ff;
 
-  --primary-bg: #5ea1f2;
-  --primary-hover: #7ab4f7;
-  --primary-active: #4888d6;
-  --primary-fg: #0a1628;
+  --primary-bg: #3b63ea;
+  --primary-hover: #4f76f6;
+  --primary-active: #2e51c9;
+  --primary-fg: #ffffff;
 
-  --success-bg: #0e2a1b;
-  --success-fg: #7cd9a0;
-  --warning-bg: #2a1e0a;
-  --warning-fg: #f5c06a;
-  --danger-bg: #2e1111;
-  --danger-fg: #f17a72;
-  --info-bg: #102546;
-  --info-fg: #7ab4f7;
+  --success-bg: #0f2417;
+  --success-fg: #7fd9a1;
+  --warning-bg: #271d08;
+  --warning-fg: #f0c169;
+  --danger-bg: #2b1210;
+  --danger-fg: #f28377;
+  --info-bg: #101c3a;
+  --info-fg: #92aefc;
 
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.25);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.35);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.45);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.55);
-  --shadow-focus: 0 0 0 3px rgba(94, 161, 242, 0.25);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 4px 12px -2px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 12px 32px -8px rgba(0, 0, 0, 0.55);
+  --shadow-xl: 0 20px 48px -12px rgba(0, 0, 0, 0.6);
+  --shadow-focus: 0 0 0 3px rgba(133, 163, 255, 0.28);
 }
 
 /* Respect OS preference unless the user forced light */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg-canvas: #0a1628;
-    --bg-surface: #101e36;
-    --bg-elevated: #152747;
-    --bg-sunken: #081226;
-    --bg-hover: #152747;
-    --bg-active: #1a3567;
-    --text-primary: #f3f5f8;
-    --text-secondary: #a8b3c3;
-    --text-tertiary: #93a0b7;
-    --text-accent: #5ea1f2;
-    --text-disabled: #4a5a70;
-    --border-default: #21324d;
-    --border-strong: #2e456b;
-    --border-accent: #5ea1f2;
-    --primary-bg: #5ea1f2;
-    --primary-hover: #7ab4f7;
-    --primary-active: #4888d6;
-    --primary-fg: #0a1628;
+    --bg-canvas: #0c0d0f;
+    --bg-surface: #121316;
+    --bg-elevated: #17181c;
+    --bg-sunken: #08090a;
+    --bg-hover: #17181c;
+    --bg-active: #16213f;
+    --text-primary: #f2f2f0;
+    --text-secondary: #a7abb2;
+    --text-tertiary: #8b8f97;
+    --text-accent: #85a3ff;
+    --text-disabled: #4c5158;
+    --border-default: #26282d;
+    --border-strong: #3a3d44;
+    --border-accent: #85a3ff;
+    --primary-bg: #3b63ea;
+    --primary-hover: #4f76f6;
+    --primary-active: #2e51c9;
+    --primary-fg: #ffffff;
   }
 }
 
-/* ── Tailwind theme — map utilities to the tokens above ──────────
-   Semantic names avoid Tailwind collisions; dark mode flows through
-   automatically because the utilities reference the CSS variables. */
+/* ── Tailwind theme — map utilities to the tokens above ────────── */
 @theme {
   /* Brand scale (static) */
-  --color-brand-50: #edf2ff;
-  --color-brand-100: #dce6ff;
-  --color-brand-200: #b6caff;
-  --color-brand-300: #88a9ff;
-  --color-brand-400: #5c85ff;
+  --color-brand-50: #eef2fe;
+  --color-brand-100: #dce5fd;
+  --color-brand-200: #b9cafb;
+  --color-brand-300: #8fa9f8;
+  --color-brand-400: #5f82f7;
   --color-brand-500: #2458f5;
-  --color-brand-600: #204be0;
-  --color-brand-700: #1a3bab;
-  --color-brand-800: #152653;
-  --color-brand-900: #0a1530;
+  --color-brand-600: #1b46db;
+  --color-brand-700: #1637ac;
+  --color-brand-800: #10214d;
+  --color-brand-900: #0a1020;
 
   /* Semantic surfaces / text / lines (theme-aware via var) */
   --color-canvas: var(--bg-canvas);
@@ -179,12 +179,12 @@
   --color-warning: var(--warning-fg);
   --color-danger: var(--danger-fg);
 
-  /* Radius (match product) */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
-  --radius-2xl: 20px;
+  /* Radius — sharp. The document look lives or dies here. */
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --radius-lg: 4px;
+  --radius-xl: 6px;
+  --radius-2xl: 8px;
 
   /* Shadows */
   --shadow-sm: var(--shadow-sm);
@@ -193,12 +193,12 @@
   --shadow-xl: var(--shadow-xl);
 
   /* Fonts — wired to next/font variables on <html> */
-  --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, Helvetica, Arial, sans-serif;
-  --font-mono: var(--font-mono-src), "SF Mono", Menlo, Monaco, Consolas,
+  --font-sans: var(--font-sans-src), -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: var(--font-mono-src), "SF Mono", Menlo, Consolas,
     "Courier New", monospace;
-  /* Display face = the same Inter; keeps `font-display` a real utility rather than a no-op */
-  --font-display: var(--font-manrope), var(--font-sans);
+  /* One family; display sizes differentiate by weight and tracking */
+  --font-display: var(--font-sans-src), -apple-system, "Segoe UI", sans-serif;
 
   /* Content width */
   --breakpoint-content: 1280px;
@@ -216,7 +216,9 @@ body {
   background: var(--bg-canvas);
   color: var(--text-primary);
   font-family: var(--font-sans);
+  font-size: 15px;
   line-height: 1.65;
+  font-feature-settings: "ss01" on;
 }
 
 h1, h2, h3, h4 {
@@ -228,7 +230,7 @@ button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
 button:not(:disabled), [role="button"] { cursor: pointer; }
 :focus-visible {
   outline: 2px solid var(--border-accent);
-  outline-offset: 4px;
+  outline-offset: 3px;
 }
 section[id], h2[id], h3[id] { scroll-margin-top: 7rem; }
 .skip-link {
@@ -237,7 +239,7 @@ section[id], h2[id], h3[id] { scroll-margin-top: 7rem; }
   left: 1rem;
   z-index: 100;
   transform: translateY(-180%);
-  border-radius: 10px;
+  border-radius: 3px;
   background: var(--primary-bg);
   color: var(--primary-fg);
   padding: .75rem 1rem;
@@ -258,45 +260,65 @@ section[id], h2[id], h3[id] { scroll-margin-top: 7rem; }
 }
 
 @utility num {
+  font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
 }
 
 /* ── Type scale — one hierarchy for the whole site ─────────────
-   display-1: page hero h1   display-2: section h2   eyebrow: tracked label
-   Every page hero and section heading uses these instead of ad-hoc sizes,
-   so headings, eyebrows and weights stay identical from page to page. */
+   display-1: page hero h1   display-2: section h2   eyebrow: mono spec label
+   The eyebrow is IBM Plex Mono, uppercase, wide-tracked — the site's
+   signature "spec label". Blue is reserved; labels default to ink/tertiary
+   at the call site. */
 @utility display-1 {
   font-family: var(--font-display);
-  font-size: clamp(2.5rem, 5.2vw, 4.5rem);
+  font-size: clamp(2.6rem, 5vw, 4.7rem);
   font-weight: 600;
-  line-height: 1.08;
-  letter-spacing: -0.055em;
+  line-height: 1.02;
+  letter-spacing: -0.042em;
   text-wrap: balance;
 }
 @utility display-2 {
   font-family: var(--font-display);
-  font-size: clamp(1.9rem, 3.5vw, 3rem);
+  font-size: clamp(1.8rem, 3vw, 2.65rem);
   font-weight: 600;
-  line-height: 1.14;
-  letter-spacing: -0.045em;
+  line-height: 1.1;
+  letter-spacing: -0.032em;
   text-wrap: balance;
 }
 @utility eyebrow {
+  font-family: var(--font-mono);
   font-size: 0.6875rem;
-  font-weight: 600;
-  line-height: 1.25;
-  letter-spacing: 0.14em;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 0.13em;
   text-transform: uppercase;
 }
 
-/* Subtle dotted grid for hero/feature backgrounds */
+/* Fine blueprint grid for technical backdrops (was a dot grid) */
 @utility bg-dot-grid {
-  background-image: radial-gradient(
-    var(--border-default) 1px,
-    transparent 1px
-  );
-  background-size: 22px 22px;
+  background-image:
+    linear-gradient(to right, var(--border-default) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border-default) 1px, transparent 1px);
+  background-size: 32px 32px;
 }
+
+/* A hairline rule with square end-ticks — the spec-sheet divider */
+.spec-rule {
+  position: relative;
+  border-top: 1px solid var(--border-default);
+}
+.spec-rule::before,
+.spec-rule::after {
+  content: "";
+  position: absolute;
+  top: -2.5px;
+  width: 4px;
+  height: 4px;
+  background: var(--border-strong);
+}
+.spec-rule::before { left: 0; }
+.spec-rule::after { right: 0; }
 
 /* Entrance animation */
 @keyframes fade-up {
@@ -321,9 +343,7 @@ section[id], h2[id], h3[id] { scroll-margin-top: 7rem; }
   animation: fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 /* Native 3D product scenes (components/scenes/ProductScene.tsx) */
-/* Soft edges so a studio poster sits in the page as a backdrop, not a framed picture */
 .scene-mask {
-  /* the platform spans ~78% of the frame, so the fade lives in the outer 10% on every side */
   -webkit-mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent), linear-gradient(to bottom, transparent, #000 9%, #000 91%, transparent);
   mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent), linear-gradient(to bottom, transparent, #000 9%, #000 91%, transparent);
   -webkit-mask-composite: source-in;
@@ -343,10 +363,6 @@ section[id], h2[id], h3[id] { scroll-margin-top: 7rem; }
 }
 
 .animate-marquee {
-  /* Longhand (not the `animation` shorthand) so it doesn't also set
-     animation-play-state: running — that would sit outside Tailwind's
-     `@layer utilities` and beat the group-hover pause utility regardless
-     of specificity, since unlayered rules always win over layered ones. */
   animation-name: marquee;
   animation-duration: 36s;
   animation-timing-function: linear;
@@ -367,14 +383,13 @@ section[id], h2[id], h3[id] { scroll-margin-top: 7rem; }
 .site-button > svg { flex-shrink: 0; transition: transform 180ms ease; }
 .site-button:hover > svg:last-child { transform: translate(1px, -1px); }
 .surface-card { position: relative; }
-.section-heading h2 { max-width: 24ch; }
+.section-heading h2 { max-width: 26ch; }
 .section-heading.text-center h2 { margin-inline: auto; }
-.site-footer { background-image: radial-gradient(ellipse at 5% 0%, rgb(36 88 245 / 0.14), transparent 52%); }
 .site-footer input { min-width: 0; }
-.site-footer input::placeholder { color: #94a3b8; }
+.site-footer input::placeholder { color: #8b8f97; }
 .site-footer form > label { font-size: 10px; }
 .site-footer form > div { gap: .5rem; }
-.site-footer form button { background: #2458f5; }
+.site-footer form button { background: var(--brand-blue); }
 .site-footer form button:hover { background: #416fff; }
 @media (prefers-reduced-motion: reduce) {
   .site-button > svg { transition: none; }

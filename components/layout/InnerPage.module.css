@@ -1,8 +1,8 @@
 .page { min-width: 0; }
 .contextBar { background: var(--bg-surface); border-bottom: 1px solid var(--border-default); }
 .contextInner { display: flex; align-items: center; gap: 28px; min-height: 56px; }
-.contextLabel { display: inline-flex; align-items: center; gap: 9px; flex-shrink: 0; color: var(--text-secondary); font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
-.contextDot { width: 5px; height: 5px; background: var(--text-accent); }
+.contextLabel { display: inline-flex; align-items: center; gap: 9px; flex-shrink: 0; color: var(--text-tertiary); font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; }
+.contextDot { width: 5px; height: 5px; background: var(--brand-blue); }
 .contextNav { display: flex; align-self: stretch; gap: 25px; min-width: 0; overflow-x: auto; scrollbar-width: none; }
 .contextNav::-webkit-scrollbar { display: none; }
 .contextNav a { display: inline-flex; align-items: center; white-space: nowrap; border-bottom: 2px solid transparent; color: var(--text-secondary); font-size: 12px; font-weight: 500; transition: color .2s, border-color .2s; }
@@ -12,7 +12,7 @@
 .pageIndexInner { display: flex; align-items: center; gap: 30px; overflow-x: auto; min-height: 66px; }
 .pageIndexInner > a { display: inline-flex; align-items: center; gap: 8px; padding: 20px 0; white-space: nowrap; font-size: 12px; font-weight: 600; color: var(--text-secondary); transition: color .2s; }
 .pageIndexInner > a:hover { color: var(--text-accent); }
-.pageIndexInner > a > span { color: var(--text-tertiary); font-family: monospace; font-size: 10px; font-weight: 400; }
+.pageIndexInner > a > span { color: var(--text-tertiary); font-family: var(--font-mono); font-size: 10px; font-weight: 400; }
 .page > section:first-of-type { position: relative; border-bottom: 1px solid var(--border-default); }
 .page > section:first-of-type h1 { font-size: clamp(2.6rem, 4.3vw, 4.4rem); line-height: 1.055; letter-spacing: -.058em; text-wrap: balance; }
 .page > section:first-of-type :global(.bg-dot-grid) { display: none; }
@@ -25,8 +25,8 @@
 .page table th, .page table td { padding-top: 18px; padding-bottom: 18px; }
 .page table tbody tr { transition: background .2s; }
 .page table tbody tr:hover { background: var(--bg-hover); }
-.page :global(.rounded-lg):has(> table) { border-radius: 16px; }
-.page :global(.rounded-lg):has(> dl) { border-radius: 16px; }
+.page :global(.rounded-lg):has(> table) { border-radius: 4px; }
+.page :global(.rounded-lg):has(> dl) { border-radius: 4px; }
 .page details { border-radius: 0; border-left: 0; border-right: 0; }
 .page details summary { padding-top: 25px; padding-bottom: 25px; }
 .page article { line-height: 1.8; }
@@ -34,22 +34,22 @@
 .document > section:first-of-type h1 { font-size: clamp(2.5rem, 4vw, 3.85rem); }
 .document article > div { scroll-margin-top: 110px; }
 .document article p { line-height: 1.9; }
-.document aside > div { border-radius: 16px; box-shadow: none; }
-.introPanel { position: relative; padding: 30px; border: 1px solid var(--border-default); border-radius: 18px; background: var(--bg-surface); box-shadow: 0 22px 55px -35px rgb(10 21 48 / .27); }
-.panelEyebrow { display: flex; align-items: center; gap: 8px; padding-bottom: 22px; color: var(--text-tertiary); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; }
-.panelEyebrow > span { width: 6px; height: 6px; border-radius: 50%; background: var(--text-accent); }
+.document aside > div { border-radius: 4px; box-shadow: none; }
+.introPanel { position: relative; padding: 30px; border: 1px solid var(--border-default); border-radius: 4px; background: var(--bg-surface); }
+.panelEyebrow { display: flex; align-items: center; gap: 8px; padding-bottom: 22px; color: var(--text-tertiary); font-family: var(--font-mono); font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .13em; }
+.panelEyebrow > span { width: 5px; height: 5px; background: var(--brand-blue); }
 .panelLink { display: grid; grid-template-columns: 24px 1fr 18px; align-items: center; gap: 12px; padding: 23px 0; border-top: 1px solid var(--border-default); color: var(--text-primary); transition: color .2s; }
 .panelLink:hover { color: var(--text-accent); }
-.panelIndex { align-self: start; padding-top: 2px; font-family: monospace; font-size: 10px; color: var(--text-tertiary); }
+.panelIndex { align-self: start; padding-top: 2px; font-family: var(--font-mono); font-size: 10px; color: var(--text-tertiary); }
 .panelLink strong { display: block; font-size: 17px; font-weight: 600; line-height: 1.25; letter-spacing: -.02em; }
 .panelLink small { display: block; margin-top: 6px; font-size: 12px; line-height: 1.7; color: var(--text-secondary); }
 .panelLink > svg { color: var(--text-accent); transition: transform .2s; }
 .panelLink:hover > svg { transform: translate(2px, -2px); }
 .panelStat { padding: 22px 0; border-top: 1px solid var(--border-default); }
 .panelStat > p { font-size: 11px; font-weight: 600; }
-.panelStat > strong { display: block; margin: 8px 0; font-size: clamp(2.8rem, 4vw, 4rem); line-height: 1.1; letter-spacing: -.065em; font-weight: 600; }
+.panelStat > strong { display: block; margin: 8px 0; font-family: var(--font-display); font-size: clamp(2.7rem, 4vw, 3.9rem); line-height: 1.06; letter-spacing: -.042em; font-weight: 600; }
 .panelStat > span { font-size: 12px; line-height: 1.7; color: var(--text-secondary); }
-.panelDark { --text-primary: #fff; --text-secondary: #acb8d0; --text-tertiary: #92a0bd; --text-accent: #89a9ff; --border-default: #ffffff24; background: #0a1530; color: #fff; }
+.panelDark { --text-primary: #f2f2f0; --text-secondary: #a7abb2; --text-tertiary: #8b8f97; --text-accent: #9db4fb; --border-default: #ffffff1f; background: #101114; color: #f2f2f0; }
 .panelDark::after { content: ""; position: absolute; top: 24px; right: 26px; width: 28px; height: 4px; background: #2458f5; }
 @media (min-width: 1024px) {
   .page > section:first-of-type:global(.py-20) { padding-top: 92px; padding-bottom: 100px; }
@@ -65,7 +65,7 @@
   .contextAction { display: none; }
   .page > section:first-of-type h1 { font-size: clamp(2.35rem, 10.2vw, 3rem); line-height: 1.09; letter-spacing: -.05em; }
   .page > section:first-of-type :global(.text-lg) { font-size: 1rem; line-height: 1.75; }
-  .introPanel { padding: 24px; border-radius: 14px; }
+  .introPanel { padding: 24px; border-radius: 4px; }
   .panelLink { padding: 19px 0; }
   .page table th, .page table td { padding-top: 14px; padding-bottom: 14px; }
 }
