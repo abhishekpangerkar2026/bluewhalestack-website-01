@@ -15,9 +15,9 @@ export function generateStaticParams() {
 
 /**
  * Print layout for a document — what scripts/build-docs.mjs turns into the
- * PDF under public/docs. A4, a white-studio cover in the style of the product
- * posters (logo, title, the document's 3D scene, tagline), then the shared
- * DocumentView in print mode. Site chrome is hidden by PrintChrome.
+ * PDF under public/docs. A4, a typographic cover (logo, title, tagline — no
+ * imagery, matching the site), then the shared DocumentView in print mode.
+ * Site chrome is hidden by PrintChrome.
  */
 export default async function PrintDocumentPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -38,14 +38,7 @@ export default async function PrintDocumentPage({ params }: { params: Promise<{ 
           <h1 className="text-[26pt] font-bold leading-[1.08] tracking-tight text-ink">{doc.title}</h1>
           <p className="mt-3 max-w-[140mm] text-[11.5pt] leading-relaxed text-muted">{doc.subtitle}</p>
         </div>
-        {scene && (
-          <div className="relative mt-2 h-[96mm] w-full overflow-hidden">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/brand/control-plane-art.png" width={1536} height={1024} alt="" className="absolute inset-0 h-full w-full object-cover" />
-            <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-white to-transparent" />
-          </div>
-        )}
-        <div className="flex items-center justify-between border-t border-line px-8 py-4">
+        <div className="mt-8 flex items-center justify-between border-t border-line px-8 py-4">
           <p className="text-[10.5pt] font-semibold text-brand-700">{scene?.tagline}</p>
           <p className="text-[8.5pt] text-faint">
             {doc.updated} · Version {doc.version} · www.bluewhalestack.com
