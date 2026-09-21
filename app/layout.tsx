@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     description: company.metaDescription,
     siteName: company.name,
     url: siteOrigin,
-    images: [{ url: "/og.png", width: 1734, height: 907, alt: "BlueWhale Stack — Every cloud. One control plane." }],
+    images: [{ url: "/og.png", width: 2400, height: 1260, alt: "BlueWhale Stack — Every cloud. One control plane." }],
     locale: "en_US",
     type: "website",
   },
