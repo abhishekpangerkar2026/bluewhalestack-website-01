@@ -10,7 +10,6 @@ import { Stat } from "@/components/ui/Stat";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { ArchitectureDiagram } from "@/components/diagrams/ArchitectureDiagram";
-import { HeroArt, HeroArtMobile } from "@/components/scenes/ProductScene";
 import { editionsBySlug } from "@/content/editions";
 import {
   fabricHero,
@@ -42,9 +41,8 @@ export default function FabricPage() {
           aria-hidden
           className="pointer-events-none absolute inset-0 bg-dot-grid opacity-[0.13] [mask-image:radial-gradient(ellipse_55%_70%_at_12%_0%,black,transparent_70%)]"
         />
-        <HeroArt scene="fabric" variant="dark" />
-        <Container className="pointer-events-none relative">
-          <div className="pointer-events-auto py-20 sm:py-28 lg:max-w-[48%]">
+        <Container className="relative">
+          <div className="max-w-3xl py-20 sm:py-28">
             <div>
               <div className="flex flex-wrap items-center gap-3">
                 <span className="eyebrow text-white/80">{fabricHero.eyebrow}</span>
@@ -77,7 +75,6 @@ export default function FabricPage() {
               </div>
             </div>
           </div>
-          <HeroArtMobile scene="fabric" variant="dark" className="pb-16" />
         </Container>
       </section>
 

@@ -4,7 +4,6 @@ import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Download, FileText, BookOpen, Building2, Landmark, Layers, Newspaper } from "lucide-react";
 import { resources, resourceTypes, type ResourceType } from "@/content/resources";
-import { SceneThumb } from "@/components/scenes/ProductScene";
 import { Badge } from "@/components/ui/Badge";
 import { cn } from "@/lib/utils";
 
@@ -63,7 +62,6 @@ export function ResourceLibrary() {
                 <span className="mb-3 inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-muted">
                   <CoverIcon className="h-3.5 w-3.5" /> {r.type}
                 </span>
-                <SceneThumb scene={r.scene} />
               </Link>
 
               <div className="flex flex-1 flex-col p-6">

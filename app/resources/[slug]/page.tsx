@@ -8,7 +8,6 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Reveal } from "@/components/ui/Reveal";
-import { HeroArt, HeroArtMobile } from "@/components/scenes/ProductScene";
 import { DocumentView, sectionHeading, sectionId } from "@/components/documents/DocumentView";
 import { ClosingCTA } from "@/components/sections/ClosingCTA";
 import { documents, documentsBySlug } from "@/content/documents";
@@ -34,12 +33,11 @@ export default async function ResourceDocumentPage({ params }: { params: Promise
 
   return (
     <InnerPage category="resources" current="/resources" document>
-      {/* ── Hero: the document's 3D scene as the backdrop, copy over the white studio ── */}
-      <section className="relative overflow-hidden border-b border-line bg-white py-12 sm:py-16 lg:min-h-[600px]">
-        <HeroArt scene={doc.scene} />
-        <Container className="pointer-events-none relative">
-          <Breadcrumbs items={[{ label: "Resources", href: "/resources" }, { label: doc.type, href: "/resources" }, { label: doc.title }]} className="pointer-events-auto" />
-          <div className="pointer-events-auto mt-10 lg:max-w-[48%]">
+      {/* ── Hero ── */}
+      <section className="border-b border-line bg-white py-12 sm:py-16">
+        <Container>
+          <Breadcrumbs items={[{ label: "Resources", href: "/resources" }, { label: doc.type, href: "/resources" }, { label: doc.title }]} />
+          <div className="mt-10 max-w-3xl">
             <Reveal>
               <div className="flex flex-wrap items-center gap-2">
                 <Badge tone="brand">{doc.type}</Badge>
@@ -65,7 +63,6 @@ export default async function ResourceDocumentPage({ params }: { params: Promise
               </div>
             </Reveal>
           </div>
-          <HeroArtMobile scene={doc.scene} />
         </Container>
       </section>
 

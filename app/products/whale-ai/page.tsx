@@ -4,7 +4,6 @@ import { ArrowRight, Check } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
-import { HeroArt, HeroArtMobile } from "@/components/scenes/ProductScene";
 import { Card } from "@/components/ui/Card";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
@@ -163,9 +162,8 @@ export default function WhaleAIPage() {
           aria-hidden
           className="pointer-events-none absolute inset-0 bg-dot-grid opacity-[0.13] [mask-image:radial-gradient(ellipse_55%_70%_at_12%_0%,black,transparent_70%)]"
         />
-        <HeroArt scene="whale-ai" variant="dark" />
-        <Container className="pointer-events-none relative py-20 sm:py-28">
-          <div className="pointer-events-auto lg:max-w-[48%]">
+        <Container className="relative py-20 sm:py-28">
+          <div>
           <div className="max-w-3xl">
             <div className="mb-5 flex items-center gap-3">
               <span aria-hidden className="h-px w-8 bg-white/40" />
@@ -203,7 +201,6 @@ export default function WhaleAIPage() {
             </div>
           </div>
           </div>
-          <HeroArtMobile scene="whale-ai" variant="dark" />
         </Container>
       </section>
 

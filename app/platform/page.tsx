@@ -16,7 +16,6 @@ import { PrototypeOffer } from "@/components/sections/PrototypeOffer";
 import { FAQ } from "@/components/sections/FAQ";
 import { ClosingCTA } from "@/components/sections/ClosingCTA";
 import { Iso, FAMILY_ISO, DEPLOY_ISO } from "@/components/illustrations/Iso";
-import { ProductScene } from "@/components/scenes/ProductScene";
 import { compliance, estates } from "@/content/company";
 import {
   modules,
@@ -61,7 +60,7 @@ export default function PlatformPage() {
           className="pointer-events-none absolute inset-0 bg-dot-grid opacity-60 [mask-image:radial-gradient(ellipse_70%_60%_at_50%_0%,black,transparent_75%)]"
         />
         <Container className="relative">
-          <div className="grid items-center gap-12 pt-20 sm:pt-28 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="pt-20 sm:pt-28">
             <div className="max-w-3xl">
               <div className="mb-6 flex items-center gap-3">
                 <span aria-hidden className="h-px w-8 bg-accent/60" />
@@ -90,9 +89,6 @@ export default function PlatformPage() {
                 </Button>
               </div>
             </div>
-            <Reveal delay={100}>
-              <ProductScene scene="architecture" priority tagline className="w-full aspect-[4/3]" />
-            </Reveal>
           </div>
 
           {/* Stats strip — the official at-a-glance numbers */}

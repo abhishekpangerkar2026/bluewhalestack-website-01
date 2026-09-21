@@ -12,7 +12,6 @@ import { Button } from "@/components/ui/Button";
 import { Iso, SOLUTION_ISO } from "@/components/illustrations/Iso";
 import { StoryVisual } from "@/components/sections/CustomerStories";
 import { ClosingCTA } from "@/components/sections/ClosingCTA";
-import { SolutionsSceneLoader } from "@/components/scenes/SolutionsSceneLoader";
 import { getSolutions, getIndustries, getEdition } from "@/lib/content";
 import { customerStories } from "@/content/customers";
 
@@ -28,14 +27,14 @@ export default function SolutionsPage() {
 
   return (
     <InnerPage category="solutions" current="/solutions">
-      {/* ── Hero: statement left, 3D art right ── */}
+      {/* ── Hero ── */}
       <section className="relative overflow-hidden border-b border-line bg-canvas">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 bg-dot-grid opacity-60 [mask-image:radial-gradient(ellipse_70%_60%_at_50%_0%,black,transparent_75%)]"
         />
         <Container className="relative">
-          <div className="grid items-center gap-12 py-20 sm:py-28 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="py-20 sm:py-28">
             <Reveal>
               <div className="max-w-2xl">
                 <div className="mb-6 flex items-center gap-3">
@@ -67,7 +66,7 @@ export default function SolutionsPage() {
                     Read the case studies
                   </Button>
                 </div>
-                {/* the six solutions as icon chips — a jump list that mirrors the tiles in the 3D scene */}
+                {/* the six solutions as icon chips — a jump list */}
                 <div className="mt-8 flex flex-wrap gap-2">
                   {solutions.map((s) => (
                     <Link
@@ -81,9 +80,6 @@ export default function SolutionsPage() {
                   ))}
                 </div>
               </div>
-            </Reveal>
-            <Reveal delay={100} className="min-w-0">
-              <SolutionsSceneLoader />
             </Reveal>
           </div>
         </Container>

@@ -11,8 +11,6 @@ import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { FactStrip } from "@/components/ui/FactStrip";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
-import { HeroArt, HeroArtMobile } from "@/components/scenes/ProductScene";
-import { SOLUTION_3D } from "@/content/product3d";
 import { ArchitectureDiagram } from "@/components/diagrams/ArchitectureDiagram";
 import { ConsoleMockup } from "@/components/sections/mockups/ConsoleMockup";
 import { FAQ } from "@/components/sections/FAQ";
@@ -59,11 +57,10 @@ export default async function SolutionDetailPage({
   return (
     <InnerPage category="solutions" current="/solutions">
       {/* ── Hero ── */}
-      <section className="relative overflow-hidden border-b border-line bg-white py-12 sm:py-16 lg:min-h-[620px]">
-        <HeroArt scene={SOLUTION_3D[solution.slug] ?? "platform"} />
-        <Container className="pointer-events-none relative">
-          <Breadcrumbs items={[{ label: "Solutions", href: "/solutions" }, { label: solution.name }]} className="pointer-events-auto" />
-          <div className="pointer-events-auto mt-10 lg:max-w-[46%]">
+      <section className="border-b border-line bg-white py-12 sm:py-16">
+        <Container>
+          <Breadcrumbs items={[{ label: "Solutions", href: "/solutions" }, { label: solution.name }]} />
+          <div className="mt-10 max-w-3xl">
             <div className="flex items-center gap-3">
               <span className="grid h-11 w-11 place-items-center rounded-lg bg-primary text-primary-fg shadow-sm">
                 <Icon name={solution.icon} className="h-5 w-5" />
@@ -85,7 +82,6 @@ export default async function SolutionDetailPage({
               </Button>
             </div>
           </div>
-          <HeroArtMobile scene={SOLUTION_3D[solution.slug] ?? "platform"} />
         </Container>
       </section>
       <section className="border-b border-line bg-sunken py-8">

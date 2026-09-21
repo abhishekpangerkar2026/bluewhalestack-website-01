@@ -5,8 +5,6 @@ import { notFound } from "next/navigation";
 import { ArrowRight, Check, Clock } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { HeroArt, HeroArtMobile } from "@/components/scenes/ProductScene";
-import { EDITION_3D } from "@/content/product3d";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
@@ -76,14 +74,13 @@ export default async function EditionDetailPage({
           aria-hidden
           className="pointer-events-none absolute inset-0 bg-dot-grid opacity-[0.13] [mask-image:radial-gradient(ellipse_55%_70%_at_12%_0%,black,transparent_70%)]"
         />
-        <HeroArt scene={EDITION_3D[edition.slug]} variant="dark" />
-        <Container className="pointer-events-none relative">
+        <Container className="relative">
           <Breadcrumbs
             inverse
-            className="pointer-events-auto pt-10"
+            className="pt-10"
             items={[{ label: "Editions", href: "/editions" }, { label: `${edition.name} Edition` }]}
           />
-          <div className="pointer-events-auto py-12 sm:py-16 lg:max-w-[48%]">
+          <div className="py-12 sm:py-16">
           <div className="max-w-3xl">
             <div className="flex flex-wrap items-center gap-3">
               <Badge tone="neutral" className="bg-white/10 text-white">
@@ -150,7 +147,6 @@ export default async function EditionDetailPage({
             </div>
           </div>
           </div>
-          <HeroArtMobile scene={EDITION_3D[edition.slug]} variant="dark" className="pb-12" />
         </Container>
       </section>
 

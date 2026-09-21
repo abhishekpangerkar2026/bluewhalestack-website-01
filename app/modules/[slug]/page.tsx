@@ -12,7 +12,6 @@ import { FactStrip } from "@/components/ui/FactStrip";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { ModuleDiagram } from "@/components/diagrams/ModuleDiagram";
-import { HeroArt, HeroArtMobile } from "@/components/scenes/ProductScene";
 import { ConsoleMockup } from "@/components/sections/mockups/ConsoleMockup";
 import { FAQ } from "@/components/sections/FAQ";
 import { ClosingCTA } from "@/components/sections/ClosingCTA";
@@ -70,18 +69,16 @@ export default async function ModuleDetailPage({
   return (
     <InnerPage category="platform" current="/modules">
       {/* ── Hero ── */}
-      <section className="relative overflow-hidden border-b border-line bg-white py-12 sm:py-16 lg:min-h-[620px]">
-        <HeroArt scene={mod.slug} />
-        <Container className="pointer-events-none relative">
+      <section className="border-b border-line bg-white py-12 sm:py-16">
+        <Container>
           <Breadcrumbs
-            className="pointer-events-auto"
             items={[
               { label: "Platform", href: "/platform" },
               { label: moduleGroups[mod.group], href: `/modules#${mod.group}` },
               { label: mod.name },
             ]}
           />
-          <div className="pointer-events-auto mt-10 lg:max-w-[46%]">
+          <div className="mt-10 max-w-3xl">
             <div>
               <div className="flex flex-wrap items-center gap-2">
                 <Badge tone={detail.status.tone}>{detail.status.label}</Badge>
@@ -110,7 +107,6 @@ export default async function ModuleDetailPage({
               </div>
             </div>
           </div>
-          <HeroArtMobile scene={mod.slug} />
         </Container>
       </section>
       <section className="border-b border-line bg-sunken py-8">

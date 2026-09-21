@@ -10,7 +10,6 @@ import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
 import { Iso, FAMILY_ISO } from "@/components/illustrations/Iso";
-import { SceneThumb } from "@/components/scenes/ProductScene";
 import { moduleDetails } from "@/content/moduleDetails";
 import {
   modules,
@@ -125,7 +124,6 @@ export default function ModulesPage() {
                     >
                       <Link href={`/modules/${m.slug}`} className="group/card block h-full">
                         <Card interactive className="flex h-full flex-col">
-                          <SceneThumb scene={m.slug} className="mb-4" />
                           <div className="flex items-center justify-between">
                             <span className="grid h-11 w-11 place-items-center rounded-lg bg-[var(--bg-active)] text-accent">
                               <Icon name={m.icon} className="h-5 w-5" />

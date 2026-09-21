@@ -12,11 +12,9 @@ import { FactStrip } from "@/components/ui/FactStrip";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { ArchitectureDiagram } from "@/components/diagrams/ArchitectureDiagram";
-import { HeroArt, HeroArtMobile } from "@/components/scenes/ProductScene";
 import { StoryVisual } from "@/components/sections/CustomerStories";
 import { FAQ } from "@/components/sections/FAQ";
 import { ClosingCTA } from "@/components/sections/ClosingCTA";
-import { INDUSTRY_3D } from "@/content/product3d";
 import { INDUSTRY_POSTER } from "@/content/industryPosters";
 import { IndustryArchitecturePoster } from "@/components/diagrams/IndustryArchitecturePoster";
 import { customerStories } from "@/content/customers";
@@ -53,11 +51,10 @@ export default async function IndustryDetailPage({
   return (
     <InnerPage category="solutions" current="/industries">
       {/* ── Hero ── */}
-      <section className="relative overflow-hidden border-b border-line bg-white py-12 sm:py-16 lg:min-h-[620px]">
-        <HeroArt scene={INDUSTRY_3D[industry.slug] ?? "platform"} />
-        <Container className="pointer-events-none relative">
-          <Breadcrumbs items={[{ label: "Industries", href: "/industries" }, { label: industry.name }]} className="pointer-events-auto" />
-          <div className="pointer-events-auto mt-10 lg:max-w-[46%]">
+      <section className="border-b border-line bg-white py-12 sm:py-16">
+        <Container>
+          <Breadcrumbs items={[{ label: "Industries", href: "/industries" }, { label: industry.name }]} />
+          <div className="mt-10 max-w-3xl">
             <div>
               <div className="flex flex-wrap items-center gap-2">
                 <span className="grid h-11 w-11 place-items-center rounded-lg bg-primary text-primary-fg">
@@ -95,7 +92,6 @@ export default async function IndustryDetailPage({
               </div>
             </div>
           </div>
-          <HeroArtMobile scene={INDUSTRY_3D[industry.slug] ?? "platform"} />
         </Container>
       </section>
       <section className="border-b border-line bg-sunken py-8">
