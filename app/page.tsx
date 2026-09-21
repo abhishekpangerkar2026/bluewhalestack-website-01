@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Boxes, Sparkles, Server, ShieldCheck, Plug, KeyRound, PackagePlus, Layers, Building2, RadioTower, Landmark } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
@@ -19,11 +19,14 @@ const steps = howItWorks.slice(0, 3);
 
 /** Short, hand-written teasers for the facts row under the console — deliberately one line, not the full pillar body. */
 const CONSOLE_FACTS = [
-  { title: "Nine families, one inventory", body: "A cost anomaly, a finding and a ticket point at the same workload and owner." },
-  { title: "Whale AI in every family", body: "50+ grounded use cases, including fully offline inside the perimeter." },
-  { title: "Six clouds, one datacenter floor", body: "Public cloud by API; VMware, Hyper-V and Nutanix by Edge Agent." },
-  { title: "Sovereign by architecture", body: "SaaS, BYOC, on-premises or fully air-gapped — the same build, every mode." },
+  { icon: Boxes, title: "Nine families, one inventory", body: "A cost anomaly, a finding and a ticket point at the same workload and owner." },
+  { icon: Sparkles, title: "Whale AI in every family", body: "50+ grounded use cases, including fully offline inside the perimeter." },
+  { icon: Server, title: "Six clouds, one datacenter floor", body: "Public cloud by API; VMware, Hyper-V and Nutanix by Edge Agent." },
+  { icon: ShieldCheck, title: "Sovereign by architecture", body: "SaaS, BYOC, on-premises or fully air-gapped — the same build, every mode." },
 ];
+
+const STEP_ICONS = [Plug, KeyRound, PackagePlus];
+const EDITION_ICONS: Record<string, typeof Layers> = { standard: Layers, enterprise: Building2, "telco-datacenter": RadioTower, government: Landmark };
 
 export default function HomePage() {
   const editions = getEditions();
@@ -50,6 +53,7 @@ export default function HomePage() {
         <div className={styles.factRow}>
           {CONSOLE_FACTS.map((f) => (
             <div key={f.title} className={styles.fact}>
+              <span className={styles.factIcon}><f.icon aria-hidden size={15} /></span>
               <div><strong>{f.title}</strong><span>{f.body}</span></div>
             </div>
           ))}
@@ -60,17 +64,19 @@ export default function HomePage() {
       <section className={`${styles.section} ${styles.sectionTint}`}><Container>
         <SectionHeading eyebrow="03 / How it works" title="Connect, govern, provision." description="Read-only credentials in, one system of record out. The mechanics — ports, permissions, timings — are the ones the docs describe." />
         <ol className={`${editorial.timeline} ${styles.timeline3}`}>
-          {steps.map((s) => (
+          {steps.map((s, i) => {
+            const StepIcon = STEP_ICONS[i] ?? Plug;
+            return (
             <li key={s.step} className={editorial.step}>
               <span aria-hidden className={editorial.stepNumber}>{s.step}</span>
               <div>
                 <div aria-hidden className={editorial.stepTrack} />
-                <h3 className="text-lg font-semibold tracking-[-0.025em] text-ink">{s.title}</h3>
+                <h3 className="flex items-center gap-2.5 text-lg font-semibold tracking-[-0.025em] text-ink"><span className={styles.stepIcon}><StepIcon aria-hidden size={14} /></span>{s.title}</h3>
                 <p className="mt-3 text-[13px] leading-[1.85] text-muted">{s.body}</p>
                 <small className="mt-4 block text-[11px] leading-relaxed text-faint">{s.detail}</small>
               </div>
             </li>
-          ))}
+          );})}
         </ol>
         <Link href="/docs/quick-start" className={`${styles.sectionLink} mt-9`}>Read the quick start <ArrowRight size={15} /></Link>
       </Container></section>
@@ -106,7 +112,7 @@ export default function HomePage() {
           {editions.map((e) => (
             <Link key={e.slug} href={`/editions/${e.slug}`} className={styles.editionRow}>
               <div className={styles.editionRowName}>
-                <strong>{e.name}{e.featured && " ★"}</strong>
+                <strong><span className={styles.editionIcon}>{(() => { const I = EDITION_ICONS[e.slug] ?? Layers; return <I aria-hidden size={14} />; })()}</span>{e.name}{e.featured && " ★"}</strong>
                 <span>{e.comingSoon ? `Preview · GA ${e.gaTarget}` : "Available now"}</span>
               </div>
               <p className={styles.editionRowFit}>{e.audience}</p>

@@ -2,7 +2,7 @@ import { ArrowRight, ArrowUpRight, ShieldCheck } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { CloudLogo } from "@/components/brand/CloudLogos";
-import { HeroProductVisual } from "./HeroProductVisual";
+import { ProductScene } from "@/components/scenes/ProductScene";
 import { hero } from "@/content/home";
 import styles from "./Home.module.css";
 
@@ -24,8 +24,7 @@ export function Hero() {
             <p className={styles.heroNote}><ShieldCheck size={14} />{hero.primaryNote}</p>
           </div>
           <div className={styles.heroArt}>
-            <div className={styles.artIndex}><span>LIVE PRODUCT VIEW</span><span>Illustrative interface · sample data</span></div>
-            <HeroProductVisual />
+            <ProductScene scene="platform" priority fill className="h-full rounded-none border-0" />
             <div className={styles.artFoot}><span>54 capabilities</span><span>9 families</span><span>4 editions</span></div>
           </div>
         </div>

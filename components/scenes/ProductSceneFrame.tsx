@@ -18,7 +18,7 @@ export function ProductSceneFrame({ sceneKey, studio, live, children }: { sceneK
       </div>
       {live && <LiveSceneMount sceneKey={sceneKey} studio={studio} onReady={() => setReady(true)} />}
       {ready && (
-        <p className={`pointer-events-none absolute bottom-3 right-3 inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-semibold shadow-sm ${studio === "dark" ? "border-white/15 bg-white/10 text-white/80" : "border-line bg-surface/90 text-muted"}`}>
+        <p className={`pointer-events-none absolute bottom-2.5 right-2.5 inline-flex items-center gap-1.5 rounded-[2px] border px-2 py-1 font-mono text-[9px] font-medium uppercase tracking-[0.08em] ${studio === "dark" ? "border-white/20 bg-[#0d1330]/85 text-white/75" : "border-line bg-white/90 text-faint"}`}>
           <span aria-hidden>↻</span> Live 3D · drag to rotate
         </p>
       )}
