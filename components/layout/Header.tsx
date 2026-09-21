@@ -58,7 +58,7 @@ export function Header() {
   return (
     <header ref={rootRef} className={cn("site-header sticky top-0 z-50 border-b border-line bg-surface/95 backdrop-blur-xl transition-shadow duration-300", scrolled && "shadow-md")}>
       <div className="container-x relative flex h-16 items-center justify-between gap-5">
-        <div className="shrink-0"><Logo className="!h-7 sm:!h-8" /></div>
+        <div className="shrink-0"><Logo className="!h-9 sm:!h-10" /></div>
         <nav aria-label="Primary navigation" className="hidden xl:block">
           <ul className="flex items-center gap-0.5">
             {primaryNav.map((item) => (

@@ -31,7 +31,7 @@ export default async function PrintDocumentPage({ params }: { params: Promise<{ 
       {/* cover: white studio poster */}
       <div className="break-inside-avoid overflow-hidden rounded-xl border border-line bg-white">
         <div className="flex items-center justify-between px-8 pt-7">
-          <Logo href={null} className="h-8" />
+          <Logo href={null} className="h-11" />
           <span className="rounded-full border border-line bg-sunken px-3 py-1 text-[8.5pt] font-semibold uppercase tracking-[0.16em] text-muted">{doc.type}</span>
         </div>
         <div className="px-8 pt-8">
