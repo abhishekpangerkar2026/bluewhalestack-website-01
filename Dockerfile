@@ -10,6 +10,14 @@ RUN npm ci
 FROM node:20-alpine AS builder
 WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
+# Railway passes every configured service variable as a --build-arg, but a
+# plain `docker build` never exposes those to `RUN` steps unless the
+# Dockerfile declares them — required for any NEXT_PUBLIC_* var, since Next
+# inlines those at build time (this is what `next build` reads to bake
+# Cloudinary URLs into the static leadership pages; see lib/cloudinary.ts).
+# Add an ARG/ENV pair here for each new NEXT_PUBLIC_* variable the app needs.
+ARG NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
+ENV NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=$NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN npm run build
