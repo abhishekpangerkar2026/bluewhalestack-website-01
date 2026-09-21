@@ -1,7 +1,6 @@
 import { InnerPage, IntroPanel, IntroPanelLink } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowRight, MapPin } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -11,6 +10,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { perks, jobs } from "@/content/careers";
 import { leadership } from "@/content/about";
 import { company } from "@/content/company";
+import { cld, publicIdFromPath } from "@/lib/cloudinary";
 
 const team = leadership.filter((l) => l.name && l.image);
 const applyHref = (title: string) =>
@@ -79,11 +79,14 @@ export default function CareersPage() {
                       key={m.name}
                       className="relative h-14 w-14 overflow-hidden rounded-full ring-2 ring-surface"
                     >
-                      <Image
-                        src={m.image!}
+                      {/* eslint-disable-next-line @next/next/no-img-element -- may resolve to an external Cloudinary URL */}
+                      <img
+                        src={cld(publicIdFromPath(m.image!, "team"), m.image!, 112)}
                         alt={m.name!}
                         width={56}
                         height={56}
+                        loading="lazy"
+                        decoding="async"
                         className="h-full w-full object-cover object-top"
                       />
                     </span>

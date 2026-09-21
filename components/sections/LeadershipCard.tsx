@@ -1,8 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
-import Image from "next/image";
 import { User } from "lucide-react";
 import { Card } from "@/components/ui/Card";
+import { cld, publicIdFromPath } from "@/lib/cloudinary";
 import type { LeadershipMember } from "@/content/about";
 
 /** Official LinkedIn mark — blue rounded square with the white "in" glyph. */
@@ -39,17 +39,23 @@ function Portrait({
   size: number;
   className?: string;
 }) {
+  // The local file (checked into /public) is both the pre-Cloudinary source of truth and the
+  // gate that decides whether this person has a photo at all — see lib/cloudinary.ts.
   const hasImage = !!member.image && imageExists(member.image);
+  const src = hasImage ? cld(publicIdFromPath(member.image!, "team"), member.image!, size * 2) : undefined;
   const badgeSize = Math.round(size * 0.3);
   return (
     <div className={`relative shrink-0 ${className}`} style={{ width: size, height: size }}>
       <div className="h-full w-full overflow-hidden rounded-full ring-1 ring-line">
         {hasImage ? (
-          <Image
-            src={member.image!}
+          // eslint-disable-next-line @next/next/no-img-element -- may resolve to an external Cloudinary URL
+          <img
+            src={src}
             alt={member.name ?? member.role}
             width={size}
             height={size}
+            loading="lazy"
+            decoding="async"
             className="h-full w-full object-cover object-top"
           />
         ) : (
