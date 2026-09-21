@@ -1,3 +1,4 @@
+import { InnerPage } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -32,7 +33,7 @@ export default async function ResourceDocumentPage({ params }: { params: Promise
   const pdf = `/docs/${doc.slug}.pdf`;
 
   return (
-    <>
+    <InnerPage category="resources" current="/resources" document>
       {/* ── Hero: the document's 3D scene as the backdrop, copy over the white studio ── */}
       <section className="relative overflow-hidden border-b border-line bg-white py-12 sm:py-16 lg:min-h-[600px]">
         <HeroArt scene={doc.scene} />
@@ -130,6 +131,6 @@ export default async function ResourceDocumentPage({ params }: { params: Promise
         secondary={{ label: "Request a custom document", href: "/contact?intent=resource", note: "A control mapping for your regimes, or a datasheet for your estate — usually within a week." }}
         tertiary={{ label: "All documents", href: "/resources", note: `${documents.length} in the library` }}
       />
-    </>
+    </InnerPage>
   );
 }

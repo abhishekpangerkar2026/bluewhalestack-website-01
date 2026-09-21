@@ -1,4 +1,4 @@
-import { Search, GitBranch, Filter, Boxes } from "lucide-react";
+import { Search, GitBranch, Filter } from "lucide-react";
 import { CloudLogo } from "@/components/brand/CloudLogos";
 import { AppWindow } from "./AppWindow";
 
@@ -9,21 +9,6 @@ import { AppWindow } from "./AppWindow";
 export function InventoryMockup() {
   return (
     <div className="relative">
-      {/* floating accent card */}
-      <div className="absolute -right-4 bottom-16 z-10 hidden rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 shadow-xl sm:block animate-fade-up [animation-delay:400ms]">
-        <div className="flex items-center gap-2">
-          <span className="grid h-7 w-7 place-items-center rounded-lg bg-brand-50 text-brand-600">
-            <Boxes className="h-4 w-4" />
-          </span>
-          <div>
-            <div className="text-sm font-bold text-slate-900">
-              4,821
-            </div>
-            <div className="text-[10px] text-slate-500">resources · 6 clouds</div>
-          </div>
-        </div>
-      </div>
-
       <AppWindow active="Inventory">
         {/* header */}
         <div className="flex items-center justify-between">

@@ -23,14 +23,15 @@ export function SectionHeading({
 }) {
   const centered = align === "center";
   return (
-    <div className={cn(centered ? "mx-auto max-w-2xl text-center" : "max-w-2xl", className)}>
+    <div className={cn("section-heading", centered ? "mx-auto max-w-3xl text-center" : "max-w-2xl", className)}>
       {eyebrow && (
         <p
           className={cn(
-            "eyebrow mb-3",
+            "eyebrow mb-5 inline-flex items-center gap-2.5",
             inverse ? "text-brand-200" : "text-accent",
           )}
         >
+          <span aria-hidden className={cn("h-1.5 w-1.5 rounded-sm", inverse ? "bg-[#83d9ee]" : "bg-accent")} />
           {eyebrow}
         </p>
       )}
@@ -40,7 +41,7 @@ export function SectionHeading({
       {description && (
         <p
           className={cn(
-            "mt-4 text-lg leading-relaxed text-pretty",
+            "mt-5 text-base leading-[1.8] text-pretty sm:text-[17px]",
             inverse ? "text-white/70" : "text-muted",
           )}
         >

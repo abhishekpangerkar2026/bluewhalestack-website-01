@@ -1,3 +1,4 @@
+import { InnerPage } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -79,7 +80,7 @@ const [founder, ...team] = announcedLeaders;
 
 export default function LeadershipPage() {
   return (
-    <>
+    <InnerPage category="company" current="/about/leadership">
       {/* ── Hero ── */}
       <section className="border-b border-line bg-surface py-20 sm:py-28">
         <Container>
@@ -294,6 +295,6 @@ export default function LeadershipPage() {
           </div>
         </Container>
       </section>
-    </>
+    </InnerPage>
   );
 }

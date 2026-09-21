@@ -1,3 +1,4 @@
+import { InnerPage } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
 
 export default function CaseStudiesPage() {
   return (
-    <>
+    <InnerPage category="solutions" current="/case-studies">
       {/* ── Hero ── */}
       <section className="relative overflow-hidden bg-brand-900 text-white">
         <div
@@ -123,6 +124,6 @@ export default function CaseStudiesPage() {
           </div>
         </Container>
       </section>
-    </>
+    </InnerPage>
   );
 }

@@ -1,3 +1,4 @@
+import { InnerPage } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -51,7 +52,7 @@ export default async function CaseStudyPage({
   const others = customerStories.filter((c) => c.slug !== story.slug);
 
   return (
-    <>
+    <InnerPage category="solutions" current="/case-studies">
       {/* ── Hero ── */}
       <section className="relative overflow-hidden bg-brand-900 text-white">
         <div
@@ -158,23 +159,7 @@ export default async function CaseStudyPage({
                     <span aria-hidden className="h-px w-8 bg-line-strong" />
                     <h2 className="eyebrow text-accent">The outcome</h2>
                   </div>
-                  <figure className="mt-5 rounded-lg border-l-4 border-amber-400 bg-sunken p-6">
-                    <blockquote className="text-lg italic leading-relaxed text-ink">
-                      &ldquo;{story.quote}&rdquo;
-                    </blockquote>
-                    <figcaption className="mt-3 flex items-center gap-3">
-                      <span className="grid h-9 w-9 place-items-center rounded-full bg-primary text-xs font-semibold text-primary-fg">
-                        {story.person.initials}
-                      </span>
-                      <span className="text-sm text-muted">
-                        <span className="font-semibold text-ink">{story.person.role}</span>
-                        {" · "}
-                        {story.org}
-                        {" · "}
-                        <span className="text-faint">as reported by the customer</span>
-                      </span>
-                    </figcaption>
-                  </figure>
+                  <div className="mt-5 border-l-2 border-accent/30 pl-4"><p className="text-[10px] font-semibold uppercase tracking-widest text-accent">Engagement outcome</p><p className="mt-2 text-sm leading-relaxed text-muted">{story.summary}</p></div>
                 </div>
               </Reveal>
             </div>
@@ -252,6 +237,6 @@ export default async function CaseStudyPage({
           </div>
         </Container>
       </section>
-    </>
+    </InnerPage>
   );
 }

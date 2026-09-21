@@ -1,3 +1,4 @@
+import { InnerPage } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -50,7 +51,7 @@ export default async function IndustryDetailPage({
   const poster = INDUSTRY_POSTER[industry.slug];
 
   return (
-    <>
+    <InnerPage category="solutions" current="/industries">
       {/* ── Hero ── */}
       <section className="relative overflow-hidden border-b border-line bg-white py-12 sm:py-16 lg:min-h-[620px]">
         <HeroArt scene={INDUSTRY_3D[industry.slug] ?? "platform"} />
@@ -220,7 +221,11 @@ export default async function IndustryDetailPage({
             </Reveal>
             <Reveal delay={100}>
               <div className="mt-12">
-                <IndustryArchitecturePoster poster={poster} sector={industry.name} />
+                {industry.architectureId && <ArchitectureDiagram id={industry.architectureId} />}
+                <details className="mt-8 border-y border-line">
+                  <summary className="cursor-pointer py-6 text-sm font-semibold text-ink">Explore the detailed seven-layer architecture sheet</summary>
+                  <div className="pb-8"><IndustryArchitecturePoster poster={poster} sector={industry.name} /></div>
+                </details>
               </div>
             </Reveal>
           </Container>
@@ -300,13 +305,8 @@ export default async function IndustryDetailPage({
                 <div>
                   <p className="eyebrow text-accent">Delivered engagement</p>
                   <h2 className="mt-4 text-2xl font-bold leading-snug text-ink sm:text-3xl">{story.headline}</h2>
-                  <p className="mt-4 leading-relaxed text-muted">{story.summary}</p>
-                  <figure className="mt-5 border-l-2 border-line-strong pl-4">
-                    <blockquote className="text-base italic leading-relaxed text-muted">&ldquo;{story.quote}&rdquo;</blockquote>
-                    <figcaption className="mt-2 text-xs text-muted">
-                      <span className="font-semibold text-ink">{story.person.role}</span> · {story.org} · as reported by the customer
-                    </figcaption>
-                  </figure>
+
+                  <div className="mt-5 border-l-2 border-accent/30 pl-4"><p className="text-[10px] font-semibold uppercase tracking-widest text-accent">Engagement outcome</p><p className="mt-2 text-sm leading-relaxed text-muted">{story.summary}</p></div>
                   <dl className="mt-6 grid grid-cols-3 gap-4 border-t border-line pt-5">
                     {story.metrics.map((m) => (
                       <div key={m.label}>
@@ -355,6 +355,6 @@ export default async function IndustryDetailPage({
         }}
         tertiary={edition ? { label: `${edition.name} Edition details`, href: `/editions/${edition.slug}`, note: edition.priceAnchor } : undefined}
       />
-    </>
+    </InnerPage>
   );
 }

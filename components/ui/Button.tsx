@@ -5,24 +5,24 @@ type Variant = "primary" | "secondary" | "outline" | "ghost" | "white";
 type Size = "sm" | "md" | "lg";
 
 const base =
-  "inline-flex items-center justify-center gap-2 rounded-md font-medium transition-colors duration-150 focus-visible:outline-none focus-visible:shadow-[var(--shadow-focus)] disabled:opacity-50 disabled:pointer-events-none";
+  "site-button inline-flex shrink-0 items-center justify-center gap-2.5 rounded-lg font-semibold leading-none transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent disabled:opacity-50 disabled:pointer-events-none";
 
 const variants: Record<Variant, string> = {
   primary:
-    "bg-primary text-primary-fg hover:bg-[var(--primary-hover)] active:bg-[var(--primary-active)]",
+    "border border-transparent bg-primary text-primary-fg shadow-[0_4px_12px_-4px_rgba(36,88,245,0.4)] hover:bg-[var(--primary-hover)] active:bg-[var(--primary-active)]",
   secondary:
-    "bg-sunken text-ink border border-line hover:bg-hover hover:border-line-strong",
+    "bg-surface text-ink border border-line shadow-sm hover:bg-hover hover:border-line-strong",
   outline:
     "border border-line-strong text-ink hover:border-accent hover:text-accent",
   ghost: "text-ink hover:bg-sunken",
   white:
-    "bg-white text-[var(--brand-deep)] shadow-sm hover:bg-white/90 active:bg-white/80",
+    "border border-white bg-white text-[#0a1530] shadow-sm hover:bg-white/90 active:bg-white/80",
 };
 
 const sizes: Record<Size, string> = {
-  sm: "h-8 px-3.5 text-[13px]",
-  md: "h-10 px-4 text-sm",
-  lg: "h-12 px-6 text-[15px]",
+  sm: "h-10 px-4 text-[13px]",
+  md: "h-11 px-5 text-sm",
+  lg: "h-[3.25rem] px-6 text-[14px]",
 };
 
 type ButtonProps = {
@@ -32,7 +32,9 @@ type ButtonProps = {
   className?: string;
   external?: boolean;
   children: React.ReactNode;
-} & React.ButtonHTMLAttributes<HTMLButtonElement>;
+} & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onClick"> & {
+  onClick?: React.MouseEventHandler<HTMLButtonElement | HTMLAnchorElement>;
+};
 
 export function Button({
   href,
@@ -41,6 +43,7 @@ export function Button({
   className,
   external,
   children,
+  onClick,
   ...props
 }: ButtonProps) {
   const classes = cn(base, variants[variant], sizes[size], className);
@@ -51,13 +54,17 @@ export function Button({
         className={classes}
         target={external ? "_blank" : undefined}
         rel={external ? "noopener noreferrer" : undefined}
+        onClick={onClick}
+        aria-label={props["aria-label"]}
+        aria-disabled={props.disabled || undefined}
+        tabIndex={props.disabled ? -1 : props.tabIndex}
       >
         {children}
       </Link>
     );
   }
   return (
-    <button className={classes} {...props}>
+    <button type="button" className={classes} onClick={onClick} {...props}>
       {children}
     </button>
   );

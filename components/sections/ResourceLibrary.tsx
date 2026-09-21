@@ -4,11 +4,9 @@ import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Download, FileText, BookOpen, Building2, Landmark, Layers, Newspaper } from "lucide-react";
 import { resources, resourceTypes, type ResourceType } from "@/content/resources";
-import { scenes } from "@/content/scenes.generated";
+import { SceneThumb } from "@/components/scenes/ProductScene";
 import { Badge } from "@/components/ui/Badge";
 import { cn } from "@/lib/utils";
-
-const poster = (key: string) => (scenes as Record<string, { src800: string }>)[key]?.src800;
 
 /** Only offer filters for types that actually have resources — no empty tabs. */
 const presentTypes = resourceTypes.filter((t) => resources.some((r) => r.type === t));
@@ -56,21 +54,16 @@ export function ResourceLibrary() {
       <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {list.map((r) => {
           const CoverIcon = COVER_ICON[r.type] ?? FileText;
-          const cover = poster(r.scene);
           return (
             <article
               key={r.slug}
               className="group relative flex h-full flex-col overflow-hidden rounded-lg border border-line bg-surface shadow-sm transition-all hover:-translate-y-1 hover:border-line-strong hover:shadow-md"
             >
-              {/* cover: the document's 3D scene in the white studio, type label over it */}
-              <Link href={r.href} className="relative block aspect-[16/8] overflow-hidden border-b border-line bg-white">
-                {cover && (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={cover} alt="" width={800} height={800} loading="lazy" decoding="async" className="scene-mask absolute inset-0 h-full w-full object-cover object-[50%_58%] transition-transform duration-500 group-hover:scale-[1.03]" />
-                )}
-                <span className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full border border-line bg-white/90 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-700 shadow-sm backdrop-blur">
+              <Link href={r.href} className="block border-b border-line bg-canvas p-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent" aria-label={`Read ${r.title}`}>
+                <span className="mb-3 inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-muted">
                   <CoverIcon className="h-3.5 w-3.5" /> {r.type}
                 </span>
+                <SceneThumb scene={r.scene} />
               </Link>
 
               <div className="flex flex-1 flex-col p-6">

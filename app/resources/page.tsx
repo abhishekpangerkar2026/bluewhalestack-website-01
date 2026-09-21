@@ -1,8 +1,8 @@
+import { InnerPage, IntroPanel, IntroPanelLink } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
-import { Iso } from "@/components/illustrations/Iso";
 import { ResourceLibrary } from "@/components/sections/ResourceLibrary";
 import { ClosingCTA } from "@/components/sections/ClosingCTA";
 
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default function ResourcesPage() {
   return (
-    <>
+    <InnerPage category="resources" current="/resources">
       {/* ── Hero: editorial split, oversized statement left ── */}
       <section className="border-b border-line bg-surface py-20 sm:py-28">
         <Container>
@@ -39,16 +39,19 @@ export default function ResourcesPage() {
               </div>
             </Reveal>
             <Reveal delay={90}>
-              <div className="mx-auto w-full max-w-[380px]">
-                <Iso name="data" title="Whitepapers, datasheets and insights" />
-              </div>
+              <IntroPanel eyebrow="The essential reading" dark>
+                <IntroPanelLink index="01" title="The platform overview" description="The architecture, capabilities and deployment models." href="/resources/platform-overview" />
+                <IntroPanelLink index="02" title="The capability guide" description="Explore the families inside the control plane." href="/resources/capability-guide" />
+                <IntroPanelLink index="03" title="Trust & compliance" description="Security posture and the supporting evidence." href="/resources/trust-and-compliance-summary" />
+                <p className="mt-3 text-xs leading-relaxed text-white/60">Read online or download. No form required.</p>
+              </IntroPanel>
             </Reveal>
           </div>
         </Container>
       </section>
 
       {/* ── Library: filterable grid ── */}
-      <section className="bg-sunken py-20 sm:py-24">
+      <section id="library" className="bg-sunken py-20 sm:py-24">
         <Container>
           <Reveal>
             <SectionHeading
@@ -71,6 +74,6 @@ export default function ResourcesPage() {
         secondary={{ label: "Book a working session", href: "/contact?intent=demo", note: "45 minutes · one of your accounts connected read-only" }}
         tertiary={{ label: "Trust Center", href: "/trust", note: "signed certificates to download" }}
       />
-    </>
+    </InnerPage>
   );
 }

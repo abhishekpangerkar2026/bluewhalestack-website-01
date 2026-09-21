@@ -1,3 +1,4 @@
+import { InnerPage, IntroPanel, IntroPanelLink } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
@@ -7,7 +8,6 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
-import { Iso } from "@/components/illustrations/Iso";
 import { perks, jobs } from "@/content/careers";
 import { leadership } from "@/content/about";
 import { company } from "@/content/company";
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function CareersPage() {
   return (
-    <>
+    <InnerPage category="company" current="/careers">
       {/* ── Hero: editorial split, oversized statement left ── */}
       <section className="border-b border-line bg-surface py-20 sm:py-28">
         <Container>
@@ -58,9 +58,11 @@ export default function CareersPage() {
               </div>
             </Reveal>
             <Reveal delay={90}>
-              <div className="mx-auto w-full max-w-[360px]">
-                <Iso name="network" title="A distributed team, one platform" />
-              </div>
+              <IntroPanel eyebrow="Your next chapter" dark>
+                <IntroPanelLink index="01" href="#roles" title="Find your role" description="Explore the open roles across the team." />
+                <IntroPanelLink index="02" href="/about/leadership" title="Meet your colleagues" description="The people building BlueWhale Stack." />
+                <IntroPanelLink index="03" href="/about" title="Understand the mission" description="Eight years of field work. One platform." />
+              </IntroPanel>
             </Reveal>
           </div>
 
@@ -199,6 +201,6 @@ export default function CareersPage() {
           </div>
         </Container>
       </section>
-    </>
+    </InnerPage>
   );
 }

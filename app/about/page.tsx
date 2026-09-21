@@ -1,3 +1,4 @@
+import { InnerPage, IntroPanel } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Check, MapPin } from "lucide-react";
@@ -43,7 +44,7 @@ const announcedLeaders = leadership.filter((l) => l.name);
 
 export default function AboutPage() {
   return (
-    <>
+    <InnerPage category="company" current="/about">
       {/* ── Hero: editorial split, oversized statement left ── */}
       <section className="border-b border-line bg-surface py-20 sm:py-28">
         <Container>
@@ -77,9 +78,18 @@ export default function AboutPage() {
               </div>
             </Reveal>
             <Reveal delay={90}>
-              <div className="mx-auto w-full max-w-[380px]">
-                <Iso name="edge" title="A global platform company — India, UAE, United States" />
-              </div>
+              <IntroPanel eyebrow="Three entities. One company." dark>
+                {offices.map((office, i) => (
+                  <div key={office.city} className="flex gap-5 border-t border-white/15 py-6">
+                    <span className="pt-1 font-mono text-[10px] text-white/40">0{i + 1}</span>
+                    <div>
+                      <p className="text-xs text-white/55">{office.label}</p>
+                      <h2 className="mt-1 text-3xl font-medium tracking-tight text-white">{office.city}</h2>
+                      <p className="mt-2 text-xs leading-relaxed text-white/65">{office.blurb}</p>
+                    </div>
+                  </div>
+                ))}
+              </IntroPanel>
             </Reveal>
           </div>
         </Container>
@@ -481,6 +491,6 @@ export default function AboutPage() {
         secondary={{ label: "See open roles", href: "/careers", note: "Engineering, product, sales and delivery" }}
         tertiary={{ label: "Become a partner", href: "/partners", note: "three partner tracks" }}
       />
-    </>
+    </InnerPage>
   );
 }

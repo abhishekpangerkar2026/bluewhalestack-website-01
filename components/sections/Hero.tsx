@@ -1,81 +1,37 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight, ShieldCheck } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
-import { ProductScene } from "@/components/scenes/ProductScene";
 import { CloudLogo } from "@/components/brand/CloudLogos";
+import { HeroProductVisual } from "./HeroProductVisual";
 import { hero } from "@/content/home";
+import styles from "./Home.module.css";
 
-const TRUST_CLOUDS = ["aws", "azure", "gcp", "oracle", "alibaba", "huawei"];
+const CLOUDS = ["aws", "azure", "gcp", "oracle", "alibaba", "huawei"];
 
 export function Hero() {
-  // Emphasize the highlight word(s) within the headline, if present.
-  const parts =
-    hero.highlight && hero.title.includes(hero.highlight)
-      ? hero.title.split(hero.highlight)
-      : null;
-
   return (
-    <section className="relative overflow-hidden border-b border-line bg-canvas">
-      {/* subtle dot grid, faded toward the bottom */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 bg-dot-grid opacity-60 [mask-image:radial-gradient(ellipse_80%_60%_at_50%_0%,black,transparent_75%)]"
-      />
-      <Container className="relative">
-        <div className="grid items-center gap-12 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:py-24">
-          {/* Left: copy */}
-          <div className="max-w-xl">
-            <span className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3.5 py-1.5 text-xs font-semibold text-muted shadow-sm">
-              <span className="h-1.5 w-1.5 rounded-full bg-[var(--success-fg)]" />
-              {hero.badge}
-            </span>
-
-            <h1 className="display-1 mt-6 text-ink">
-              {parts ? (
-                <>
-                  {parts[0]}
-                  <span className="text-accent">{hero.highlight}</span>
-                  {parts[1]}
-                </>
-              ) : (
-                hero.title
-              )}
-            </h1>
-
-            <p className="mt-6 text-lg leading-relaxed text-muted">
-              {hero.description}
-            </p>
-
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-              <div>
-                <Button href={hero.primaryCta.href} size="lg">
-                  {hero.primaryCta.label}
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-                <p className="mt-2 text-xs text-faint">{hero.primaryNote}</p>
-              </div>
-              <Button href={hero.secondaryCta.href} size="lg" variant="outline">
-                {hero.secondaryCta.label}
-              </Button>
+    <section className={styles.hero}>
+      <Container>
+        <div className={styles.heroGrid}>
+          <div className={styles.heroCopy}>
+            <p className={styles.kicker}><span /> DIGITAL EXPERIENCE PLATFORM</p>
+            <h1 className={styles.heroTitle}>Every cloud.<br /><span>One control<br className={styles.desktopBreak} /> plane.</span></h1>
+            <p className={styles.heroDescription}>{hero.description}</p>
+            <div className={styles.heroActions}>
+              <Button href={hero.primaryCta.href} size="lg">{hero.primaryCta.label}<ArrowUpRight size={18} /></Button>
+              <Button href={hero.secondaryCta.href} size="lg" variant="ghost">{hero.secondaryCta.label}<ArrowRight size={17} /></Button>
             </div>
-
-            {/* trust row */}
-            <div className="mt-10">
-              <p className="eyebrow text-faint">
-                Six public clouds · private, hybrid &amp; edge estates
-              </p>
-              <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3 opacity-80">
-                {TRUST_CLOUDS.map((c) => (
-                  <CloudLogo key={c} name={c} />
-                ))}
-              </div>
-            </div>
+            <p className={styles.heroNote}><ShieldCheck size={14} />{hero.primaryNote}</p>
           </div>
-
-          {/* Right: the platform, natively — objects on the page surface, pills and cables in HTML */}
-          <div className="relative min-w-0">
-            <ProductScene scene="estate" priority className="mx-auto w-full max-w-[680px]" />
+          <div className={styles.heroArt}>
+            <div className={styles.artIndex}><span>LIVE PRODUCT VIEW</span><span>Illustrative interface · sample data</span></div>
+            <HeroProductVisual />
+            <div className={styles.artFoot}><span>54 capabilities</span><span>9 families</span><span>4 editions</span></div>
           </div>
+        </div>
+        <div className={styles.integrations}>
+          <p>Built for your cloud.<br /><strong>And everything beyond it.</strong></p>
+          <div>{CLOUDS.map((c) => <CloudLogo key={c} name={c} className={styles.cloudLogo} />)}</div>
         </div>
       </Container>
     </section>

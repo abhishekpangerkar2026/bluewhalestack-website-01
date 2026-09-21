@@ -1,0 +1,56 @@
+{
+  "date": "2026-09-20",
+  "scope": "Complete visual redesign of the existing Railway-hosted Next.js marketing website",
+  "preserved": "Main product content/data, routes, forms, downloadable documents, existing project/package architecture, Railway service",
+  "changes": [
+    "Editorial navy/cobalt/warm-white visual system with Manrope headings",
+    "Rebuilt homepage and refreshed 29 public inner page templates",
+    "New original hero and social-preview artwork",
+    "Replaced old product CGI, custom scene SVGs and WebGL with native readable diagrams",
+    "Rebuilt navigation, footer, customer story panels, product preview tabs, regional directory, prototype timeline and closing CTAs",
+    "Replaced resource covers and web print cover art",
+    "Product preview disclosure and authored outcome-summary presentation",
+    "Corrected site origin for new social metadata and removed inherited homepage canonical"
+  ],
+  "validation": {
+    "productionBuild": "passed; 132 generated pages",
+    "httpPages": 94,
+    "pageErrors": 0,
+    "referencedAssets": 68,
+    "assetErrors": 0,
+    "missingCheckedAnchors": 0,
+    "legacyRedirects": "2 correct 308 responses",
+    "notFound": "404",
+    "diagramStaticRenders": 108,
+    "browserVisualQA": "Unavailable in session; no rendered desktop/mobile or interaction testing claimed",
+    "forms": "No submissions sent",
+    "live": {
+      "pages": 94,
+      "pageErrors": [],
+      "assets": 71,
+      "assetErrors": [],
+      "artwork": [
+        {
+          "path": "/og.png",
+          "status": 200,
+          "type": "image/png",
+          "matchesLocal": true
+        },
+        {
+          "path": "/brand/control-plane-art.png",
+          "status": 200,
+          "type": "image/png",
+          "matchesLocal": true
+        }
+      ]
+    }
+  },
+  "railway": {
+    "projectId": "87ad26d8-214d-4b9d-899e-c8f93154495a",
+    "serviceId": "9af6a470-d24d-4130-b9c5-2ff2e269001f",
+    "environmentId": "1d69991f-6d13-45a4-8680-25889c5a7ffb",
+    "deploymentId": "4b3f53a5-d4f6-4234-9255-8559a20f8506",
+    "url": "https://bluewhalestack-website-production-6507.up.railway.app",
+    "status": "SUCCESS"
+  }
+}

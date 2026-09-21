@@ -1,3 +1,4 @@
+import { InnerPage } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
 import { ArrowRight, Check } from "lucide-react";
 import { Container } from "@/components/ui/Container";
@@ -155,7 +156,7 @@ const GROUNDING = [
 
 export default function WhaleAIPage() {
   return (
-    <>
+    <InnerPage category="platform" current="/products/whale-ai">
       {/* ── Hero: dark brand band ── */}
       <section className="relative overflow-hidden bg-brand-900 text-white">
         <div
@@ -588,6 +589,6 @@ export default function WhaleAIPage() {
         }}
         tertiary={{ label: "Whale AI module page", href: "/modules/whale-ai", note: "capabilities, tiers and FAQ" }}
       />
-    </>
+    </InnerPage>
   );
 }

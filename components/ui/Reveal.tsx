@@ -17,15 +17,16 @@ export function Reveal({
   delay?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [shown, setShown] = useState(false);
+  const [shown, setShown] = useState(true);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window) || el.getBoundingClientRect().top < window.innerHeight) {
       setShown(true);
       return;
     }
+    setShown(false);
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -33,7 +34,7 @@ export function Reveal({
           io.disconnect();
         }
       },
-      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" },
+      { threshold: 0, rootMargin: "0px 0px 20px 0px" },
     );
     io.observe(el);
     return () => io.disconnect();
@@ -44,8 +45,8 @@ export function Reveal({
       ref={ref}
       style={{ transitionDelay: `${delay}ms` }}
       className={cn(
-        "transition-all duration-700 ease-out will-change-transform motion-reduce:transition-none",
-        shown ? "translate-y-0 opacity-100" : "translate-y-5 opacity-0",
+        "transition-[opacity,transform] duration-500 ease-out motion-reduce:transition-none focus-within:translate-y-0 focus-within:opacity-100",
+        shown ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0",
         className,
       )}
     >

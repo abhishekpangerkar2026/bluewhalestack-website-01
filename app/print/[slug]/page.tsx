@@ -41,7 +41,7 @@ export default async function PrintDocumentPage({ params }: { params: Promise<{ 
         {scene && (
           <div className="relative mt-2 h-[96mm] w-full overflow-hidden">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={scene.src} width={scene.width} height={scene.height} alt="" className="absolute inset-0 h-full w-full object-cover" />
+            <img src="/brand/control-plane-art.png" width={1536} height={1024} alt="" className="absolute inset-0 h-full w-full object-cover" />
             <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-white to-transparent" />
           </div>
         )}

@@ -1,3 +1,4 @@
+import { InnerPage } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -23,7 +24,7 @@ const MARKETS = ["Singapore", "Qatar", "Saudi Arabia", "South Africa", "UAE", "I
 
 export default function CustomersPage() {
   return (
-    <>
+    <InnerPage category="solutions" current="/customers">
       {/* ── Hero ── */}
       <section className="relative overflow-hidden border-b border-line bg-canvas">
         <div
@@ -114,14 +115,7 @@ export default function CustomersPage() {
                       </div>
                       <h2 className="mt-3 text-xl font-bold leading-snug text-ink">{s.headline}</h2>
                       <p className="mt-3 flex-1 text-sm leading-relaxed text-muted">{s.challenge}</p>
-                      <figure className="mt-4 border-l-2 border-line-strong pl-4">
-                        <blockquote className="text-sm italic leading-relaxed text-muted">
-                          &ldquo;{s.quote}&rdquo;
-                        </blockquote>
-                        <figcaption className="mt-1 text-xs text-faint">
-                          {s.person.role} · {s.org}
-                        </figcaption>
-                      </figure>
+                      <div className="mt-5 border-l-2 border-accent/30 pl-4"><p className="text-[10px] font-semibold uppercase tracking-widest text-accent">Engagement outcome</p><p className="mt-2 text-sm leading-relaxed text-muted">{s.summary}</p></div>
                       <dl className="mt-5 grid grid-cols-3 gap-3 border-t border-line pt-4">
                         {s.metrics.map((m) => (
                           <div key={m.label}>
@@ -158,6 +152,6 @@ export default function CustomersPage() {
           </div>
         </Container>
       </section>
-    </>
+    </InnerPage>
   );
 }

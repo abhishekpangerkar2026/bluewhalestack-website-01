@@ -1,0 +1,1415 @@
+{
+  "base": "http://localhost:3001",
+  "summary": {
+    "pages": 94,
+    "pageErrors": [],
+    "assets": 68,
+    "assetErrors": [],
+    "anchorErrors": [],
+    "oldImageryPages": [],
+    "canvasOrVideoPages": [],
+    "home": {
+      "path": "/",
+      "status": 200,
+      "h1Count": 1,
+      "ids": [
+        "main-content",
+        "product",
+        "_R_14avdb_-tab-0",
+        "_R_14avdb_-tab-1",
+        "_R_14avdb_-tab-2",
+        "_R_14avdb_-panel",
+        "fg",
+        "global-infrastructure",
+        "prototype"
+      ],
+      "links": [
+        "#main-content",
+        "/",
+        "/resources",
+        "/docs",
+        "https://app.bluewhalestack.com",
+        "/contact?intent=demo",
+        "/contact?intent=demo",
+        "/platform",
+        "/case-studies",
+        "/case-studies/bfsi-singapore-qatar",
+        "/case-studies/government-middle-east-defence",
+        "/case-studies/telco-datacenter-qatar-ksa-safrica",
+        "/case-studies/media-qatar-network",
+        "/platform",
+        "/modules",
+        "/modules/finops",
+        "/platform",
+        "/docs/quick-start",
+        "/docs/cloud-integration",
+        "/solutions",
+        "/industries",
+        "/editions",
+        "/editions",
+        "/editions/standard",
+        "/editions/enterprise",
+        "/editions/telco-datacenter",
+        "/editions/government",
+        "/resources",
+        "/platform",
+        "/platform#architecture",
+        "/products/whale-ai",
+        "/fabric",
+        "/contact?intent=demo",
+        "/customers",
+        "/case-studies/bfsi-singapore-qatar",
+        "/case-studies/bfsi-singapore-qatar",
+        "/case-studies/government-middle-east-defence",
+        "/case-studies/government-middle-east-defence",
+        "/case-studies/telco-datacenter-qatar-ksa-safrica",
+        "/case-studies/telco-datacenter-qatar-ksa-safrica",
+        "/case-studies/media-qatar-network",
+        "/case-studies/media-qatar-network",
+        "/case-studies",
+        "/contact?intent=demo",
+        "/platform#prototype",
+        "/pricing",
+        "/",
+        "https://www.linkedin.com/company/bluewhalestack",
+        "/platform",
+        "/modules",
+        "/products/whale-ai",
+        "/products/whaleforge",
+        "/pricing",
+        "/fabric",
+        "/solutions",
+        "/industries/government",
+        "/industries/bfsi",
+        "/industries/healthcare",
+        "/industries/telco",
+        "/industries/datacenter",
+        "/customers",
+        "/case-studies",
+        "/docs",
+        "/docs/quick-start",
+        "/docs/cloud-integration",
+        "/docs/identity-access",
+        "/docs/api-reference",
+        "https://partners.bluewhalestack.com",
+        "/about",
+        "/about/leadership",
+        "/careers",
+        "/partners",
+        "/newsroom",
+        "/resources",
+        "/trust",
+        "/contact",
+        "/trust",
+        "/legal/privacy",
+        "/legal/terms"
+      ],
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": true,
+      "sampleDisclosure": true,
+      "newCss": true
+    },
+    "redirectChecks": [
+      {
+        "path": "/editions/telco",
+        "status": 308,
+        "location": "/editions/telco-datacenter"
+      },
+      {
+        "path": "/editions/datacenter",
+        "status": 308,
+        "location": "/editions/telco-datacenter"
+      },
+      {
+        "path": "/not-a-real-page-for-review",
+        "status": 404,
+        "location": null
+      }
+    ]
+  },
+  "pages": [
+    {
+      "path": "/case-studies/bfsi-singapore-qatar",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/case-studies",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/careers",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": true,
+      "sampleDisclosure": true,
+      "newCss": true
+    },
+    {
+      "path": "/about/leadership",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/about",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/case-studies/media-qatar-network",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/case-studies/government-middle-east-defence",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/customers",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/case-studies/telco-datacenter-qatar-ksa-safrica",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/docs",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/docs/api-reference",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/docs/cloud-integration",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/contact",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/docs/identity-access",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/docs/introduction",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/docs/quick-start",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/docs/service-catalog",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/editions",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/editions/enterprise",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/editions/government",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/editions/standard",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/editions/telco-datacenter",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/fabric",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/industries/bfsi",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/industries",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/industries/datacenter",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/industries/government",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/industries/healthcare",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/industries/regulated-enterprise",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/industries/telco",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/industries/saas",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/legal/terms",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/legal/privacy",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/modules",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/modules/cloud-connectors",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/modules/cloud-audit",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/modules/finops",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/modules/identity",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/modules/inventory",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/modules/itsm",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/modules/landing-zone",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/modules/migration",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/modules/observe",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/modules/provisioning",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/modules/sovereign-operations",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/modules/tenancy",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/newsroom",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/partners",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/modules/whale-ai",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/modules/whaleforge",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/pricing",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/platform",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": true,
+      "newCss": true
+    },
+    {
+      "path": "/products/whale-ai",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/products/whaleforge",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/resources",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/resources/brief-ai-native-provisioning",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/resources/brief-bundled-observability",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/resources/brief-cloud-migration",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/resources/brief-security-compliance",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/resources/brief-sovereign-cloud",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/resources/brief-unified-cloud-inventory",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/resources/capability-guide",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/resources/case-bfsi-singapore-qatar",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/resources/case-government-middle-east-defence",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/resources/case-media-qatar-network",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/resources/case-telco-datacenter-qatar-ksa-safrica",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/resources/company-profile",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/resources/datasheet-enterprise",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/resources/datasheet-government",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/resources/datasheet-standard",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/resources/datasheet-telco-datacenter",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/resources/industry-bfsi",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/resources/industry-datacenter",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/resources/industry-government",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/resources/industry-healthcare",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/resources/industry-regulated-enterprise",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/resources/industry-saas",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/resources/industry-telco",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/resources/migration-6r-assessment",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/resources/platform-overview",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/resources/sovereign-cloud-patterns",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/resources/trust-and-compliance-summary",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/resources/whale-ai-guide",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/solutions",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/solutions/ai-native-provisioning",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/solutions/bundled-observability",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/solutions/cloud-migration",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/solutions/security-compliance",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/solutions/sovereign-cloud",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/solutions/unified-cloud-inventory",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/trust",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": false,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/print/platform-overview",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": true,
+      "sampleDisclosure": false,
+      "newCss": true
+    },
+    {
+      "path": "/print/datasheet-enterprise",
+      "status": 200,
+      "h1Count": 1,
+      "hasOldCgi": false,
+      "hasCanvasOrVideo": false,
+      "homeArt": true,
+      "sampleDisclosure": false,
+      "newCss": true
+    }
+  ],
+  "assets": [
+    {
+      "path": "/_next/static/css/a0615cb184d55b47.css",
+      "status": 200,
+      "type": "text/css; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/css/dc4e5464aa0ca274.css",
+      "status": 200,
+      "type": "text/css; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/css/d2323ce84f637ab0.css",
+      "status": 200,
+      "type": "text/css; charset=UTF-8"
+    },
+    {
+      "path": "/opengraph-image",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "path": "/og.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "path": "/brand/control-plane-art.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "path": "/_next/static/chunks/main-app-a35a5cabf6841e22.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/chunks/webpack-394cf093f6348d7e.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/css/69ed5ae240ac3650.css",
+      "status": 200,
+      "type": "text/css; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/chunks/2619-3c9e02e22d10480a.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/chunks/4909-09e20765c3e2a673.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/chunks/5072-5651e93abb4e55d1.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/chunks/app/layout-fac76712353a54ef.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/chunks/app/case-studies/%5Bslug%5D/page-2277062c3f09eead.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/chunks/app/case-studies/page-9045ecd7f1795911.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/chunks/1255-5c680abb9db89955.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/chunks/1356-b0e55b2010b20891.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/chunks/app/careers/page-c8537d91b0b81def.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/chunks/polyfills-42372ed130431b0a.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/chunks/2450-cb285a07137303ba.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/image?url=%2Fteam%2Fanil-pakale.jpg&w=128&q=75",
+      "status": 200,
+      "type": "image/webp"
+    },
+    {
+      "path": "/_next/image?url=%2Fteam%2Fabhishek-pangerkar.jpg&w=128&q=75",
+      "status": 200,
+      "type": "image/webp"
+    },
+    {
+      "path": "/_next/image?url=%2Fteam%2Fasawari-more.jpg&w=128&q=75",
+      "status": 200,
+      "type": "image/webp"
+    },
+    {
+      "path": "/_next/static/chunks/app/page-b52672d3baf55cb9.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/image?url=%2Fteam%2Fganesh-muthusamy.jpg&w=128&q=75",
+      "status": 200,
+      "type": "image/webp"
+    },
+    {
+      "path": "/_next/static/chunks/app/about/leadership/page-c8537d91b0b81def.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/image?url=%2Fteam%2Fparag-ware.jpg&w=128&q=75",
+      "status": 200,
+      "type": "image/webp"
+    },
+    {
+      "path": "/_next/image?url=%2Fteam%2Fanil-pakale.jpg&w=256&q=75",
+      "status": 200,
+      "type": "image/webp"
+    },
+    {
+      "path": "/_next/image?url=%2Fteam%2Fasawari-more.jpg&w=256&q=75",
+      "status": 200,
+      "type": "image/webp"
+    },
+    {
+      "path": "/_next/image?url=%2Fteam%2Fabhishek-pangerkar.jpg&w=384&q=75",
+      "status": 200,
+      "type": "image/webp"
+    },
+    {
+      "path": "/_next/static/chunks/app/about/page-d2573af2d1f342e5.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/chunks/app/customers/page-2277062c3f09eead.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/image?url=%2Fteam%2Fganesh-muthusamy.jpg&w=256&q=75",
+      "status": 200,
+      "type": "image/webp"
+    },
+    {
+      "path": "/_next/static/chunks/app/docs/page-4cb5cecfa286b8bb.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/chunks/app/docs/%5Bslug%5D/page-4cb5cecfa286b8bb.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/image?url=%2Fteam%2Fparag-ware.jpg&w=256&q=75",
+      "status": 200,
+      "type": "image/webp"
+    },
+    {
+      "path": "/_next/image?url=%2Fteam%2Fabhishek-pangerkar.jpg&w=256&q=75",
+      "status": 200,
+      "type": "image/webp"
+    },
+    {
+      "path": "/_next/static/chunks/app/contact/page-d2376b389620c692.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/chunks/app/editions/page-64b66fff18e5ac3e.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/chunks/8168-585921892046779f.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/chunks/app/editions/%5Bslug%5D/page-64b66fff18e5ac3e.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/chunks/app/fabric/page-8905d58d8343b1df.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/chunks/app/industries/%5Bslug%5D/page-0b3ba85af69cf03d.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/industry-architecture/bfsi-2400.webp",
+      "status": 200,
+      "type": "image/webp"
+    },
+    {
+      "path": "/_next/static/chunks/app/industries/page-e9e1ae55c0407bc2.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/industry-architecture/telco-datacenter-2400.webp",
+      "status": 200,
+      "type": "image/webp"
+    },
+    {
+      "path": "/industry-architecture/government-2400.webp",
+      "status": 200,
+      "type": "image/webp"
+    },
+    {
+      "path": "/industry-architecture/enterprise-multicloud-2400.webp",
+      "status": 200,
+      "type": "image/webp"
+    },
+    {
+      "path": "/_next/static/chunks/app/legal/terms/page-cfe0641243465db2.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/chunks/app/legal/privacy/page-cfe0641243465db2.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/chunks/app/modules/page-9045ecd7f1795911.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/chunks/app/newsroom/page-4cb5cecfa286b8bb.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/chunks/app/modules/%5Bslug%5D/page-64b66fff18e5ac3e.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/chunks/7328-7474186c9802522c.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/chunks/app/partners/page-a2692cda4e19d767.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/chunks/app/pricing/page-e9e1ae55c0407bc2.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/chunks/app/products/whale-ai/page-64b66fff18e5ac3e.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/chunks/app/platform/page-a93d1200c95c9018.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/chunks/app/products/whaleforge/page-4cb5cecfa286b8bb.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/chunks/6277-da9cf38f2e2ca2f8.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/chunks/app/resources/%5Bslug%5D/page-64b66fff18e5ac3e.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/chunks/app/solutions/%5Bslug%5D/page-64b66fff18e5ac3e.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/chunks/app/solutions/page-8364f339cb37bb18.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/chunks/app/print/%5Bslug%5D/page-dd001be55436bc94.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/chunks/app/trust/page-1b19006309133b93.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/static/chunks/app/resources/page-3e8e90f57d17c3f7.js",
+      "status": 200,
+      "type": "application/javascript; charset=UTF-8"
+    },
+    {
+      "path": "/_next/image?url=%2Fbrand%2Fcontrol-plane-art.png&w=3840&q=75",
+      "status": 200,
+      "type": "image/webp"
+    }
+  ]
+}

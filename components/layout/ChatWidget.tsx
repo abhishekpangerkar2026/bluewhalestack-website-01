@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { MessageSquare, X, Send } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { MessageSquare, X, ArrowUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type Msg = { from: "bot" | "user"; text: string };
@@ -44,6 +45,16 @@ export function ChatWidget() {
     },
   ]);
   const [input, setInput] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const messagesRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => { if (open) inputRef.current?.focus(); }, [open]);
+  useEffect(() => {
+    if (messagesRef.current) messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+  }, [messages, open]);
+
+  function close() { setOpen(false); toggleRef.current?.focus(); }
 
   function send(text: string) {
     const q = text.trim();
@@ -61,36 +72,35 @@ export function ChatWidget() {
   return (
     <>
       {open && (
-        <div className="fixed bottom-24 right-5 z-50 flex h-[28rem] w-[22rem] max-w-[calc(100vw-2.5rem)] flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-lg">
-          <div className="flex items-center justify-between bg-primary px-4 py-3 text-primary-fg">
-            <span className="text-sm font-semibold">
-              BlueWhale Assistant
-            </span>
-            <button onClick={() => setOpen(false)} aria-label="Close chat">
-              <X className="h-4 w-4" />
+        <div id="bluewhale-assistant" role="dialog" aria-labelledby="assistant-title" onKeyDown={(event) => { if (event.key === "Escape") { event.stopPropagation(); close(); } }} className="fixed bottom-24 right-4 z-50 flex h-[29rem] max-h-[calc(100dvh-7rem)] w-[23rem] max-w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-xl sm:right-6">
+          <div className="flex shrink-0 items-center justify-between border-b border-white/10 bg-[#0a1530] px-5 py-4 text-white">
+            <div className="flex items-center gap-3"><span className="grid h-9 w-9 place-items-center rounded-lg bg-white/10"><MessageSquare aria-hidden className="h-4 w-4 text-[#83d9ee]" /></span><div><p id="assistant-title" className="text-sm font-semibold">BlueWhale Assistant</p><p className="mt-0.5 text-[10px] text-slate-400">Find your next step</p></div></div>
+            <button type="button" onClick={close} aria-label="Close chat" className="grid h-9 w-9 place-items-center rounded-lg hover:bg-white/10">
+              <X aria-hidden className="h-4 w-4" />
             </button>
           </div>
-          <div className="flex-1 space-y-3 overflow-y-auto p-4">
+          <div ref={messagesRef} role="log" aria-label="Conversation" aria-live="polite" aria-relevant="additions" className="min-h-0 flex-1 space-y-3 overflow-y-auto p-4">
             {messages.map((m, i) => (
               <div
                 key={i}
                 className={cn(
-                  "max-w-[85%] rounded-2xl px-3.5 py-2 text-sm",
+                  "max-w-[90%] rounded-xl px-3.5 py-3 text-[13px] leading-relaxed",
                   m.from === "bot"
                     ? "bg-sunken text-muted"
                     : "ml-auto bg-primary text-primary-fg",
                 )}
               >
-                {m.text}
+                {m.from === "bot" ? m.text.split(/(\/[a-z0-9]+(?:[/-][a-z0-9]+)*)/gi).map((part, index) => part.startsWith("/") ? <Link key={index} href={part} onClick={close} className="font-medium text-accent underline decoration-accent/30 underline-offset-2 hover:decoration-accent">{part}</Link> : part) : m.text}
               </div>
             ))}
           </div>
-          <div className="flex flex-wrap gap-1.5 px-3 pb-2">
+          <div className="flex shrink-0 flex-wrap gap-1.5 px-4 pb-3">
             {SUGGESTIONS.map((s) => (
               <button
                 key={s}
+                type="button"
                 onClick={() => send(s)}
-                className="rounded-full border border-line px-2.5 py-1 text-xs text-muted hover:border-line-strong hover:text-accent"
+                className="rounded-md border border-line px-2.5 py-1.5 text-[10px] font-medium text-muted transition-colors hover:border-accent hover:text-accent"
               >
                 {s}
               </button>
@@ -101,31 +111,38 @@ export function ChatWidget() {
               e.preventDefault();
               send(input);
             }}
-            className="flex items-center gap-2 border-t border-line p-3"
+            className="flex shrink-0 items-center gap-2 border-t border-line bg-sunken/50 p-3"
           >
             <input
+              ref={inputRef}
+              aria-label="Your question"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask a question…"
-              className="h-9 flex-1 rounded-lg border border-line px-3 text-sm text-ink focus:border-accent focus:outline-none"
+              className="h-11 min-w-0 flex-1 rounded-lg border border-line bg-surface px-3 text-sm text-ink placeholder:text-faint focus:border-accent"
             />
             <button
               type="submit"
-              className="grid h-9 w-9 place-items-center rounded-lg bg-primary text-primary-fg hover:opacity-90"
+              disabled={!input.trim()}
+              className="grid h-11 w-11 shrink-0 place-items-center rounded-lg bg-primary text-primary-fg hover:opacity-90 disabled:opacity-40"
               aria-label="Send"
             >
-              <Send className="h-4 w-4" />
+              <ArrowUp aria-hidden className="h-4 w-4" />
             </button>
           </form>
         </div>
       )}
 
       <button
+        ref={toggleRef}
+        type="button"
         onClick={() => setOpen((v) => !v)}
-        className="fixed bottom-5 right-5 z-50 grid h-14 w-14 place-items-center rounded-full bg-primary text-primary-fg shadow-lg transition-transform hover:scale-105"
-        aria-label="Open chat assistant"
+        className="fixed bottom-5 right-4 z-40 inline-flex h-12 items-center gap-2.5 rounded-xl border border-white/15 bg-[#0a1530] px-4 text-white shadow-lg transition-transform hover:-translate-y-0.5 motion-reduce:transform-none sm:right-6"
+        aria-label={open ? "Close chat assistant" : "Open chat assistant"}
+        aria-expanded={open}
+        aria-controls="bluewhale-assistant"
       >
-        {open ? <X className="h-6 w-6" /> : <MessageSquare className="h-6 w-6" />}
+        {open ? <X aria-hidden className="h-4 w-4" /> : <MessageSquare aria-hidden className="h-4 w-4" />}<span className="hidden text-xs font-medium sm:inline">Ask BlueWhale</span>
       </button>
     </>
   );

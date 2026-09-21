@@ -1,0 +1,109 @@
+.panel {
+  position: relative;
+  isolation: isolate;
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  min-width: 0;
+  aspect-ratio: auto;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid #25334d;
+  border-radius: 18px;
+  color: #f6f7fb;
+  background: #101b2e;
+  box-shadow: 0 24px 64px -32px rgb(12 25 49 / 45%);
+  text-align: left;
+}
+.panel::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(rgb(161 185 233 / 4%) 1px, transparent 1px), linear-gradient(90deg, rgb(161 185 233 / 4%) 1px, transparent 1px), radial-gradient(ellipse at 50% 50%, #244c913d, transparent 72%);
+  background-size: 28px 28px, 28px 28px, 100% 100%;
+}
+.onDark { border-color: #3a4860; box-shadow: 0 24px 80px -35px #0009; }
+.header { display: flex; align-items: center; gap: 8px; padding: clamp(15px, 3.6cqi, 26px) clamp(16px, 4.7cqi, 34px); border-bottom: 1px solid #ffffff12; font-size: clamp(10px, 2.25cqi, 12px); font-weight: 600; letter-spacing: .02em; color: #d3dded; }
+.status { width: 6px; height: 6px; flex-shrink: 0; background: #8aaaff; border-radius: 50%; box-shadow: 0 0 0 4px #7f9ffb12; }
+.diagramLabel { margin-left: auto; color: #8d9cb4; font-size: 9px; font-weight: 400; }
+.diagram { position: relative; margin: clamp(16px, 4cqi, 28px); }
+.nodes { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(6px, 2cqi, 14px); }
+.node { display: flex; min-width: 0; align-items: center; justify-content: center; gap: 7px; padding: clamp(10px, 2.6cqi, 17px) 6px; border: 1px solid #344258; border-radius: 8px; background: #142137; color: #e0e7f2; font-size: clamp(10px, 2.5cqi, 13px); font-weight: 500; line-height: 1.35; text-align: center; }
+.node svg { width: clamp(14px, 3.2cqi, 19px); height: clamp(14px, 3.2cqi, 19px); color: #9ab7ff; stroke-width: 1.5; flex-shrink: 0; }
+.node > span { min-width: 0; overflow-wrap: anywhere; }
+.sources .node { min-height: clamp(74px, 16cqi, 92px); flex-direction: column; gap: 8px; background: #122036; }
+.node small { display: block; font-size: clamp(9px, 1.8cqi, 10px); color: #a4b2c8; line-height: 1.45; font-weight: 400; max-width: 140px; overflow-wrap: anywhere; }
+.connector { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); height: clamp(18px, 4cqi, 28px); padding: 0; gap: clamp(6px, 2cqi, 14px); }
+.connector i { position: relative; display: block; width: 1px; height: 100%; margin: auto; background: linear-gradient(#5d7abb88, #6996ff); }
+.connector i::after { content: ""; position: absolute; width: 4px; height: 4px; left: -1.5px; top: calc(50% - 2px); background: #a0bbff; border-radius: 50%; }
+.core { position: relative; display: flex; align-items: center; gap: clamp(12px, 3.5cqi, 24px); min-height: clamp(84px, 18cqi, 104px); padding: clamp(15px, 4cqi, 25px); border: 1px solid #7596ee; border-radius: 10px; background: linear-gradient(110deg, #254aab, #2544a0 65%, #2f53b5); box-shadow: 0 0 32px -10px #3661c95c; }
+.coreCopy { min-width: 0; overflow-wrap: anywhere; }
+.coreIcon { display: grid; place-items: center; width: clamp(34px, 8cqi, 47px); height: clamp(34px, 8cqi, 47px); flex-shrink: 0; border: 1px solid #a9bffa4a; border-radius: 9px; background: #91b3ff0d; }
+.coreIcon svg { width: 53%; height: 53%; stroke-width: 1.4; color: #f1f5ff; }
+.coreEyebrow { display: block; margin-bottom: 5px; font-size: clamp(8px, 1.7cqi, 10px); color: #c9d7ff; letter-spacing: .12em; font-weight: 500; }
+.core strong { display: block; font-size: clamp(17px, 4.7cqi, 28px); line-height: 1.1; letter-spacing: -.035em; font-weight: 500; }
+.coreMark { margin-left: auto; color: #c5d7ff; font-size: clamp(20px, 5cqi, 30px); font-weight: 300; }
+.footer { display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: clamp(13px, 3cqi, 21px) clamp(16px, 4.7cqi, 34px); border-top: 1px solid #ffffff12; font-size: clamp(9px, 2.1cqi, 11px); line-height: 1.5; color: #a9b8d1; }
+.captionNote { flex-shrink: 0; font-size: 9px; text-transform: uppercase; letter-spacing: .08em; color: #95a6c0; }
+.perimeter { border: 1px dashed #6687b967; border-radius: 13px; padding: clamp(10px, 3cqi, 20px); }
+.perimeter .sources .node { min-height: clamp(64px, 15cqi, 90px); }
+.cost .core { background: linear-gradient(110deg, #234d90, #2442a0); }
+.allocation { display: flex; gap: 4px; margin-top: 16px; height: 4px; }
+.allocation span { flex: 1; background: #7da0ff; border-radius: 2px; }
+.allocation span:nth-child(2) { background: #9bc6db; }
+.allocation span:nth-child(3) { background: #d4dec0; }
+.layers { display: grid; gap: 8px; margin: clamp(16px, 4.7cqi, 32px); }
+.layer { position: relative; display: flex; align-items: center; gap: clamp(10px, 3cqi, 18px); padding: clamp(10px, 2cqi, 12px); border: 1px solid #344258; border-radius: 7px; background: #142137; }
+.layer > div { min-width: 0; overflow-wrap: anywhere; }
+.layer:not(:last-child)::after { content: ""; position: absolute; left: 50%; bottom: -9px; height: 8px; width: 1px; background: #668edb; }
+.layerNumber { font-size: 9px; font-family: ui-monospace, monospace; color: #8fa4c7; }
+.layer svg { width: 17px; height: 17px; stroke-width: 1.5; color: #a6bded; flex-shrink: 0; }
+.layer strong { display: block; font-weight: 500; font-size: clamp(11px, 2.7cqi, 15px); line-height: 1.3; }
+.layer div > span { display: block; margin-top: 3px; font-size: clamp(8px, 1.9cqi, 11px); color: #a1b0c8; }
+.coreLayer { border-color: #7692da; background: #25479f; }
+.coreLayer div > span { color: #c5d5f8; }
+.compact { border-radius: 10px; box-shadow: none; min-height: 194px; }
+.compact .header { padding: 13px 15px; font-size: 10px; gap: 7px; }
+.compact .diagramLabel { display: none; }
+.compact .diagram { margin: 15px; }
+.compact .core { padding: 13px; min-height: 68px; gap: 11px; }
+.compact .coreEyebrow { font-size: 8px; }
+.compact .core strong { font-size: clamp(15px, 5cqi, 21px); }
+.compact .coreIcon { width: 32px; height: 32px; }
+.compact .coreMark { font-size: 20px; }
+.compact .connector { height: 15px; }
+.compact .node { padding: 9px 4px; font-size: 10px; gap: 5px; }
+.compact .node svg { width: 12px; height: 12px; }
+.compact .perimeter { padding: 0; border: 0; }
+@container (max-width: 370px) {
+  .diagramLabel, .captionNote { display: none; }
+  .node { flex-direction: column; gap: 5px; }
+  .sources .node { gap: 6px; }
+  .coreMark { display: none; }
+  .compact .node { flex-direction: column; }
+}
+@container (max-width: 270px) {
+  .compact .nodes { grid-template-columns: 1fr; gap: 5px; }
+  .compact .node { flex-direction: row; justify-content: flex-start; padding: 7px 9px; }
+  .compact .coreIcon { display: none; }
+  .compact .core strong { font-size: 16px; }
+  .compact .core { padding: 12px; }
+  .compact .header { font-size: 10px; line-height: 1.5; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .panel *, .panel::before { animation: none !important; transition: none !important; }
+}
+.emblem { position: relative; container-type: size; display: grid; place-items: center; width: 100%; aspect-ratio: 1.55; overflow: hidden; isolation: isolate; }
+.emblem::before { content: ""; position: absolute; inset: 13% 22%; border: 1px solid #91a5c62e; border-radius: 50%; }
+.emblem::after { content: ""; position: absolute; inset: 0 30%; border-inline: 1px solid #91a5c629; transform: rotate(45deg); z-index: -1; }
+.emblemCore { position: relative; display: grid; place-items: center; width: min(42cqi, 64cqb, 140px); aspect-ratio: 1; background: #152844; border: 1px solid #5577b3; border-radius: 23%; color: #d6e3ff; box-shadow: 0 12px 30px -15px #16316666; }
+.emblemCore > svg { width: 43%; height: 43%; stroke-width: 1.25; }
+.emblemSatellite { position: absolute; display: grid; place-items: center; width: 20%; aspect-ratio: 1; border: 1px solid #beccdf; border-radius: 22%; background: #f1f5fb; color: #315487; }
+.emblemSatellite svg { width: 48%; height: 48%; stroke-width: 1.4; }
+.emblemSatellite:nth-child(2) { top: -14%; left: -28%; }
+.emblemSatellite:nth-child(3) { right: -28%; bottom: -10%; }
+.emblemDark .emblemSatellite { background: #1d3357; color: #a8c0ed; border-color: #5577b3; }

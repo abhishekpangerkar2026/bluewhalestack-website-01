@@ -1,60 +1,35 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
+import { SceneThumb } from "@/components/scenes/ProductScene";
 
-/**
- * Short looping films of the product scenes (rendered by scripts/capture-video.mjs
- * into public/media/scenes). Muted, autoplaying, with a poster frame so the
- * strip is complete before the video arrives.
- */
-const CLIPS = [
-  { key: "estate", title: "Every estate, one control plane", body: "Six public clouds, your virtualised estate and your edge sites, cabled into one console.", href: "/platform" },
-  { key: "architecture", title: "Six layers, one platform build", body: "Industry segments down to deployment modes — the same architecture in every edition.", href: "/platform#architecture" },
-  { key: "whale-ai", title: "Whale AI, inside the perimeter", body: "50+ grounded use cases across every family, including fully offline.", href: "/products/whale-ai" },
+const STORIES = [
+  { key: "estate", title: "Every estate, one control plane", body: "Public clouds, virtualized infrastructure and edge sites connected through one resource model.", href: "/platform" },
+  { key: "architecture", title: "Six layers, one platform build", body: "A shared architecture from the industry experience to the infrastructure it governs.", href: "/platform#architecture" },
+  { key: "whale-ai", title: "Whale AI, inside the perimeter", body: "Intelligence grounded in your inventory, billing and tickets, with an offline deployment option.", href: "/products/whale-ai" },
 ];
 
+/** Architecture stories replace the decorative looping scene videos. */
 export function MotionStrip() {
   return (
     <section className="border-y border-line bg-sunken py-20 sm:py-24">
       <Container>
         <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-          <Reveal>
-            <SectionHeading
-              eyebrow="The platform in motion"
-              title="Three short films of the product"
-              description="Rendered from the same 3D scenes you can rotate on every product page. Each loops in five seconds; the download pack has all nine in MP4 and WebM."
-            />
-          </Reveal>
-          <Reveal delay={80}>
-            <Link href="/resources" className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-accent hover:gap-2.5">
-              Request the media pack <ArrowRight className="h-3.5 w-3.5" />
-            </Link>
-          </Reveal>
+          <Reveal><SectionHeading eyebrow="Explore the architecture" title="See how it fits together." description="Three views of the platform: the infrastructure it connects, the layers it shares, and the intelligence that works across them." /></Reveal>
+          <Reveal delay={80}><Link href="/resources" className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-accent">Technical resources <ArrowRight className="h-4 w-4" /></Link></Reveal>
         </div>
-        <div className="mt-12 grid gap-5 md:grid-cols-3">
-          {CLIPS.map((c, i) => (
-            <Reveal key={c.key} delay={i * 80}>
-              <Link href={c.href} className="group block h-full overflow-hidden rounded-lg border border-line bg-surface shadow-sm transition-all hover:-translate-y-0.5 hover:border-line-strong hover:shadow-md">
-                <div className="aspect-video w-full overflow-hidden bg-[#eef3ff]">
-                  <video
-                    className="block h-full w-full object-cover"
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    preload="metadata"
-                    poster={`/media/scenes/${c.key}.jpg`}
-                    aria-label={`${c.title} — product film`}
-                  >
-                    <source src={`/media/scenes/${c.key}.webm`} type="video/webm" />
-                    <source src={`/media/scenes/${c.key}.mp4`} type="video/mp4" />
-                  </video>
-                </div>
-                <div className="p-5">
-                  <h3 className="text-base font-bold text-ink group-hover:text-accent">{c.title}</h3>
-                  <p className="mt-1.5 text-sm leading-relaxed text-muted">{c.body}</p>
+        <div className="mt-12 grid gap-7 md:grid-cols-3">
+          {STORIES.map((story, i) => (
+            <Reveal key={story.key} delay={i * 70}>
+              <Link href={story.href} className="group block h-full rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4">
+                <SceneThumb scene={story.key} />
+                <div className="pt-6">
+                  <p className="text-xs font-medium tracking-widest text-faint">0{i + 1} / PLATFORM GUIDE</p>
+                  <h3 className="mt-3 text-lg font-semibold leading-snug text-ink group-hover:text-accent">{story.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted">{story.body}</p>
+                  <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-accent">Explore <ArrowRight className="h-4 w-4" /></span>
                 </div>
               </Link>
             </Reveal>

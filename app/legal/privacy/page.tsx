@@ -1,3 +1,4 @@
+import { InnerPage } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
 import { LegalDoc, type LegalSection } from "@/components/sections/LegalDoc";
 import { company, offices, regions } from "@/content/company";
@@ -108,11 +109,13 @@ const sections: LegalSection[] = [
 
 export default function PrivacyPage() {
   return (
-    <LegalDoc
+    <InnerPage category="legal" current="/legal/privacy" document>
+      <LegalDoc
       title="Privacy Policy"
       intro="How BlueWhale Stack collects, uses, shares, and protects your personal data — and the rights available to you."
       lastUpdated="12 July 2026"
       sections={sections}
     />
+    </InnerPage>
   );
 }

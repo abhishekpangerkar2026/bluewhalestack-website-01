@@ -1,3 +1,4 @@
+import { InnerPage, PageIndex } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
@@ -26,7 +27,7 @@ export default function SolutionsPage() {
   const industries = getIndustries();
 
   return (
-    <>
+    <InnerPage category="solutions" current="/solutions">
       {/* ── Hero: statement left, 3D art right ── */}
       <section className="relative overflow-hidden border-b border-line bg-canvas">
         <div
@@ -87,6 +88,12 @@ export default function SolutionsPage() {
           </div>
         </Container>
       </section>
+
+      <PageIndex items={[
+        { label: "By outcome", href: "#outcomes" },
+        { label: "By industry", href: "#industries" },
+        { label: "Customer stories", href: "#customers" },
+      ]} />
 
       {/* ── By outcome ── */}
       <section id="outcomes" className="scroll-mt-24 border-b border-line bg-sunken py-20 sm:py-24">
@@ -249,6 +256,6 @@ export default function SolutionsPage() {
         }}
         tertiary={{ label: "Compare the four editions", href: "/editions", note: "which edition includes which solution" }}
       />
-    </>
+    </InnerPage>
   );
 }

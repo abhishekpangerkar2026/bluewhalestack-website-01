@@ -1,0 +1,24 @@
+{
+  "date": "2026-09-20",
+  "method": "Built-in image_gen tool; original generated files retained; final project files copied unchanged",
+  "assets": {
+    "hero": {
+      "path": "public/brand/control-plane-art.png",
+      "purpose": "Abstract original brand artwork for homepage and print cover; not a customer facility or product screenshot",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "prompt": "Use case: stylized-concept. Asset type: original premium enterprise cloud platform website hero artwork, no text. Create a breathtaking architectural abstract sculpture representing many infrastructure layers becoming one control plane. A precise upright flowing ribbon folded into three interlocking tall arches, made from translucent deep cobalt optical glass with a finely ribbed brushed aluminum internal core. The arch stack sits on a very thin dark graphite rectangular base, photographed like a luxury industrial object in a pale cool gray studio. One luminous electric-blue conduit sweeps through the arches. Restrained, sophisticated, tangible, editorial art direction, photorealistic ray-traced materials, soft daylight from upper left, beautiful contact shadows, delicate caustics. Subject dominates center and right in a landscape 3:2 composition, with generous clean background at left. Colors deep ink navy #0a1530, electric cobalt #2458f5, icy glass and brushed silver; background #f5f7fb. Crisp sculptural silhouette, excellent detail. No toy clouds, miniature buildings, servers, plants, floating UI, text, letters, logos, chart, people or watermark. This is abstract brand artwork, not a depiction of a real facility."
+    },
+    "social": {
+      "path": "public/og.png",
+      "purpose": "Complete social link-preview card",
+      "dimensions": [
+        1734,
+        907
+      ],
+      "prompt": "Use case: ads-marketing. Create the complete landscape social sharing card for BlueWhale Stack's redesigned premium enterprise cloud platform website. Aspect ratio 1.91:1. Art direction: warm-white background #f8f9fc, ink navy #0a1530 typography and saturated cobalt #2458f5. Extremely refined editorial enterprise design. Left two-thirds has large beautifully typeset geometric sans headline on three lines, exact text: 'Every cloud.' then 'One control' then 'plane.' The first line in ink navy and the next two lines cobalt. Top left modest exact brand text 'BLUEWHALE STACK'. Small bottom-left line exact text 'Cloud. Infrastructure. Intelligence.' Right third shows an elegant translucent cobalt optical glass architectural sculpture, three interlocking upright arches with ribbed brushed-aluminum core, an electric-blue conduit passes through, polished light studio shadows. No toy clouds, floating cards, charts, mini servers or dashboards. Generous whitespace, superb crisp typesetting, intentional alignment, professional contrast, no extra text, no watermark. This is a finished social sharing card with all typography included."
+    }
+  }
+}

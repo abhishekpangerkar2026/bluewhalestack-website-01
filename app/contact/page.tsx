@@ -1,3 +1,4 @@
+import { InnerPage } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { Container } from "@/components/ui/Container";
@@ -63,13 +64,13 @@ export default async function ContactPage({
             };
 
   return (
-    <>
+    <InnerPage category="company" current="/contact">
       {/* ── Hero + form: editorial split, dark statement column meets the form ── */}
       <section className="relative overflow-hidden bg-brand-900">
         <Container className="relative">
-          <div className="grid gap-x-16 gap-y-12 py-16 sm:py-20 lg:grid-cols-[1fr_1.05fr]">
+          <div className="grid items-start gap-x-20 gap-y-12 py-16 sm:py-24 lg:grid-cols-[0.95fr_1.05fr]">
             {/* Statement + channels (dark) */}
-            <div className="lg:py-4">
+            <div className="lg:sticky lg:top-28 lg:py-4">
               <div className="mb-5 flex items-center gap-3">
                 <span aria-hidden className="h-px w-8 bg-white/40" />
                 <span className="eyebrow text-white/80">
@@ -152,7 +153,7 @@ export default async function ContactPage({
 
             {/* Form (light card on the dark band) */}
             <div>
-              <div className="rounded-xl border border-line bg-surface p-7 shadow-lg sm:p-9">
+              <div className="rounded-2xl border border-line bg-surface p-7 shadow-xl sm:p-10">
                 <h2 className="text-2xl font-bold text-ink">
                   {hero.formTitle}
                 </h2>
@@ -169,6 +170,6 @@ export default async function ContactPage({
           </div>
         </Container>
       </section>
-    </>
+    </InnerPage>
   );
 }

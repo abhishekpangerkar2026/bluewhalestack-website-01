@@ -20,6 +20,12 @@ export function ThemeToggle({ className }: { className?: string }) {
     const prefersDark =
       window.matchMedia("(prefers-color-scheme: dark)").matches;
     setDark(stored ? stored === "dark" : prefersDark);
+    const observer = new MutationObserver(() => {
+      const current = document.documentElement.getAttribute("data-theme");
+      setDark(current ? current === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches);
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+    return () => observer.disconnect();
   }, []);
 
   function toggle() {
@@ -38,9 +44,10 @@ export function ThemeToggle({ className }: { className?: string }) {
     <button
       type="button"
       onClick={toggle}
-      aria-label="Toggle dark mode"
+      aria-label={dark ? "Switch to light appearance" : "Switch to dark appearance"}
+      aria-pressed={dark}
       className={
-        "inline-grid h-9 w-9 place-items-center rounded-md text-muted transition-colors hover:bg-sunken hover:text-ink " +
+        "inline-grid h-10 w-10 shrink-0 place-items-center rounded-lg text-muted transition-colors hover:bg-sunken hover:text-ink " +
         (className ?? "")
       }
     >

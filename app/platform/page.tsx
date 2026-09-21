@@ -1,3 +1,4 @@
+import { InnerPage, PageIndex } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Check } from "lucide-react";
@@ -52,7 +53,7 @@ export const metadata: Metadata = {
 
 export default function PlatformPage() {
   return (
-    <>
+    <InnerPage category="platform" current="/platform">
       {/* ── Hero ── */}
       <section className="relative overflow-hidden border-b border-line bg-canvas text-ink">
         <div
@@ -107,6 +108,14 @@ export default function PlatformPage() {
           </Reveal>
         </Container>
       </section>
+
+      <PageIndex items={[
+        { label: "What it replaces", href: "#replaces" },
+        { label: "Architecture", href: "#architecture" },
+        { label: "Capabilities", href: "#families" },
+        { label: "Deployment", href: "#deployment" },
+        { label: "90-day prototype", href: "#prototype" },
+      ]} />
 
       {/* ── Who it is for ── */}
       <section className="py-20 sm:py-24">
@@ -188,7 +197,7 @@ export default function PlatformPage() {
         <Container>
           <Reveal>
             <SectionHeading
-              eyebrow="3D product architecture view"
+              eyebrow="Platform architecture"
               title="The architecture, top to bottom"
               description="The platform in one picture — read top-down, the way value flows: from the industries served, through the Digital Experience Layer and the Unified Platform Core, down to the integrations, every estate, and the modes it deploys in."
             />
@@ -619,6 +628,6 @@ export default function PlatformPage() {
         }}
         tertiary={{ label: "Compare the four editions", href: "/editions", note: "quotas, SLAs and prices side by side" }}
       />
-    </>
+    </InnerPage>
   );
 }

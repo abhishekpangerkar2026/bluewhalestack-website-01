@@ -1,3 +1,4 @@
+import { InnerPage } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
@@ -34,7 +35,7 @@ export const metadata: Metadata = {
 export default function FabricPage() {
   const platformEdition = editionsBySlug["telco-datacenter"];
   return (
-    <>
+    <InnerPage category="platform" current="/fabric">
       {/* ── Hero: dark, two-column — copy left, tier→fabric illustration right ── */}
       <section className="relative overflow-hidden bg-brand-900 text-white">
         <div
@@ -395,6 +396,6 @@ export default function FabricPage() {
         }}
         tertiary={{ label: "For datacenter operators", href: "/industries/datacenter", note: "DCIM beside the cloud estate" }}
       />
-    </>
+    </InnerPage>
   );
 }

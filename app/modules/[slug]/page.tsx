@@ -1,3 +1,4 @@
+import { InnerPage } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -67,7 +68,7 @@ export default async function ModuleDetailPage({
   const stepsTitle = detail.howItWorks.map((s) => s.title).join(" → ");
 
   return (
-    <>
+    <InnerPage category="platform" current="/modules">
       {/* ── Hero ── */}
       <section className="relative overflow-hidden border-b border-line bg-white py-12 sm:py-16 lg:min-h-[620px]">
         <HeroArt scene={mod.slug} />
@@ -336,6 +337,6 @@ export default async function ModuleDetailPage({
         }}
         tertiary={{ label: "Compare the four editions", href: "/editions", note: "see which one includes it" }}
       />
-    </>
+    </InnerPage>
   );
 }

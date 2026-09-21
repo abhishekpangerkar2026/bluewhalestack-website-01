@@ -1,230 +1,145 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { Menu, X, ChevronDown, ArrowUpRight } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { ArrowRight, ArrowUpRight, ChevronDown, Menu, X } from "lucide-react";
 import { Logo } from "./Logo";
-import { Button } from "@/components/ui/Button";
-import { Icon } from "@/components/ui/Icon";
 import { ThemeToggle } from "./ThemeToggle";
-import {
-  primaryNav,
-  utilityNav,
-  type NavItem,
-  type NavLink,
-} from "@/content/company";
-import { modulesBySlug } from "@/content/modules";
-import { industriesBySlug } from "@/content/industries";
-import { solutionsBySlug } from "@/content/solutions";
+import { Button } from "@/components/ui/Button";
+import { primaryNav, utilityNav, type NavItem } from "@/content/company";
 import { cn } from "@/lib/utils";
 
-const EDITION_ICONS: Record<string, string> = {
-  standard: "Cloud",
-  enterprise: "Layers",
-  "telco-datacenter": "Server",
-  government: "Landmark",
-};
-const STATIC_ICONS: Record<string, string> = {
-  "/platform": "Cloud",
-  "/modules": "Boxes",
-  "/editions": "Layers",
-  "/pricing": "CreditCard",
-  "/products/whaleforge": "Boxes",
-  "/partners": "Handshake",
-  "/about": "Building2",
-  "/about#family": "Boxes",
-  "/about/leadership": "Users",
-  "/careers": "GraduationCap",
-  "/newsroom": "ScrollText",
-  "/contact": "Mail",
-  "/resources": "FileCheck",
-  "/docs": "ScrollText",
-};
-
-/** Resolve a lucide icon name for a nav link from content data. */
-function iconForLink(l: NavLink): string {
-  if (l.external) return "ArrowUpRight";
-  const h = l.href;
-  if (h.startsWith("/modules/")) return modulesBySlug[h.split("/")[2]]?.icon ?? "Boxes";
-  if (h.startsWith("/editions/")) return EDITION_ICONS[h.split("/")[2]] ?? "Layers";
-  if (h.startsWith("/industries/")) return industriesBySlug[h.split("/")[2]]?.icon ?? "Building2";
-  if (h.startsWith("/solutions/")) return solutionsBySlug[h.split("/")[2]]?.icon ?? "Workflow";
-  return STATIC_ICONS[h] ?? STATIC_ICONS[h.split("#")[0]] ?? "ArrowRight";
-}
+const menuId = (label: string) => `navigation-${label.toLowerCase().replace(/\s+/g, "-")}`;
+const focusable = 'a[href], button:not([disabled]), input:not([disabled]), [tabindex="0"]';
 
 export function Header() {
-  const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
   const [open, setOpen] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [scrolled, setScrolled] = useState(false);
+  const rootRef = useRef<HTMLElement>(null);
+  const mobileToggle = useRef<HTMLButtonElement>(null);
+  const drawerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => setScrolled(window.scrollY > 12);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => { setOpen(null); setMobileOpen(false); }, [pathname]);
+
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(null);
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    const outside = (event: PointerEvent) => { if (!rootRef.current?.contains(event.target as Node)) setOpen(null); };
+    document.addEventListener("pointerdown", outside);
+    return () => {
+      document.removeEventListener("pointerdown", outside);
+    };
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    if (!mobileOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    drawerRef.current?.querySelector<HTMLElement>(focusable)?.focus();
+    const media = window.matchMedia("(min-width: 1280px)");
+    const onResize = () => { if (media.matches) setMobileOpen(false); };
+    media.addEventListener("change", onResize);
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = previousOverflow;
+      media.removeEventListener("change", onResize);
     };
   }, [mobileOpen]);
 
-  function openMenu(label: string) {
-    if (closeTimer.current) clearTimeout(closeTimer.current);
-    setOpen(label);
-  }
-  function scheduleClose() {
-    if (closeTimer.current) clearTimeout(closeTimer.current);
-    closeTimer.current = setTimeout(() => setOpen(null), 180);
-  }
+  function closeMobile() { setMobileOpen(false); mobileToggle.current?.focus(); }
 
   return (
-    <header
-      className={cn(
-        "sticky top-0 z-50 w-full border-b bg-surface/95 backdrop-blur transition-all duration-200",
-        scrolled ? "border-line shadow-sm" : "border-line",
-      )}
-    >
-      <div className="container-x relative flex h-16 items-center justify-between gap-4">
-        <Logo />
-
-        {/* Desktop primary nav */}
-        <nav className="hidden lg:block" aria-label="Primary" onMouseLeave={scheduleClose}>
-          <ul className="flex items-center gap-1">
+    <header ref={rootRef} className={cn("site-header sticky top-0 z-50 border-b border-line bg-surface/95 backdrop-blur-xl transition-shadow duration-300", scrolled && "shadow-md")}>
+      <div className="container-x relative flex h-20 items-center justify-between gap-5">
+        <div className="shrink-0"><Logo className="h-9 sm:h-10" /></div>
+        <nav aria-label="Primary navigation" className="hidden xl:block">
+          <ul className="flex items-center gap-0.5">
             {primaryNav.map((item) => (
-              <li key={item.label} onMouseEnter={() => openMenu(item.label)}>
-                <Link
-                  href={item.href}
-                  className={cn(
-                    "inline-flex items-center gap-1 whitespace-nowrap rounded-md px-2.5 py-2 text-sm font-medium transition-colors xl:px-3",
-                    open === item.label
-                      ? "bg-sunken text-ink"
-                      : "text-muted hover:bg-sunken hover:text-ink",
-                  )}
-                  aria-haspopup={item.columns ? "true" : undefined}
-                  aria-expanded={open === item.label}
-                  onFocus={() => item.columns && openMenu(item.label)}
-                  onClick={() => setOpen(null)}
-                >
-                  {item.label}
-                  {item.columns && (
-                    <ChevronDown
-                      className={cn(
-                        "h-3.5 w-3.5 opacity-60 transition-transform",
-                        open === item.label && "rotate-180",
-                      )}
-                    />
-                  )}
-                </Link>
+              <li key={item.label}
+                onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node)) setOpen(null); }}
+                onKeyDown={(event) => {
+                  if (event.key === "Escape") {
+                    setOpen(null);
+                    event.currentTarget.querySelector<HTMLButtonElement>("button")?.focus();
+                    event.stopPropagation();
+                  }
+                }}
+              >
+                {item.columns ? (
+                  <button type="button"
+                    className={cn("flex h-10 items-center gap-1.5 rounded-md px-2.5 text-[13px] font-medium transition-colors", open === item.label ? "bg-sunken text-ink" : "text-muted hover:text-ink")}
+                    aria-expanded={open === item.label} aria-controls={menuId(item.label)}
+                    onClick={() => setOpen(open === item.label ? null : item.label)}
+                    onKeyDown={(event) => {
+                      if (event.key === "ArrowDown") {
+                        event.preventDefault(); setOpen(item.label);
+                        requestAnimationFrame(() => document.getElementById(menuId(item.label))?.querySelector<HTMLAnchorElement>("a")?.focus());
+                      }
+                    }}
+                  >{item.label}<ChevronDown aria-hidden className={cn("h-3 w-3 text-faint transition-transform", open === item.label && "rotate-180")} /></button>
+                ) : <Link href={item.href} className="inline-flex h-10 items-center px-3 text-[13px] font-medium text-muted hover:text-ink">{item.label}</Link>}
+                {item.columns && open === item.label && <MegaPanel item={item} onNavigate={() => setOpen(null)} />}
               </li>
             ))}
           </ul>
-
-          {primaryNav.map(
-            (item) =>
-              item.columns &&
-              open === item.label && (
-                <MegaPanel
-                  key={item.label}
-                  item={item}
-                  onEnter={() => openMenu(item.label)}
-                  onClose={() => setOpen(null)}
-                />
-              ),
-          )}
         </nav>
-
-        {/* Right: utility + CTA */}
-        <div className="hidden items-center gap-1 lg:flex">
-          {utilityNav.map((u) => (
-            <Link
-              key={u.href}
-              href={u.href}
-              className="rounded-md px-3 py-2 text-sm font-medium text-muted hover:bg-sunken hover:text-ink"
-            >
-              {u.label}
-            </Link>
-          ))}
-          <a
-            href="https://app.bluewhalestack.com"
-            className="rounded-md px-3 py-2 text-sm font-medium text-muted hover:bg-sunken hover:text-ink"
-          >
-            Login
-          </a>
-          <ThemeToggle className="ml-1" />
-          <Button href="/contact?intent=demo" size="sm" className="ml-1">
-            Book a demo
-          </Button>
+        <div className="hidden items-center gap-5 xl:flex">
+          <nav aria-label="Resources" className="flex items-center gap-4">
+            {utilityNav.map((item) => <Link key={item.href} href={item.href} className="text-[12px] font-medium text-muted transition-colors hover:text-ink">{item.label}</Link>)}
+          </nav>
+          <div className="flex items-center gap-3 border-l border-line pl-4">
+            <a href="https://app.bluewhalestack.com" className="text-[12px] font-medium text-muted hover:text-ink">Log in</a>
+            <ThemeToggle />
+            <Button href="/contact?intent=demo" size="sm">Book a demo <ArrowUpRight aria-hidden className="h-3.5 w-3.5" /></Button>
+          </div>
         </div>
-
-        {/* Mobile toggle */}
-        <div className="flex items-center gap-1 lg:hidden">
+        <div className="flex items-center gap-2 xl:hidden">
           <ThemeToggle />
-          <button
-            className="inline-flex h-10 w-10 items-center justify-center rounded-md text-ink hover:bg-sunken"
-            onClick={() => setMobileOpen((v) => !v)}
-            aria-label="Toggle menu"
-            aria-expanded={mobileOpen}
-          >
-            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
+          <button ref={mobileToggle} type="button" aria-label={mobileOpen ? "Close navigation" : "Open navigation"} aria-expanded={mobileOpen} aria-controls="mobile-navigation" onClick={() => setMobileOpen((value) => !value)} className="grid h-11 w-11 place-items-center rounded-lg border border-line text-ink transition-colors hover:bg-sunken">{mobileOpen ? <X aria-hidden className="h-5 w-5" /> : <Menu aria-hidden className="h-5 w-5" />}</button>
         </div>
       </div>
-
-      {mobileOpen && <MobileDrawer onNavigate={() => setMobileOpen(false)} />}
+      {mobileOpen && (
+        <div ref={drawerRef} id="mobile-navigation" role="dialog" aria-modal="true" aria-label="Website navigation" className="fixed inset-x-0 top-20 h-[calc(100dvh-5rem)] overflow-y-auto border-t border-line bg-surface xl:hidden"
+          onKeyDown={(event) => {
+            if (event.key === "Escape") { event.preventDefault(); closeMobile(); }
+            if (event.key === "Tab") {
+              const elements = Array.from(event.currentTarget.querySelectorAll<HTMLElement>(focusable)).filter((element) => element.getClientRects().length > 0);
+              const first = elements[0], last = elements[elements.length - 1];
+              if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+              if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+            }
+          }}
+        ><MobileDrawer onNavigate={closeMobile} /></div>
+      )}
     </header>
   );
 }
 
-/* ── Desktop mega-menu panel ─────────────────────────────────── */
-function MegaPanel({
-  item,
-  onEnter,
-  onClose,
-}: {
-  item: NavItem;
-  onEnter: () => void;
-  onClose: () => void;
-}) {
+function MegaPanel({ item, onNavigate }: { item: NavItem; onNavigate: () => void }) {
   return (
-    <div onMouseEnter={onEnter} className="absolute left-0 right-0 top-full z-40 pt-3">
-      <div className="animate-fade-up overflow-hidden rounded-xl border border-line bg-surface shadow-xl">
-        <div className="grid grid-cols-4 divide-x divide-line">
-          {item.columns!.map((col) => (
-            <div key={col.heading} className={cn("p-4", col.featured && "bg-sunken")}>
-              <p className="mb-2.5 px-2 text-[11px] font-semibold uppercase tracking-wider text-accent">
-                {col.heading}
-              </p>
-              <ul className="space-y-0.5">
-                {col.links.map((l) => (
-                  <li key={l.label}>
-                    <Link
-                      href={l.href}
-                      onClick={onClose}
-                      target={l.external ? "_blank" : undefined}
-                      className="group flex items-start gap-3 rounded-lg px-2 py-2 transition-colors hover:bg-hover"
-                    >
-                      <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md bg-sunken text-accent transition-colors group-hover:bg-primary group-hover:text-primary-fg">
-                        <Icon name={iconForLink(l)} className="h-4 w-4" />
-                      </span>
-                      <span className="min-w-0">
-                        <span className="flex items-center gap-1 text-sm font-medium text-ink group-hover:text-accent">
-                          {l.label}
-                          {l.external && <ArrowUpRight className="h-3 w-3 opacity-60" />}
-                        </span>
-                        {l.desc && <span className="block text-xs text-muted">{l.desc}</span>}
-                      </span>
-                    </Link>
-                  </li>
+    <div id={menuId(item.label)} className="absolute inset-x-5 top-full pt-3">
+      <div className="overflow-hidden rounded-2xl border border-line bg-surface shadow-xl">
+        <div className="flex items-center justify-between border-b border-line bg-sunken/60 px-7 py-4">
+          <span className="eyebrow text-faint">Explore {item.label}</span>
+          <Link href={item.href} onClick={onNavigate} className="inline-flex items-center gap-2 text-xs font-semibold text-accent">{item.label} overview <ArrowRight aria-hidden className="h-3.5 w-3.5" /></Link>
+        </div>
+        <div className="grid grid-cols-4 divide-x divide-line p-3">
+          {item.columns!.map((column) => (
+            <div key={column.heading} className={cn("p-4", column.featured && "rounded-xl bg-sunken/70")}>
+              <h2 className="mb-3 px-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-faint">{column.heading}</h2>
+              <ul className="space-y-1">
+                {column.links.map((link) => (
+                  <li key={link.label}><Link href={link.href} target={link.external ? "_blank" : undefined} rel={link.external ? "noopener noreferrer" : undefined} onClick={onNavigate} className="group block rounded-lg px-2 py-2.5 transition-colors hover:bg-sunken">
+                    <span className="flex items-center gap-1.5 text-[13px] font-semibold leading-snug text-ink group-hover:text-accent">{link.label}{link.external && <ArrowUpRight aria-hidden className="h-3 w-3" />}</span>
+                    {link.desc && <span className="mt-1 block text-[11px] leading-relaxed text-muted">{link.desc}</span>}
+                  </Link></li>
                 ))}
               </ul>
             </div>
@@ -235,82 +150,26 @@ function MegaPanel({
   );
 }
 
-/* ── Mobile drawer ───────────────────────────────────────────── */
 function MobileDrawer({ onNavigate }: { onNavigate: () => void }) {
   const [openItem, setOpenItem] = useState<string | null>(null);
   return (
-    <div className="border-t border-line bg-surface lg:hidden">
-      <nav className="container-x max-h-[calc(100vh-4rem)] overflow-y-auto py-4">
-        <ul className="flex flex-col">
-          {primaryNav.map((item) => (
-            <li key={item.label} className="border-b border-line">
-              <button
-                className="flex w-full items-center justify-between py-3 text-base font-semibold text-ink"
-                onClick={() => setOpenItem((v) => (v === item.label ? null : item.label))}
-                aria-expanded={openItem === item.label}
-              >
-                {item.label}
-                <ChevronDown
-                  className={cn(
-                    "h-4 w-4 text-faint transition-transform",
-                    openItem === item.label && "rotate-180",
-                  )}
-                />
-              </button>
-              {openItem === item.label && item.columns && (
-                <div className="pb-3">
-                  {item.columns.map((col) => (
-                    <div key={col.heading} className="mb-3">
-                      <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-accent">
-                        {col.heading}
-                      </p>
-                      <ul className="space-y-0.5">
-                        {col.links.map((l) => (
-                          <li key={l.label}>
-                            <Link
-                              href={l.href}
-                              onClick={onNavigate}
-                              target={l.external ? "_blank" : undefined}
-                              className="block rounded-md px-2 py-1.5 text-sm text-muted hover:bg-sunken hover:text-ink"
-                            >
-                              {l.label}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </li>
-          ))}
-        </ul>
-
-        <div className="mt-4 flex flex-col gap-1">
-          {utilityNav.map((u) => (
-            <Link
-              key={u.href}
-              href={u.href}
-              onClick={onNavigate}
-              className="rounded-md px-2 py-2 text-sm font-medium text-muted hover:bg-sunken hover:text-ink"
-            >
-              {u.label}
-            </Link>
-          ))}
-          <a
-            href="https://app.bluewhalestack.com"
-            className="rounded-md px-2 py-2 text-sm font-medium text-muted hover:bg-sunken hover:text-ink"
-          >
-            Login
-          </a>
-        </div>
-
-        <div className="mt-4">
-          <Button href="/contact" className="w-full" onClick={onNavigate}>
-            Book a demo
-          </Button>
-        </div>
-      </nav>
+    <div className="container-x pb-10 pt-4">
+      <div className="mb-2 flex items-center justify-between"><p className="eyebrow text-faint">Explore BlueWhale Stack</p><button type="button" onClick={onNavigate} aria-label="Close navigation" className="grid h-10 w-10 place-items-center rounded-lg hover:bg-sunken"><X aria-hidden className="h-5 w-5" /></button></div>
+      <nav aria-label="Mobile primary navigation"><ul>
+        {primaryNav.map((item) => (
+          <li key={item.label} className="border-b border-line">
+            <div className="flex items-center justify-between py-2">
+              <Link href={item.href} onClick={onNavigate} className="py-3 font-display text-lg font-semibold text-ink">{item.label}</Link>
+              {item.columns && <button type="button" aria-label={`Show ${item.label} links`} aria-expanded={openItem === item.label} aria-controls={`mobile-${menuId(item.label)}`} onClick={() => setOpenItem(openItem === item.label ? null : item.label)} className="grid h-11 w-11 place-items-center rounded-lg bg-sunken text-muted"><ChevronDown aria-hidden className={cn("h-4 w-4 transition-transform", openItem === item.label && "rotate-180")} /></button>}
+            </div>
+            {openItem === item.label && item.columns && <div id={`mobile-${menuId(item.label)}`} className="grid gap-6 pb-6 pt-2 sm:grid-cols-2">
+              {item.columns.map((column) => <div key={column.heading}><p className="eyebrow mb-2 text-faint">{column.heading}</p><ul>{column.links.map((link) => <li key={link.label}><Link href={link.href} onClick={onNavigate} target={link.external ? "_blank" : undefined} rel={link.external ? "noopener noreferrer" : undefined} className="flex items-center gap-1.5 rounded-lg py-2 text-sm text-muted hover:text-accent">{link.label}{link.external && <ArrowUpRight aria-hidden className="h-3 w-3" />}</Link></li>)}</ul></div>)}
+            </div>}
+          </li>
+        ))}
+      </ul></nav>
+      <div className="my-6 flex flex-wrap gap-x-7 gap-y-4">{utilityNav.map((item) => <Link key={item.href} href={item.href} onClick={onNavigate} className="text-sm font-medium text-muted">{item.label}</Link>)}<a href="https://app.bluewhalestack.com" className="text-sm font-medium text-muted">Log in <ArrowUpRight aria-hidden className="inline h-3.5 w-3.5" /></a></div>
+      <Button href="/contact?intent=demo" onClick={onNavigate} size="lg" className="w-full">Book a demo <ArrowUpRight aria-hidden className="h-4 w-4" /></Button>
     </div>
   );
 }

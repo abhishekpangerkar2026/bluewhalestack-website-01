@@ -1,3 +1,4 @@
+import { InnerPage } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
 import { ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
 
 export default function PartnersPage() {
   return (
-    <>
+    <InnerPage category="company" current="/partners">
       {/* ── Hero: clean light statement band ── */}
       <section className="relative overflow-hidden border-b border-line bg-surface">
         <div
@@ -244,6 +245,6 @@ export default function PartnersPage() {
           </Reveal>
         </Container>
       </section>
-    </>
+    </InnerPage>
   );
 }

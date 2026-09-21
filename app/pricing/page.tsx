@@ -1,3 +1,4 @@
+import { InnerPage, IntroPanel, IntroPanelStat } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Check, Minus } from "lucide-react";
@@ -6,7 +7,6 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
-import { Iso } from "@/components/illustrations/Iso";
 import { ClosingCTA } from "@/components/sections/ClosingCTA";
 import { getEditions } from "@/lib/content";
 import { modules } from "@/content/modules";
@@ -55,7 +55,7 @@ const faqs = [
 export default function PricingPage() {
   const editions = getEditions();
   return (
-    <>
+    <InnerPage category="pricing" current="/pricing">
       {/* ── Hero: editorial split, oversized statement left ── */}
       <section className="border-b border-line bg-surface py-20 sm:py-28">
         <Container>
@@ -94,9 +94,11 @@ export default function PricingPage() {
               </div>
             </Reveal>
             <Reveal delay={90}>
-              <div className="mx-auto w-full max-w-[380px]">
-                <Iso name="chart" title="Whalenomics — spend explained, decomposed, owned" />
-              </div>
+              <IntroPanel eyebrow="Published annual list prices" dark>
+                <IntroPanelStat label="STANDARD" value="$24,000" detail="Per year · 1,000 managed resource units included" />
+                <IntroPanelStat label="ENTERPRISE" value="$120,000" detail="Per year · up to 1,000,000 resources across 100 cloud accounts" />
+                <p className="mt-3 border-t border-white/15 pt-5 text-xs leading-relaxed text-white/60">Telco &amp; Datacenter and Government are scoped to your estate.</p>
+              </IntroPanel>
             </Reveal>
           </div>
         </Container>
@@ -344,6 +346,6 @@ export default function PricingPage() {
         }}
         tertiary={{ label: "Trust Center", href: "/trust", note: "certificates and the DPA for procurement" }}
       />
-    </>
+    </InnerPage>
   );
 }

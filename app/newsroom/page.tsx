@@ -1,3 +1,4 @@
+import { InnerPage, IntroPanel, IntroPanelLink } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Calendar } from "lucide-react";
@@ -7,7 +8,6 @@ import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
-import { Iso } from "@/components/illustrations/Iso";
 
 export const metadata: Metadata = {
   title: "Newsroom",
@@ -83,7 +83,7 @@ const badgeTone: Record<string, BadgeTone> = {
 
 export default function NewsroomPage() {
   return (
-    <>
+    <InnerPage category="company" current="/newsroom">
       {/* ── Hero ── */}
       <section className="border-b border-line bg-surface py-20 sm:py-28">
         <Container>
@@ -122,16 +122,19 @@ export default function NewsroomPage() {
               </div>
             </Reveal>
             <Reveal delay={90}>
-              <div className="mx-auto w-full max-w-[360px]">
-                <Iso name="audit" title="Announcements and certifications" />
-              </div>
+              <IntroPanel eyebrow="From the newsroom" dark>
+                <p className="border-t border-white/15 pt-6 text-xs text-white/55">{announcements[0].date} · {announcements[0].category}</p>
+                <h2 className="mt-4 text-2xl font-medium leading-tight tracking-tight text-white">{announcements[0].title}</h2>
+                <p className="mb-6 mt-4 text-sm leading-relaxed text-white/65">{announcements[0].body}</p>
+                <IntroPanelLink index="↗" href="#announcements" title="All announcements" description="Product launches, certifications and milestones." />
+              </IntroPanel>
             </Reveal>
           </div>
         </Container>
       </section>
 
       {/* ── Announcements ── */}
-      <section className="py-24 sm:py-32">
+      <section id="announcements" className="py-24 sm:py-32">
         <Container>
           <Reveal>
             <SectionHeading
@@ -222,6 +225,6 @@ export default function NewsroomPage() {
           </div>
         </Container>
       </section>
-    </>
+    </InnerPage>
   );
 }

@@ -1,3 +1,4 @@
+import { InnerPage } from "@/components/layout/InnerPage";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, Clock, ChevronRight } from "lucide-react";
@@ -156,7 +157,7 @@ export default async function DocSlugPage({
   if (!page) notFound();
 
   return (
-    <>
+    <InnerPage category="resources" current="/docs" document>
       {/* ── Breadcrumb + hero ── */}
       <section className="border-b border-line bg-surface py-14 sm:py-20">
         <Container>
@@ -339,6 +340,6 @@ export default async function DocSlugPage({
           </div>
         </Container>
       </section>
-    </>
+    </InnerPage>
   );
 }

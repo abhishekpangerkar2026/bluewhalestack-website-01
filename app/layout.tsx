@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono, Manrope } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -20,11 +20,19 @@ const mono = JetBrains_Mono({
   display: "swap",
 });
 
+const manrope = Manrope({
+  subsets: ["latin"],
+  variable: "--font-manrope",
+  display: "swap",
+});
+
 /** Apply the saved theme before first paint to avoid a flash. */
-const themeInit = `(function(){try{var t=localStorage.getItem('bws-theme');if(t==='dark'||t==='light'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();`;
+const themeInit = `(function(){var t;try{t=localStorage.getItem('bws-theme');}catch(e){}if(t!=='dark'&&t!=='light'){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.setAttribute('data-theme',t);})();`;
+
+const siteOrigin = process.env.NEXT_PUBLIC_SITE_URL ?? "https://bluewhalestack-website-production-6507.up.railway.app";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.bluewhalestack.com"),
+  metadataBase: new URL(siteOrigin),
   title: {
     default: `${company.name} — ${company.tagline}`,
     template: `%s · ${company.name}`,
@@ -49,7 +57,6 @@ export const metadata: Metadata = {
   authors: [{ name: company.name }],
   creator: company.name,
   publisher: company.name,
-  alternates: { canonical: "/" },
   robots: {
     index: true,
     follow: true,
@@ -59,7 +66,8 @@ export const metadata: Metadata = {
     title: `${company.name} — ${company.tagline}`,
     description: company.metaDescription,
     siteName: company.name,
-    url: "https://www.bluewhalestack.com",
+    url: siteOrigin,
+    images: [{ url: "/og.png", width: 1734, height: 907, alt: "BlueWhale Stack — Every cloud. One control plane." }],
     locale: "en_US",
     type: "website",
   },
@@ -68,6 +76,7 @@ export const metadata: Metadata = {
     title: `${company.name} — ${company.tagline}`,
     description: company.metaDescription,
     site: "@bluewhalestack",
+    images: ["/og.png"],
   },
 };
 
@@ -98,7 +107,7 @@ const websiteJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   name: company.name,
-  url: "https://www.bluewhalestack.com",
+  url: siteOrigin,
 };
 
 export default function RootLayout({
@@ -107,11 +116,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${mono.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${inter.variable} ${mono.variable} ${manrope.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInit }} />
       </head>
       <body className="min-h-screen font-sans antialiased">
+        <a href="#main-content" className="skip-link">Skip to content</a>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
@@ -121,7 +131,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
         <Header />
-        <main>{children}</main>
+        <main id="main-content" tabIndex={-1}>{children}</main>
         <Footer />
         <ChatWidget />
       </body>

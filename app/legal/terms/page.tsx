@@ -1,3 +1,4 @@
+import { InnerPage } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
 import { LegalDoc, type LegalSection } from "@/components/sections/LegalDoc";
 import { company } from "@/content/company";
@@ -86,11 +87,13 @@ const sections: LegalSection[] = [
 
 export default function TermsPage() {
   return (
-    <LegalDoc
+    <InnerPage category="legal" current="/legal/terms" document>
+      <LegalDoc
       title="Terms of Use"
       intro="The terms governing your access to and use of the BlueWhale Stack website and services."
       lastUpdated="12 July 2026"
       sections={sections}
     />
+    </InnerPage>
   );
 }

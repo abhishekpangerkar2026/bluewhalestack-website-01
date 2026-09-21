@@ -1,3 +1,4 @@
+import { InnerPage } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -44,7 +45,7 @@ export default async function EditionDetailPage({
   const mods = getModulesForEdition(slug);
 
   return (
-    <>
+    <InnerPage category="platform" current="/editions">
       {/* ── Coming Soon banner (Telco / Datacenter) ── */}
       {edition.comingSoon && (
         <div className="border-b border-line bg-sunken">
@@ -509,7 +510,7 @@ export default async function EditionDetailPage({
         }}
         tertiary={{ label: "Published pricing and quotas", href: "/pricing", note: "all four editions side by side" }}
       />
-    </>
+    </InnerPage>
   );
 }
 

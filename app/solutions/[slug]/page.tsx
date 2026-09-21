@@ -1,3 +1,4 @@
+import { InnerPage } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -56,7 +57,7 @@ export default async function SolutionDetailPage({
   const siblings = getSolutions().filter((s) => s.slug !== slug).slice(0, 3);
 
   return (
-    <>
+    <InnerPage category="solutions" current="/solutions">
       {/* ── Hero ── */}
       <section className="relative overflow-hidden border-b border-line bg-white py-12 sm:py-16 lg:min-h-[620px]">
         <HeroArt scene={SOLUTION_3D[solution.slug] ?? "platform"} />
@@ -225,13 +226,8 @@ export default async function SolutionDetailPage({
                     <span className="text-xs text-faint">{story.org}</span>
                   </div>
                   <h2 className="mt-4 text-2xl font-bold leading-snug text-ink sm:text-3xl">{story.headline}</h2>
-                  <p className="mt-4 leading-relaxed text-muted">{story.summary}</p>
-                  <figure className="mt-6 border-l-2 border-line-strong pl-4">
-                    <blockquote className="text-base italic leading-relaxed text-muted">&ldquo;{story.quote}&rdquo;</blockquote>
-                    <figcaption className="mt-2 text-xs text-muted">
-                      <span className="font-semibold text-ink">{story.person.role}</span> · as reported by the customer
-                    </figcaption>
-                  </figure>
+
+                  <div className="mt-5 border-l-2 border-accent/30 pl-4"><p className="text-[10px] font-semibold uppercase tracking-widest text-accent">Engagement outcome</p><p className="mt-2 text-sm leading-relaxed text-muted">{story.summary}</p></div>
                   <dl className="mt-6 grid grid-cols-3 gap-4 border-t border-line pt-5">
                     {story.metrics.map((m) => (
                       <div key={m.label}>
@@ -332,6 +328,6 @@ export default async function SolutionDetailPage({
         }}
         tertiary={{ label: "Compare the four editions", href: "/editions", note: "see which one includes it" }}
       />
-    </>
+    </InnerPage>
   );
 }

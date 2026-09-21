@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 /* ═══════════════════════════════════════════════════════════════
    BlueWhale Stack — Marketing site design tokens
@@ -9,36 +10,36 @@
 
 :root {
   /* Brand — official logomark */
-  --brand-deep: #002da1; /* primary brand blue */
-  --brand-blue: #1e6fdb; /* interactive — buttons, links, active */
-  --brand-sky: #e8f2ff;
-  --brand-ink: #0a1628;
+  --brand-deep: #2458f5;
+  --brand-blue: #2458f5;
+  --brand-sky: #edf2ff;
+  --brand-ink: #0a1530;
 
   /* Backgrounds (light) */
-  --bg-canvas: #fafbfc;
+  --bg-canvas: #f8f9fc;
   --bg-surface: #ffffff;
   --bg-elevated: #ffffff;
-  --bg-sunken: #f3f5f8;
-  --bg-hover: #f3f5f8;
-  --bg-active: #e8f2ff;
+  --bg-sunken: #f0f3f9;
+  --bg-hover: #f0f3f9;
+  --bg-active: #edf2ff;
 
   /* Text (light) */
-  --text-primary: #0a1628;
-  --text-secondary: #4a5a70;
-  --text-tertiary: #66717f; /* ≈4.6:1 on canvas — WCAG AA for small text */
+  --text-primary: #0a1530;
+  --text-secondary: #566176;
+  --text-tertiary: #68748a;
   --text-inverse: #ffffff;
-  --text-accent: #1e6fdb;
+  --text-accent: #2458f5;
   --text-disabled: #a0aab8;
 
   /* Borders (light) */
-  --border-default: #e3e8ef;
-  --border-strong: #cbd3df;
-  --border-accent: #1e6fdb;
+  --border-default: #e1e6ef;
+  --border-strong: #c9d2e2;
+  --border-accent: #2458f5;
 
   /* Primary action */
-  --primary-bg: #1e6fdb;
-  --primary-hover: #1859b0;
-  --primary-active: #134087;
+  --primary-bg: #2458f5;
+  --primary-hover: #1946d9;
+  --primary-active: #1539ad;
   --primary-fg: #ffffff;
 
   /* Status */
@@ -66,14 +67,11 @@
   --cloud-nutanix: #024da1;
 
   /* Elevation */
-  --shadow-sm: 0 1px 2px rgba(10, 22, 40, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(10, 22, 40, 0.08),
-    0 2px 4px -2px rgba(10, 22, 40, 0.05);
-  --shadow-lg: 0 10px 15px -3px rgba(10, 22, 40, 0.1),
-    0 4px 6px -4px rgba(10, 22, 40, 0.08);
-  --shadow-xl: 0 20px 25px -5px rgba(10, 22, 40, 0.12),
-    0 8px 10px -6px rgba(10, 22, 40, 0.08);
-  --shadow-focus: 0 0 0 3px rgba(30, 111, 219, 0.15);
+  --shadow-sm: 0 2px 6px -2px rgb(10 21 48 / 0.05);
+  --shadow-md: 0 8px 28px -12px rgb(10 21 48 / 0.13);
+  --shadow-lg: 0 18px 50px -20px rgb(10 21 48 / 0.19);
+  --shadow-xl: 0 28px 80px -24px rgb(10 21 48 / 0.22);
+  --shadow-focus: 0 0 0 4px rgb(36 88 245 / 0.18);
 }
 
 /* Dark mode — explicit opt-in */
@@ -87,7 +85,7 @@
 
   --text-primary: #f3f5f8;
   --text-secondary: #a8b3c3;
-  --text-tertiary: #6c7890;
+  --text-tertiary: #93a0b7;
   --text-accent: #5ea1f2;
   --text-disabled: #4a5a70;
 
@@ -127,7 +125,7 @@
     --bg-active: #1a3567;
     --text-primary: #f3f5f8;
     --text-secondary: #a8b3c3;
-    --text-tertiary: #6c7890;
+    --text-tertiary: #93a0b7;
     --text-accent: #5ea1f2;
     --text-disabled: #4a5a70;
     --border-default: #21324d;
@@ -145,16 +143,16 @@
    automatically because the utilities reference the CSS variables. */
 @theme {
   /* Brand scale (static) */
-  --color-brand-50: #e6ecfa;
-  --color-brand-100: #b3c4ef;
-  --color-brand-200: #809ce3;
-  --color-brand-300: #4d74d8;
-  --color-brand-400: #264fcb;
-  --color-brand-500: #002da1;
-  --color-brand-600: #002894;
-  --color-brand-700: #002286;
-  --color-brand-800: #001b79;
-  --color-brand-900: #00156b;
+  --color-brand-50: #edf2ff;
+  --color-brand-100: #dce6ff;
+  --color-brand-200: #b6caff;
+  --color-brand-300: #88a9ff;
+  --color-brand-400: #5c85ff;
+  --color-brand-500: #2458f5;
+  --color-brand-600: #204be0;
+  --color-brand-700: #1a3bab;
+  --color-brand-800: #152653;
+  --color-brand-900: #0a1530;
 
   /* Semantic surfaces / text / lines (theme-aware via var) */
   --color-canvas: var(--bg-canvas);
@@ -182,11 +180,11 @@
   --color-danger: var(--danger-fg);
 
   /* Radius (match product) */
-  --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 8px;
-  --radius-xl: 12px;
-  --radius-2xl: 16px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
 
   /* Shadows */
   --shadow-sm: var(--shadow-sm);
@@ -200,10 +198,10 @@
   --font-mono: var(--font-mono-src), "SF Mono", Menlo, Monaco, Consolas,
     "Courier New", monospace;
   /* Display face = the same Inter; keeps `font-display` a real utility rather than a no-op */
-  --font-display: var(--font-sans);
+  --font-display: var(--font-manrope), var(--font-sans);
 
   /* Content width */
-  --breakpoint-content: 1200px;
+  --breakpoint-content: 1280px;
 }
 
 /* ── Base ─────────────────────────────────────────────────────── */
@@ -218,8 +216,33 @@ body {
   background: var(--bg-canvas);
   color: var(--text-primary);
   font-family: var(--font-sans);
-  line-height: 1.5;
+  line-height: 1.65;
 }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  text-wrap: balance;
+}
+
+button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
+button:not(:disabled), [role="button"] { cursor: pointer; }
+:focus-visible {
+  outline: 2px solid var(--border-accent);
+  outline-offset: 4px;
+}
+section[id], h2[id], h3[id] { scroll-margin-top: 7rem; }
+.skip-link {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 100;
+  transform: translateY(-180%);
+  border-radius: 10px;
+  background: var(--primary-bg);
+  color: var(--primary-fg);
+  padding: .75rem 1rem;
+}
+.skip-link:focus { transform: translateY(0); }
 
 ::selection {
   background: var(--brand-blue);
@@ -230,8 +253,8 @@ body {
 @utility container-x {
   width: 100%;
   margin-inline: auto;
-  max-width: 75rem; /* 1200px */
-  padding-inline: 1.5rem;
+  max-width: 80rem;
+  padding-inline: clamp(1.25rem, 4vw, 2.5rem);
 }
 
 @utility num {
@@ -243,33 +266,26 @@ body {
    Every page hero and section heading uses these instead of ad-hoc sizes,
    so headings, eyebrows and weights stay identical from page to page. */
 @utility display-1 {
-  font-size: 2.5rem;
-  font-weight: 700;
-  line-height: 1.05;
-  letter-spacing: -0.025em;
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5.2vw, 4.5rem);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.055em;
   text-wrap: balance;
-  @media (min-width: 640px) {
-    font-size: 3.25rem;
-  }
-  @media (min-width: 1024px) {
-    font-size: 3.75rem;
-  }
 }
 @utility display-2 {
-  font-size: 1.875rem;
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 3.5vw, 3rem);
+  font-weight: 600;
+  line-height: 1.14;
+  letter-spacing: -0.045em;
   text-wrap: balance;
-  @media (min-width: 640px) {
-    font-size: 2.25rem;
-  }
 }
 @utility eyebrow {
-  font-size: 0.75rem;
+  font-size: 0.6875rem;
   font-weight: 600;
   line-height: 1.25;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
@@ -337,15 +353,32 @@ body {
   animation-iteration-count: infinite;
 }
 @media (prefers-reduced-motion: reduce) {
-  /* .animate-marquee is deliberately excluded: it's a purely decorative,
-     slow linear logo scroll (not an interface transition), so it keeps
-     running even for visitors who've asked the OS to reduce motion. */
-  .animate-fade-up {
+  .animate-fade-up, .animate-marquee {
     animation: none;
   }
   html {
     scroll-behavior: auto;
   }
+}
+
+/* Shared chrome and component polish; page content stays in normal flow. */
+.site-header { isolation: isolate; }
+.site-header a, .site-header button { -webkit-user-select: none; user-select: none; }
+.site-button > svg { flex-shrink: 0; transition: transform 180ms ease; }
+.site-button:hover > svg:last-child { transform: translate(1px, -1px); }
+.surface-card { position: relative; }
+.section-heading h2 { max-width: 24ch; }
+.section-heading.text-center h2 { margin-inline: auto; }
+.site-footer { background-image: radial-gradient(ellipse at 5% 0%, rgb(36 88 245 / 0.14), transparent 52%); }
+.site-footer input { min-width: 0; }
+.site-footer input::placeholder { color: #94a3b8; }
+.site-footer form > label { font-size: 10px; }
+.site-footer form > div { gap: .5rem; }
+.site-footer form button { background: #2458f5; }
+.site-footer form button:hover { background: #416fff; }
+@media (prefers-reduced-motion: reduce) {
+  .site-button > svg { transition: none; }
+  .site-button:hover > svg:last-child { transform: none; }
 }
 
 /* ── printed documents (/print/[slug] → public/docs/*.pdf) ─────────── */

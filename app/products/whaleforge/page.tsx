@@ -1,3 +1,4 @@
+import { InnerPage } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
 import { ArrowRight, Check } from "lucide-react";
 import { Container } from "@/components/ui/Container";
@@ -128,7 +129,7 @@ const diagramTypes = [
 
 export default function WhaleForge() {
   return (
-    <>
+    <InnerPage category="platform" current="/products/whaleforge">
       {/* ── Hero ── */}
       <section className="border-b border-line bg-surface py-20 sm:py-28">
         <Container>
@@ -425,6 +426,6 @@ policies:
           </div>
         </Container>
       </section>
-    </>
+    </InnerPage>
   );
 }

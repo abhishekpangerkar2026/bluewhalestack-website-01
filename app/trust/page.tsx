@@ -1,3 +1,4 @@
+import { InnerPage } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Check, ChevronDown, ShieldCheck } from "lucide-react";
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
 
 export default function TrustPage() {
   return (
-    <>
+    <InnerPage category="resources" current="/trust">
       {/* ── Hero ── */}
       <section className="relative overflow-hidden bg-brand-900 py-20 text-white sm:py-28">
         <div
@@ -226,6 +227,6 @@ export default function TrustPage() {
           </Reveal>
         </Container>
       </section>
-    </>
+    </InnerPage>
   );
 }

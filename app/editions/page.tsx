@@ -1,3 +1,4 @@
+import { InnerPage } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Check, Minus } from "lucide-react";
@@ -22,7 +23,7 @@ export default function EditionsPage() {
   const editions = getEditions();
 
   return (
-    <>
+    <InnerPage category="platform" current="/editions">
       {/* ── Intro: editorial split ── */}
       <section className="bg-canvas py-20 sm:py-28">
         <Container>
@@ -206,6 +207,6 @@ export default function EditionsPage() {
         }}
         tertiary={{ label: "Published pricing", href: "/pricing", note: "quotas, terms and FAQ" }}
       />
-    </>
+    </InnerPage>
   );
 }

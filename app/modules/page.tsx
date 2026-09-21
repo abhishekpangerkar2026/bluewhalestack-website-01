@@ -1,3 +1,4 @@
+import { InnerPage, IntroPanel, IntroPanelStat } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -33,7 +34,7 @@ const ORDER: ModuleGroup[] = moduleGroupOrder.filter((g) =>
 
 export default function ModulesPage() {
   return (
-    <>
+    <InnerPage category="platform" current="/modules">
       {/* ── Editorial intro ── */}
       <section className="border-b border-line bg-canvas pb-16 pt-20 sm:pt-28">
         <Container>
@@ -57,24 +58,30 @@ export default function ModulesPage() {
               </div>
             </Reveal>
             <Reveal delay={90}>
-              <div className="flex items-end gap-10 lg:justify-end">
-                <div className="lg:text-right">
-                  <div className="text-6xl font-bold tracking-tight text-accent num sm:text-7xl">
-                    54
-                  </div>
-                  <p className="eyebrow mt-1 text-faint">capabilities</p>
+              <IntroPanel eyebrow="Inside the platform" dark>
+                <div className="grid grid-cols-2 gap-6">
+                  <IntroPanelStat value="54" label="CAPABILITIES" />
+                  <IntroPanelStat value={String(ORDER.length).padStart(2, "0")} label="FAMILIES" />
                 </div>
-                <div className="lg:text-right">
-                  <div className="text-6xl font-bold tracking-tight text-ink num sm:text-7xl">
-                    {ORDER.length}
-                  </div>
-                  <p className="eyebrow mt-1 text-faint">families</p>
-                </div>
-              </div>
+                <p className="border-t border-white/15 pt-5 text-sm leading-relaxed text-white/65">One identity, one inventory and one policy plane. Every module states its current maturity.</p>
+              </IntroPanel>
             </Reveal>
           </div>
         </Container>
       </section>
+
+      <nav aria-label="Capability families" className="border-b border-line bg-surface">
+        <Container>
+          <div className="flex items-center gap-5 overflow-x-auto py-5">
+            <span className="shrink-0 text-[10px] font-bold uppercase tracking-widest text-faint">Explore families</span>
+            {ORDER.map((group, i) => (
+              <a key={group} href={`#${group}`} className="inline-flex shrink-0 items-center gap-2 text-xs font-medium text-muted transition-colors hover:text-accent">
+                <span className="font-mono text-[10px] text-faint">0{i + 1}</span>{moduleGroups[group]}
+              </a>
+            ))}
+          </div>
+        </Container>
+      </nav>
 
       {/* ── Family sections, alternating surface, indexed, asymmetric heading column ── */}
       {ORDER.map((group, gi) => {
@@ -168,6 +175,6 @@ export default function ModulesPage() {
           </div>
         </Container>
       </section>
-    </>
+    </InnerPage>
   );
 }

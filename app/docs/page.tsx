@@ -1,3 +1,4 @@
+import { InnerPage, IntroPanel, IntroPanelLink } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -7,7 +8,6 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
-import { Iso } from "@/components/illustrations/Iso";
 import { docCards } from "@/content/docs";
 
 export const metadata: Metadata = {
@@ -27,7 +27,7 @@ const quickLinks: { label: string; href: string }[] = [
 
 export default function DocsPage() {
   return (
-    <>
+    <InnerPage category="resources" current="/docs">
       {/* ── Hero: editorial split, oversized statement left ── */}
       <section className="border-b border-line bg-surface py-20 sm:py-28">
         <Container>
@@ -65,9 +65,11 @@ export default function DocsPage() {
               </div>
             </Reveal>
             <Reveal delay={90}>
-              <div className="mx-auto w-full max-w-[380px]">
-                <Iso name="app-window" title="Technical documentation and API reference" />
-              </div>
+              <IntroPanel eyebrow="From setup to your first integration" dark>
+                <IntroPanelLink index="01" href="/docs/quick-start" title="Connect your first account" description="Set up SaaS and run your first discovery." />
+                <IntroPanelLink index="02" href="/docs/identity-access" title="Bring your identity provider" description="Configure federation, SSO and access." />
+                <IntroPanelLink index="03" href="/docs/api-reference" title="Build with the API" description="Authentication, resources and webhooks." />
+              </IntroPanel>
             </Reveal>
           </div>
         </Container>
@@ -115,7 +117,7 @@ export default function DocsPage() {
                         </span>
                       ))}
                     </div>
-                    <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-accent opacity-0 transition-opacity group-hover:opacity-100">
+                    <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-accent">
                       Read guide
                       <ArrowRight className="h-3 w-3" />
                     </div>
@@ -158,6 +160,6 @@ export default function DocsPage() {
           </div>
         </Container>
       </section>
-    </>
+    </InnerPage>
   );
 }
