@@ -8,8 +8,8 @@
 .tabs strong { display: block; font-size: 13px; font-weight: 600; }
 .tabs small { display: block; font-size: 10px; opacity: .65; margin-top: 3px; }
 .tabArrow { margin-left: auto; }
-.stage { overflow: hidden; border-radius: 6px; border: 1px solid #26282d; background: #101114; padding: 26px 42px 30px; }
-.stageHeader { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-bottom: 25px; color: #8b8f97; font-family: var(--font-mono); font-size: 10px; letter-spacing: .04em; }
+.stage { overflow: hidden; border-radius: 6px; border: 1px solid #26282d; background: #0d2270; padding: 26px 42px 30px; }
+.stageHeader { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-bottom: 25px; color: #8d98b8; font-family: var(--font-mono); font-size: 10px; letter-spacing: .04em; }
 .stageHeader p { display: inline-flex; align-items: center; gap: 8px; font-size: 9px; letter-spacing: .13em; color: #c9cbcf; }
 .stageHeader p span { width: 5px; height: 5px; background: #4ade80; }
 .screen { max-width: 980px; margin: 0 auto; min-height: 375px; }

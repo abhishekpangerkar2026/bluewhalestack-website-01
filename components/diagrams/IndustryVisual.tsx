@@ -31,7 +31,7 @@ export function IndustryVisual({ industry }: { industry: IndustryDef }) {
             <Icon name={industry.icon} className="h-6 w-6" />
           </span>
           <div className="min-w-0">
-            <p className="eyebrow text-accent">Industry cloud</p>
+            <p className="eyebrow">Industry cloud</p>
             <p className="truncate text-lg font-bold text-ink">
               {industry.name}
             </p>
@@ -60,7 +60,7 @@ export function IndustryVisual({ industry }: { industry: IndustryDef }) {
         {/* Compliance chips */}
         {compliance.length > 0 && (
           <div className="mt-6">
-            <p className="eyebrow mb-2 text-faint">Compliance &amp; controls</p>
+            <p className="eyebrow mb-2 ">Compliance &amp; controls</p>
             <div className="flex flex-wrap gap-2">
               {compliance.map((c) => (
                 <span

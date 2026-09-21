@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { PhotoHero } from "@/components/sections/PhotoHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -21,56 +22,28 @@ export default function CaseStudiesPage() {
   return (
     <InnerPage category="solutions" current="/case-studies">
       {/* ── Hero ── */}
-      <section className="relative overflow-hidden bg-brand-900 text-white">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 bg-dot-grid opacity-[0.13] [mask-image:radial-gradient(ellipse_55%_70%_at_12%_0%,black,transparent_70%)]"
-        />
-        <Container className="relative">
-          <div className="grid items-center gap-12 py-20 sm:py-28 lg:grid-cols-[1.1fr_0.9fr]">
-            <Reveal>
-              <div className="max-w-2xl">
-                <div className="mb-6 flex items-center gap-3">
-                  <span className="grid h-11 w-11 place-items-center rounded-lg bg-white/15 text-white ring-1 ring-white/25">
-                    <Icon name="FileText" className="h-5 w-5" />
-                  </span>
-                  <span className="eyebrow text-white/80">Case studies</span>
-                  <span aria-hidden className="h-px w-8 bg-white/40" />
-                  <span className="text-xs font-semibold text-white/60">Situation · work · outcome</span>
-                </div>
-                <h1 className="display-1 text-white">
-                  Four estates, written up the way an architect reads them.
-                </h1>
-                <p className="mt-6 text-lg leading-relaxed text-white/70">
-                  Four delivered engagements, written up the way an architect
-                  or a CFO would want to read them — what the estate looked
-                  like, what BlueWhale Stack changed, and what the auditor,
-                  the board and the bill said afterwards.
-                </p>
-                <div className="mt-8 flex flex-wrap gap-3">
-                  <Button href="/contact?intent=demo" size="lg" variant="white">
-                    Discuss a similar estate
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    href="/customers"
-                    size="lg"
-                    variant="outline"
-                    className="border-white/30 text-white hover:border-white hover:bg-white/10 hover:text-white"
-                  >
-                    Success stories overview
-                  </Button>
-                </div>
-              </div>
-            </Reveal>
-            <Reveal delay={100}>
-              <div className="mx-auto w-full max-w-[460px]">
-                <Iso name="audit" variant="dark" title="Evidence, documented" />
-              </div>
-            </Reveal>
-          </div>
-        </Container>
-      </section>
+      <PhotoHero
+        photo="dark-gateway"
+        tone="dark"
+        eyebrow="Case studies · situation, work, outcome"
+        title="Four estates, written up the way an architect reads them."
+        description="Four delivered engagements, written up the way an architect or a CFO would want to read them — what the estate looked like, what BlueWhale Stack changed, and what the auditor, the board and the bill said afterwards."
+      >
+        <div className="flex flex-wrap gap-3">
+          <Button href="/contact?intent=demo" size="lg" variant="white">
+            Discuss a similar estate
+            <ArrowRight className="h-4 w-4" />
+          </Button>
+          <Button
+            href="/customers"
+            size="lg"
+            variant="outline"
+            className="border-white/30 text-white hover:border-white hover:bg-white/10 hover:text-white"
+          >
+            Success stories overview
+          </Button>
+        </div>
+      </PhotoHero>
 
       {/* ── Index ── */}
       <section className="bg-canvas py-20 sm:py-24">

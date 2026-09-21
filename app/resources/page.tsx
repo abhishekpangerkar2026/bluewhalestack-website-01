@@ -1,6 +1,10 @@
-import { InnerPage, IntroPanel, IntroPanelLink } from "@/components/layout/InnerPage";
+import { InnerPage } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
+import Link from "next/link";
+import { ArrowUpRight, Download } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { PhotoHero } from "@/components/sections/PhotoHero";
+import { collateral, collateralHref } from "@/content/collateral";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
 import { ResourceLibrary } from "@/components/sections/ResourceLibrary";
@@ -15,37 +19,51 @@ export const metadata: Metadata = {
 export default function ResourcesPage() {
   return (
     <InnerPage category="resources" current="/resources">
-      {/* ── Hero: editorial split, oversized statement left ── */}
-      <section className="border-b border-line bg-surface py-20 sm:py-28">
+      {/* ── Hero ── */}
+      <PhotoHero
+        photo="discovery-lens"
+        eyebrow="Resources"
+        title="Datasheets, briefs, whitepapers and case studies — read online or download."
+        description="The documents a procurement or architecture review asks for: the official collateral kit as finished PDFs, plus a datasheet per edition, a brief per solution and per industry, four case studies and the company profile as reading pages. No form, no email required."
+      >
+        <div className="flex flex-wrap gap-2">
+          {[
+            { label: "The platform overview", href: "/resources/platform-overview" },
+            { label: "The capability guide", href: "/resources/capability-guide" },
+            { label: "Trust & compliance", href: "/resources/trust-and-compliance-summary" },
+            { label: "Official collateral (PDF)", href: "#collateral" },
+          ].map((l) => (
+            <Link key={l.href} href={l.href} className="inline-flex items-center gap-1.5 rounded-full border border-line bg-white px-3.5 py-2 text-xs font-semibold text-muted shadow-sm transition-colors hover:border-accent hover:text-accent">
+              {l.label} <ArrowUpRight className="h-3 w-3" />
+            </Link>
+          ))}
+        </div>
+      </PhotoHero>
+
+      {/* ── Official collateral: the finished PDFs ── */}
+      <section id="collateral" className="scroll-mt-20 border-b border-line bg-canvas py-20 sm:py-24">
         <Container>
-          <div className="grid gap-x-16 gap-y-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
-            <Reveal>
-              <div className="max-w-2xl">
-                <div className="mb-5 flex items-center gap-3">
-                  <span aria-hidden className="h-px w-8 bg-accent/50" />
-                  <span className="eyebrow text-accent">
-                    Resources
-                  </span>
-                </div>
-                <h1 className="display-1 text-ink">
-                  Datasheets, briefs, whitepapers and case studies — read online or download.
-                </h1>
-                <p className="mt-6 text-lg leading-relaxed text-muted">
-                  The documents a procurement or architecture review asks for: a datasheet per edition, a brief per
-                  solution and per industry, the platform overview and capability guide, four case studies, the trust
-                  summary and the company profile. Every one is written from the same content as the product pages,
-                  readable here and downloadable as a PDF — no form, no email required.
-                </p>
-              </div>
-            </Reveal>
-            <Reveal delay={90}>
-              <IntroPanel eyebrow="The essential reading" dark>
-                <IntroPanelLink index="01" title="The platform overview" description="The architecture, capabilities and deployment models." href="/resources/platform-overview" />
-                <IntroPanelLink index="02" title="The capability guide" description="Explore the families inside the control plane." href="/resources/capability-guide" />
-                <IntroPanelLink index="03" title="Trust & compliance" description="Security posture and the supporting evidence." href="/resources/trust-and-compliance-summary" />
-                <p className="mt-3 text-xs leading-relaxed text-white/60">Read online or download. No form required.</p>
-              </IntroPanel>
-            </Reveal>
+          <Reveal>
+            <SectionHeading
+              eyebrow="Official collateral"
+              title="The documents we hand to prospects — as finished PDFs"
+              description="The Product Overview with the 3D architecture view, the Company Profile, the Mastering Multi-Cloud whitepaper, and a datasheet and whitepaper for each edition. Direct downloads, no form."
+            />
+          </Reveal>
+          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {collateral.map((d, i) => (
+              <Reveal key={d.file} delay={(i % 3) * 60}>
+                <a href={collateralHref(d)} target="_blank" rel="noopener" className="card-lift group flex h-full flex-col rounded-xl border border-line bg-surface p-6 shadow-sm">
+                  <div className="flex items-center justify-between">
+                    <span className="rounded-full border border-line bg-sunken px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-muted">{d.kind}</span>
+                    <span className="text-xs text-faint">PDF · {d.size}</span>
+                  </div>
+                  <h3 className="mt-4 text-[15px] font-bold leading-snug text-ink">{d.title}</h3>
+                  <p className="mt-2 flex-1 text-[13px] leading-relaxed text-muted">{d.blurb}</p>
+                  <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-accent"><Download className="h-3.5 w-3.5" /> Download</span>
+                </a>
+              </Reveal>
+            ))}
           </div>
         </Container>
       </section>

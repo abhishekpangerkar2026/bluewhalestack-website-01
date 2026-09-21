@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Check, Minus } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { PhotoHero } from "@/components/sections/PhotoHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
@@ -25,40 +26,19 @@ export default function EditionsPage() {
   return (
     <InnerPage category="platform" current="/editions">
       {/* ── Intro: editorial split ── */}
-      <section className="bg-canvas py-20 sm:py-28">
+      <PhotoHero
+        photo="editions-rack"
+        eyebrow="Editions · four licences, one deployment"
+        title={<>Four editions. <span className="text-accent">One architecture.</span></>}
+        description="Standard at $24,000 a year for a single AWS, Azure or GCP estate; Enterprise at $120,000 a year for every cloud and every estate; the Telco & Datacenter Edition for operators who sell governed cloud services; the Government Edition for air-gapped, accredited estates. An upgrade is a licence change, never a migration."
+      >
+        <p className="max-w-xl text-[14px] font-semibold leading-relaxed text-ink">
+          Choosing in one question: do you consume cloud (Standard), govern it at scale (Enterprise), sell it to tenants (Telco &amp; Datacenter) — or must it never leave the perimeter (Government)?
+        </p>
+      </PhotoHero>
+      <section className="bg-canvas py-16 sm:py-20">
         <Container>
-          <div className="grid gap-x-16 gap-y-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
-            <Reveal>
-              <div className="max-w-2xl">
-                <div className="mb-6 flex items-center gap-3">
-                  <span className="grid h-11 w-11 place-items-center rounded-lg bg-primary text-primary-fg shadow-sm">
-                    <Icon name="Layers" className="h-5 w-5" />
-                  </span>
-                  <span className="eyebrow text-accent">Editions</span>
-                  <span aria-hidden className="h-px w-8 bg-accent/50" />
-                  <span className="text-xs font-semibold text-faint">Four licences · one deployment</span>
-                </div>
-                <h1 className="display-1 text-ink">
-                  Four editions.{" "}
-                  <span className="text-faint">One architecture.</span>
-                </h1>
-                <p className="mt-6 text-lg leading-relaxed text-muted">
-                  Standard at $24,000 a year for a single AWS, Azure or GCP estate; Enterprise at $120,000 a year for
-                  every cloud and every estate; the Telco &amp; Datacenter Edition for operators who sell governed
-                  cloud services; the Government Edition for air-gapped, accredited estates. All four run the same
-                  deployment — moving up is a licence change, and each edition page says who it is for and who it is
-                  not.
-                </p>
-              </div>
-            </Reveal>
-            <Reveal delay={90}>
-              <div className="mx-auto w-full max-w-[440px] lg:ml-auto lg:mr-0">
-                <Iso name="stacked-slabs" title="Four editions on one architecture" />
-              </div>
-            </Reveal>
-          </div>
-
-          <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
             {editions.map((e, i) => (
               <Reveal key={e.slug} delay={(i % 4) * 70}>
                 <Card
@@ -88,11 +68,11 @@ export default function EditionsPage() {
                   </p>
                   <div className="mt-4 flex-1 space-y-4">
                     <div>
-                      <p className="eyebrow text-faint">Who it targets</p>
+                      <p className="eyebrow">Who it targets</p>
                       <p className="mt-1 text-sm leading-relaxed text-muted">{e.audience}</p>
                     </div>
                     <div>
-                      <p className="eyebrow text-faint">What it includes</p>
+                      <p className="eyebrow">What it includes</p>
                       <ul className="mt-1.5 space-y-1">
                         {e.includes.map((x) => (
                           <li key={x} className="flex items-start gap-2 text-sm text-ink">
@@ -103,7 +83,7 @@ export default function EditionsPage() {
                       </ul>
                     </div>
                     <div>
-                      <p className="eyebrow text-faint">The outcome</p>
+                      <p className="eyebrow">The outcome</p>
                       <p className="mt-1 text-sm font-bold text-ink">{e.outcome}</p>
                     </div>
                   </div>

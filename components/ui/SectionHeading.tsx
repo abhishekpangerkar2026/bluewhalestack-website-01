@@ -25,13 +25,8 @@ export function SectionHeading({
   return (
     <div className={cn("section-heading", centered ? "mx-auto max-w-3xl text-center" : "max-w-2xl", className)}>
       {eyebrow && (
-        <p
-          className={cn(
-            "eyebrow mb-5 inline-flex items-center gap-2.5",
-            inverse ? "text-[#8b8f97]" : "text-faint",
-          )}
-        >
-          <span aria-hidden className={cn("h-[5px] w-[5px]", inverse ? "bg-[#6b93ff]" : "bg-[var(--brand-blue)]")} />
+        <p className={cn("eyebrow mb-5 inline-flex items-center gap-3", inverse && "text-[var(--gold)]")}>
+          <span aria-hidden className="h-px w-7 bg-[var(--gold)]" />
           {eyebrow}
         </p>
       )}

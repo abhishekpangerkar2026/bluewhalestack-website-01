@@ -123,7 +123,7 @@ export default async function CaseStudyPage({
                   <div className="flex items-center gap-3">
                     <span className="text-sm font-bold text-accent num">01</span>
                     <span aria-hidden className="h-px w-8 bg-line-strong" />
-                    <h2 className="eyebrow text-accent">The situation</h2>
+                    <h2 className="eyebrow">The situation</h2>
                   </div>
                   <p className="mt-5 text-xl leading-relaxed text-ink sm:text-2xl sm:leading-relaxed">
                     {story.challenge}
@@ -135,7 +135,7 @@ export default async function CaseStudyPage({
                   <div className="flex items-center gap-3">
                     <span className="text-sm font-bold text-accent num">02</span>
                     <span aria-hidden className="h-px w-8 bg-line-strong" />
-                    <h2 className="eyebrow text-accent">What BlueWhale Stack did</h2>
+                    <h2 className="eyebrow">What BlueWhale Stack did</h2>
                   </div>
                   <p className="mt-5 text-lg leading-relaxed text-muted">{story.solution}</p>
                   {edition && (
@@ -157,7 +157,7 @@ export default async function CaseStudyPage({
                   <div className="flex items-center gap-3">
                     <span className="text-sm font-bold text-accent num">03</span>
                     <span aria-hidden className="h-px w-8 bg-line-strong" />
-                    <h2 className="eyebrow text-accent">The outcome</h2>
+                    <h2 className="eyebrow">The outcome</h2>
                   </div>
                   <div className="mt-5 border-l-2 border-accent/30 pl-4"><p className="text-[10px] font-semibold uppercase tracking-widest text-accent">Engagement outcome</p><p className="mt-2 text-sm leading-relaxed text-muted">{story.summary}</p></div>
                 </div>

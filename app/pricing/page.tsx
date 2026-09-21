@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Check, Minus } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { PhotoHero } from "@/components/sections/PhotoHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -57,52 +58,36 @@ export default function PricingPage() {
   return (
     <InnerPage category="pricing" current="/pricing">
       {/* ── Hero: editorial split, oversized statement left ── */}
-      <section className="border-b border-line bg-surface py-20 sm:py-28">
-        <Container>
-          <div className="grid gap-x-16 gap-y-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
-            <Reveal>
-              <div className="max-w-2xl">
-                <div className="mb-5 flex items-center gap-3">
-                  <span aria-hidden className="h-px w-8 bg-accent/50" />
-                  <span className="eyebrow text-accent">
-                    Pricing
-                  </span>
-                </div>
-                <h1 className="display-1 text-ink">
-                  Two published prices. Two shaped to the estate.
-                </h1>
-                <p className="mt-6 text-lg leading-relaxed text-muted">
-                  Standard is $24,000 a year and Enterprise is $120,000 a year — flat, published, on 1-, 3- or 5-year
-                  terms with 10% off for two years and 15% off for three. The Telco &amp; Datacenter and Government
-                  editions are priced per operator or per contract, because they are metered on network elements, racks or
-                  sovereignty scope rather than on cloud accounts.
-                </p>
-                <p className="mt-4 text-sm leading-relaxed text-muted">
-                  <span className="font-semibold text-ink">The unit:</span> a Managed Resource Unit (MRU) is one discovered
-                  resource under management — an instance, a bucket, a database, a VM. Standard includes 1,000; Enterprise
-                  includes up to 1,000,000 across 100 cloud accounts.
-                </p>
-                <div className="mt-8 flex flex-wrap gap-3">
-                  <Button href="/contact?intent=sales" size="lg">
-                    Get a quote for your resource count
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
-                  <Button href="#compare" size="lg" variant="outline">
-                    Module-by-edition matrix
-                  </Button>
-                </div>
+      <PhotoHero
+        photo="finops-balance"
+        eyebrow="Pricing"
+        title="Two published prices. Two shaped to the estate."
+        description="Standard is $24,000 a year and Enterprise is $120,000 a year — flat, published, on 1-, 3- or 5-year terms with 10% off for two years and 15% off for three. The Telco & Datacenter and Government editions are priced per operator or per contract, because they are metered on network elements, racks or sovereignty scope rather than on cloud accounts."
+        below={
+          <div className="border-t border-line bg-sunken">
+            <Container>
+              <div className="grid gap-y-6 sm:grid-cols-3 sm:divide-x sm:divide-line">
+                <div className="py-6 sm:pr-6"><p className="eyebrow">Standard</p><p className="num mt-2 text-3xl font-extrabold text-accent">$24,000</p><p className="mt-1 text-sm text-muted">Per year · 1,000 managed resource units included</p></div>
+                <div className="py-6 sm:px-6"><p className="eyebrow">Enterprise</p><p className="num mt-2 text-3xl font-extrabold text-accent">$120,000</p><p className="mt-1 text-sm text-muted">Per year · up to 1,000,000 resources across 100 cloud accounts</p></div>
+                <div className="py-6 sm:pl-6"><p className="eyebrow">Telco &amp; Datacenter · Government</p><p className="mt-2 text-3xl font-extrabold text-ink">Scoped</p><p className="mt-1 text-sm text-muted">Operator licensing and sovereign programmes, shaped to the estate · 2-yr −10% · 3-yr −15%</p></div>
               </div>
-            </Reveal>
-            <Reveal delay={90}>
-              <IntroPanel eyebrow="Published annual list prices" dark>
-                <IntroPanelStat label="STANDARD" value="$24,000" detail="Per year · 1,000 managed resource units included" />
-                <IntroPanelStat label="ENTERPRISE" value="$120,000" detail="Per year · up to 1,000,000 resources across 100 cloud accounts" />
-                <p className="mt-3 border-t border-white/15 pt-5 text-xs leading-relaxed text-white/60">Telco &amp; Datacenter and Government are scoped to your estate.</p>
-              </IntroPanel>
-            </Reveal>
+            </Container>
           </div>
-        </Container>
-      </section>
+        }
+      >
+        <p className="text-sm leading-relaxed text-muted">
+          <span className="font-semibold text-ink">The unit:</span> a Managed Resource Unit (MRU) is one discovered resource under management — an instance, a bucket, a database, a VM. Standard includes 1,000; Enterprise includes up to 1,000,000 across 100 cloud accounts.
+        </p>
+        <div className="mt-6 flex flex-wrap gap-3">
+          <Button href="/contact?intent=sales" size="lg">
+            Get a quote for your resource count
+            <ArrowRight className="h-4 w-4" />
+          </Button>
+          <Button href="#compare" size="lg" variant="outline">
+            Module-by-edition matrix
+          </Button>
+        </div>
+      </PhotoHero>
 
       {/* ── Tier cards: asymmetric, featured edition pulled forward ── */}
       <section className="bg-canvas py-20 sm:py-24">

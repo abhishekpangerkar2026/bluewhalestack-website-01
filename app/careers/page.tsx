@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, MapPin } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { PhotoHero } from "@/components/sections/PhotoHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
@@ -26,45 +27,24 @@ export default function CareersPage() {
   return (
     <InnerPage category="company" current="/careers">
       {/* ── Hero: editorial split, oversized statement left ── */}
-      <section className="border-b border-line bg-surface py-20 sm:py-28">
+      <PhotoHero
+        photo="datacenter-tray"
+        eyebrow="Careers"
+        title="Build the control plane that banks, ministries and operators run on."
+        description="We are engineers, architects and product people in Mumbai, Ajman and Wilmington, building one platform across six public clouds, virtualised estates and air-gapped sites. The work is concrete — connectors, discovery engines, policy evaluation, an AI layer that runs offline — and it ships quarterly to customers who audit what we build."
+      >
+        <div className="flex flex-wrap gap-3">
+          <Button href="#roles" size="lg">
+            View open roles
+            <ArrowRight className="h-4 w-4" />
+          </Button>
+          <Button href="/about/leadership" size="lg" variant="secondary">
+            Who you would work with
+          </Button>
+        </div>
+      </PhotoHero>
+      <section className="border-b border-line bg-surface pb-12">
         <Container>
-          <div className="grid gap-x-16 gap-y-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
-            <Reveal>
-              <div className="max-w-2xl">
-                <div className="mb-5 flex items-center gap-3">
-                  <span aria-hidden className="h-px w-8 bg-accent/50" />
-                  <span className="eyebrow text-accent">
-                    Careers
-                  </span>
-                </div>
-                <h1 className="display-1 text-ink">
-                  Build the control plane that banks, ministries and operators run on.
-                </h1>
-                <p className="mt-6 text-lg leading-relaxed text-muted">
-                  We are engineers, architects and product people in Mumbai, Ajman and Wilmington, building one platform
-                  across six public clouds, virtualised estates and air-gapped sites. The work is concrete — connectors,
-                  discovery engines, policy evaluation, an AI layer that runs offline — and it ships quarterly to customers
-                  who audit what we build.
-                </p>
-                <div className="mt-8 flex flex-wrap gap-3">
-                  <Button href="#roles" size="lg">
-                    View open roles
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
-                  <Button href="/about/leadership" size="lg" variant="secondary">
-                    Who you would work with
-                  </Button>
-                </div>
-              </div>
-            </Reveal>
-            <Reveal delay={90}>
-              <IntroPanel eyebrow="Your next chapter" dark>
-                <IntroPanelLink index="01" href="#roles" title="Find your role" description="Explore the open roles across the team." />
-                <IntroPanelLink index="02" href="/about/leadership" title="Meet your colleagues" description="The people building BlueWhale Stack." />
-                <IntroPanelLink index="03" href="/about" title="Understand the mission" description="Eight years of field work. One platform." />
-              </IntroPanel>
-            </Reveal>
-          </div>
 
           {/* the people you'd work with — real headshots from the leadership roster */}
           {team.length > 0 && (

@@ -2,7 +2,7 @@
 .global {
   position: relative;
   overflow: hidden;
-  background: #0e0f12;
+  background: #081540;
   color: #f2f2f0;
 }
 .global::before {
@@ -42,7 +42,7 @@
   left: -2px;
   width: 5px;
   height: 5px;
-  background: #6b93ff;
+  background: #e6c06a;
   content: "";
 }
 .closing { position: relative; overflow: hidden; isolation: isolate; }

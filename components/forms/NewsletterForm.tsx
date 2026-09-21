@@ -32,7 +32,7 @@ export function NewsletterForm() {
 
   return (
     <form className="mt-6" onSubmit={onSubmit}>
-      <label className="eyebrow text-white/60">
+      <label className="eyebrow text-[var(--gold)]">
         Cloud insights, monthly
       </label>
       <div className="mt-2 flex gap-2">

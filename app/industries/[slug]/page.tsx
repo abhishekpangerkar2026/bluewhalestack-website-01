@@ -4,6 +4,20 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { PhotoHero } from "@/components/sections/PhotoHero";
+import type { PhotoKey } from "@/content/photos";
+
+/** the studio photograph that carries each sector's idea */
+const INDUSTRY_PHOTO: Record<string, PhotoKey> = {
+  government: "government-hall",
+  bfsi: "finops-balance",
+  healthcare: "sovereign-vault",
+  "regulated-enterprise": "enterprise-campus",
+  saas: "estates-row",
+  telco: "telco-datacenter",
+  datacenter: "datacenter-tray",
+  media: "hybrid-bridge",
+};
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
@@ -51,49 +65,49 @@ export default async function IndustryDetailPage({
   return (
     <InnerPage category="solutions" current="/industries">
       {/* ── Hero ── */}
-      <section className="border-b border-line bg-white py-12 sm:py-16">
-        <Container>
-          <Breadcrumbs items={[{ label: "Industries", href: "/industries" }, { label: industry.name }]} />
-          <div className="mt-10 max-w-3xl">
-            <div>
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="grid h-11 w-11 place-items-center rounded-lg bg-primary text-primary-fg">
-                  <Icon name={industry.icon} className="h-5 w-5" />
-                </span>
-                <Badge tone="neutral">BlueWhale Stack for {industry.name}</Badge>
-                {edition &&
-                  (preview ? (
-                    <Badge tone="warning">
-                      {edition.name} Edition in preview{edition.gaTarget ? ` · GA ${edition.gaTarget}` : ""}
-                    </Badge>
-                  ) : (
-                    <Badge tone="success">Available now on {edition.name} Edition</Badge>
-                  ))}
-              </div>
-              <h1 className="mt-6 display-1 text-ink">{industry.title}</h1>
-              <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">{industry.description}</p>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <div>
-                  <Button href={preview ? "/contact?intent=preview" : "/contact?intent=demo"} size="lg">
-                    {preview ? `Join the ${edition?.gaTarget ?? ""} preview`.replace("  ", " ") : "See it on your estate"}
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
-                  <p className="mt-2 text-xs text-faint">
-                    {preview
-                      ? "Design partners deploy on their own infrastructure with BlueWhale engineers"
-                      : "45 minutes · one of your accounts, connected read-only"}
-                  </p>
-                </div>
-                {edition && (
-                  <Button href={`/editions/${edition.slug}`} size="lg" variant="outline">
-                    {edition.name} Edition
-                  </Button>
-                )}
-              </div>
+      <PhotoHero
+        photo={INDUSTRY_PHOTO[industry.slug] ?? "enterprise-campus"}
+        above={
+          <div className="mb-8">
+            <Breadcrumbs items={[{ label: "Industries", href: "/industries" }, { label: industry.name }]} />
+            <div className="mt-8 flex flex-wrap items-center gap-2">
+              <span className="grid h-11 w-11 place-items-center rounded-lg bg-primary text-primary-fg">
+                <Icon name={industry.icon} className="h-5 w-5" />
+              </span>
+              <Badge tone="neutral">BlueWhale Stack for {industry.name}</Badge>
+              {edition &&
+                (preview ? (
+                  <Badge tone="warning">
+                    {edition.name} Edition in preview{edition.gaTarget ? ` · GA ${edition.gaTarget}` : ""}
+                  </Badge>
+                ) : (
+                  <Badge tone="success">Available now on {edition.name} Edition</Badge>
+                ))}
             </div>
           </div>
-        </Container>
-      </section>
+        }
+        title={industry.title}
+        description={industry.description}
+      >
+        <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <div>
+            <Button href={preview ? "/contact?intent=preview" : "/contact?intent=demo"} size="lg">
+              {preview ? `Join the ${edition?.gaTarget ?? ""} preview`.replace("  ", " ") : "See it on your estate"}
+              <ArrowRight className="h-4 w-4" />
+            </Button>
+            <p className="mt-2 text-xs text-faint">
+              {preview
+                ? "Design partners deploy on their own infrastructure with BlueWhale engineers"
+                : "45 minutes · one of your accounts, connected read-only"}
+            </p>
+          </div>
+          {edition && (
+            <Button href={`/editions/${edition.slug}`} size="lg" variant="outline">
+              {edition.name} Edition
+            </Button>
+          )}
+        </div>
+      </PhotoHero>
       <section className="border-b border-line bg-sunken py-8">
         <Container>
           <Reveal delay={120}>
@@ -162,7 +176,7 @@ export default async function IndustryDetailPage({
             <Reveal delay={120}>
               <div className="lg:sticky lg:top-28 lg:self-start">
                 <div className="rounded-lg border border-line bg-surface p-8 shadow-sm">
-                  <p className="eyebrow text-accent">Who it&apos;s for</p>
+                  <p className="eyebrow">Who it&apos;s for</p>
                   <div className="mt-4 flex flex-wrap gap-2">
                     {industry.targets.map((t) => (
                       <span key={t} className="rounded-full border border-line bg-canvas px-3 py-1 text-sm text-muted">
@@ -172,7 +186,7 @@ export default async function IndustryDetailPage({
                   </div>
                   {edition && (
                     <div className="mt-8 border-t border-line pt-6">
-                      <p className="eyebrow text-faint">Edition</p>
+                      <p className="eyebrow">Edition</p>
                       <p className="mt-2 font-bold text-ink">
                         {edition.name} Edition
                         {preview && <span className="ml-2 text-xs font-medium text-faint">preview · GA {edition.gaTarget}</span>}
@@ -188,7 +202,7 @@ export default async function IndustryDetailPage({
                     </div>
                   )}
                   <div className="mt-8 border-t border-line pt-6">
-                    <p className="eyebrow text-faint">Platform certifications</p>
+                    <p className="eyebrow">Platform certifications</p>
                     <p className="mt-2 text-sm leading-relaxed text-muted">
                       ISO/IEC 27001, 27017, 27018, 27701 and ISO 22301, independently audited; SOC 2 Type II readiness assessment
                       complete.
@@ -299,7 +313,7 @@ export default async function IndustryDetailPage({
               </Reveal>
               <Reveal delay={100}>
                 <div>
-                  <p className="eyebrow text-accent">Delivered engagement</p>
+                  <p className="eyebrow">Delivered engagement</p>
                   <h2 className="mt-4 text-2xl font-bold leading-snug text-ink sm:text-3xl">{story.headline}</h2>
 
                   <div className="mt-5 border-l-2 border-accent/30 pl-4"><p className="text-[10px] font-semibold uppercase tracking-widest text-accent">Engagement outcome</p><p className="mt-2 text-sm leading-relaxed text-muted">{story.summary}</p></div>

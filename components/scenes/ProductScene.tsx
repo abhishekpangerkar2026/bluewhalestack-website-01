@@ -88,7 +88,7 @@ export function ProductScene({
         )}
       >
         <span className="inline-flex min-w-0 items-center gap-2">
-          <span aria-hidden className={cn("h-[5px] w-[5px] shrink-0", dark ? "bg-[#6b93ff]" : "bg-[var(--brand-blue)]")} />
+          <span aria-hidden className={cn("h-[5px] w-[5px] shrink-0", dark ? "bg-[#e6c06a]" : "bg-[var(--brand-blue)]")} />
           <span className="truncate">Fig · {s.title}</span>
         </span>
         <span className="hidden shrink-0 sm:inline">Illustrative render</span>

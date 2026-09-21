@@ -2,6 +2,7 @@ import { InnerPage } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
 import { ArrowRight, Check } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { PhotoHero } from "@/components/sections/PhotoHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -30,7 +31,7 @@ const TIERS = [
     badge: "Flagship",
     tagline: "For the hardest problems that require multi-step analysis",
     accentColor: "#4f46e5",
-    topGrad: "#2458f5",
+    topGrad: "#002ca0",
     features: [
       "Executive monthly cost narratives with trend analysis",
       "Security root cause analysis across multi-cloud",
@@ -156,53 +157,33 @@ const GROUNDING = [
 export default function WhaleAIPage() {
   return (
     <InnerPage category="platform" current="/products/whale-ai">
-      {/* ── Hero: dark brand band ── */}
-      <section className="relative overflow-hidden bg-brand-900 text-white">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 bg-dot-grid opacity-[0.13] [mask-image:radial-gradient(ellipse_55%_70%_at_12%_0%,black,transparent_70%)]"
-        />
-        <Container className="relative py-20 sm:py-28">
+      {/* ── Hero: the brand band, the night studio ── */}
+      <PhotoHero
+        photo="dark-gateway"
+        tone="dark"
+        eyebrow="Whale AI · Horizontal intelligence layer"
+        title={<>AI that answers from <span className="text-[var(--gold)]">your live estate</span></>}
+        description="Whale AI is an intelligence layer inside every module of the platform. Each of its 50+ use cases declares the live data it reads — inventory, billing, tickets, findings — and cites it in the answer. It runs in three tiers by task complexity, on hosted models, your own model, or fully offline inside the perimeter for sovereign estates."
+      >
+        <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
           <div>
-          <div className="max-w-3xl">
-            <div className="mb-5 flex items-center gap-3">
-              <span aria-hidden className="h-px w-8 bg-white/40" />
-              <span className="eyebrow text-white/80">
-                Whale AI · Horizontal intelligence layer
-              </span>
-            </div>
-            <h1 className="display-1 text-white">
-              AI that answers from{" "}
-              <span className="text-[#9db4fb]">your live estate</span>
-            </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/70">
-              Whale AI is an intelligence layer inside every module of the platform. Each of its 50+ use cases
-              declares the live data it reads — inventory, billing, tickets, findings — and cites it in the answer.
-              It runs in three tiers by task complexity, on hosted models, your own model, or fully offline inside
-              the perimeter for sovereign estates.
-            </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-              <div>
-                <Button href="/contact?intent=demo" size="lg" variant="white">
-                  See it on your estate
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-                <p className="mt-2 text-xs text-white/50">45 minutes · one account connected read-only · ask it about your own bill</p>
-              </div>
-              <Button
-                href="/modules/whale-ai"
-                size="lg"
-                variant="outline"
-                className="border-white/30 text-white hover:border-white hover:bg-white/10 hover:text-white"
-              >
-                Module page and FAQ
-                <ArrowRight className="h-4 w-4" />
-              </Button>
-            </div>
+            <Button href="/contact?intent=demo" size="lg" variant="white">
+              See it on your estate
+              <ArrowRight className="h-4 w-4" />
+            </Button>
+            <p className="mt-2 text-xs text-white/50">45 minutes · one account connected read-only · ask it about your own bill</p>
           </div>
-          </div>
-        </Container>
-      </section>
+          <Button
+            href="/modules/whale-ai"
+            size="lg"
+            variant="outline"
+            className="border-white/30 text-white hover:border-white hover:bg-white/10 hover:text-white"
+          >
+            Module page and FAQ
+            <ArrowRight className="h-4 w-4" />
+          </Button>
+        </div>
+      </PhotoHero>
 
       {/* Stats strip */}
       <section className="bg-brand-900 pb-14 text-white">
@@ -277,7 +258,7 @@ export default function WhaleAIPage() {
                     ))}
                   </div>
                   <div className="mt-6 rounded-lg border border-line bg-surface p-4">
-                    <p className="eyebrow mb-3 text-accent">
+                    <p className="eyebrow mb-3 ">
                       Grounding providers
                     </p>
                     <div className="flex flex-wrap gap-1.5">
@@ -423,7 +404,7 @@ export default function WhaleAIPage() {
                 },
               ].map((col) => (
                 <div key={col.heading}>
-                  <p className="eyebrow mb-3 text-accent">
+                  <p className="eyebrow mb-3 ">
                     {col.heading}
                   </p>
                   <ul className="space-y-0">
@@ -465,7 +446,7 @@ export default function WhaleAIPage() {
                   <div className="grid h-[72px] w-[72px] place-items-center rounded-full bg-primary text-white shadow-md">
                     <Icon name={s.icon} className="h-6 w-6" />
                   </div>
-                  <p className="eyebrow mt-2 text-accent">
+                  <p className="eyebrow mt-2 ">
                     {s.step}
                   </p>
                   <h3 className="mt-3 text-base font-bold text-ink">{s.title}</h3>

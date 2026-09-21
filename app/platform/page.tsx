@@ -10,7 +10,9 @@ import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { ControlPlaneMap } from "@/components/diagrams/ControlPlaneMap";
-import { ArchitectureDiagram } from "@/components/diagrams/ArchitectureDiagram";
+import { LayerStack, LayerList } from "@/components/diagrams/LayerStack";
+import { PhotoHero } from "@/components/sections/PhotoHero";
+import { CountUp } from "@/components/ui/CountUp";
 import { ProductShowcase } from "@/components/sections/ProductShowcase";
 import { PrototypeOffer } from "@/components/sections/PrototypeOffer";
 import { FAQ } from "@/components/sections/FAQ";
@@ -54,56 +56,40 @@ export default function PlatformPage() {
   return (
     <InnerPage category="platform" current="/platform">
       {/* ── Hero ── */}
-      <section className="relative overflow-hidden border-b border-line bg-canvas text-ink">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 bg-dot-grid opacity-60 [mask-image:radial-gradient(ellipse_70%_60%_at_50%_0%,black,transparent_75%)]"
-        />
-        <Container className="relative">
-          <div className="pt-20 sm:pt-28">
-            <div className="max-w-3xl">
-              <div className="mb-6 flex items-center gap-3">
-                <span aria-hidden className="h-px w-8 bg-accent/60" />
-                <span className="eyebrow text-accent">{platformHero.eyebrow}</span>
+      <PhotoHero
+        photo="estates-row"
+        eyebrow={platformHero.eyebrow}
+        title={<>One Platform. <span className="text-accent">Every Industry. Every Estate.</span></>}
+        description={platformHero.description}
+        below={
+          <div className="border-t border-line bg-sunken">
+            <Container>
+              <div className="grid grid-cols-2 gap-y-6 sm:grid-cols-4 sm:divide-x sm:divide-line">
+                {heroStats.map((s) => (
+                  <div key={s.label} className="py-6 sm:px-6 sm:first:pl-0 sm:last:pr-0">
+                    <p className="num text-3xl font-extrabold text-accent sm:text-4xl"><CountUp value={s.value} /></p>
+                    <p className="mt-1 text-sm leading-snug text-muted">{s.label}</p>
+                  </div>
+                ))}
               </div>
-              <h1 className="display-1">
-                One Platform.{" "}
-                <span className="text-accent">Every Industry. Every Estate.</span>
-              </h1>
-              <p className="mt-7 text-lg leading-relaxed text-muted sm:text-xl">
-                {platformHero.description}
-              </p>
-              <p className="mt-5 text-base font-semibold text-ink">
-                {platformHero.tagline}
-              </p>
-              <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <div>
-                  <Button href="/contact?intent=demo" size="lg" variant="primary">
-                    Book the discovery workshop
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
-                  <p className="mt-2 text-xs text-faint">Half a day · your technology and finance leads · success criteria agreed</p>
-                </div>
-                <Button href="#replaces" size="lg" variant="outline">
-                  What it replaces
-                </Button>
-              </div>
-            </div>
+            </Container>
           </div>
-
-          {/* Stats strip — the official at-a-glance numbers */}
-          <Reveal delay={120}>
-            <div className="mt-14 mb-0 grid grid-cols-2 gap-px overflow-hidden rounded-t-lg border-x border-t border-line bg-line sm:grid-cols-4">
-              {heroStats.map((s) => (
-                <div key={s.label} className="border-t-[3px] border-t-primary bg-surface px-5 py-5">
-                  <p className="num text-3xl font-bold text-accent sm:text-4xl">{s.value}</p>
-                  <p className="mt-1 text-sm leading-snug text-muted">{s.label}</p>
-                </div>
-              ))}
-            </div>
-          </Reveal>
-        </Container>
-      </section>
+        }
+      >
+        <p className="text-base font-semibold text-ink">{platformHero.tagline}</p>
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <div>
+            <Button href="/contact?intent=demo" size="lg" variant="primary">
+              Book the discovery workshop
+              <ArrowRight className="h-4 w-4" />
+            </Button>
+            <p className="mt-2 text-xs text-faint">Half a day · your technology and finance leads · success criteria agreed</p>
+          </div>
+          <Button href="#architecture" size="lg" variant="outline">
+            See the architecture
+          </Button>
+        </div>
+      </PhotoHero>
 
       <PageIndex items={[
         { label: "What it replaces", href: "#replaces" },
@@ -198,16 +184,35 @@ export default function PlatformPage() {
               description="The platform in one picture — read top-down, the way value flows: from the industries served, through the Digital Experience Layer and the Unified Platform Core, down to the integrations, every estate, and the modes it deploys in."
             />
           </Reveal>
-          <Reveal delay={100}>
-            <div className="mt-12">
-              <ArchitectureDiagram id="platform-dxp" />
-            </div>
+          <div className="mt-12 grid items-center gap-10 lg:grid-cols-[1fr_0.9fr]">
+            <Reveal delay={100}><LayerStack /></Reveal>
+            <Reveal delay={140}><LayerList /></Reveal>
+          </div>
+          <Reveal delay={160}>
+            <figure className="mt-14 overflow-hidden rounded-2xl border border-line bg-white shadow-lg">
+              <a href="/architecture/product-architecture-wide-2400.webp" target="_blank" rel="noopener" aria-label="Open the 3D product architecture at full size">
+                <img
+                  src="/architecture/product-architecture-wide-1600.webp"
+                  srcSet="/architecture/product-architecture-wide-1000.webp 1000w, /architecture/product-architecture-wide-1600.webp 1600w, /architecture/product-architecture-wide-2400.webp 2400w"
+                  sizes="(min-width:1280px) 1200px, 100vw"
+                  alt="BlueWhale Stack 3D product architecture — industry segments, the Digital Experience Layer, the Unified Platform Core, integrations, every estate and the deployment modes"
+                  width={5413}
+                  height={3045}
+                  loading="lazy"
+                  className="w-full"
+                />
+              </a>
+              <figcaption className="flex flex-wrap items-center justify-between gap-3 border-t border-line px-5 py-3 text-xs text-faint">
+                <span>The official 3D product architecture — the same six layers, as published in the Product Overview.</span>
+                <span className="font-semibold text-accent">Open full size ↗</span>
+              </figcaption>
+            </figure>
           </Reveal>
 
           {/* How to read the architecture */}
           <Reveal delay={140}>
             <div className="mt-12">
-              <p className="eyebrow text-accent">How to read the architecture</p>
+              <p className="eyebrow">How to read the architecture</p>
               <div className="mt-4 overflow-hidden rounded-lg border border-line bg-surface shadow-sm">
                 <table className="w-full text-sm">
                   <thead>
@@ -394,7 +399,7 @@ export default function PlatformPage() {
           <div className="overflow-hidden rounded-2xl bg-[var(--brand-deep)] px-8 py-14 text-center sm:px-14">
             <div className="mb-3 flex items-center justify-center gap-3">
               <span aria-hidden className="h-px w-8 bg-white/30" />
-              <span className="eyebrow text-white/60">✦ Whale AI — incl. offline</span>
+              <span className="eyebrow text-[var(--gold)]">✦ Whale AI — incl. offline</span>
               <span aria-hidden className="h-px w-8 bg-white/30" />
             </div>
             <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
@@ -562,7 +567,7 @@ export default function PlatformPage() {
           <Reveal delay={80}>
             <div className="mt-14 grid gap-10 lg:grid-cols-2">
               <div>
-                <p className="eyebrow text-accent">Security posture</p>
+                <p className="eyebrow">Security posture</p>
                 <ul className="mt-4 space-y-3">
                   {securityPosture.map((s) => (
                     <li key={s} className="flex items-start gap-3">
@@ -575,7 +580,7 @@ export default function PlatformPage() {
                 </ul>
               </div>
               <div className="rounded-lg border border-line bg-sunken p-6">
-                <p className="eyebrow text-accent">Compliance frameworks</p>
+                <p className="eyebrow">Compliance frameworks</p>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {compliance.map((c) => (
                     <span

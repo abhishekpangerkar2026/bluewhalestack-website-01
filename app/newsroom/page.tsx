@@ -92,7 +92,7 @@ export default function NewsroomPage() {
               <div className="max-w-2xl">
                 <div className="mb-5 flex items-center gap-3">
                   <span aria-hidden className="h-px w-8 bg-accent/50" />
-                  <span className="eyebrow text-accent">
+                  <span className="eyebrow">
                     Newsroom
                   </span>
                 </div>
@@ -181,7 +181,7 @@ export default function NewsroomPage() {
             {pressContacts.map((c, i) => (
               <Reveal key={c.type} delay={i * 70}>
                 <Card className="flex flex-col gap-3 p-6">
-                  <p className="eyebrow text-faint">
+                  <p className="eyebrow">
                     {c.type}
                   </p>
                   <a
@@ -205,7 +205,7 @@ export default function NewsroomPage() {
           <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
             <Reveal>
               <div className="max-w-2xl">
-                <p className="eyebrow text-white/80">
+                <p className="eyebrow text-[var(--gold)]">
                   See it live
                 </p>
                 <h2 className="mt-5 text-3xl font-bold leading-[1.1] tracking-tight text-white sm:text-4xl">

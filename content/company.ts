@@ -134,6 +134,7 @@ export const primaryNav: NavItem[] = [
       {
         heading: "Platform",
         links: [
+          { label: "Product portfolio", href: "/products", desc: "Stack · WhaleDocs · Public Cloud · Appliance" },
           { label: "Platform overview", href: "/platform", desc: "One platform. Every industry. Every estate." },
           { label: "Whale AI", href: "/products/whale-ai", desc: "AI across every family — incl. offline" },
           { label: "Cloud Connectors", href: "/modules/cloud-connectors", desc: "6 public clouds + private, hybrid & edge" },
@@ -193,6 +194,7 @@ export const primaryNav: NavItem[] = [
           { label: "Healthcare", href: "/industries/healthcare", desc: "Clinical systems governed in-country" },
           { label: "Telco & MSP", href: "/industries/telco", desc: "Governed cloud on your network" },
           { label: "Datacenter & Colocation", href: "/industries/datacenter", desc: "Racks to the U position, beside your clouds" },
+          { label: "Media & Broadcasting", href: "/industries/media", desc: "Newsroom and archive AI inside the perimeter" },
           { label: "All industry solutions", href: "/solutions#industries", desc: "Seven sectors" },
         ],
       },
@@ -231,6 +233,7 @@ export const primaryNav: NavItem[] = [
         links: [
           { label: "Telco & MSP", href: "/industries/telco", desc: "Governed cloud services on your network" },
           { label: "Datacenter & Colocation", href: "/industries/datacenter", desc: "DCIM beside the cloud estate" },
+          { label: "Media & Broadcasting", href: "/industries/media", desc: "Newsroom governed, AI in-perimeter" },
           { label: "Regulated Enterprise", href: "/industries/regulated-enterprise", desc: "Six clouds and the floor, one estate" },
           { label: "SaaS & Digital Native", href: "/industries/saas", desc: "Governed from the first account" },
         ],
@@ -340,6 +343,7 @@ export const footerNav = [
   {
     heading: "Product",
     links: [
+      { label: "Product portfolio", href: "/products" },
       { label: "Platform overview", href: "/platform" },
       { label: "Modules", href: "/modules" },
       { label: "Whale AI", href: "/products/whale-ai" },

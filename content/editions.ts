@@ -22,6 +22,10 @@ export interface EditionDef {
   audience: string;
   /** Official "The outcome" line (Product Overview, Four Editions) */
   outcome: string;
+  /** Official "Fits these industries" (Editions Fit, August 2026) */
+  fits?: string[];
+  /** Official "Buy when" line (Editions Fit, August 2026) */
+  buyWhen?: string;
   /** Official "What it includes" — the three headline inclusions */
   includes: string[];
   deploy: string[];
@@ -67,6 +71,8 @@ export const editions: EditionDef[] = [
       "Governance from day one for a single estate — inventory, governed provisioning, Whalenomics essentials, security baseline and observability, basic ITSM and Whale AI Spark. SaaS or BYOC.",
     audience: "Mid-market and single-cloud enterprises · departmental IT",
     outcome: "Governance from day one — not a retrofit.",
+    fits: ["Technology & SaaS", "Retail & e-commerce", "Professional services", "Mid-market manufacturing", "Education"],
+    buyWhen: "Visibility and control are the problem, and time-to-value must be days, not quarters.",
     includes: [
       "Management & Delivery",
       "Whalenomics essentials",
@@ -123,6 +129,8 @@ export const editions: EditionDef[] = [
       "The complete platform — all nine capability families, Whale AI including offline, Cloud Audit & Evidence and the Migration Engine, across every estate. SaaS, BYOC or Sovereign across four regions.",
     audience: "Multi-cloud enterprises · BFSI · regulated industries",
     outcome: "Every estate answerable from one console.",
+    fits: ["BFSI", "Healthcare & life sciences", "Large manufacturing", "Energy & utilities", "Media", "Aviation", "Large retail"],
+    buyWhen: "Audit readiness, migration at scale and CFO-grade cost control decide the evaluation.",
     includes: [
       "All nine capability families",
       "Whale AI — including offline",
@@ -184,6 +192,8 @@ export const editions: EditionDef[] = [
       "The Enterprise platform extended for telecom and datacenter operators — NFV/5G network fabric, DCIM at U-position level, native multi-tenancy and white-label branding, with per-tenant metering into your BSS.",
     audience: "Telcos, datacenter & hosting operators — Tier-1/2/3 telecom, MVNOs, colocation, carrier-grade MSPs",
     outcome: "Revenue per tenant, on capacity you own.",
+    fits: ["Telecom operators", "Datacenter & colocation providers", "Managed service providers", "Regional and sovereign cloud providers"],
+    buyWhen: "The platform must be monetized — tenants, marketplaces and metered billing are the business.",
     includes: [
       "Tenancy & Monetization",
       "White-label portals & catalog",
@@ -287,6 +297,8 @@ export const editions: EditionDef[] = [
       "The Enterprise platform with a mandatory sovereignty layer — air-gapped install, FIPS crypto, always-on PAM, WORM audit log, residency enforcement and accreditation-ready compliance packs.",
     audience: "Ministries, agencies & public sector · defence · central banks",
     outcome: "Sovereignty demonstrated, not asserted.",
+    fits: ["Central & state government", "PSUs", "Defence", "Public healthcare", "Smart cities", "Regulators and public financial bodies"],
+    buyWhen: "Data cannot leave the perimeter and compliance must be provable continuously, not annually.",
     includes: [
       "Sovereign Operations",
       "Air-gapped deployment classes",

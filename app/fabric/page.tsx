@@ -2,6 +2,7 @@ import { InnerPage } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { PhotoHero } from "@/components/sections/PhotoHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { ClosingCTA } from "@/components/sections/ClosingCTA";
@@ -35,48 +36,31 @@ export default function FabricPage() {
   const platformEdition = editionsBySlug["telco-datacenter"];
   return (
     <InnerPage category="platform" current="/fabric">
-      {/* ── Hero: dark, two-column — copy left, tier→fabric illustration right ── */}
-      <section className="relative overflow-hidden bg-brand-900 text-white">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 bg-dot-grid opacity-[0.13] [mask-image:radial-gradient(ellipse_55%_70%_at_12%_0%,black,transparent_70%)]"
-        />
-        <Container className="relative">
-          <div className="max-w-3xl py-20 sm:py-28">
-            <div>
-              <div className="flex flex-wrap items-center gap-3">
-                <span className="eyebrow text-white/80">{fabricHero.eyebrow}</span>
-                {platformEdition?.comingSoon && (
-                  <Badge tone="neutral" className="bg-amber-500/20 text-amber-300">
-                    Preview{platformEdition.gaTarget ? ` · GA ${platformEdition.gaTarget}` : ""}
-                  </Badge>
-                )}
-              </div>
-              <h1 className="display-1 mt-6 text-white">
-                {fabricHero.title}
-              </h1>
-              <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/70">
-                {fabricHero.description}
-              </p>
-              <div className="mt-9 flex flex-wrap gap-3">
-                <Button href="/contact?intent=demo" size="lg" variant="white">
-                  Request a fabric workshop
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-                <Button
-                  href="/editions/telco-datacenter"
-                  size="lg"
-                  variant="outline"
-                  className="border-white/30 text-white hover:border-white hover:bg-white/10 hover:text-white"
-                >
-                  Runs on Telco &amp; Datacenter Edition
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-              </div>
+      {/* ── Hero ── */}
+      <PhotoHero
+        photo="sovereign-regions"
+        eyebrow={`${fabricHero.eyebrow} · Strategic initiative · launching in India`}
+        above={
+          platformEdition?.comingSoon ? (
+            <div className="mb-5">
+              <Badge tone="warning">Preview{platformEdition.gaTarget ? ` · GA ${platformEdition.gaTarget}` : ""}</Badge>
             </div>
-          </div>
-        </Container>
-      </section>
+          ) : undefined
+        }
+        title={fabricHero.title}
+        description={fabricHero.description}
+      >
+        <div className="flex flex-wrap gap-3">
+          <Button href="/contact?intent=demo" size="lg">
+            Request a fabric workshop
+            <ArrowRight className="h-4 w-4" />
+          </Button>
+          <Button href="/editions/telco-datacenter" size="lg" variant="outline">
+            Runs on Telco &amp; Datacenter Edition
+            <ArrowRight className="h-4 w-4" />
+          </Button>
+        </div>
+      </PhotoHero>
 
       {/* ── Stats band ── */}
       <section className="border-b border-line bg-sunken py-14">
@@ -151,7 +135,7 @@ export default function FabricPage() {
             {fabricTiers.map((t, i) => (
               <Reveal key={t.name} delay={i * 90}>
                 <div className="flex h-full flex-col bg-surface p-7">
-                  <span className="eyebrow text-accent">
+                  <span className="eyebrow">
                     {t.name}
                   </span>
                   <p className="mt-1 text-sm font-semibold text-ink">
@@ -271,7 +255,7 @@ export default function FabricPage() {
             {fabricRevenueStreams.map((r, i) => (
               <Reveal key={r.name} delay={(i % 3) * 70}>
                 <div className="flex h-full flex-col bg-surface p-7">
-                  <span className="eyebrow text-accent">
+                  <span className="eyebrow">
                     {r.character}
                   </span>
                   <h3 className="mt-3 text-lg font-bold text-ink">
@@ -345,7 +329,7 @@ export default function FabricPage() {
             </Reveal>
             <Reveal delay={120}>
               <div className="rounded-lg border border-line bg-sunken p-8">
-                <p className="eyebrow text-accent">
+                <p className="eyebrow">
                   Getting started
                 </p>
                 <ol className="mt-6 flex flex-col">

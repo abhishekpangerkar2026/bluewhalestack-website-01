@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Check, ChevronDown, ShieldCheck } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { PhotoHero } from "@/components/sections/PhotoHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
@@ -21,64 +22,35 @@ export default function TrustPage() {
   return (
     <InnerPage category="resources" current="/trust">
       {/* ── Hero ── */}
-      <section className="relative overflow-hidden bg-brand-900 py-20 text-white sm:py-28">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 bg-dot-grid opacity-[0.13] [mask-image:radial-gradient(ellipse_55%_70%_at_12%_0%,black,transparent_70%)]"
-        />
-        <Container className="relative">
-          <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-            <Reveal>
-              <div>
-                <div className="mb-5 flex items-center gap-3">
-                  <ShieldCheck className="h-5 w-5 text-brand-200" />
-                  <span className="eyebrow text-white/80">
-                    Trust Center
-                  </span>
-                </div>
-                <h1 className="display-1 text-white">
-                  Security and compliance,{" "}
-                  <span className="text-brand-200">independently verified.</span>
-                </h1>
-                <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/70">
-                  Five ISO management-system certifications — 27001, 27017, 27018, 27701 and 22301 — audited by
-                  accredited third-party bodies, plus a CSA STAR Level 1 self-assessment, a GDPR compliance
-                  assessment and a SOC 2 Type II readiness assessment. All current, with eight signed certificates
-                  downloadable below and full audit reports available to customers under NDA.
-                </p>
-                <div className="mt-8 flex flex-wrap gap-3">
-                  <Button href="#certifications" size="lg">
-                    Download certificates
-                  </Button>
-                  <Button
-                    href="/legal/privacy"
-                    variant="outline"
-                    size="lg"
-                    className="border-white/30 text-white hover:border-white hover:bg-white/10 hover:text-white"
-                  >
-                    Privacy policy
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    href="/legal/terms"
-                    variant="outline"
-                    size="lg"
-                    className="border-white/30 text-white hover:border-white hover:bg-white/10 hover:text-white"
-                  >
-                    Terms of service
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-            </Reveal>
+      <PhotoHero
+        photo="sovereign-vault"
+        eyebrow="Trust Center"
+        title={<>Security and compliance, <span className="text-accent">independently verified.</span></>}
+        description="Five ISO management-system certifications — 27001, 27017, 27018, 27701 and 22301 — audited by accredited third-party bodies, plus a CSA STAR Level 1 self-assessment, a GDPR compliance assessment and a SOC 2 Type II readiness assessment. All current, with eight signed certificates downloadable below and full audit reports available to customers under NDA."
+      >
+        <div className="flex flex-wrap gap-3">
+          <Button href="#certifications" size="lg">
+            Download certificates
+          </Button>
+          <Button href="/legal/privacy" variant="outline" size="lg">
+            Privacy policy
+            <ArrowRight className="h-4 w-4" />
+          </Button>
+          <Button href="/legal/terms" variant="outline" size="lg">
+            Terms of service
+            <ArrowRight className="h-4 w-4" />
+          </Button>
+        </div>
+      </PhotoHero>
 
-            {/* Cert badge cloud — floats on a light card so the dark badge tiles keep contrast */}
-            <Reveal delay={100}>
-              <div className="rounded-2xl border border-white/10 bg-surface p-6 shadow-lg sm:p-7">
-                <CertBadgeGrid />
-              </div>
-            </Reveal>
-          </div>
+      {/* Cert badge cloud — the real certification marks */}
+      <section className="border-b border-line bg-sunken py-10">
+        <Container>
+          <Reveal>
+            <div className="rounded-2xl border border-line bg-surface p-6 shadow-md sm:p-7">
+              <CertBadgeGrid />
+            </div>
+          </Reveal>
         </Container>
       </section>
 

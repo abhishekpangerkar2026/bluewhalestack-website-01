@@ -86,7 +86,7 @@ export function LeadershipFeature({ member }: { member: LeadershipMember }) {
     <Card className="flex flex-col gap-6 p-8 sm:flex-row sm:items-start sm:gap-8">
       <Portrait member={member} size={144} className="mx-auto sm:mx-0" />
       <div className="min-w-0 text-center sm:text-left">
-        <p className="eyebrow text-accent">{member.role}</p>
+        <p className="eyebrow">{member.role}</p>
         <h3 className="mt-2 text-2xl font-bold text-ink">{member.name ?? "To be announced"}</h3>
         {member.bio && (
           <p className="mt-4 text-base leading-relaxed text-muted text-pretty">{member.bio}</p>

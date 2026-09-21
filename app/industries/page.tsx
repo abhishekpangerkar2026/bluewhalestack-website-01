@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { PhotoHero } from "@/components/sections/PhotoHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
@@ -25,41 +26,16 @@ export default function IndustriesPage() {
   return (
     <InnerPage category="solutions" current="/industries">
       {/* ── Intro: editorial split, big statement left / count right ── */}
-      <section className="bg-canvas py-20 sm:py-28">
-        <Container>
-          <div className="grid gap-x-16 gap-y-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
-            <Reveal>
-              <div className="max-w-2xl">
-                <div className="mb-6 flex items-center gap-3">
-                  <span className="grid h-11 w-11 place-items-center rounded-lg bg-primary text-primary-fg shadow-sm">
-                    <Icon name="Landmark" className="h-5 w-5" />
-                  </span>
-                  <span className="eyebrow text-accent">Industry solutions</span>
-                  <span aria-hidden className="h-px w-8 bg-accent/50" />
-                  <span className="text-xs font-semibold text-faint">Seven sectors · one control plane</span>
-                </div>
-                <h1 className="display-1 text-ink">
-                  Seven sectors, and the regimes each one answers to.
-                </h1>
-                <p className="mt-6 text-lg leading-relaxed text-muted">
-                  Every industry page names the regulators and frameworks that sector actually faces — RBI and
-                  CERT-In, DPDP and GDPR, accreditation and air-gap mandates, carrier SLAs — and the platform control
-                  that answers each. Standard, Enterprise and Government editions are generally available today; the
-                  Telco &amp; Datacenter Edition is in preview ahead of GA in Q4 2026.
-                </p>
-              </div>
-            </Reveal>
-            <Reveal delay={90}>
-              <IntroPanel eyebrow="Industry-specific. Platform-wide." dark>
-                <IntroPanelStat value={String(industries.length).padStart(2, "0")} label="SECTORS SERVED" detail="Every estate brings its own regulatory reality." />
-                <div className="flex flex-wrap gap-2 border-t border-white/15 pt-5">
-                  {industries.map((industry) => <Link key={industry.slug} href={`/industries/${industry.slug}`} className="rounded-full border border-white/20 px-3 py-2 text-xs text-white/75 transition-colors hover:border-white/50 hover:text-white">{industry.name}</Link>)}
-                </div>
-              </IntroPanel>
-            </Reveal>
-          </div>
-        </Container>
-      </section>
+      <PhotoHero
+        photo="enterprise-campus"
+        eyebrow={`Industry solutions · ${industries.length} sectors, one control plane`}
+        title="Every sector, and the regimes each one answers to."
+        description="Every industry page names the regulators and frameworks that sector actually faces — RBI and CERT-In, DPDP and GDPR, accreditation and air-gap mandates, carrier SLAs — and the platform control that answers each. Standard, Enterprise and Government editions are generally available today; the Telco & Datacenter Edition is in preview ahead of GA in Q4 2026."
+      >
+        <div className="flex flex-wrap gap-2">
+          {industries.map((industry) => <Link key={industry.slug} href={`/industries/${industry.slug}`} className="rounded-full border border-line bg-white px-3.5 py-2 text-xs font-semibold text-muted shadow-sm transition-colors hover:border-accent hover:text-accent">{industry.name}</Link>)}
+        </div>
+      </PhotoHero>
 
       {/* ── Cross-industry reference architecture ── */}
       <section className="border-t border-line bg-sunken py-20 sm:py-28">
@@ -80,7 +56,7 @@ export default function IndustriesPage() {
                       <span className="grid h-12 w-12 place-items-center rounded-lg bg-primary text-primary-fg">
                         <Icon name={featured.icon} className="h-6 w-6" />
                       </span>
-                      <span className="eyebrow text-accent">
+                      <span className="eyebrow">
                         Featured sector
                       </span>
                     </div>
@@ -192,7 +168,7 @@ export default function IndustriesPage() {
                   href={href}
                   className="group flex h-full flex-col overflow-hidden rounded-lg border border-line bg-surface shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-line-strong hover:shadow-md"
                 >
-                  <div className="bg-[#101114] p-7">
+                  <div className="bg-[#0d2270] p-7">
                     <div className="flex items-center justify-between border-b border-white/15 pb-4">
                       <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-white/55">Reference architecture</p>
                       <span className="font-mono text-[10px] text-white/40">0{i + 1}</span>
@@ -202,10 +178,10 @@ export default function IndustriesPage() {
                       {poster.estates.map((estate) => <span key={estate} className="flex items-center gap-2 border border-white/15 bg-white/[0.04] px-3 py-2 text-[11px] text-white/75"><span aria-hidden className="h-1 w-1 bg-[#89a9ff]" />{estate}</span>)}
                     </div>
                     <div aria-hidden className="mx-auto h-5 w-px bg-white/20" />
-                    <p className="border border-[#6286ff]/40 bg-[#2458f5]/20 py-2.5 text-center text-[10px] font-semibold uppercase tracking-widest text-[#bed0ff]">One control plane</p>
+                    <p className="border border-[#6286ff]/40 bg-[#002ca0]/20 py-2.5 text-center text-[10px] font-semibold uppercase tracking-widest text-[#bed0ff]">One control plane</p>
                   </div>
                   <div className="flex flex-1 flex-col p-6">
-                    <p className="eyebrow text-accent">{sector}</p>
+                    <p className="eyebrow">{sector}</p>
                     <h3 className="mt-2 text-lg font-bold leading-snug text-ink">{poster.subtitle}</h3>
                     <div className="mt-4 flex flex-wrap gap-1.5">
                       {poster.modules.map((m) => (
@@ -224,7 +200,7 @@ export default function IndustriesPage() {
             <Reveal delay={160}>
               <div className="flex h-full flex-col justify-between rounded-lg border border-dashed border-line-strong bg-sunken p-6">
                 <div>
-                  <p className="eyebrow text-faint">Your sector</p>
+                  <p className="eyebrow">Your sector</p>
                   <h3 className="mt-2 text-lg font-bold leading-snug text-ink">Healthcare, SaaS, manufacturing, utilities — the sheet is drawn per engagement.</h3>
                   <p className="mt-3 text-sm leading-relaxed text-muted">
                     Tell us the regulators and frameworks you answer to and the estates you run. We return the same seven-layer sheet for your sector with the control mapping alongside it, before any commercial conversation.

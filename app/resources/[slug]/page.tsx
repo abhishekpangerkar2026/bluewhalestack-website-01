@@ -4,6 +4,18 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowRight, Download, Clock, FileText } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { PhotoHero } from "@/components/sections/PhotoHero";
+import type { PhotoKey } from "@/content/photos";
+
+/** a studio photograph per document type */
+const DOC_PHOTO: Record<string, PhotoKey> = {
+  Whitepaper: "editions-rack",
+  Datasheet: "estates-row",
+  "Solution brief": "hybrid-bridge",
+  "Industry brief": "enterprise-campus",
+  "Case study": "discovery-lens",
+  Company: "sovereign-regions",
+};
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
@@ -34,37 +46,38 @@ export default async function ResourceDocumentPage({ params }: { params: Promise
   return (
     <InnerPage category="resources" current="/resources" document>
       {/* ── Hero ── */}
-      <section className="border-b border-line bg-white py-12 sm:py-16">
-        <Container>
-          <Breadcrumbs items={[{ label: "Resources", href: "/resources" }, { label: doc.type, href: "/resources" }, { label: doc.title }]} />
-          <div className="mt-10 max-w-3xl">
-            <Reveal>
-              <div className="flex flex-wrap items-center gap-2">
-                <Badge tone="brand">{doc.type}</Badge>
-                <Badge tone="neutral">{doc.topic}</Badge>
-              </div>
-              <h1 className="display-1 mt-6 text-ink">{doc.title}</h1>
-              <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted">{doc.subtitle}</p>
-              <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-faint">
-                <span className="inline-flex items-center gap-1.5"><Clock className="h-3.5 w-3.5" /> {doc.meta}</span>
-                <span>Updated {doc.updated} · v{doc.version}</span>
-              </div>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <div>
-                  <Button href={pdf} size="lg" external>
-                    <Download className="h-4 w-4" />
-                    Download the PDF
-                  </Button>
-                  <p className="mt-2 text-xs text-faint">A4 · no form, no email required</p>
-                </div>
-                <Button href="/contact?intent=demo" size="lg" variant="outline">
-                  Talk to us about it
-                </Button>
-              </div>
-            </Reveal>
+      <PhotoHero
+        photo={DOC_PHOTO[doc.type] ?? "editions-rack"}
+        minHeight="lg:min-h-[560px]"
+        above={
+          <div className="mb-8">
+            <Breadcrumbs items={[{ label: "Resources", href: "/resources" }, { label: doc.type, href: "/resources" }, { label: doc.title }]} />
+            <div className="mt-8 flex flex-wrap items-center gap-2">
+              <Badge tone="brand">{doc.type}</Badge>
+              <Badge tone="neutral">{doc.topic}</Badge>
+            </div>
           </div>
-        </Container>
-      </section>
+        }
+        title={doc.title}
+        description={doc.subtitle}
+      >
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-faint">
+          <span className="inline-flex items-center gap-1.5"><Clock className="h-3.5 w-3.5" /> {doc.meta}</span>
+          <span>Updated {doc.updated} · v{doc.version}</span>
+        </div>
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <div>
+            <Button href={pdf} size="lg" external>
+              <Download className="h-4 w-4" />
+              Download the PDF
+            </Button>
+            <p className="mt-2 text-xs text-faint">A4 · no form, no email required</p>
+          </div>
+          <Button href="/contact?intent=demo" size="lg" variant="outline">
+            Talk to us about it
+          </Button>
+        </div>
+      </PhotoHero>
 
       <section className="bg-canvas py-16 sm:py-20">
         <Container>
@@ -75,7 +88,7 @@ export default async function ResourceDocumentPage({ params }: { params: Promise
             <aside className="lg:sticky lg:top-28 lg:self-start">
               {toc.length > 0 && (
                 <div className="rounded-lg border border-line bg-surface p-5 shadow-sm">
-                  <p className="eyebrow text-accent">In this document</p>
+                  <p className="eyebrow">In this document</p>
                   <ol className="mt-3 space-y-1.5">
                     {toc.map((t, i) => (
                       <li key={t.id}>
@@ -89,7 +102,7 @@ export default async function ResourceDocumentPage({ params }: { params: Promise
                 </div>
               )}
               <div className="mt-5 rounded-lg border border-line bg-surface p-5 shadow-sm">
-                <p className="eyebrow text-faint">Related</p>
+                <p className="eyebrow">Related</p>
                 <ul className="mt-3 space-y-2">
                   {doc.related.map((r) => (
                     <li key={r.href}>
@@ -101,7 +114,7 @@ export default async function ResourceDocumentPage({ params }: { params: Promise
                 </ul>
                 {siblings.length > 0 && (
                   <>
-                    <p className="eyebrow mt-6 text-faint">More {doc.type.toLowerCase()}s</p>
+                    <p className="eyebrow mt-6 ">More {doc.type.toLowerCase()}s</p>
                     <ul className="mt-3 space-y-2">
                       {siblings.map((d) => (
                         <li key={d.slug}>

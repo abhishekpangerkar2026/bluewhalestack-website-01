@@ -4,6 +4,18 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Check, ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { PhotoHero } from "@/components/sections/PhotoHero";
+import type { PhotoKey } from "@/content/photos";
+
+/** the studio photograph that carries each solution's idea */
+const SOLUTION_PHOTO: Record<string, PhotoKey> = {
+  "unified-cloud-inventory": "discovery-lens",
+  "ai-native-provisioning": "appliance-enclosure",
+  "bundled-observability": "estates-row",
+  "cloud-migration": "migration-wave",
+  "security-compliance": "sovereign-vault",
+  "sovereign-cloud": "sovereign-regions",
+};
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
@@ -57,33 +69,35 @@ export default async function SolutionDetailPage({
   return (
     <InnerPage category="solutions" current="/solutions">
       {/* ── Hero ── */}
-      <section className="border-b border-line bg-white py-12 sm:py-16">
-        <Container>
-          <Breadcrumbs items={[{ label: "Solutions", href: "/solutions" }, { label: solution.name }]} />
-          <div className="mt-10 max-w-3xl">
-            <div className="flex items-center gap-3">
+      <PhotoHero
+        photo={SOLUTION_PHOTO[solution.slug] ?? "hybrid-bridge"}
+        above={
+          <div className="mb-8">
+            <Breadcrumbs items={[{ label: "Solutions", href: "/solutions" }, { label: solution.name }]} />
+            <div className="mt-8 flex items-center gap-3">
               <span className="grid h-11 w-11 place-items-center rounded-lg bg-primary text-primary-fg shadow-sm">
                 <Icon name={solution.icon} className="h-5 w-5" />
               </span>
-              <span className="eyebrow text-accent">Solution</span>
-            </div>
-            <h1 className="display-1 mt-6 text-ink">{solution.name}</h1>
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">{solution.description}</p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-              <div>
-                <Button href="/contact?intent=demo" size="lg">
-                  See it on your estate
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-                <p className="mt-2 text-xs text-faint">45 minutes · one of your accounts, connected read-only</p>
-              </div>
-              <Button href="#architecture" size="lg" variant="outline">
-                How it works
-              </Button>
+              <span className="eyebrow">Solution</span>
             </div>
           </div>
-        </Container>
-      </section>
+        }
+        title={solution.name}
+        description={solution.description}
+      >
+        <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <div>
+            <Button href="/contact?intent=demo" size="lg">
+              See it on your estate
+              <ArrowRight className="h-4 w-4" />
+            </Button>
+            <p className="mt-2 text-xs text-faint">45 minutes · one of your accounts, connected read-only</p>
+          </div>
+          <Button href="#architecture" size="lg" variant="outline">
+            How it works
+          </Button>
+        </div>
+      </PhotoHero>
       <section className="border-b border-line bg-sunken py-8">
         <Container>
           <Reveal delay={120}>
@@ -99,7 +113,7 @@ export default async function SolutionDetailPage({
             <Reveal>
               <div className="flex items-center gap-3">
                 <span aria-hidden className="h-px w-8 bg-accent/50" />
-                <span className="eyebrow text-accent">The challenge</span>
+                <span className="eyebrow">The challenge</span>
               </div>
             </Reveal>
             <Reveal delay={80}>
@@ -179,7 +193,7 @@ export default async function SolutionDetailPage({
                 </ul>
                 {relatedModules.length > 0 && (
                   <div className="mt-8">
-                    <p className="eyebrow text-faint">Modules used</p>
+                    <p className="eyebrow">Modules used</p>
                     <div className="mt-3 flex flex-wrap gap-2">
                       {relatedModules.map((m) => (
                         <Link
@@ -216,7 +230,7 @@ export default async function SolutionDetailPage({
             <Reveal>
               {story ? (
                 <div>
-                  <p className="eyebrow text-accent">Delivered engagement</p>
+                  <p className="eyebrow">Delivered engagement</p>
                   <div className="mt-4 flex flex-wrap items-center gap-2">
                     <Badge tone="brand">{story.industry}</Badge>
                     <span className="text-xs text-faint">{story.org}</span>
@@ -241,7 +255,7 @@ export default async function SolutionDetailPage({
                 </div>
               ) : (
                 <div>
-                  <p className="eyebrow text-accent">Proven before commitment</p>
+                  <p className="eyebrow">Proven before commitment</p>
                   <h2 className="mt-4 text-2xl font-bold leading-snug text-ink sm:text-3xl">
                     Run it on your estate for 90 days before any licensing decision.
                   </h2>
@@ -260,7 +274,7 @@ export default async function SolutionDetailPage({
             <Reveal delay={120}>
               <div className="lg:sticky lg:top-28 lg:self-start">
                 <div className="rounded-lg border border-line bg-surface p-7 shadow-sm">
-                  <p className="eyebrow text-accent">Recommended editions</p>
+                  <p className="eyebrow">Recommended editions</p>
                   <div className="mt-5 space-y-3">
                     {recEditions.map((e) => (
                       <Link
@@ -283,7 +297,7 @@ export default async function SolutionDetailPage({
                     <span className="font-semibold text-ink">Who it&apos;s for:</span> {solution.audience}
                   </p>
                   <div className="mt-6 border-t border-line pt-5">
-                    <p className="eyebrow text-faint">Related solutions</p>
+                    <p className="eyebrow">Related solutions</p>
                     <ul className="mt-3 space-y-2">
                       {siblings.map((s) => (
                         <li key={s.slug}>

@@ -89,7 +89,7 @@ export default function LeadershipPage() {
               <div className="max-w-2xl">
                 <div className="mb-5 flex items-center gap-3">
                   <span aria-hidden className="h-px w-8 bg-accent/50" />
-                  <span className="eyebrow text-accent">
+                  <span className="eyebrow">
                     About · Leadership
                   </span>
                 </div>
@@ -269,7 +269,7 @@ export default function LeadershipPage() {
           <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
             <Reveal>
               <div className="max-w-2xl">
-                <p className="eyebrow text-white/80">
+                <p className="eyebrow text-[var(--gold)]">
                   We&apos;re hiring
                 </p>
                 <h2 className="display-2 mt-5 text-white">

@@ -459,6 +459,61 @@ export const industries: IndustryDef[] = [
       { q: "When is this generally available?", a: "The Telco & Datacenter Edition is in preview with design partners now; general availability is targeted for Q4 2026. White-label resale and metered billing through the Partner Portal run today on the Enterprise platform." },
     ],
   },
+  {
+    slug: "media",
+    name: "Media & Broadcasting",
+    icon: "Clapperboard",
+    title: "Newsroom, archive and bureaus governed as one estate — with AI that never leaves the building.",
+    description:
+      "BlueWhale Stack lets media networks and broadcasters run production, playout, archive and bureau estates from one control plane — on-premise at headquarters, public cloud for burst and OTT, and offline-tolerant edge at bureaus and field sites. Whale AI runs inside the perimeter for newsroom search, transcription and archive research in Arabic and English, with Observability watching it and the audit log recording it.",
+    kpis: [
+      { value: "In-perimeter", label: "Whale AI for newsroom and archive — no external AI exposure" },
+      { value: "Arabic · English", label: "Bilingual newsroom and archive AI, fully offline where required" },
+      { value: "Edge", label: "Bureaus and field sites under headquarters-grade policy" },
+      { value: "One estate", label: "Production, playout, archive and OTT governed together" },
+    ],
+    why: [
+      "Run production, playout and archive on-premise, public cloud for burst and OTT, and bureau edge sites under one identity and one policy set",
+      "Keep newsroom AI inside the perimeter — transcription, translation, archive search and research on the network's own model, logged and versioned",
+      "Extend a uniform security posture to the most exposed remote bureaus, not just headquarters",
+      "Join health, events and service operations across broadcast IT, newsroom systems and MAM into one view",
+      "Meter and decompose cloud spend by production, programme and bureau",
+      "Answer rights, retention and audit questions from a system of record rather than a scramble",
+    ],
+    targets: ["Media networks", "Broadcasters", "Newsrooms", "Archive & MAM operations", "OTT platforms"],
+    edition: "enterprise",
+    outcome: "Governed newsroom, in-perimeter AI",
+    compliance: ["Data residency", "Rights & retention", "Cyber-resilience", "Least-privilege access", "Audit trail"],
+    regimes: [
+      { name: "Sustained cyber threat against newsrooms", demands: "Uniform posture at headquarters, bureaus and field sites; privileged access attributable", control: "One identity fabric with least-privilege, time-bound access; continuous vulnerability scanning across every estate; Edge Agent policy at bureaus" },
+      { name: "Editorial confidentiality & source protection", demands: "Newsroom material never reaches an external AI service", control: "Whale AI in-perimeter on the network's own model, including fully offline; every prompt and response logged and versioned" },
+      { name: "Rights, retention & archive obligations", demands: "Archive and production assets governed with defensible retention", control: "Policy as configuration across MAM and archive estates; evidence generated continuously" },
+      { name: "Broadcast continuity", demands: "Production and playout health visible, with ownership", control: "Unified health and events; alert routing with ownership; ServiceNow and Jira integration" },
+    ],
+    story: "media-qatar-network",
+    useCases: [
+      {
+        title: "Archive and newsroom AI inside the perimeter",
+        body: "Arabic–English archive search, transcription and research assistance on the network's own model, deployed in the customer's environment — including fully disconnected — with Observability watching it and Audit logging it.",
+        modules: ["whale-ai", "cloud-audit"],
+      },
+      {
+        title: "Bureaus and field sites under one policy",
+        body: "Offline-tolerant edge estates at bureaus inherit headquarters-grade identity, policy and posture through the Edge Agent, and report into the same inventory.",
+        modules: ["identity", "inventory"],
+      },
+      {
+        title: "Production, playout and OTT as one estate",
+        body: "On-premise production, cloud burst and OTT platforms discovered, governed and billed together — spend decomposed by programme, production and bureau.",
+        modules: ["inventory", "finops", "observe"],
+      },
+    ],
+    faq: [
+      { q: "Does newsroom material ever reach an external AI service?", a: "No. Whale AI runs inside the network's perimeter on the model the network chooses — hosted in-region, its own, or fully offline — and every prompt and response is logged and versioned." },
+      { q: "Which languages does the newsroom AI support?", a: "Arabic and English were delivered for a global newsroom in Doha; other languages depend on the model the network selects." },
+      { q: "Which edition is this?", a: "The Enterprise Edition, deployed on-premise or BYOC, with Sovereign Operations classes where a bureau or archive must stay disconnected." },
+    ],
+  },
 ];
 
 export const industriesBySlug = Object.fromEntries(

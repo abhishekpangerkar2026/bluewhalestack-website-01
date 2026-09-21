@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Check, MapPin } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { PhotoHero } from "@/components/sections/PhotoHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Card } from "@/components/ui/Card";
 import { LocationVisual } from "@/components/diagrams/LocationVisual";
@@ -46,54 +47,37 @@ export default function AboutPage() {
   return (
     <InnerPage category="company" current="/about">
       {/* ── Hero: editorial split, oversized statement left ── */}
-      <section className="border-b border-line bg-surface py-20 sm:py-28">
-        <Container>
-          <div className="grid gap-x-16 gap-y-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
-            <Reveal>
-              <div className="max-w-2xl">
-                <div className="mb-5 flex items-center gap-3">
-                  <span aria-hidden className="h-px w-8 bg-accent/50" />
-                  <span className="eyebrow text-accent">
-                    {aboutHero.eyebrow}
-                  </span>
-                </div>
-                <h1 className="display-1 text-ink">
-                  A consulting firm that turned eight years of field work into a platform.
-                </h1>
-                <p className="mt-6 text-lg leading-relaxed text-muted">
-                  BlueWhale Stack was founded in Mumbai in 2018 as a cloud consultancy. After eight years of migrations,
-                  audits and datacenter modernisations for telcos, banks, governments and hospitals in India and the GCC,
-                  the same gap kept appearing — no single view of the estate — and in 2026 we shipped the platform that
-                  closes it. Three entities today: India, the UAE and the United States.
-                </p>
-                <div className="mt-8 flex flex-wrap gap-3">
-                  <Button href="/contact?intent=demo" size="lg">
-                    Talk to the team
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
-                  <Button href="/about/leadership" size="lg" variant="secondary">
-                    Meet the leadership
-                  </Button>
-                </div>
-              </div>
-            </Reveal>
-            <Reveal delay={90}>
-              <IntroPanel eyebrow="Three entities. One company." dark>
+      <PhotoHero
+        photo="sovereign-regions"
+        eyebrow={aboutHero.eyebrow}
+        title="A consulting firm that turned eight years of field work into a platform."
+        description="BlueWhale Stack was founded in Mumbai in 2018 as a cloud consultancy. After eight years of migrations, audits and datacenter modernisations for telcos, banks, governments and hospitals in India and the GCC, the same gap kept appearing — no single view of the estate — and in 2026 we shipped the platform that closes it. Three entities today: the United States, the UAE and India."
+        below={
+          <div className="border-t border-line bg-sunken">
+            <Container>
+              <div className="grid divide-y divide-line sm:grid-cols-3 sm:divide-x sm:divide-y-0">
                 {offices.map((office, i) => (
-                  <div key={office.city} className="flex gap-5 border-t border-white/15 py-6">
-                    <span className="pt-1 font-mono text-[10px] text-white/40">0{i + 1}</span>
-                    <div>
-                      <p className="text-xs text-white/55">{office.label}</p>
-                      <h2 className="mt-1 text-3xl font-medium tracking-tight text-white">{office.city}</h2>
-                      <p className="mt-2 text-xs leading-relaxed text-white/65">{office.blurb}</p>
-                    </div>
+                  <div key={office.city} className="py-6 sm:px-6 sm:first:pl-0 sm:last:pr-0">
+                    <p className="eyebrow">0{i + 1} · {office.label}</p>
+                    <h2 className="mt-2 text-2xl font-bold tracking-[-0.02em] text-ink">{office.city}</h2>
+                    <p className="mt-1.5 text-[13px] leading-relaxed text-muted">{office.blurb}</p>
                   </div>
                 ))}
-              </IntroPanel>
-            </Reveal>
+              </div>
+            </Container>
           </div>
-        </Container>
-      </section>
+        }
+      >
+        <div className="flex flex-wrap gap-3">
+          <Button href="/contact?intent=demo" size="lg">
+            Talk to the team
+            <ArrowRight className="h-4 w-4" />
+          </Button>
+          <Button href="/about/leadership" size="lg" variant="secondary">
+            Meet the leadership
+          </Button>
+        </div>
+      </PhotoHero>
 
       {/* At a glance — quiet fact strip */}
       <section className="border-b border-line bg-sunken py-10">
@@ -165,7 +149,7 @@ export default function AboutPage() {
           <div className="grid gap-x-16 gap-y-12 lg:grid-cols-2">
             <Reveal>
               <div>
-                <p className="eyebrow text-accent">
+                <p className="eyebrow">
                   Our mission
                 </p>
                 <p className="mt-6 text-2xl font-bold leading-[1.25] tracking-tight text-ink sm:text-3xl">
@@ -175,7 +159,7 @@ export default function AboutPage() {
             </Reveal>
             <Reveal delay={120}>
               <div className="lg:border-l lg:border-line-strong lg:pl-16">
-                <p className="eyebrow text-accent">
+                <p className="eyebrow">
                   Our vision
                 </p>
                 <p className="mt-6 text-2xl font-bold leading-[1.25] tracking-tight text-ink sm:text-3xl">
@@ -336,7 +320,7 @@ export default function AboutPage() {
       {/* ── Proof we're real: entities, registrations, certificates ── */}
       <section className="bg-brand-900 py-16 text-white">
         <Container>
-          <p className="eyebrow text-brand-200">On the record</p>
+          <p className="eyebrow text-[var(--gold)]">On the record</p>
           <div className="mt-6 grid gap-px overflow-hidden rounded-lg border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
             {numbers.map((n, i) => (
               <Reveal key={n.label} delay={i * 70}>
@@ -444,7 +428,7 @@ export default function AboutPage() {
             </Reveal>
             <Reveal delay={120}>
               <div className="rounded-lg border border-line bg-surface p-7 shadow-sm">
-                <p className="eyebrow text-accent">
+                <p className="eyebrow">
                   Compliance frameworks
                 </p>
                 <div className="mt-5 flex flex-wrap gap-2">

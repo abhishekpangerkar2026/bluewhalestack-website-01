@@ -31,7 +31,7 @@ export function LegalDoc({
         <Container className="relative">
           <div className="flex items-center gap-3">
             <span aria-hidden className="h-px w-8 bg-white/40" />
-            <span className="eyebrow text-white/80">
+            <span className="eyebrow text-[var(--gold)]">
               Legal
             </span>
           </div>

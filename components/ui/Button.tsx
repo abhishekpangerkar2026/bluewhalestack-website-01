@@ -5,24 +5,24 @@ type Variant = "primary" | "secondary" | "outline" | "ghost" | "white";
 type Size = "sm" | "md" | "lg";
 
 const base =
-  "site-button inline-flex shrink-0 items-center justify-center gap-2.5 rounded-[3px] font-medium leading-none tracking-[-0.005em] transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-accent disabled:opacity-50 disabled:pointer-events-none";
+  "site-button inline-flex shrink-0 items-center justify-center gap-2.5 rounded-lg font-semibold leading-none tracking-[-0.005em] transition-[background-color,border-color,box-shadow,transform] duration-200 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-accent disabled:opacity-50 disabled:pointer-events-none";
 
 const variants: Record<Variant, string> = {
   primary:
-    "border border-transparent bg-primary text-primary-fg hover:bg-[var(--primary-hover)] active:bg-[var(--primary-active)]",
+    "border border-transparent bg-primary text-primary-fg shadow-md hover:bg-[var(--primary-hover)] hover:shadow-lg hover:-translate-y-px active:translate-y-0 active:bg-[var(--primary-active)]",
   secondary:
-    "bg-surface text-ink border border-line hover:border-line-strong",
+    "bg-surface text-ink border border-line shadow-sm hover:border-line-strong hover:shadow-md",
   outline:
-    "border border-line-strong text-ink hover:border-[var(--text-primary)]",
+    "border border-line-strong text-ink hover:border-[var(--brand-blue)] hover:text-accent",
   ghost: "text-muted hover:bg-sunken hover:text-ink",
   white:
-    "border border-white bg-white text-[#101114] hover:bg-white/90 active:bg-white/80",
+    "border border-white bg-white text-[#0d2270] shadow-md hover:bg-white/92 active:bg-white/85",
 };
 
 const sizes: Record<Size, string> = {
-  sm: "h-9 px-3.5 text-[12.5px]",
-  md: "h-10 px-[18px] text-[13px]",
-  lg: "h-12 px-6 text-[13.5px]",
+  sm: "h-9 px-4 text-[13px]",
+  md: "h-11 px-5 text-[14px]",
+  lg: "h-[52px] px-7 text-[15px]",
 };
 
 type ButtonProps = {

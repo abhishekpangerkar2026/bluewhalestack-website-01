@@ -36,7 +36,7 @@ export default function DocsPage() {
               <div className="max-w-2xl">
                 <div className="mb-5 flex items-center gap-3">
                   <span aria-hidden className="h-px w-8 bg-accent/50" />
-                  <span className="eyebrow text-accent">
+                  <span className="eyebrow">
                     Documentation
                   </span>
                 </div>
@@ -48,7 +48,7 @@ export default function DocsPage() {
                   account each cloud needs, the Edge Agent&apos;s outbound-only path on port 443, SSO and SCIM setup,
                   the service catalog, and the REST API with webhooks and events.
                 </p>
-                <p className="eyebrow mt-8 text-faint">
+                <p className="eyebrow mt-8 ">
                   Jump to
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">

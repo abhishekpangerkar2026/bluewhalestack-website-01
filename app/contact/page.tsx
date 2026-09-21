@@ -73,7 +73,7 @@ export default async function ContactPage({
             <div className="lg:sticky lg:top-28 lg:py-4">
               <div className="mb-5 flex items-center gap-3">
                 <span aria-hidden className="h-px w-8 bg-white/40" />
-                <span className="eyebrow text-white/80">
+                <span className="eyebrow text-[var(--gold)]">
                   {hero.eyebrow}
                 </span>
               </div>
@@ -86,7 +86,7 @@ export default async function ContactPage({
 
               <div className="mt-10 grid gap-8 sm:grid-cols-2">
                 <div>
-                  <h3 className="eyebrow text-white/80">
+                  <h3 className="eyebrow text-[var(--gold)]">
                     Reach us directly
                   </h3>
                   <ul className="mt-4 space-y-4">
@@ -130,7 +130,7 @@ export default async function ContactPage({
                 </div>
 
                 <div>
-                  <h3 className="eyebrow text-white/80">
+                  <h3 className="eyebrow text-[var(--gold)]">
                     Offices
                   </h3>
                   <ul className="mt-4 space-y-4">

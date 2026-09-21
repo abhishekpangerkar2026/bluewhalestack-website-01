@@ -4,6 +4,16 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight, Check, Clock } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { PhotoHero } from "@/components/sections/PhotoHero";
+import type { PhotoKey } from "@/content/photos";
+
+/** the studio photograph that carries each edition's idea */
+const EDITION_PHOTO: Record<string, PhotoKey> = {
+  standard: "editions-rack",
+  enterprise: "enterprise-campus",
+  "telco-datacenter": "telco-datacenter",
+  government: "government-hall",
+};
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
@@ -68,87 +78,82 @@ export default async function EditionDetailPage({
         </div>
       )}
 
-      {/* ── Hero: dark, oversized, asymmetric ── */}
-      <section className="relative overflow-hidden bg-brand-900 text-white">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 bg-dot-grid opacity-[0.13] [mask-image:radial-gradient(ellipse_55%_70%_at_12%_0%,black,transparent_70%)]"
-        />
-        <Container className="relative">
-          <Breadcrumbs
-            inverse
-            className="pt-10"
-            items={[{ label: "Editions", href: "/editions" }, { label: `${edition.name} Edition` }]}
-          />
-          <div className="py-12 sm:py-16">
-          <div className="max-w-3xl">
-            <div className="flex flex-wrap items-center gap-3">
-              <Badge tone="neutral" className="bg-white/10 text-white">
-                {edition.badge}
-              </Badge>
+      {/* ── Hero ── */}
+      <PhotoHero
+        photo={EDITION_PHOTO[edition.slug] ?? "editions-rack"}
+        above={
+          <div className="mb-8">
+            <Breadcrumbs items={[{ label: "Editions", href: "/editions" }, { label: `${edition.name} Edition` }]} />
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <Badge tone="neutral">{edition.badge}</Badge>
+              {edition.featured && <span className="chip-signature">Most deployed</span>}
               {edition.comingSoon && (
-                <Badge tone="neutral" className="bg-amber-500/20 text-amber-300">
-                  Preview{edition.gaTarget ? ` · GA ${edition.gaTarget}` : ""}
-                </Badge>
-              )}
-            </div>
-            <h1 className="display-1 mt-6 text-white">
-              {edition.headline}
-            </h1>
-            <p className="mt-4 text-lg font-semibold text-brand-100">
-              {edition.tagline}
-            </p>
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/70">
-              {edition.positioning}
-            </p>
-            <p className="mt-5 text-sm text-white/60">
-              <span className="font-semibold text-white/80">Who it targets:</span>{" "}
-              {edition.audience}
-            </p>
-            <div className="mt-6 rounded-lg border-l-4 border-amber-400 bg-white/[0.06] px-5 py-4">
-              <p className="eyebrow text-white/60">The outcome</p>
-              <p className="mt-1 text-lg font-bold text-white">{edition.outcome}</p>
-              <p className="mt-2 text-sm text-white/70">
-                Includes {edition.includes.join(" · ")}.
-              </p>
-            </div>
-            <div className="mt-9 flex flex-wrap gap-3">
-              {edition.comingSoon ? (
-                <>
-                  <Button href="/contact" size="lg" variant="white">
-                    Join the preview
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    href="/editions"
-                    size="lg"
-                    variant="outline"
-                    className="border-white/30 text-white hover:border-white hover:bg-white/10 hover:text-white"
-                  >
-                    See available editions
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <Button href="/contact" size="lg" variant="white">
-                    Book a demo
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    href="/editions"
-                    size="lg"
-                    variant="outline"
-                    className="border-white/30 text-white hover:border-white hover:bg-white/10 hover:text-white"
-                  >
-                    Compare editions
-                  </Button>
-                </>
+                <Badge tone="warning">Preview{edition.gaTarget ? ` · GA ${edition.gaTarget}` : ""}</Badge>
               )}
             </div>
           </div>
-          </div>
-        </Container>
-      </section>
+        }
+        title={edition.headline}
+        description={edition.positioning}
+      >
+        <p className="text-base font-semibold text-gold-text">{edition.tagline}</p>
+        <p className="mt-3 text-sm text-muted">
+          <span className="font-semibold text-ink">Who it targets:</span> {edition.audience}
+        </p>
+        <div className="mt-5 rounded-xl border border-line border-l-4 border-l-[var(--gold)] bg-sunken px-5 py-4">
+          <p className="eyebrow">The outcome</p>
+          <p className="mt-1 text-lg font-bold text-ink">{edition.outcome}</p>
+          <p className="mt-1.5 text-sm text-muted">Includes {edition.includes.join(" · ")}.</p>
+        </div>
+        <div className="mt-7 flex flex-wrap gap-3">
+          {edition.comingSoon ? (
+            <>
+              <Button href="/contact" size="lg">
+                Join the preview
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+              <Button href="/editions" size="lg" variant="outline">
+                See available editions
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button href="/contact" size="lg">
+                Book a demo
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+              <Button href="/editions" size="lg" variant="outline">
+                Compare editions
+              </Button>
+            </>
+          )}
+        </div>
+      </PhotoHero>
+
+      {(edition.fits || edition.buyWhen) && (
+        <section className="border-b border-line bg-white py-10">
+          <Container>
+            <div className="grid gap-8 lg:grid-cols-2">
+              {edition.fits && (
+                <div>
+                  <p className="eyebrow">Fits these industries</p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {edition.fits.map((f) => (
+                      <span key={f} className="rounded-full border border-line bg-sunken px-3 py-1.5 text-xs font-semibold text-muted">{f}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {edition.buyWhen && (
+                <div>
+                  <p className="eyebrow">Buy when</p>
+                  <p className="mt-3 max-w-xl text-[15px] font-semibold leading-relaxed text-ink">{edition.buyWhen}</p>
+                </div>
+              )}
+            </div>
+          </Container>
+        </section>
+      )}
 
       {/* ── Key specs: hairline-divided strip ── */}
       <section className="border-b border-line bg-sunken py-12">
@@ -187,7 +192,7 @@ export default async function EditionDetailPage({
             </Reveal>
             <Reveal delay={80}>
               <div className="h-full rounded-lg border border-line border-l-4 border-l-line-strong bg-sunken p-7">
-                <p className="eyebrow text-faint">Look elsewhere if</p>
+                <p className="eyebrow">Look elsewhere if</p>
                 <ul className="mt-4 space-y-3">
                   {edition.notFor.map((f) => (
                     <li key={f} className="flex items-start gap-3 text-sm leading-relaxed text-muted">
@@ -256,7 +261,7 @@ export default async function EditionDetailPage({
             <Reveal delay={120}>
               <div className="lg:sticky lg:top-28 lg:self-start">
                 <div className="rounded-lg border border-line bg-surface p-8 shadow-sm">
-                  <p className="eyebrow text-accent">
+                  <p className="eyebrow">
                     Specs &amp; quotas
                   </p>
                   <dl className="mt-5 divide-y divide-line">
@@ -365,7 +370,7 @@ export default async function EditionDetailPage({
                     {profile.revenueStreams.map((r, i) => (
                       <Reveal key={r.name} delay={(i % 5) * 60}>
                         <div className="flex h-full flex-col bg-brand-900 p-6">
-                          <span className="eyebrow text-brand-200">
+                          <span className="eyebrow text-[var(--gold)]">
                             {r.character}
                           </span>
                           <h4 className="mt-3 text-base font-bold text-white">
@@ -380,7 +385,7 @@ export default async function EditionDetailPage({
                   </div>
 
                   <Reveal delay={100}>
-                    <p className="mt-10 eyebrow text-brand-200">
+                    <p className="mt-10 eyebrow text-[var(--gold)]">
                       Phased delivery
                     </p>
                   </Reveal>
@@ -513,7 +518,7 @@ export default async function EditionDetailPage({
 function Spec({ label, value }: { label: string; value: string }) {
   return (
     <div className="bg-surface p-6">
-      <dt className="eyebrow text-faint">
+      <dt className="eyebrow">
         {label}
       </dt>
       <dd className="mt-2 text-lg font-bold text-ink">{value}</dd>

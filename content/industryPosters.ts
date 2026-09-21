@@ -99,6 +99,7 @@ export const INDUSTRY_POSTER: Record<string, IndustryPoster> = {
   telco: posters["telco-datacenter"],
   datacenter: posters["telco-datacenter"],
   "regulated-enterprise": posters["enterprise-multicloud"],
+  media: posters.media,
 };
 
 /** Gallery order for the /industries index; `href` is where the sheet lives on the site. */
@@ -107,7 +108,7 @@ export const POSTER_GALLERY: { poster: IndustryPoster; href: string; sector: str
   { poster: posters.government, href: "/industries/government#architecture", sector: "Government" },
   { poster: posters["telco-datacenter"], href: "/industries/telco#architecture", sector: "Telco & Datacenter" },
   { poster: posters["enterprise-multicloud"], href: "/industries/regulated-enterprise#architecture", sector: "Regulated Enterprise" },
-  { poster: posters.media, href: "/case-studies/media-qatar-network", sector: "Media & Broadcasting" },
+  { poster: posters.media, href: "/industries/media#architecture", sector: "Media & Broadcasting" },
 ];
 
 export const posterSrc = (p: IndustryPoster, w: 1200 | 2400 | "full") => `/industry-architecture/${p.file}-${w}.webp`;

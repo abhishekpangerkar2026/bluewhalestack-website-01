@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { PhotoHero } from "@/components/sections/PhotoHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
@@ -28,62 +29,38 @@ export default function SolutionsPage() {
   return (
     <InnerPage category="solutions" current="/solutions">
       {/* ── Hero ── */}
-      <section className="relative overflow-hidden border-b border-line bg-canvas">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 bg-dot-grid opacity-60 [mask-image:radial-gradient(ellipse_70%_60%_at_50%_0%,black,transparent_75%)]"
-        />
-        <Container className="relative">
-          <div className="py-20 sm:py-28">
-            <Reveal>
-              <div className="max-w-2xl">
-                <div className="mb-6 flex items-center gap-3">
-                  <span className="grid h-11 w-11 place-items-center rounded-lg bg-primary text-primary-fg shadow-sm">
-                    <Icon name="Workflow" className="h-5 w-5" />
-                  </span>
-                  <span className="eyebrow text-accent">Solutions</span>
-                  <span aria-hidden className="h-px w-8 bg-accent/50" />
-                  <span className="text-xs font-semibold text-faint">Six outcomes · one control plane</span>
-                </div>
-                <h1 className="display-1 text-ink">
-                  Six things teams buy the platform for.
-                </h1>
-                <p className="mt-6 text-lg leading-relaxed text-muted">
-                  One inventory across every cloud, provisioning without console access, observability included in
-                  the licence, a scored migration plan, one identity fabric with continuous audit evidence, and a
-                  sovereign deployment that proves where data lives. Each solution page shows the data path, the
-                  console, the modules involved and a delivered engagement.
-                </p>
-                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                  <div>
-                    <Button href="/contact?intent=demo" size="lg">
-                      See it on your estate
-                      <ArrowRight className="h-4 w-4" />
-                    </Button>
-                    <p className="mt-2 text-xs text-faint">45 minutes · one of your accounts, connected read-only</p>
-                  </div>
-                  <Button href="/case-studies" size="lg" variant="outline">
-                    Read the case studies
-                  </Button>
-                </div>
-                {/* the six solutions as icon chips — a jump list */}
-                <div className="mt-8 flex flex-wrap gap-2">
-                  {solutions.map((s) => (
-                    <Link
-                      key={s.slug}
-                      href={`/solutions/${s.slug}`}
-                      className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3 py-1.5 text-xs font-semibold text-muted transition-colors hover:border-accent hover:text-accent"
-                    >
-                      <Icon name={s.icon} className="h-3.5 w-3.5 text-accent" />
-                      {s.name}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </Reveal>
+      <PhotoHero
+        photo="hybrid-bridge"
+        eyebrow="Solutions · six outcomes, one control plane"
+        title="Six things teams buy the platform for."
+        description="One inventory across every cloud, provisioning without console access, observability included in the licence, a scored migration plan, one identity fabric with continuous audit evidence, and a sovereign deployment that proves where data lives. Each solution page shows the data path, the console, the modules involved and a delivered engagement."
+      >
+        <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <div>
+            <Button href="/contact?intent=demo" size="lg">
+              See it on your estate
+              <ArrowRight className="h-4 w-4" />
+            </Button>
+            <p className="mt-2 text-xs text-faint">45 minutes · one of your accounts, connected read-only</p>
           </div>
-        </Container>
-      </section>
+          <Button href="/case-studies" size="lg" variant="outline">
+            Read the case studies
+          </Button>
+        </div>
+        {/* the six solutions as icon chips — a jump list */}
+        <div className="mt-8 flex flex-wrap gap-2">
+          {solutions.map((s) => (
+            <Link
+              key={s.slug}
+              href={`/solutions/${s.slug}`}
+              className="inline-flex items-center gap-1.5 rounded-full border border-line bg-white px-3 py-1.5 text-xs font-semibold text-muted shadow-sm transition-colors hover:border-accent hover:text-accent"
+            >
+              <Icon name={s.icon} className="h-3.5 w-3.5 text-accent" />
+              {s.name}
+            </Link>
+          ))}
+        </div>
+      </PhotoHero>
 
       <PageIndex items={[
         { label: "By outcome", href: "#outcomes" },

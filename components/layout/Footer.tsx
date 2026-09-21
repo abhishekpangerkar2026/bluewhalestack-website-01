@@ -6,7 +6,7 @@ import { footerNav, company, compliance } from "@/content/company";
 
 export function Footer() {
   return (
-    <footer className="site-footer relative overflow-hidden border-t border-white/10 bg-[#0e0f12] text-white/70">
+    <footer className="site-footer relative overflow-hidden border-t border-white/10 bg-[#081540] text-white/70">
       <div className="container-x relative pt-14 sm:pt-20">
         <div className="grid gap-10 border-b border-white/10 pb-12 sm:pb-16 lg:grid-cols-[1fr_0.8fr] lg:gap-24">
           <div>
@@ -16,7 +16,7 @@ export function Footer() {
             <a href={company.social.linkedin} className="mt-6 inline-flex items-center gap-2 text-xs font-medium text-white/80 transition-colors hover:text-white">Follow our progress on LinkedIn <ArrowUpRight aria-hidden className="h-3.5 w-3.5" /></a>
           </div>
           <div className="max-w-md lg:ml-auto lg:w-full">
-            <div className="flex items-center gap-2.5"><Globe2 aria-hidden className="h-4 w-4 text-[#6b93ff]" /><span className="eyebrow text-slate-400">Connected thinking</span></div>
+            <div className="flex items-center gap-2.5"><Globe2 aria-hidden className="h-4 w-4 text-[#e6c06a]" /><span className="eyebrow text-slate-400">Connected thinking</span></div>
             <p className="mt-4 font-display text-xl font-medium tracking-tight text-white">A clearer view of the cloud.</p>
             <p className="mt-2 text-sm leading-relaxed text-slate-400">Platform updates and ideas for the teams running modern infrastructure.</p>
             <NewsletterForm />
@@ -35,7 +35,7 @@ export function Footer() {
         </nav>
 
         <div className="flex flex-col gap-5 border-y border-white/10 py-6 sm:flex-row sm:items-start sm:gap-10">
-          <Link href="/trust" className="inline-flex shrink-0 items-center gap-2 text-xs font-medium text-white/85"><ShieldCheck aria-hidden className="h-4 w-4 text-[#6b93ff]" />Trust, by design <ArrowUpRight aria-hidden className="h-3 w-3" /></Link>
+          <Link href="/trust" className="inline-flex shrink-0 items-center gap-2 text-xs font-medium text-white/85"><ShieldCheck aria-hidden className="h-4 w-4 text-[#e6c06a]" />Trust, by design <ArrowUpRight aria-hidden className="h-3 w-3" /></Link>
           <div className="flex flex-wrap gap-x-5 gap-y-2">{compliance.map((item) => <span key={item} className="text-[10px] font-medium tracking-wide text-slate-400">{item}</span>)}</div>
         </div>
 

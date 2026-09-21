@@ -3,60 +3,67 @@
 
 /* ═══════════════════════════════════════════════════════════════
    BlueWhale Stack — design system
-   "Spec-sheet modernism": warm paper, near-black ink, one signal
-   blue, hairline rules, square corners, IBM Plex Sans + Mono.
-   The site reads like a precision engineering document, because
-   the product is a control plane.
+   The official brand system (Design & Collateral Guidelines v1.0,
+   August 2026): royal blue #002CA0, dark blue #0D2270, one gold
+   accent #C9962E used small and sparingly, ink #101828 on white,
+   light panels #F4F7FC, hairlines #E4E9F2. White-dominant pages;
+   blue is confident but rationed; whites are protected.
+   Visual language: "glass 3D" — studio renders, glass cards,
+   gold glow nodes, blue gradients. Plus Jakarta Sans throughout.
    Light-first, dark via [data-theme='dark'] + OS preference.
    ═══════════════════════════════════════════════════════════════ */
 
 :root {
   /* Brand */
-  --brand-deep: #16389f;  /* pressed / deep brand blue */
-  --brand-blue: #2458f5;  /* the logo's signal blue — used sparingly */
-  --brand-sky: #ebf0fe;
-  --brand-ink: #14161a;
+  --brand-blue: #002ca0;   /* BLUE — primary brand */
+  --brand-deep: #0d2270;   /* DARK — headlines, dark bands, featured */
+  --brand-mid: #3355c0;    /* MID — gradients, secondary tiers */
+  --brand-sky: #dce7f6;    /* LBLU — light-blue container bands */
+  --brand-ink: #101828;
+  --gold: #c9962e;         /* GOLD — the only accent; rules, nodes, chips */
+  --gold-soft: #f6ecd6;
+  --gold-text: #8f6612;    /* gold that passes contrast as small text on white */
 
-  /* Backgrounds (light) — warm paper, not cool gray */
-  --bg-canvas: #fafaf8;
+  /* Backgrounds (light) */
+  --bg-canvas: #ffffff;
   --bg-surface: #ffffff;
   --bg-elevated: #ffffff;
-  --bg-sunken: #f1f1ee;
-  --bg-hover: #f1f1ee;
-  --bg-active: #ebf0fe;
+  --bg-sunken: #f4f7fc;    /* PANEL */
+  --bg-hover: #eef1f5;     /* LGRY */
+  --bg-active: #dce7f6;    /* LBLU */
 
   /* Text (light) */
-  --text-primary: #14161a;
-  --text-secondary: #4c5158;
-  --text-tertiary: #6e7077; /* ≥4.5:1 on canvas */
+  --text-primary: #101828;
+  --text-secondary: #475467;
+  --text-tertiary: #667085;
   --text-inverse: #ffffff;
-  --text-accent: #1e49d2;
-  --text-disabled: #a3a5ab;
+  --text-accent: #002ca0;
+  --text-disabled: #98a2b3;
 
-  /* Borders (light) — hairlines do the work shadows used to do */
-  --border-default: #e4e3de;
-  --border-strong: #c7c6bf;
-  --border-accent: #2458f5;
+  /* Borders (light) */
+  --border-default: #e4e9f2;
+  --border-strong: #c3cde0;
+  --border-accent: #002ca0;
 
   /* Primary action */
-  --primary-bg: #2458f5;
-  --primary-hover: #1b46db;
-  --primary-active: #16389f;
+  --primary-bg: #002ca0;
+  --primary-hover: #0d2270;
+  --primary-active: #091a55;
   --primary-fg: #ffffff;
 
   /* Status */
-  --success-bg: #e9f3ec;
-  --success-fg: #17683a;
-  --success-border: #a9d4b7;
-  --warning-bg: #faf3e2;
-  --warning-fg: #7d5300;
-  --warning-border: #ecc97a;
+  --success-bg: #e8f5ee;
+  --success-fg: #176a3c;
+  --success-border: #a6d8b9;
+  --warning-bg: #f9f1df;
+  --warning-fg: #7a5410;
+  --warning-border: #e3c67a;
   --danger-bg: #fdeeec;
   --danger-fg: #ab2418;
   --danger-border: #f0a8a1;
-  --info-bg: #ebf0fe;
-  --info-fg: #1e49d2;
-  --info-border: #b8caf9;
+  --info-bg: #eaf0fb;
+  --info-fg: #002ca0;
+  --info-border: #b9cbee;
 
   /* Cloud brand colors */
   --cloud-aws: #ff9900;
@@ -68,91 +75,97 @@
   --cloud-vmware: #607d8b;
   --cloud-nutanix: #024da1;
 
-  /* Elevation — barely there; hairlines carry hierarchy */
-  --shadow-sm: 0 1px 2px rgb(20 22 26 / 0.04);
-  --shadow-md: 0 2px 10px -2px rgb(20 22 26 / 0.07);
-  --shadow-lg: 0 10px 32px -12px rgb(20 22 26 / 0.12);
-  --shadow-xl: 0 18px 48px -16px rgb(20 22 26 / 0.16);
-  --shadow-focus: 0 0 0 3px rgb(36 88 245 / 0.22);
+  /* Elevation — soft, blue-tinted (the deck card shadow) */
+  --shadow-sm: 0 1px 2px rgb(13 34 112 / 0.05);
+  --shadow-md: 0 2px 5px rgb(13 34 112 / 0.06), 0 6px 18px -6px rgb(13 34 112 / 0.1);
+  --shadow-lg: 0 12px 32px -10px rgb(13 34 112 / 0.18);
+  --shadow-xl: 0 24px 56px -18px rgb(13 34 112 / 0.26);
+  --shadow-focus: 0 0 0 3px rgb(0 44 160 / 0.22);
 }
 
-/* Dark mode — graphite console, not navy */
+/* Dark mode — deep navy, gold stays */
 [data-theme="dark"] {
-  --bg-canvas: #0c0d0f;
-  --bg-surface: #121316;
-  --bg-elevated: #17181c;
-  --bg-sunken: #08090a;
-  --bg-hover: #17181c;
-  --bg-active: #16213f;
+  --bg-canvas: #070c22;
+  --bg-surface: #0b1230;
+  --bg-elevated: #10183c;
+  --bg-sunken: #050918;
+  --bg-hover: #10183c;
+  --bg-active: #162457;
 
-  --text-primary: #f2f2f0;
-  --text-secondary: #a7abb2;
-  --text-tertiary: #8b8f97;
-  --text-accent: #85a3ff;
-  --text-disabled: #4c5158;
+  --text-primary: #f3f5fb;
+  --text-secondary: #aeb8d3;
+  --text-tertiary: #8d98b8;
+  --text-accent: #9db4ff;
+  --text-disabled: #4d5779;
+  --gold-text: #e6c06a;
 
-  --border-default: #26282d;
-  --border-strong: #3a3d44;
-  --border-accent: #85a3ff;
+  --border-default: #1d2750;
+  --border-strong: #2f3b6d;
+  --border-accent: #9db4ff;
 
-  --primary-bg: #3b63ea;
-  --primary-hover: #4f76f6;
-  --primary-active: #2e51c9;
+  --primary-bg: #2f57d6;
+  --primary-hover: #4368e6;
+  --primary-active: #2446b5;
   --primary-fg: #ffffff;
 
   --success-bg: #0f2417;
   --success-fg: #7fd9a1;
-  --warning-bg: #271d08;
-  --warning-fg: #f0c169;
+  --warning-bg: #2a2010;
+  --warning-fg: #e9c36a;
   --danger-bg: #2b1210;
   --danger-fg: #f28377;
   --info-bg: #101c3a;
-  --info-fg: #92aefc;
+  --info-fg: #9db4ff;
 
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
   --shadow-md: 0 4px 12px -2px rgba(0, 0, 0, 0.45);
   --shadow-lg: 0 12px 32px -8px rgba(0, 0, 0, 0.55);
   --shadow-xl: 0 20px 48px -12px rgba(0, 0, 0, 0.6);
-  --shadow-focus: 0 0 0 3px rgba(133, 163, 255, 0.28);
+  --shadow-focus: 0 0 0 3px rgba(157, 180, 255, 0.28);
 }
 
 /* Respect OS preference unless the user forced light */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg-canvas: #0c0d0f;
-    --bg-surface: #121316;
-    --bg-elevated: #17181c;
-    --bg-sunken: #08090a;
-    --bg-hover: #17181c;
-    --bg-active: #16213f;
-    --text-primary: #f2f2f0;
-    --text-secondary: #a7abb2;
-    --text-tertiary: #8b8f97;
-    --text-accent: #85a3ff;
-    --text-disabled: #4c5158;
-    --border-default: #26282d;
-    --border-strong: #3a3d44;
-    --border-accent: #85a3ff;
-    --primary-bg: #3b63ea;
-    --primary-hover: #4f76f6;
-    --primary-active: #2e51c9;
+    --bg-canvas: #070c22;
+    --bg-surface: #0b1230;
+    --bg-elevated: #10183c;
+    --bg-sunken: #050918;
+    --bg-hover: #10183c;
+    --bg-active: #162457;
+    --text-primary: #f3f5fb;
+    --text-secondary: #aeb8d3;
+    --text-tertiary: #8d98b8;
+    --text-accent: #9db4ff;
+    --text-disabled: #4d5779;
+    --gold-text: #e6c06a;
+    --border-default: #1d2750;
+    --border-strong: #2f3b6d;
+    --border-accent: #9db4ff;
+    --primary-bg: #2f57d6;
+    --primary-hover: #4368e6;
+    --primary-active: #2446b5;
     --primary-fg: #ffffff;
   }
 }
 
 /* ── Tailwind theme — map utilities to the tokens above ────────── */
 @theme {
-  /* Brand scale (static) */
-  --color-brand-50: #eef2fe;
-  --color-brand-100: #dce5fd;
-  --color-brand-200: #b9cafb;
-  --color-brand-300: #8fa9f8;
-  --color-brand-400: #5f82f7;
-  --color-brand-500: #2458f5;
-  --color-brand-600: #1b46db;
-  --color-brand-700: #1637ac;
-  --color-brand-800: #10214d;
-  --color-brand-900: #0a1020;
+  /* Brand scale (static) — 600 is BLUE, 700 is DARK, 900 the deep hero navy */
+  --color-brand-50: #eef2fb;
+  --color-brand-100: #dce7f6;
+  --color-brand-200: #b9cbee;
+  --color-brand-300: #8fa9e0;
+  --color-brand-400: #5b7bd0;
+  --color-brand-500: #3355c0;
+  --color-brand-600: #002ca0;
+  --color-brand-700: #0d2270;
+  --color-brand-800: #0a1a58;
+  --color-brand-900: #081540;
+
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-gold-text: var(--gold-text);
 
   /* Semantic surfaces / text / lines (theme-aware via var) */
   --color-canvas: var(--bg-canvas);
@@ -179,12 +192,12 @@
   --color-warning: var(--warning-fg);
   --color-danger: var(--danger-fg);
 
-  /* Radius — sharp. The document look lives or dies here. */
-  --radius-sm: 2px;
-  --radius-md: 3px;
-  --radius-lg: 4px;
-  --radius-xl: 6px;
-  --radius-2xl: 8px;
+  /* Radius — soft cards, the deck system's rounded panels */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
 
   /* Shadows */
   --shadow-sm: var(--shadow-sm);
@@ -197,7 +210,6 @@
     "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-mono: var(--font-mono-src), "SF Mono", Menlo, Consolas,
     "Courier New", monospace;
-  /* One family; display sizes differentiate by weight and tracking */
   --font-display: var(--font-sans-src), -apple-system, "Segoe UI", sans-serif;
 
   /* Content width */
@@ -216,9 +228,8 @@ body {
   background: var(--bg-canvas);
   color: var(--text-primary);
   font-family: var(--font-sans);
-  font-size: 15px;
+  font-size: 15.5px;
   line-height: 1.65;
-  font-feature-settings: "ss01" on;
 }
 
 h1, h2, h3, h4 {
@@ -239,7 +250,7 @@ section[id], h2[id], h3[id] { scroll-margin-top: 7rem; }
   left: 1rem;
   z-index: 100;
   transform: translateY(-180%);
-  border-radius: 3px;
+  border-radius: 8px;
   background: var(--primary-bg);
   color: var(--primary-fg);
   padding: .75rem 1rem;
@@ -260,42 +271,42 @@ section[id], h2[id], h3[id] { scroll-margin-top: 7rem; }
 }
 
 @utility num {
-  font-family: var(--font-mono);
+  font-family: var(--font-display);
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.02em;
 }
 
 /* ── Type scale — one hierarchy for the whole site ─────────────
-   display-1: page hero h1   display-2: section h2   eyebrow: mono spec label
-   The eyebrow is IBM Plex Mono, uppercase, wide-tracked — the site's
-   signature "spec label". Blue is reserved; labels default to ink/tertiary
-   at the call site. */
+   display-1: page hero h1   display-2: section h2
+   eyebrow: the brand's signature kicker — gold, bold, letterspaced,
+   uppercase ("01 · SECTION NAME"). */
 @utility display-1 {
   font-family: var(--font-display);
-  font-size: clamp(2.6rem, 5vw, 4.7rem);
-  font-weight: 600;
+  font-size: clamp(2.7rem, 5.1vw, 4.8rem);
+  font-weight: 700;
   line-height: 1.02;
-  letter-spacing: -0.042em;
+  letter-spacing: -0.035em;
   text-wrap: balance;
 }
 @utility display-2 {
   font-family: var(--font-display);
-  font-size: clamp(1.8rem, 3vw, 2.65rem);
-  font-weight: 600;
-  line-height: 1.1;
-  letter-spacing: -0.032em;
+  font-size: clamp(1.9rem, 3.1vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.028em;
   text-wrap: balance;
 }
 @utility eyebrow {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 700;
   line-height: 1.3;
-  letter-spacing: 0.13em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
+  color: var(--gold-text);
 }
 
-/* Fine blueprint grid for technical backdrops (was a dot grid) */
+/* Fine grid for technical backdrops */
 @utility bg-dot-grid {
   background-image:
     linear-gradient(to right, var(--border-default) 1px, transparent 1px),
@@ -303,7 +314,21 @@ section[id], h2[id], h3[id] { scroll-margin-top: 7rem; }
   background-size: 32px 32px;
 }
 
-/* A hairline rule with square end-ticks — the spec-sheet divider */
+/* The brand gradient — dark blue to royal blue, used on hero and CTA bands */
+@utility bg-brand-gradient {
+  background-image: linear-gradient(135deg, #0d2270 0%, #002ca0 58%, #1d43b8 100%);
+}
+
+/* Deck-style content backdrop: white → pale blue with soft circles */
+@utility bg-deck {
+  background-color: #ffffff;
+  background-image:
+    radial-gradient(circle at 88% 12%, rgb(220 231 246 / 0.75) 0, transparent 26%),
+    radial-gradient(circle at 8% 90%, rgb(201 217 240 / 0.55) 0, transparent 24%),
+    linear-gradient(180deg, #ffffff 0%, #edf3fb 100%);
+}
+
+/* A hairline rule with gold end-ticks */
 .spec-rule {
   position: relative;
   border-top: 1px solid var(--border-default);
@@ -315,66 +340,147 @@ section[id], h2[id], h3[id] { scroll-margin-top: 7rem; }
   top: -2.5px;
   width: 4px;
   height: 4px;
-  background: var(--border-strong);
+  background: var(--gold);
 }
 .spec-rule::before { left: 0; }
 .spec-rule::after { right: 0; }
 
-/* Entrance animation */
+/* Short gold rule used under kickers and above card titles */
+.gold-rule {
+  display: block;
+  width: 40px;
+  height: 2px;
+  background: var(--gold);
+  border-radius: 2px;
+}
+
+/* Signature chip: dark fill, 1px gold border, white bold text */
+.chip-signature {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  border: 1px solid var(--gold);
+  background: var(--brand-deep);
+  color: #fff;
+  border-radius: 999px;
+  padding: .3rem .75rem;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+/* Glass panel for copy that sits over a photo */
+.glass {
+  background: rgb(255 255 255 / 0.72);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  backdrop-filter: blur(14px) saturate(1.2);
+  border: 1px solid rgb(255 255 255 / 0.6);
+  box-shadow: var(--shadow-lg);
+}
+.glass-dark {
+  background: rgb(8 21 64 / 0.55);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  backdrop-filter: blur(14px) saturate(1.2);
+  border: 1px solid rgb(255 255 255 / 0.14);
+}
+
+/* Cards that lift on hover */
+.card-lift {
+  transition: transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s cubic-bezier(.16,1,.3,1), border-color .25s;
+}
+.card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--border-strong);
+}
+
+/* ── Motion ───────────────────────────────────────────────────── */
 @keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 @keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
-.animate-fade-up {
-  animation: fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+/* slow studio drift for hero photographs */
+@keyframes photo-drift {
+  from { transform: scale(1.07) translate3d(1.2%, 1%, 0); }
+  to { transform: scale(1) translate3d(0, 0, 0); }
 }
-/* Native 3D product scenes (components/scenes/ProductScene.tsx) */
+/* gentle hover for floating objects */
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+/* gold glow nodes breathing */
+@keyframes gold-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgb(201 150 46 / 0.55); opacity: .95; }
+  50% { box-shadow: 0 0 0 9px rgb(201 150 46 / 0); opacity: 1; }
+}
+/* a light pulse travelling along a beam */
+@keyframes beam-travel {
+  0% { offset-distance: 0%; opacity: 0; }
+  8% { opacity: 1; }
+  92% { opacity: 1; }
+  100% { offset-distance: 100%; opacity: 0; }
+}
+@keyframes beam-down {
+  0% { transform: translateY(-20%); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(120%); opacity: 0; }
+}
+/* slow sheen across dark bands */
+@keyframes sheen {
+  0% { transform: translateX(-60%) skewX(-18deg); }
+  100% { transform: translateX(260%) skewX(-18deg); }
+}
+@keyframes slide-in-word {
+  from { opacity: 0; transform: translateY(0.6em) rotate(1.5deg); }
+  to { opacity: 1; transform: translateY(0) rotate(0); }
+}
+@keyframes dash-flow { to { stroke-dashoffset: -40; } }
+
+.animate-fade-up { animation: fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-marquee { animation: marquee 44s linear infinite; }
+.photo-drift { animation: photo-drift 9s cubic-bezier(.2,.7,.2,1) both; will-change: transform; }
+.float-slow { animation: float-y 6s ease-in-out infinite; }
+.float-slower { animation: float-y 8s ease-in-out infinite; animation-delay: -2s; }
+.gold-node { position: relative; width: 10px; height: 10px; border-radius: 999px; background: var(--gold); animation: gold-pulse 2.6s ease-out infinite; }
+.beam-dot { animation: beam-down 3.2s linear infinite; }
+.flow-line { stroke-dasharray: 6 8; animation: dash-flow 1.4s linear infinite; }
+.sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 28%;
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.07), transparent);
+  animation: sheen 9s ease-in-out infinite;
+  pointer-events: none;
+}
+.word-in { display: inline-block; animation: slide-in-word .7s cubic-bezier(.16,1,.3,1) both; }
+
+/* Legacy scene hooks kept for the unmounted 3D engine */
 .scene-mask {
   -webkit-mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent), linear-gradient(to bottom, transparent, #000 9%, #000 91%, transparent);
   mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent), linear-gradient(to bottom, transparent, #000 9%, #000 91%, transparent);
   -webkit-mask-composite: source-in;
   mask-composite: intersect;
 }
-@keyframes scene-flow {
-  to { stroke-dashoffset: -40; }
-}
-@keyframes scene-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
-}
-.scene-flow { animation: scene-flow 1.6s linear infinite; }
-.scene-float { animation: scene-float 5s ease-in-out infinite; }
-@media (prefers-reduced-motion: reduce) {
-  .scene-flow, .scene-float { animation: none; }
-}
+.scene-flow { animation: dash-flow 1.6s linear infinite; }
+.scene-float { animation: float-y 5s ease-in-out infinite; }
 
-.animate-marquee {
-  animation-name: marquee;
-  animation-duration: 36s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
 @media (prefers-reduced-motion: reduce) {
-  .animate-fade-up, .animate-marquee {
+  .animate-fade-up, .animate-marquee, .photo-drift, .float-slow, .float-slower,
+  .gold-node, .beam-dot, .flow-line, .word-in, .scene-flow, .scene-float {
     animation: none;
   }
-  html {
-    scroll-behavior: auto;
-  }
+  .sheen::after { animation: none; display: none; }
+  .card-lift { transition: none; }
+  .card-lift:hover { transform: none; }
+  html { scroll-behavior: auto; }
 }
 
 /* Shared chrome and component polish; page content stays in normal flow. */
@@ -386,11 +492,11 @@ section[id], h2[id], h3[id] { scroll-margin-top: 7rem; }
 .section-heading h2 { max-width: 26ch; }
 .section-heading.text-center h2 { margin-inline: auto; }
 .site-footer input { min-width: 0; }
-.site-footer input::placeholder { color: #8b8f97; }
+.site-footer input::placeholder { color: #8d98b8; }
 .site-footer form > label { font-size: 10px; }
 .site-footer form > div { gap: .5rem; }
 .site-footer form button { background: var(--brand-blue); }
-.site-footer form button:hover { background: #416fff; }
+.site-footer form button:hover { background: var(--brand-mid); }
 @media (prefers-reduced-motion: reduce) {
   .site-button > svg { transition: none; }
   .site-button:hover > svg:last-child { transform: none; }

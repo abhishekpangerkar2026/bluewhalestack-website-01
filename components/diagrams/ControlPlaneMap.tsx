@@ -41,7 +41,7 @@ export function ControlPlaneMap({
       className="mx-auto max-w-5xl"
     >
       {/* sources */}
-      <p className="eyebrow text-center text-white/60">
+      <p className="eyebrow text-center text-[var(--gold)]">
         Your clouds, hypervisors &amp; data centers
       </p>
       <div className="mt-3 flex flex-wrap items-center justify-center gap-2">

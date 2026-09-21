@@ -2,6 +2,7 @@ import { InnerPage } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
 import { ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { PhotoHero } from "@/components/sections/PhotoHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
@@ -23,62 +24,33 @@ export default function PartnersPage() {
   return (
     <InnerPage category="company" current="/partners">
       {/* ── Hero: clean light statement band ── */}
-      <section className="relative overflow-hidden border-b border-line bg-surface">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 bg-dot-grid opacity-60 [mask-image:radial-gradient(ellipse_70%_60%_at_50%_50%,black,transparent)]"
-        />
-        <Container className="relative">
-          <div className="grid items-center gap-12 py-20 sm:py-28 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="max-w-3xl">
-            <div className="mb-5 flex items-center gap-3">
-              <span aria-hidden className="h-px w-8 bg-accent/50" />
-              <span className="eyebrow text-accent">
-                Partner Ecosystem
-              </span>
-            </div>
-            <h1 className="display-1 text-ink">
-              Grow together.{" "}
-              <span className="whitespace-nowrap text-accent">Win together.</span>
-            </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
-              Three ways to partner with BlueWhale Stack — resell licenses,
-              implement and support the platform for end customers, or operate
-              as the official partner for your country. Apply in minutes and
-              go live after approval.
-            </p>
-            <div className="mt-9 flex flex-wrap gap-3">
-              <Button href={partnerPortal.register} external size="lg">
-                Become a partner
-                <ArrowUpRight className="h-4 w-4" />
-              </Button>
-              <Button
-                href={partnerPortal.login}
-                external
-                size="lg"
-                variant="secondary"
-              >
-                Partner login
-              </Button>
-            </div>
-            <p className="mt-5 text-sm text-faint">
-              Portal:{" "}
-              <a href={partnerPortal.url} className="text-accent hover:underline">
-                {partnerPortal.url.replace(/^https?:\/\//, "")}
-              </a>
-            </p>
-          </div>
-          <Reveal delay={100}>
-            <div className="mx-auto w-full max-w-[500px]">
-              <Iso
-                name="partners"
-                title="Three partner tracks — License Service Provider, System Implementation and Strategic — around one platform"
-              />
-            </div>
-          </Reveal>
-          </div>
-        </Container>
-      </section>
+      <PhotoHero
+        photo="hybrid-bridge"
+        eyebrow="Partner Ecosystem"
+        title={<>Grow together. <span className="whitespace-nowrap text-accent">Win together.</span></>}
+        description="Three ways to partner with BlueWhale Stack — resell licences, implement and support the platform for end customers, or operate as the official partner for your country. Apply in minutes and go live after approval."
+      >
+        <div className="flex flex-wrap gap-3">
+          <Button href={partnerPortal.register} external size="lg">
+            Become a partner
+            <ArrowUpRight className="h-4 w-4" />
+          </Button>
+          <Button
+            href={partnerPortal.login}
+            external
+            size="lg"
+            variant="secondary"
+          >
+            Partner login
+          </Button>
+        </div>
+        <p className="mt-5 text-sm text-faint">
+          Portal:{" "}
+          <a href={partnerPortal.url} className="text-accent hover:underline">
+            {partnerPortal.url.replace(/^https?:\/\//, "")}
+          </a>
+        </p>
+      </PhotoHero>
 
       {/* ── Why partner: editorial split, heading left / reasons right ── */}
       <section className="bg-canvas py-24 sm:py-32">
@@ -187,7 +159,7 @@ export default function PartnersPage() {
           <Reveal delay={120}>
             <div className="relative mt-12 overflow-hidden rounded-lg border border-line bg-surface p-8 shadow-sm">
               <div className="relative">
-                <p className="eyebrow text-accent">
+                <p className="eyebrow">
                   LSP margin tiers
                 </p>
                 <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted">

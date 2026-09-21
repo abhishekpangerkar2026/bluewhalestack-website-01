@@ -138,7 +138,7 @@ export default function WhaleForge() {
               <div>
                 <div className="mb-5 flex items-center gap-3">
                   <Badge tone="warning">Beta</Badge>
-                  <span className="eyebrow text-accent">
+                  <span className="eyebrow">
                     Product · WhaleForge
                   </span>
                 </div>
@@ -191,7 +191,7 @@ policies:
                   </pre>
                 </div>
                 <div className="rounded-xl border border-line bg-sunken p-5">
-                  <p className="eyebrow text-faint">
+                  <p className="eyebrow">
                     What you get today
                   </p>
                   <ul className="mt-4 flex flex-col gap-2.5">
@@ -400,7 +400,7 @@ policies:
           <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
             <Reveal>
               <div className="max-w-2xl">
-                <p className="eyebrow text-white/80">
+                <p className="eyebrow text-[var(--gold)]">
                   Beta · Free to try
                 </p>
                 <h2 className="mt-5 text-3xl font-bold leading-[1.1] tracking-tight text-white sm:text-4xl">

@@ -127,7 +127,7 @@ function MegaPanel({ item, onNavigate }: { item: NavItem; onNavigate: () => void
     <div id={menuId(item.label)} className="absolute inset-x-5 top-full pt-3">
       <div className="overflow-hidden rounded-md border border-line bg-surface shadow-lg">
         <div className="flex items-center justify-between border-b border-line bg-sunken px-7 py-3.5">
-          <span className="eyebrow text-faint">Explore {item.label}</span>
+          <span className="eyebrow">Explore {item.label}</span>
           <Link href={item.href} onClick={onNavigate} className="inline-flex items-center gap-2 text-xs font-semibold text-accent">{item.label} overview <ArrowRight aria-hidden className="h-3.5 w-3.5" /></Link>
         </div>
         <div className="grid grid-cols-4 divide-x divide-line p-3">
@@ -154,7 +154,7 @@ function MobileDrawer({ onNavigate }: { onNavigate: () => void }) {
   const [openItem, setOpenItem] = useState<string | null>(null);
   return (
     <div className="container-x pb-10 pt-4">
-      <div className="mb-2 flex items-center justify-between"><p className="eyebrow text-faint">Explore BlueWhale Stack</p><button type="button" onClick={onNavigate} aria-label="Close navigation" className="grid h-10 w-10 place-items-center rounded-lg hover:bg-sunken"><X aria-hidden className="h-5 w-5" /></button></div>
+      <div className="mb-2 flex items-center justify-between"><p className="eyebrow">Explore BlueWhale Stack</p><button type="button" onClick={onNavigate} aria-label="Close navigation" className="grid h-10 w-10 place-items-center rounded-lg hover:bg-sunken"><X aria-hidden className="h-5 w-5" /></button></div>
       <nav aria-label="Mobile primary navigation"><ul>
         {primaryNav.map((item) => (
           <li key={item.label} className="border-b border-line">
@@ -163,7 +163,7 @@ function MobileDrawer({ onNavigate }: { onNavigate: () => void }) {
               {item.columns && <button type="button" aria-label={`Show ${item.label} links`} aria-expanded={openItem === item.label} aria-controls={`mobile-${menuId(item.label)}`} onClick={() => setOpenItem(openItem === item.label ? null : item.label)} className="grid h-11 w-11 place-items-center rounded-lg bg-sunken text-muted"><ChevronDown aria-hidden className={cn("h-4 w-4 transition-transform", openItem === item.label && "rotate-180")} /></button>}
             </div>
             {openItem === item.label && item.columns && <div id={`mobile-${menuId(item.label)}`} className="grid gap-6 pb-6 pt-2 sm:grid-cols-2">
-              {item.columns.map((column) => <div key={column.heading}><p className="eyebrow mb-2 text-faint">{column.heading}</p><ul>{column.links.map((link) => <li key={link.label}><Link href={link.href} onClick={onNavigate} target={link.external ? "_blank" : undefined} rel={link.external ? "noopener noreferrer" : undefined} className="flex items-center gap-1.5 rounded-lg py-2 text-sm text-muted hover:text-accent">{link.label}{link.external && <ArrowUpRight aria-hidden className="h-3 w-3" />}</Link></li>)}</ul></div>)}
+              {item.columns.map((column) => <div key={column.heading}><p className="eyebrow mb-2 ">{column.heading}</p><ul>{column.links.map((link) => <li key={link.label}><Link href={link.href} onClick={onNavigate} target={link.external ? "_blank" : undefined} rel={link.external ? "noopener noreferrer" : undefined} className="flex items-center gap-1.5 rounded-lg py-2 text-sm text-muted hover:text-accent">{link.label}{link.external && <ArrowUpRight aria-hidden className="h-3 w-3" />}</Link></li>)}</ul></div>)}
             </div>}
           </li>
         ))}

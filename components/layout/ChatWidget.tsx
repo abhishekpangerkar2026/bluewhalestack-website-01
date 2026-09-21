@@ -73,8 +73,8 @@ export function ChatWidget() {
     <>
       {open && (
         <div id="bluewhale-assistant" role="dialog" aria-labelledby="assistant-title" onKeyDown={(event) => { if (event.key === "Escape") { event.stopPropagation(); close(); } }} className="fixed bottom-24 right-4 z-50 flex h-[29rem] max-h-[calc(100dvh-7rem)] w-[23rem] max-w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-xl sm:right-6">
-          <div className="flex shrink-0 items-center justify-between border-b border-white/10 bg-[#101114] px-5 py-4 text-white">
-            <div className="flex items-center gap-3"><span className="grid h-9 w-9 place-items-center rounded-lg bg-white/10"><MessageSquare aria-hidden className="h-4 w-4 text-[#6b93ff]" /></span><div><p id="assistant-title" className="text-sm font-semibold">BlueWhale Assistant</p><p className="mt-0.5 text-[10px] text-slate-400">Find your next step</p></div></div>
+          <div className="flex shrink-0 items-center justify-between border-b border-white/10 bg-[#0d2270] px-5 py-4 text-white">
+            <div className="flex items-center gap-3"><span className="grid h-9 w-9 place-items-center rounded-lg bg-white/10"><MessageSquare aria-hidden className="h-4 w-4 text-[#e6c06a]" /></span><div><p id="assistant-title" className="text-sm font-semibold">BlueWhale Assistant</p><p className="mt-0.5 text-[10px] text-slate-400">Find your next step</p></div></div>
             <button type="button" onClick={close} aria-label="Close chat" className="grid h-9 w-9 place-items-center rounded-lg hover:bg-white/10">
               <X aria-hidden className="h-4 w-4" />
             </button>
@@ -137,7 +137,7 @@ export function ChatWidget() {
         ref={toggleRef}
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="fixed bottom-5 right-4 z-40 inline-flex h-12 items-center gap-2.5 rounded-md border border-white/15 bg-[#101114] px-4 text-white shadow-lg transition-transform hover:-translate-y-0.5 motion-reduce:transform-none sm:right-6"
+        className="fixed bottom-5 right-4 z-40 inline-flex h-12 items-center gap-2.5 rounded-md border border-white/15 bg-[#0d2270] px-4 text-white shadow-lg transition-transform hover:-translate-y-0.5 motion-reduce:transform-none sm:right-6"
         aria-label={open ? "Close chat assistant" : "Open chat assistant"}
         aria-expanded={open}
         aria-controls="bluewhale-assistant"

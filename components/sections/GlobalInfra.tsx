@@ -15,7 +15,7 @@ export function GlobalInfra() {
           <Reveal>
             <SectionHeading inverse eyebrow={globalIntro.eyebrow} title={globalIntro.title} description={globalIntro.description} />
             <div aria-hidden className="mt-10 flex items-center gap-4 border-t border-white/10 pt-6">
-              <Globe2 className="h-5 w-5 text-[#6b93ff]" />
+              <Globe2 className="h-5 w-5 text-[#e6c06a]" />
               <div className="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[10px] tracking-[0.12em] text-slate-400">
                 {globalRegions.map((region, index) => <span key={region.code} className="inline-flex items-center gap-4">{region.code}{index < globalRegions.length - 1 && <span className="h-px w-5 bg-white/20" />}</span>)}
               </div>
@@ -26,7 +26,7 @@ export function GlobalInfra() {
             <ol className={styles.regionList}>
               {globalRegions.map((region) => (
                 <li key={region.code} className={styles.region}>
-                  <span className="pt-1 font-mono text-base font-medium tracking-tight text-[#6b93ff]">{region.code}</span>
+                  <span className="pt-1 font-mono text-base font-medium tracking-tight text-[#e6c06a]">{region.code}</span>
                   <div>
                     <h3 className="text-xl font-medium tracking-[-0.03em] text-white">{region.city}</h3>
                     <p className="mt-1 text-xs text-slate-400">{region.country} <span className="mx-1 text-white/20">/</span> {region.serves}</p>

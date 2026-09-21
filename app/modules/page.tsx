@@ -1,4 +1,4 @@
-import { InnerPage, IntroPanel, IntroPanelStat } from "@/components/layout/InnerPage";
+import { InnerPage } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -9,7 +9,9 @@ import { Badge } from "@/components/ui/Badge";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
-import { Iso, FAMILY_ISO } from "@/components/illustrations/Iso";
+import { PhotoHero } from "@/components/sections/PhotoHero";
+import { CountUp } from "@/components/ui/CountUp";
+import { familyTileSrc } from "@/content/moduleArt";
 import { moduleDetails } from "@/content/moduleDetails";
 import {
   modules,
@@ -34,40 +36,34 @@ const ORDER: ModuleGroup[] = moduleGroupOrder.filter((g) =>
 export default function ModulesPage() {
   return (
     <InnerPage category="platform" current="/modules">
-      {/* ── Editorial intro ── */}
-      <section className="border-b border-line bg-canvas pb-16 pt-20 sm:pt-28">
-        <Container>
-          <div className="grid items-end gap-x-16 gap-y-10 lg:grid-cols-[1.25fr_0.75fr]">
-            <Reveal>
-              <div>
-                <div className="mb-5 flex items-center gap-3">
-                  <span aria-hidden className="h-px w-8 bg-accent/50" />
-                  <span className="eyebrow text-accent">The nine capability families</span>
-                </div>
-                <h1 className="display-1 text-ink">
-                  What lives in the{" "}
-                  <span className="text-accent">platform core.</span>
-                </h1>
-                <p className="mt-7 max-w-2xl text-lg leading-relaxed text-muted sm:text-xl">
-                  Fourteen modules across nine families, gated per edition — each with its own page showing what it
-                  does, how it works, the console screen, where it fits and the questions buyers ask. Maturity is
-                  stated on every card: GA, beta, preview or in progress. The full 54-capability list with edition
-                  mapping is in the technical datasheet, on request.
-                </p>
+      {/* ── Hero ── */}
+      <PhotoHero
+        photo="platform-stack"
+        eyebrow="The nine capability families"
+        title={<>What lives in the <span className="text-accent">platform core.</span></>}
+        description="Fourteen modules across nine families, gated per edition — each with its own page showing what it does, how it works, the console screen, where it fits and the questions buyers ask. Maturity is stated on every card: GA, beta, preview or in progress."
+        below={
+          <div className="border-t border-line bg-sunken">
+            <Container>
+              <div className="grid grid-cols-2 gap-y-6 sm:grid-cols-4 sm:divide-x sm:divide-line">
+                {[
+                  { value: 54, label: "capabilities shipped across the platform" },
+                  { value: ORDER.length, label: "capability families under one console" },
+                  { value: modules.length, label: "modules, each with its own page and maturity" },
+                  { value: 4, label: "editions on one architecture — upgrade is a licence change" },
+                ].map((s) => (
+                  <div key={s.label} className="py-6 sm:px-6 sm:first:pl-0 sm:last:pr-0">
+                    <p className="num text-3xl font-extrabold text-accent sm:text-4xl"><CountUp value={s.value} /></p>
+                    <p className="mt-1 text-sm leading-snug text-muted">{s.label}</p>
+                  </div>
+                ))}
               </div>
-            </Reveal>
-            <Reveal delay={90}>
-              <IntroPanel eyebrow="Inside the platform" dark>
-                <div className="grid grid-cols-2 gap-6">
-                  <IntroPanelStat value="54" label="CAPABILITIES" />
-                  <IntroPanelStat value={String(ORDER.length).padStart(2, "0")} label="FAMILIES" />
-                </div>
-                <p className="border-t border-white/15 pt-5 text-sm leading-relaxed text-white/65">One identity, one inventory and one policy plane. Every module states its current maturity.</p>
-              </IntroPanel>
-            </Reveal>
+            </Container>
           </div>
-        </Container>
-      </section>
+        }
+      >
+        <p className="text-sm text-faint">One identity, one inventory and one policy plane. The full 54-capability list with edition mapping is in the technical datasheet, on request.</p>
+      </PhotoHero>
 
       <nav aria-label="Capability families" className="border-b border-line bg-surface">
         <Container>
@@ -98,7 +94,16 @@ export default function ModulesPage() {
               <div className="grid gap-x-14 gap-y-10 lg:grid-cols-[0.85fr_1.15fr]">
                 <Reveal>
                   <div className="lg:sticky lg:top-28 lg:self-start">
-                    <Iso name={FAMILY_ISO[group]} className="mb-6 max-w-[260px]" />
+                    <img
+                      src={familyTileSrc(group, 800)}
+                      srcSet={`${familyTileSrc(group, 480)} 480w, ${familyTileSrc(group, 800)} 800w`}
+                      sizes="(min-width:1024px) 360px, 100vw"
+                      alt=""
+                      width={1200}
+                      height={942}
+                      loading="lazy"
+                      className="mb-6 w-full max-w-[360px] rounded-xl border border-line shadow-md"
+                    />
                     <div className="mb-4 flex items-center gap-3">
                       <span className="grid h-10 w-10 place-items-center rounded-lg bg-primary text-primary-fg">
                         <Icon name={moduleGroupIcons[group]} className="h-5 w-5" />

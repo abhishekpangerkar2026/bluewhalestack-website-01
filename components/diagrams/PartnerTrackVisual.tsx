@@ -39,7 +39,7 @@ export function PartnerTrackVisual({ track }: { track: PartnerTrack }) {
             <Icon name={track.icon} className="h-6 w-6" />
           </span>
           <div className="min-w-0">
-            <p className="eyebrow text-accent">
+            <p className="eyebrow">
               How it works
             </p>
             <h3 className="truncate text-lg font-bold text-ink">

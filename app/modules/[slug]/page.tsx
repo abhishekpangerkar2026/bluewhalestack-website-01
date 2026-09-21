@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowRight, BookOpen, Check, Minus } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { PhotoHero } from "@/components/sections/PhotoHero";
+import { FAMILY_PHOTO } from "@/content/moduleArt";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
@@ -69,46 +71,47 @@ export default async function ModuleDetailPage({
   return (
     <InnerPage category="platform" current="/modules">
       {/* ── Hero ── */}
-      <section className="border-b border-line bg-white py-12 sm:py-16">
-        <Container>
-          <Breadcrumbs
-            items={[
-              { label: "Platform", href: "/platform" },
-              { label: moduleGroups[mod.group], href: `/modules#${mod.group}` },
-              { label: mod.name },
-            ]}
-          />
-          <div className="mt-10 max-w-3xl">
-            <div>
-              <div className="flex flex-wrap items-center gap-2">
-                <Badge tone={detail.status.tone}>{detail.status.label}</Badge>
-                <Badge tone="neutral">{moduleGroups[mod.group]}</Badge>
-              </div>
-              <h1 className="display-1 mt-6 text-ink">{mod.name}</h1>
-              <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">{detail.summary}</p>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <div>
-                  <Button href="/contact?intent=demo" size="lg">
-                    See it on your estate
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
-                  <p className="mt-2 text-xs text-faint">45 minutes · one of your accounts, connected read-only</p>
-                </div>
-                {docs ? (
-                  <Button href={`/docs/${docs.slug}`} size="lg" variant="outline">
-                    <BookOpen className="h-4 w-4" />
-                    {docs.label}
-                  </Button>
-                ) : (
-                  <Button href="/editions" size="lg" variant="outline">
-                    Which edition includes it
-                  </Button>
-                )}
-              </div>
+      <PhotoHero
+        photo={FAMILY_PHOTO[mod.group]}
+        priority
+        above={
+          <div className="mb-8">
+            <Breadcrumbs
+              items={[
+                { label: "Platform", href: "/platform" },
+                { label: moduleGroups[mod.group], href: `/modules#${mod.group}` },
+                { label: mod.name },
+              ]}
+            />
+            <div className="mt-8 flex flex-wrap items-center gap-2">
+              <Badge tone={detail.status.tone}>{detail.status.label}</Badge>
+              <Badge tone="neutral">{moduleGroups[mod.group]}</Badge>
             </div>
           </div>
-        </Container>
-      </section>
+        }
+        title={mod.name}
+        description={detail.summary}
+      >
+        <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <div>
+            <Button href="/contact?intent=demo" size="lg">
+              See it on your estate
+              <ArrowRight className="h-4 w-4" />
+            </Button>
+            <p className="mt-2 text-xs text-faint">45 minutes · one of your accounts, connected read-only</p>
+          </div>
+          {docs ? (
+            <Button href={`/docs/${docs.slug}`} size="lg" variant="outline">
+              <BookOpen className="h-4 w-4" />
+              {docs.label}
+            </Button>
+          ) : (
+            <Button href="/editions" size="lg" variant="outline">
+              Which edition includes it
+            </Button>
+          )}
+        </div>
+      </PhotoHero>
       <section className="border-b border-line bg-sunken py-8">
         <Container>
           <Reveal delay={120}>
@@ -204,7 +207,7 @@ export default async function ModuleDetailPage({
               <div className="flex flex-col gap-8">
                 {/* editions */}
                 <div>
-                  <p className="eyebrow text-accent">Included in</p>
+                  <p className="eyebrow">Included in</p>
                   <ul className="mt-3 divide-y divide-line rounded-lg border border-line bg-surface">
                     {editions.map((e) => {
                       const included = e.modules.includes(slug);
@@ -236,7 +239,7 @@ export default async function ModuleDetailPage({
                 {/* solutions */}
                 {usedBySolutions.length > 0 && (
                   <div>
-                    <p className="eyebrow text-accent">Solutions that use it</p>
+                    <p className="eyebrow">Solutions that use it</p>
                     <div className="mt-3 flex flex-wrap gap-2">
                       {usedBySolutions.map((s) => (
                         <Link
@@ -255,7 +258,7 @@ export default async function ModuleDetailPage({
                 {/* industries */}
                 {usedByIndustries.length > 0 && (
                   <div>
-                    <p className="eyebrow text-accent">Industries that rely on it</p>
+                    <p className="eyebrow">Industries that rely on it</p>
                     <div className="mt-3 flex flex-wrap gap-2">
                       {usedByIndustries.map((i) => (
                         <Link
@@ -274,7 +277,7 @@ export default async function ModuleDetailPage({
                 {/* siblings */}
                 {siblings.length > 0 && (
                   <div>
-                    <p className="eyebrow text-accent">Also in {moduleGroups[mod.group]}</p>
+                    <p className="eyebrow">Also in {moduleGroups[mod.group]}</p>
                     <ul className="mt-3 flex flex-col gap-2">
                       {siblings.map((m) => (
                         <li key={m.slug}>
