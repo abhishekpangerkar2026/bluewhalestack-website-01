@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { PhotoHero } from "@/components/sections/PhotoHero";
+import { CmsPhotoHero } from "@/components/sections/CmsPhotoHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
@@ -13,7 +13,7 @@ import { Stat } from "@/components/ui/Stat";
 import { Reveal } from "@/components/ui/Reveal";
 import { Iso } from "@/components/illustrations/Iso";
 import { StoryVisual } from "@/components/sections/CustomerStories";
-import { customerStories } from "@/content/customers";
+import { getCustomerStories } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Customer success stories",
@@ -23,11 +23,13 @@ export const metadata: Metadata = {
 
 const MARKETS = ["Singapore", "Qatar", "Saudi Arabia", "South Africa", "UAE", "India"];
 
-export default function CustomersPage() {
+export default async function CustomersPage() {
+  const customerStories = await getCustomerStories();
   return (
     <InnerPage category="solutions" current="/customers">
       {/* ── Hero ── */}
-      <PhotoHero
+      <CmsPhotoHero
+        route="/customers"
         photo="enterprise-campus"
         eyebrow="Customer success stories · four delivered engagements"
         title="Banks, ministries, operators and a newsroom — what changed for each."
@@ -42,7 +44,7 @@ export default function CustomersPage() {
             Talk to us about yours
           </Button>
         </div>
-      </PhotoHero>
+      </CmsPhotoHero>
 
       {/* ── Stats ── */}
       <section className="border-b border-line bg-sunken py-12">

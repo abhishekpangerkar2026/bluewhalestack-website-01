@@ -10,7 +10,7 @@ import { LocationVisual } from "@/components/diagrams/LocationVisual";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { LeadershipFeature, LeadershipSpotlight, LeadershipTile } from "@/components/sections/LeadershipCard";
-import { leadership } from "@/content/about";
+import { getTeam } from "@/lib/content";
 import { offices } from "@/content/company";
 
 export const metadata: Metadata = {
@@ -73,12 +73,12 @@ const values = [
   },
 ];
 
-const announcedLeaders = leadership.filter((l) => l.name);
-const unannouncedRoles = leadership.filter((l) => !l.name);
-// The founder gets the full-width feature; everyone else fills a balanced grid.
-const [founder, ...team] = announcedLeaders;
-
-export default function LeadershipPage() {
+export default async function LeadershipPage() {
+  const leadership = await getTeam();
+  const announcedLeaders = leadership.filter((l) => l.name);
+  const unannouncedRoles = leadership.filter((l) => !l.name);
+  // The founder gets the full-width feature; everyone else fills a balanced grid.
+  const [founder, ...team] = announcedLeaders;
   return (
     <InnerPage category="company" current="/about/leadership">
       {/* ── Hero ── */}

@@ -9,7 +9,11 @@
  * Datacenter Edition is marked "preview" in the copy itself.
  */
 
+import type { CmsImage } from "@/content/cmsTypes";
+
 export interface IndustryDef {
+  /** editor-chosen hero photograph (CMS) */
+  cmsImage?: CmsImage;
   slug: string;
   name: string;
   icon: string;

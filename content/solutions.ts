@@ -4,7 +4,11 @@
  * content/modules.ts for the module-level ledger.
  */
 
+import type { CmsImage } from "@/content/cmsTypes";
+
 export interface SolutionDef {
+  /** editor-chosen hero photograph (CMS) */
+  cmsImage?: CmsImage;
   slug: string;
   name: string;
   icon: string;

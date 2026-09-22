@@ -3,14 +3,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { PhotoHero } from "@/components/sections/PhotoHero";
+import { CmsPhotoHero } from "@/components/sections/CmsPhotoHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { Iso, INDUSTRY_ISO } from "@/components/illustrations/Iso";
-import { customerStories } from "@/content/customers";
+import { getCustomerStories } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Case studies",
@@ -18,11 +18,13 @@ export const metadata: Metadata = {
     "BlueWhale Stack case studies — the situation, what the platform did and the outcome, for banks, ministries, telco and datacenter operators and a global media network.",
 };
 
-export default function CaseStudiesPage() {
+export default async function CaseStudiesPage() {
+  const customerStories = await getCustomerStories();
   return (
     <InnerPage category="solutions" current="/case-studies">
       {/* ── Hero ── */}
-      <PhotoHero
+      <CmsPhotoHero
+        route="/case-studies"
         photo="dark-gateway"
         tone="dark"
         eyebrow="Case studies · situation, work, outcome"
@@ -43,7 +45,7 @@ export default function CaseStudiesPage() {
             Success stories overview
           </Button>
         </div>
-      </PhotoHero>
+      </CmsPhotoHero>
 
       {/* ── Index ── */}
       <section className="bg-canvas py-20 sm:py-24">

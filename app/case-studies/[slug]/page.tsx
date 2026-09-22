@@ -11,7 +11,7 @@ import { Stat } from "@/components/ui/Stat";
 import { Reveal } from "@/components/ui/Reveal";
 import { Iso, INDUSTRY_ISO } from "@/components/illustrations/Iso";
 import { StoryVisual } from "@/components/sections/CustomerStories";
-import { customerStories } from "@/content/customers";
+import { getCustomerStories, getCustomerStory } from "@/lib/content";
 import { editions } from "@/content/editions";
 import { industries } from "@/content/industries";
 
@@ -23,8 +23,8 @@ const INDUSTRY_SLUG: Record<string, string> = {
   Media: "regulated-enterprise",
 };
 
-export function generateStaticParams() {
-  return customerStories.map((s) => ({ slug: s.slug }));
+export async function generateStaticParams() {
+  return (await getCustomerStories()).map((s) => ({ slug: s.slug }));
 }
 
 export async function generateMetadata({
@@ -33,7 +33,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const s = customerStories.find((c) => c.slug === slug);
+  const s = await getCustomerStory(slug);
   if (!s) return {};
   return { title: `${s.headline} — case study`, description: s.challenge };
 }
@@ -44,12 +44,12 @@ export default async function CaseStudyPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const story = customerStories.find((c) => c.slug === slug);
+  const story = await getCustomerStory(slug);
   if (!story) notFound();
 
   const edition = editions.find((e) => `${e.name} Edition` === story.edition);
   const industry = industries.find((i) => i.slug === INDUSTRY_SLUG[story.industry]);
-  const others = customerStories.filter((c) => c.slug !== story.slug);
+  const others = (await getCustomerStories()).filter((c) => c.slug !== story.slug);
 
   return (
     <InnerPage category="solutions" current="/case-studies">

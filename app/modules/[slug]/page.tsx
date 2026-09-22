@@ -17,10 +17,9 @@ import { ModuleDiagram } from "@/components/diagrams/ModuleDiagram";
 import { ConsoleMockup } from "@/components/sections/mockups/ConsoleMockup";
 import { FAQ } from "@/components/sections/FAQ";
 import { ClosingCTA } from "@/components/sections/ClosingCTA";
-import { getModules, getModule, getSolutions, getIndustries } from "@/lib/content";
+import { getModules, getModule, getModuleDetail, getSolutions, getIndustries } from "@/lib/content";
 import { moduleGroups, modules } from "@/content/modules";
 import { editions } from "@/content/editions";
-import { moduleDetails } from "@/content/moduleDetails";
 
 /** Module → the documentation page that covers it, where one exists. */
 const DOCS: Record<string, { slug: string; label: string }> = {
@@ -34,8 +33,8 @@ const DOCS: Record<string, { slug: string; label: string }> = {
 
 const stripStatus = (tagline: string) => tagline.replace(/\s*\([^)]*\)\s*$/, "");
 
-export function generateStaticParams() {
-  return getModules().map((m) => ({ slug: m.slug }));
+export async function generateStaticParams() {
+  return (await getModules()).map((m) => ({ slug: m.slug }));
 }
 
 export async function generateMetadata({
@@ -44,9 +43,9 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const m = getModule(slug);
+  const m = await getModule(slug);
   if (!m) return {};
-  const d = moduleDetails[slug];
+  const d = await getModuleDetail(slug);
   return { title: `${m.name} — ${stripStatus(m.tagline)}`, description: d?.summary ?? m.description };
 }
 
@@ -56,14 +55,13 @@ export default async function ModuleDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const mod = getModule(slug);
-  const detail = moduleDetails[slug];
+  const [mod, detail, allModules, allSolutions, allIndustries] = await Promise.all([getModule(slug), getModuleDetail(slug), getModules(), getSolutions(), getIndustries()]);
   if (!mod || !detail) notFound();
 
   const docs = DOCS[slug];
-  const siblings = modules.filter((m) => m.group === mod.group && m.slug !== slug);
-  const usedBySolutions = getSolutions().filter((s) => s.modules.includes(slug));
-  const usedByIndustries = getIndustries().filter((i) =>
+  const siblings = allModules.filter((m) => m.group === mod.group && m.slug !== slug);
+  const usedBySolutions = allSolutions.filter((s) => s.modules.includes(slug));
+  const usedByIndustries = allIndustries.filter((i) =>
     i.useCases?.some((u) => u.modules?.includes(slug)),
   );
   const stepsTitle = detail.howItWorks.map((s) => s.title).join(" → ");
@@ -73,6 +71,7 @@ export default async function ModuleDetailPage({
       {/* ── Hero ── */}
       <PhotoHero
         photo={FAMILY_PHOTO[mod.group]}
+        image={mod.cmsImage}
         priority
         above={
           <div className="mb-8">
@@ -175,14 +174,16 @@ export default async function ModuleDetailPage({
                 </ol>
               </div>
             </Reveal>
-            <Reveal delay={100} className="min-w-0">
-              <div className="min-w-0">
-                <ConsoleMockup screen={detail.screen} />
-                <p className="mt-3 text-xs text-faint">
-                  {mod.name} in the console — {detail.screen.title.toLowerCase()}. Illustrative screen with sample data.
-                </p>
-              </div>
-            </Reveal>
+            {detail.screen && (
+              <Reveal delay={100} className="min-w-0">
+                <div className="min-w-0">
+                  <ConsoleMockup screen={detail.screen} />
+                  <p className="mt-3 text-xs text-faint">
+                    {mod.name} in the console — {detail.screen.title.toLowerCase()}. Illustrative screen with sample data.
+                  </p>
+                </div>
+              </Reveal>
+            )}
           </div>
         </Container>
       </section>

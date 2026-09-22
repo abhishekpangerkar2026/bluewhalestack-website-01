@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Check, Minus } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { PhotoHero } from "@/components/sections/PhotoHero";
+import { CmsPhotoHero } from "@/components/sections/CmsPhotoHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
@@ -20,13 +20,14 @@ export const metadata: Metadata = {
     "Compare BlueWhale Stack editions — Standard, Enterprise, Telco & Datacenter, and Government — with a module-by-edition matrix.",
 };
 
-export default function EditionsPage() {
-  const editions = getEditions();
+export default async function EditionsPage() {
+  const editions = await getEditions();
 
   return (
     <InnerPage category="platform" current="/editions">
       {/* ── Intro: editorial split ── */}
-      <PhotoHero
+      <CmsPhotoHero
+        route="/editions"
         photo="editions-rack"
         eyebrow="Editions · four licences, one deployment"
         title={<>Four editions. <span className="text-accent">One architecture.</span></>}
@@ -35,7 +36,7 @@ export default function EditionsPage() {
         <p className="max-w-xl text-[14px] font-semibold leading-relaxed text-ink">
           Choosing in one question: do you consume cloud (Standard), govern it at scale (Enterprise), sell it to tenants (Telco &amp; Datacenter) — or must it never leave the perimeter (Government)?
         </p>
-      </PhotoHero>
+      </CmsPhotoHero>
       <section className="bg-canvas py-16 sm:py-20">
         <Container>
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">

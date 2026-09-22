@@ -5,19 +5,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { PhotoHero } from "@/components/sections/PhotoHero";
-import type { PhotoKey } from "@/content/photos";
-
-/** the studio photograph that carries each sector's idea */
-const INDUSTRY_PHOTO: Record<string, PhotoKey> = {
-  government: "government-hall",
-  bfsi: "finops-balance",
-  healthcare: "sovereign-vault",
-  "regulated-enterprise": "enterprise-campus",
-  saas: "estates-row",
-  telco: "telco-datacenter",
-  datacenter: "datacenter-tray",
-  media: "hybrid-bridge",
-};
+import { INDUSTRY_PHOTO } from "@/content/photos";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
@@ -31,11 +19,10 @@ import { FAQ } from "@/components/sections/FAQ";
 import { ClosingCTA } from "@/components/sections/ClosingCTA";
 import { INDUSTRY_POSTER } from "@/content/industryPosters";
 import { IndustryArchitecturePoster } from "@/components/diagrams/IndustryArchitecturePoster";
-import { customerStories } from "@/content/customers";
-import { getIndustries, getIndustry, getEdition, getModule } from "@/lib/content";
+import { getIndustries, getIndustry, getEdition, getModules, getCustomerStories } from "@/lib/content";
 
-export function generateStaticParams() {
-  return getIndustries().map((i) => ({ slug: i.slug }));
+export async function generateStaticParams() {
+  return (await getIndustries()).map((i) => ({ slug: i.slug }));
 }
 
 export async function generateMetadata({
@@ -44,7 +31,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const i = getIndustry(slug);
+  const i = await getIndustry(slug);
   if (!i) return {};
   return { title: `${i.name} — ${i.title}`, description: i.description };
 }
@@ -55,9 +42,9 @@ export default async function IndustryDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const industry = getIndustry(slug);
+  const industry = await getIndustry(slug);
   if (!industry) notFound();
-  const edition = getEdition(industry.edition);
+  const [edition, allModules, customerStories] = await Promise.all([getEdition(industry.edition), getModules(), getCustomerStories()]);
   const preview = Boolean(edition?.comingSoon);
   const story = industry.story ? customerStories.find((c) => c.slug === industry.story) : undefined;
   const poster = INDUSTRY_POSTER[industry.slug];
@@ -67,6 +54,7 @@ export default async function IndustryDetailPage({
       {/* ── Hero ── */}
       <PhotoHero
         photo={INDUSTRY_PHOTO[industry.slug] ?? "enterprise-campus"}
+        image={industry.cmsImage}
         above={
           <div className="mb-8">
             <Breadcrumbs items={[{ label: "Industries", href: "/industries" }, { label: industry.name }]} />
@@ -282,7 +270,7 @@ export default async function IndustryDetailPage({
                     {u.modules && u.modules.length > 0 && (
                       <div className="mt-5 flex flex-wrap gap-2">
                         {u.modules.map((mslug) => {
-                          const m = getModule(mslug);
+                          const m = allModules.find((x) => x.slug === mslug);
                           return m ? (
                             <Link
                               key={mslug}

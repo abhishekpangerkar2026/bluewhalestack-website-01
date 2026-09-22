@@ -3,6 +3,7 @@ import path from "node:path";
 import { User } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { cld, publicIdFromPath } from "@/lib/cloudinary";
+import { imageUrl } from "@/lib/cms";
 import type { LeadershipMember } from "@/content/about";
 
 /** Official LinkedIn mark — blue rounded square with the white "in" glyph. */
@@ -41,8 +42,14 @@ function Portrait({
 }) {
   // The local file (checked into /public) is both the pre-Cloudinary source of truth and the
   // gate that decides whether this person has a photo at all — see lib/cloudinary.ts.
-  const hasImage = !!member.image && imageExists(member.image);
-  const src = hasImage ? cld(publicIdFromPath(member.image!, "team"), member.image!, size * 2) : undefined;
+  // An editor-uploaded photo (CMS) wins; otherwise the local file gates the Cloudinary URL.
+  const hasLocal = !!member.image && imageExists(member.image);
+  const hasImage = Boolean(member.cmsImage) || hasLocal;
+  const src = member.cmsImage
+    ? imageUrl(member.cmsImage.src, size * 2)
+    : hasLocal
+      ? cld(publicIdFromPath(member.image!, "team"), member.image!, size * 2)
+      : undefined;
   const badgeSize = Math.round(size * 0.3);
   return (
     <div className={`relative shrink-0 ${className}`} style={{ width: size, height: size }}>

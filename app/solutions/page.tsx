@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { PhotoHero } from "@/components/sections/PhotoHero";
+import { CmsPhotoHero } from "@/components/sections/CmsPhotoHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
@@ -13,8 +13,7 @@ import { Button } from "@/components/ui/Button";
 import { Iso, SOLUTION_ISO } from "@/components/illustrations/Iso";
 import { StoryVisual } from "@/components/sections/CustomerStories";
 import { ClosingCTA } from "@/components/sections/ClosingCTA";
-import { getSolutions, getIndustries, getEdition } from "@/lib/content";
-import { customerStories } from "@/content/customers";
+import { getSolutions, getIndustries, getEditions, getCustomerStories } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Solutions",
@@ -22,14 +21,14 @@ export const metadata: Metadata = {
     "Outcome-focused solutions, industry solutions for government, BFSI, healthcare, telco and datacenter operators, and the customer success stories and case studies behind them.",
 };
 
-export default function SolutionsPage() {
-  const solutions = getSolutions();
-  const industries = getIndustries();
+export default async function SolutionsPage() {
+  const [solutions, industries, editions, customerStories] = await Promise.all([getSolutions(), getIndustries(), getEditions(), getCustomerStories()]);
 
   return (
     <InnerPage category="solutions" current="/solutions">
       {/* ── Hero ── */}
-      <PhotoHero
+      <CmsPhotoHero
+        route="/solutions"
         photo="hybrid-bridge"
         eyebrow="Solutions · six outcomes, one control plane"
         title="Six things teams buy the platform for."
@@ -60,7 +59,7 @@ export default function SolutionsPage() {
             </Link>
           ))}
         </div>
-      </PhotoHero>
+      </CmsPhotoHero>
 
       <PageIndex items={[
         { label: "By outcome", href: "#outcomes" },
@@ -127,7 +126,7 @@ export default function SolutionsPage() {
           </div>
           <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {industries.map((ind, i) => {
-              const edition = getEdition(ind.edition);
+              const edition = editions.find((e) => e.slug === ind.edition);
               return (
                 <Reveal key={ind.slug} delay={(i % 4) * 60}>
                   <Link href={`/industries/${ind.slug}`} className="group/card block h-full">

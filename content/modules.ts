@@ -19,7 +19,11 @@ export type ModuleGroup =
   | "tenancy"
   | "sovereign";
 
+import type { CmsImage } from "@/content/cmsTypes";
+
 export interface ModuleDef {
+  /** editor-chosen hero photograph (CMS) */
+  cmsImage?: CmsImage;
   slug: string;
   name: string;
   group: ModuleGroup;

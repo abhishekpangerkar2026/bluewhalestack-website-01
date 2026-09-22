@@ -11,7 +11,7 @@ import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { ControlPlaneMap } from "@/components/diagrams/ControlPlaneMap";
 import { LayerStack, LayerList } from "@/components/diagrams/LayerStack";
-import { PhotoHero } from "@/components/sections/PhotoHero";
+import { CmsPhotoHero } from "@/components/sections/CmsPhotoHero";
 import { CountUp } from "@/components/ui/CountUp";
 import { ProductShowcase } from "@/components/sections/ProductShowcase";
 import { PrototypeOffer } from "@/components/sections/PrototypeOffer";
@@ -56,7 +56,8 @@ export default function PlatformPage() {
   return (
     <InnerPage category="platform" current="/platform">
       {/* ── Hero ── */}
-      <PhotoHero
+      <CmsPhotoHero
+        route="/platform"
         photo="estates-row"
         eyebrow={platformHero.eyebrow}
         title={<>One Platform. <span className="text-accent">Every Industry. Every Estate.</span></>}
@@ -89,7 +90,7 @@ export default function PlatformPage() {
             See the architecture
           </Button>
         </div>
-      </PhotoHero>
+      </CmsPhotoHero>
 
       <PageIndex items={[
         { label: "What it replaces", href: "#replaces" },

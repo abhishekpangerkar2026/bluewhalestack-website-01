@@ -10,7 +10,11 @@
  * supplied the UI shows an on-brand placeholder — see docs/image-prompts.md.
  */
 
+import type { CmsImage } from "@/content/cmsTypes";
+
 export interface CustomerStory {
+  /** editor-chosen story image (CMS) */
+  cmsImage?: CmsImage;
   slug: string;
   org: string;
   industry: string;

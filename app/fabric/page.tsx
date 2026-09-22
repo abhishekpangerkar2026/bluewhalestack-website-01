@@ -2,7 +2,7 @@ import { InnerPage } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { PhotoHero } from "@/components/sections/PhotoHero";
+import { CmsPhotoHero } from "@/components/sections/CmsPhotoHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { ClosingCTA } from "@/components/sections/ClosingCTA";
@@ -37,7 +37,8 @@ export default function FabricPage() {
   return (
     <InnerPage category="platform" current="/fabric">
       {/* ── Hero ── */}
-      <PhotoHero
+      <CmsPhotoHero
+        route="/fabric"
         photo="sovereign-regions"
         eyebrow={`${fabricHero.eyebrow} · Strategic initiative · launching in India`}
         above={
@@ -60,7 +61,7 @@ export default function FabricPage() {
             <ArrowRight className="h-4 w-4" />
           </Button>
         </div>
-      </PhotoHero>
+      </CmsPhotoHero>
 
       {/* ── Stats band ── */}
       <section className="border-b border-line bg-sunken py-14">

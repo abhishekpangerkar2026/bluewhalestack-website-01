@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Check, MapPin } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { PhotoHero } from "@/components/sections/PhotoHero";
+import { CmsPhotoHero } from "@/components/sections/CmsPhotoHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Card } from "@/components/ui/Card";
 import { LocationVisual } from "@/components/diagrams/LocationVisual";
@@ -47,7 +47,8 @@ export default function AboutPage() {
   return (
     <InnerPage category="company" current="/about">
       {/* ── Hero: editorial split, oversized statement left ── */}
-      <PhotoHero
+      <CmsPhotoHero
+        route="/about"
         photo="sovereign-regions"
         eyebrow={aboutHero.eyebrow}
         title="A consulting firm that turned eight years of field work into a platform."
@@ -77,7 +78,7 @@ export default function AboutPage() {
             Meet the leadership
           </Button>
         </div>
-      </PhotoHero>
+      </CmsPhotoHero>
 
       {/* At a glance — quiet fact strip */}
       <section className="border-b border-line bg-sunken py-10">

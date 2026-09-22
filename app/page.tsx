@@ -12,15 +12,12 @@ import { StoryVisual } from "@/components/sections/CustomerStories";
 import { PrototypeOffer } from "@/components/sections/PrototypeOffer";
 import { ClosingCTA } from "@/components/sections/ClosingCTA";
 import { LayerStack, LayerList } from "@/components/diagrams/LayerStack";
-import { proofStrip, story, problems, differentiators, portfolio } from "@/content/home";
-import { customerStories } from "@/content/customers";
 import { moduleGroups, moduleGroupOrder, moduleGroupBlurbs } from "@/content/modules";
 import { familyTileSrc } from "@/content/moduleArt";
 import { photos, photoSrc, photoSrcSet } from "@/content/photos";
-import { getEditions } from "@/lib/content";
+import { getCustomerStories, getEditions, getHomePage } from "@/lib/content";
+import { imageSrcSet, imageUrl } from "@/lib/cms";
 import { cn } from "@/lib/utils";
-
-const spotlight = customerStories.find((s) => s.slug === "bfsi-singapore-qatar") ?? customerStories[0];
 
 /** One-line teasers for the facts row under the console. */
 const CONSOLE_FACTS = [
@@ -32,12 +29,13 @@ const CONSOLE_FACTS = [
 
 const EDITION_ICONS: Record<string, typeof Layers> = { standard: Layers, enterprise: Building2, "telco-datacenter": RadioTower, government: Landmark };
 
-export default function HomePage() {
-  const editions = getEditions();
+export default async function HomePage() {
+  const [home, editions, stories] = await Promise.all([getHomePage(), getEditions(), getCustomerStories()]);
+  const spotlight = stories.find((s) => s.slug === "bfsi-singapore-qatar") ?? stories[0];
   const dark = photos["dark-gateway"];
   return (
     <>
-      <Hero />
+      <Hero data={home.hero} />
 
       {/* 01 — proof: outcomes from delivered engagements */}
       <section className="border-b border-line bg-sunken py-14 sm:py-16">
@@ -47,8 +45,8 @@ export default function HomePage() {
             <Link className="inline-flex items-center gap-2 text-sm font-semibold text-accent" href="/case-studies">The outcomes <ArrowUpRight size={15} /></Link>
           </div>
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {proofStrip.map((p, i) => (
-              <Reveal key={p.href} delay={i * 70}>
+            {home.proofStrip.map((p, i) => (
+              <Reveal key={p.href + i} delay={i * 70}>
                 <Link href={p.href} className="card-lift block h-full rounded-xl border border-line bg-surface p-6 shadow-sm">
                   <strong className="block text-[30px] font-extrabold leading-none tracking-[-0.03em] text-accent">{p.value}</strong>
                   <p className="mt-3 text-[14px] font-semibold leading-snug text-ink">{p.label}</p>
@@ -68,18 +66,18 @@ export default function HomePage() {
         <Container className="relative py-20 sm:py-28">
           <div className="lg:max-w-[54%]">
             <Reveal>
-              <p className="eyebrow flex items-center gap-3 text-[var(--gold)]"><span aria-hidden className="h-px w-7 bg-[var(--gold)]" />{story.eyebrow}</p>
-              <h2 className="display-2 mt-5 text-white">{story.hook}</h2>
-              <p className="mt-6 text-lg leading-relaxed text-white/75">{story.problem}</p>
-              <p className="mt-7 border-l-2 border-[var(--gold)] pl-5 text-xl font-semibold leading-snug text-white">{story.turn}</p>
+              <p className="eyebrow flex items-center gap-3 text-[var(--gold)]"><span aria-hidden className="h-px w-7 bg-[var(--gold)]" />{home.story.eyebrow}</p>
+              <h2 className="display-2 mt-5 text-white">{home.story.hook}</h2>
+              <p className="mt-6 text-lg leading-relaxed text-white/75">{home.story.problem}</p>
+              <p className="mt-7 border-l-2 border-[var(--gold)] pl-5 text-xl font-semibold leading-snug text-white">{home.story.turn}</p>
             </Reveal>
             <div className="mt-11 grid gap-4 sm:grid-cols-3">
-              {problems.map((p, i) => (
+              {home.problems.map((p, i) => (
                 <Reveal key={p.title} delay={120 + i * 80}>
                   <div className="h-full rounded-xl border border-white/12 bg-white/[0.06] p-5 backdrop-blur-sm">
                     <Icon name={p.icon} className="h-5 w-5 text-[var(--gold)]" />
                     <h3 className="mt-3 text-[14px] font-bold text-white">{p.title}</h3>
-                    <p className="mt-2 text-[13px] leading-relaxed text-white/65">{p.cost}</p>
+                    <p className="mt-2 text-[13px] leading-relaxed text-white/65">{p.cost || p.body}</p>
                   </div>
                 </Reveal>
               ))}
@@ -135,9 +133,9 @@ export default function HomePage() {
       {/* 05 — what makes it different */}
       <section className="border-y border-line bg-sunken py-20 sm:py-28">
         <Container>
-          <Reveal><SectionHeading eyebrow={differentiators.eyebrow} title={differentiators.title} description={differentiators.description} /></Reveal>
+          <Reveal><SectionHeading eyebrow={home.differentiators.eyebrow} title={home.differentiators.title} description={home.differentiators.description} /></Reveal>
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {differentiators.items.map((d, i) => (
+            {home.differentiators.items.map((d, i) => (
               <Reveal key={d.title} delay={(i % 3) * 80}>
                 <div className="card-lift flex h-full flex-col rounded-xl border border-line bg-surface p-7 shadow-sm">
                   <span className="grid h-11 w-11 place-items-center rounded-full bg-primary text-primary-fg"><Icon name={d.icon} className="h-5 w-5" /></span>
@@ -175,27 +173,29 @@ export default function HomePage() {
       </section>
 
       {/* 07 — one deep case study */}
-      <section className="border-t border-line bg-sunken py-20 sm:py-28">
-        <Container>
-          <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-            <SectionHeading eyebrow="Delivered in the real world" title="One estate, told in full." description="Anonymized under confidentiality; every figure is as briefed by BlueWhale Stack, not illustrative." />
-            <Link href="/case-studies" className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-accent">All engagements <ArrowUpRight size={17} /></Link>
-          </div>
-          <div className="mt-12 grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
-            <div>
-              <p className="eyebrow">{spotlight.industry} · {spotlight.edition}</p>
-              <h3 className="mt-4 text-[clamp(26px,3vw,36px)] font-bold leading-[1.12] tracking-[-0.03em] text-ink">{spotlight.headline}</h3>
-              <p className="mt-5 max-w-[48ch] text-[15.5px] leading-[1.8] text-muted">{spotlight.summary}</p>
-              <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px] text-faint"><strong className="font-semibold text-ink">{spotlight.org}</strong><span>{spotlight.note}</span></div>
-              <div className="mt-7 flex flex-wrap gap-6">
-                <Link href={`/case-studies/${spotlight.slug}`} className="inline-flex items-center gap-2 text-sm font-semibold text-accent">Read the full case study <ArrowUpRight size={15} /></Link>
-                <Link href="/customers" className="inline-flex items-center gap-2 text-sm font-semibold text-ink">All success stories <ArrowRight size={15} /></Link>
-              </div>
+      {spotlight && (
+        <section className="border-t border-line bg-sunken py-20 sm:py-28">
+          <Container>
+            <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+              <SectionHeading eyebrow="Delivered in the real world" title="One estate, told in full." description="Anonymized under confidentiality; every figure is as briefed by BlueWhale Stack, not illustrative." />
+              <Link href="/case-studies" className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-accent">All engagements <ArrowUpRight size={17} /></Link>
             </div>
-            <StoryVisual story={spotlight} />
-          </div>
-        </Container>
-      </section>
+            <div className="mt-12 grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
+              <div>
+                <p className="eyebrow">{spotlight.industry} · {spotlight.edition}</p>
+                <h3 className="mt-4 text-[clamp(26px,3vw,36px)] font-bold leading-[1.12] tracking-[-0.03em] text-ink">{spotlight.headline}</h3>
+                <p className="mt-5 max-w-[48ch] text-[15.5px] leading-[1.8] text-muted">{spotlight.summary}</p>
+                <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px] text-faint"><strong className="font-semibold text-ink">{spotlight.org}</strong><span>{spotlight.note}</span></div>
+                <div className="mt-7 flex flex-wrap gap-6">
+                  <Link href={`/case-studies/${spotlight.slug}`} className="inline-flex items-center gap-2 text-sm font-semibold text-accent">Read the full case study <ArrowUpRight size={15} /></Link>
+                  <Link href="/customers" className="inline-flex items-center gap-2 text-sm font-semibold text-ink">All success stories <ArrowRight size={15} /></Link>
+                </div>
+              </div>
+              <StoryVisual story={spotlight} />
+            </div>
+          </Container>
+        </section>
+      )}
 
       {/* 08 — editions */}
       <section className="py-20 sm:py-28">
@@ -234,15 +234,18 @@ export default function HomePage() {
       {/* 10 — the product portfolio */}
       <section className="border-t border-line py-20 sm:py-28">
         <Container>
-          <Reveal><SectionHeading eyebrow={portfolio.eyebrow} title={portfolio.title} description={portfolio.description} /></Reveal>
+          <Reveal><SectionHeading eyebrow={home.portfolio.eyebrow} title={home.portfolio.title} description={home.portfolio.description} /></Reveal>
           <div className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-            {portfolio.products.map((pr, i) => {
-              const ph = photos[pr.photo];
+            {home.portfolio.products.map((pr, i) => {
+              const key = pr.photo ?? "platform-stack";
+              const ph = photos[key];
+              const src = pr.image ? imageUrl(pr.image.src, 640) : photoSrc(key, 640);
+              const srcSet = pr.image ? imageSrcSet(pr.image.src) : photoSrcSet(key);
               return (
                 <Reveal key={pr.name} delay={i * 70}>
                   <Link href={pr.href} className="card-lift group flex h-full flex-col overflow-hidden rounded-xl border border-line bg-surface shadow-sm">
                     <div className="overflow-hidden bg-[#f6f7fa]">
-                      <img src={photoSrc(pr.photo, 640)} srcSet={photoSrcSet(pr.photo)} sizes="(min-width:1280px) 320px, (min-width:768px) 50vw, 100vw" alt={ph.alt} width={ph.width} height={ph.height} loading="lazy" className="aspect-[3/2] w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" />
+                      <img src={src} srcSet={srcSet} sizes="(min-width:1280px) 320px, (min-width:768px) 50vw, 100vw" alt={pr.image?.alt ?? ph.alt} width={pr.image?.width ?? ph.width} height={pr.image?.height ?? ph.height} loading="lazy" className="aspect-[3/2] w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" style={{ objectPosition: pr.image?.focal }} />
                     </div>
                     <div className="flex flex-1 flex-col p-6">
                       <span className={cn("self-start rounded-full border px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em]", pr.status === "Available" ? "border-[var(--gold)] bg-[var(--brand-deep)] text-white" : "border-line bg-sunken text-muted")}>{pr.status}</span>
@@ -255,7 +258,7 @@ export default function HomePage() {
               );
             })}
           </div>
-          <p className="mt-5 text-xs text-faint">{portfolio.note}</p>
+          <p className="mt-5 text-xs text-faint">{home.portfolio.note}</p>
         </Container>
       </section>
 

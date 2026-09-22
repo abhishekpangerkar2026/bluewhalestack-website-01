@@ -2,7 +2,7 @@ import { InnerPage } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
 import { ArrowRight, Check } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { PhotoHero } from "@/components/sections/PhotoHero";
+import { CmsPhotoHero } from "@/components/sections/CmsPhotoHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -158,7 +158,8 @@ export default function WhaleAIPage() {
   return (
     <InnerPage category="platform" current="/products/whale-ai">
       {/* ── Hero: the brand band, the night studio ── */}
-      <PhotoHero
+      <CmsPhotoHero
+        route="/products/whale-ai"
         photo="dark-gateway"
         tone="dark"
         eyebrow="Whale AI · Horizontal intelligence layer"
@@ -183,7 +184,7 @@ export default function WhaleAIPage() {
             <ArrowRight className="h-4 w-4" />
           </Button>
         </div>
-      </PhotoHero>
+      </CmsPhotoHero>
 
       {/* Stats strip */}
       <section className="bg-brand-900 pb-14 text-white">

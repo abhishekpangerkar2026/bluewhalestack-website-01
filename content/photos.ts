@@ -53,6 +53,64 @@ export const photos: Record<PhotoKey, Photo> = {
   "dark-gateway": { key: "dark-gateway", alt: "A blue gateway glowing in a dark studio, a blue path leading to it", width: 1916, height: 821, dark: true, focal: "70% 50%" },
 };
 
+/** The studio photograph that carries each edition's idea (also used to seed the CMS). */
+export const EDITION_PHOTO: Record<string, PhotoKey> = {
+  standard: "editions-rack",
+  enterprise: "enterprise-campus",
+  "telco-datacenter": "telco-datacenter",
+  government: "government-hall",
+};
+
+export const INDUSTRY_PHOTO: Record<string, PhotoKey> = {
+  government: "government-hall",
+  bfsi: "finops-balance",
+  healthcare: "sovereign-vault",
+  "regulated-enterprise": "enterprise-campus",
+  saas: "estates-row",
+  telco: "telco-datacenter",
+  datacenter: "datacenter-tray",
+  media: "hybrid-bridge",
+};
+
+export const SOLUTION_PHOTO: Record<string, PhotoKey> = {
+  "unified-cloud-inventory": "discovery-lens",
+  "ai-native-provisioning": "appliance-enclosure",
+  "bundled-observability": "estates-row",
+  "cloud-migration": "migration-wave",
+  "security-compliance": "sovereign-vault",
+  "sovereign-cloud": "sovereign-regions",
+};
+
+export const DOC_PHOTO: Record<string, PhotoKey> = {
+  Whitepaper: "editions-rack",
+  Datasheet: "estates-row",
+  "Solution brief": "hybrid-bridge",
+  "Industry brief": "enterprise-campus",
+  "Case study": "discovery-lens",
+  Company: "sovereign-regions",
+};
+
+/** The photograph on each static page's hero, by route (used to seed the CMS page heroes). */
+export const ROUTE_PHOTO: Record<string, PhotoKey> = {
+  "/platform": "estates-row",
+  "/modules": "platform-stack",
+  "/editions": "editions-rack",
+  "/industries": "enterprise-campus",
+  "/solutions": "hybrid-bridge",
+  "/resources": "discovery-lens",
+  "/products": "appliance-enclosure",
+  "/trust": "sovereign-vault",
+  "/partners": "hybrid-bridge",
+  "/pricing": "finops-balance",
+  "/about": "sovereign-regions",
+  "/careers": "datacenter-tray",
+  "/customers": "enterprise-campus",
+  "/case-studies": "dark-gateway",
+  "/fabric": "sovereign-regions",
+  "/products/whale-ai": "dark-gateway",
+  "/newsroom": "edge-tower",
+};
+
 export const photoSrc = (key: PhotoKey, w: 1536 | 1024 | 640 = 1536) => `/photos/${key}-${w}.webp`;
 
 export const photoSrcSet = (key: PhotoKey) =>

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Check, Minus } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { PhotoHero } from "@/components/sections/PhotoHero";
+import { CmsPhotoHero } from "@/components/sections/CmsPhotoHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -53,12 +53,13 @@ const faqs = [
   },
 ];
 
-export default function PricingPage() {
-  const editions = getEditions();
+export default async function PricingPage() {
+  const editions = await getEditions();
   return (
     <InnerPage category="pricing" current="/pricing">
       {/* ── Hero: editorial split, oversized statement left ── */}
-      <PhotoHero
+      <CmsPhotoHero
+        route="/pricing"
         photo="finops-balance"
         eyebrow="Pricing"
         title="Two published prices. Two shaped to the estate."
@@ -87,7 +88,7 @@ export default function PricingPage() {
             Module-by-edition matrix
           </Button>
         </div>
-      </PhotoHero>
+      </CmsPhotoHero>
 
       {/* ── Tier cards: asymmetric, featured edition pulled forward ── */}
       <section className="bg-canvas py-20 sm:py-24">

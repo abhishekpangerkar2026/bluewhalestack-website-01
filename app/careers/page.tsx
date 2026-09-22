@@ -3,17 +3,17 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, MapPin } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { PhotoHero } from "@/components/sections/PhotoHero";
+import { CmsPhotoHero } from "@/components/sections/CmsPhotoHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { perks, jobs } from "@/content/careers";
-import { leadership } from "@/content/about";
 import { company } from "@/content/company";
 import { cld, publicIdFromPath } from "@/lib/cloudinary";
+import { imageUrl } from "@/lib/cms";
+import { getTeam } from "@/lib/content";
 
-const team = leadership.filter((l) => l.name && l.image);
 const applyHref = (title: string) =>
   `mailto:${company.emails.careers}?subject=${encodeURIComponent(`Application: ${title}`)}`;
 
@@ -23,11 +23,13 @@ export const metadata: Metadata = {
     "Build the future of cloud infrastructure with BlueWhale Stack. Open roles across engineering, product, sales and more.",
 };
 
-export default function CareersPage() {
+export default async function CareersPage() {
+  const team = (await getTeam()).filter((l) => l.name && (l.image || l.cmsImage));
   return (
     <InnerPage category="company" current="/careers">
       {/* ── Hero: editorial split, oversized statement left ── */}
-      <PhotoHero
+      <CmsPhotoHero
+        route="/careers"
         photo="datacenter-tray"
         eyebrow="Careers"
         title="Build the control plane that banks, ministries and operators run on."
@@ -42,7 +44,7 @@ export default function CareersPage() {
             Who you would work with
           </Button>
         </div>
-      </PhotoHero>
+      </CmsPhotoHero>
       <section className="border-b border-line bg-surface pb-12">
         <Container>
 
@@ -61,7 +63,7 @@ export default function CareersPage() {
                     >
                       {/* eslint-disable-next-line @next/next/no-img-element -- may resolve to an external Cloudinary URL */}
                       <img
-                        src={cld(publicIdFromPath(m.image!, "team"), m.image!, 112)}
+                        src={m.cmsImage ? imageUrl(m.cmsImage.src, 112) : cld(publicIdFromPath(m.image!, "team"), m.image!, 112)}
                         alt={m.name!}
                         width={56}
                         height={56}

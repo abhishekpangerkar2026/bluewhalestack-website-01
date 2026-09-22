@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
-import { PhotoHero } from "@/components/sections/PhotoHero";
+import { CmsPhotoHero } from "@/components/sections/CmsPhotoHero";
 import { CountUp } from "@/components/ui/CountUp";
 import { familyTileSrc } from "@/content/moduleArt";
 import { moduleDetails } from "@/content/moduleDetails";
@@ -37,7 +37,8 @@ export default function ModulesPage() {
   return (
     <InnerPage category="platform" current="/modules">
       {/* ── Hero ── */}
-      <PhotoHero
+      <CmsPhotoHero
+        route="/modules"
         photo="platform-stack"
         eyebrow="The nine capability families"
         title={<>What lives in the <span className="text-accent">platform core.</span></>}
@@ -63,7 +64,7 @@ export default function ModulesPage() {
         }
       >
         <p className="text-sm text-faint">One identity, one inventory and one policy plane. The full 54-capability list with edition mapping is in the technical datasheet, on request.</p>
-      </PhotoHero>
+      </CmsPhotoHero>
 
       <nav aria-label="Capability families" className="border-b border-line bg-surface">
         <Container>

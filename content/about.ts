@@ -184,6 +184,8 @@ export const milestones = [
 
 /** Leadership — profiles are added one by one; unfilled roles render as "To be announced". */
 export type LeadershipMember = {
+  /** editor-uploaded photograph (CMS) */
+  cmsImage?: import("@/content/cmsTypes").CmsImage;
   name?: string;
   role: string;
   bio?: string;

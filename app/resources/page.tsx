@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowUpRight, Download } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { PhotoHero } from "@/components/sections/PhotoHero";
-import { collateral, collateralHref } from "@/content/collateral";
+import { CmsPhotoHero } from "@/components/sections/CmsPhotoHero";
+import { getCollateral } from "@/lib/content";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
 import { ResourceLibrary } from "@/components/sections/ResourceLibrary";
@@ -16,11 +16,13 @@ export const metadata: Metadata = {
     "Whitepapers, case studies, webinars and expert insights on cloud management, FinOps and enterprise cloud strategy.",
 };
 
-export default function ResourcesPage() {
+export default async function ResourcesPage() {
+  const collateral = await getCollateral();
   return (
     <InnerPage category="resources" current="/resources">
       {/* ── Hero ── */}
-      <PhotoHero
+      <CmsPhotoHero
+        route="/resources"
         photo="discovery-lens"
         eyebrow="Resources"
         title="Datasheets, briefs, whitepapers and case studies — read online or download."
@@ -38,7 +40,7 @@ export default function ResourcesPage() {
             </Link>
           ))}
         </div>
-      </PhotoHero>
+      </CmsPhotoHero>
 
       {/* ── Official collateral: the finished PDFs ── */}
       <section id="collateral" className="scroll-mt-20 border-b border-line bg-canvas py-20 sm:py-24">
@@ -53,7 +55,7 @@ export default function ResourcesPage() {
           <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {collateral.map((d, i) => (
               <Reveal key={d.file} delay={(i % 3) * 60}>
-                <a href={collateralHref(d)} target="_blank" rel="noopener" className="card-lift group flex h-full flex-col rounded-xl border border-line bg-surface p-6 shadow-sm">
+                <a href={d.url} target="_blank" rel="noopener" className="card-lift group flex h-full flex-col rounded-xl border border-line bg-surface p-6 shadow-sm">
                   <div className="flex items-center justify-between">
                     <span className="rounded-full border border-line bg-sunken px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-muted">{d.kind}</span>
                     <span className="text-xs text-faint">PDF · {d.size}</span>

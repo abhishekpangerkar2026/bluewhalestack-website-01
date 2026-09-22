@@ -5,15 +5,7 @@ import { notFound } from "next/navigation";
 import { ArrowRight, Check, Clock } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { PhotoHero } from "@/components/sections/PhotoHero";
-import type { PhotoKey } from "@/content/photos";
-
-/** the studio photograph that carries each edition's idea */
-const EDITION_PHOTO: Record<string, PhotoKey> = {
-  standard: "editions-rack",
-  enterprise: "enterprise-campus",
-  "telco-datacenter": "telco-datacenter",
-  government: "government-hall",
-};
+import { EDITION_PHOTO } from "@/content/photos";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
@@ -27,8 +19,8 @@ import { getEditions, getEdition, getModulesForEdition } from "@/lib/content";
 import { editions, editionSpecs } from "@/content/editions";
 import { moduleDetails } from "@/content/moduleDetails";
 
-export function generateStaticParams() {
-  return getEditions().map((e) => ({ slug: e.slug }));
+export async function generateStaticParams() {
+  return (await getEditions()).map((e) => ({ slug: e.slug }));
 }
 
 export async function generateMetadata({
@@ -37,7 +29,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const e = getEdition(slug);
+  const e = await getEdition(slug);
   if (!e) return {};
   return { title: `${e.name} Edition`, description: e.positioning };
 }
@@ -48,9 +40,9 @@ export default async function EditionDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const edition = getEdition(slug);
+  const edition = await getEdition(slug);
   if (!edition) notFound();
-  const mods = getModulesForEdition(slug);
+  const mods = await getModulesForEdition(slug);
 
   return (
     <InnerPage category="platform" current="/editions">
@@ -81,6 +73,7 @@ export default async function EditionDetailPage({
       {/* ── Hero ── */}
       <PhotoHero
         photo={EDITION_PHOTO[edition.slug] ?? "editions-rack"}
+        image={edition.cmsImage}
         above={
           <div className="mb-8">
             <Breadcrumbs items={[{ label: "Editions", href: "/editions" }, { label: `${edition.name} Edition` }]} />

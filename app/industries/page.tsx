@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { PhotoHero } from "@/components/sections/PhotoHero";
+import { CmsPhotoHero } from "@/components/sections/CmsPhotoHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
@@ -11,7 +11,7 @@ import { ArchitectureDiagram } from "@/components/diagrams/ArchitectureDiagram";
 import { IndustryVisual } from "@/components/diagrams/IndustryVisual";
 import { ClosingCTA } from "@/components/sections/ClosingCTA";
 import { POSTER_GALLERY } from "@/content/industryPosters";
-import { getIndustries, getEdition } from "@/lib/content";
+import { getIndustries, getEditions } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Industries",
@@ -19,14 +19,15 @@ export const metadata: Metadata = {
     "Purpose-built cloud management for Government, BFSI, Healthcare, Regulated Enterprise, SaaS & Digital Native, Telco & MSP, and Datacenter & Colocation.",
 };
 
-export default function IndustriesPage() {
-  const industries = getIndustries();
+export default async function IndustriesPage() {
+  const [industries, editions] = await Promise.all([getIndustries(), getEditions()]);
   const [featured, ...rest] = industries;
 
   return (
     <InnerPage category="solutions" current="/industries">
       {/* ── Intro: editorial split, big statement left / count right ── */}
-      <PhotoHero
+      <CmsPhotoHero
+        route="/industries"
         photo="enterprise-campus"
         eyebrow={`Industry solutions · ${industries.length} sectors, one control plane`}
         title="Every sector, and the regimes each one answers to."
@@ -35,7 +36,7 @@ export default function IndustriesPage() {
         <div className="flex flex-wrap gap-2">
           {industries.map((industry) => <Link key={industry.slug} href={`/industries/${industry.slug}`} className="rounded-full border border-line bg-white px-3.5 py-2 text-xs font-semibold text-muted shadow-sm transition-colors hover:border-accent hover:text-accent">{industry.name}</Link>)}
         </div>
-      </PhotoHero>
+      </CmsPhotoHero>
 
       {/* ── Cross-industry reference architecture ── */}
       <section className="border-t border-line bg-sunken py-20 sm:py-28">
@@ -92,7 +93,7 @@ export default function IndustriesPage() {
 
           <div className="mt-6 grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
             {rest.map((i, idx) => {
-              const edition = getEdition(i.edition);
+              const edition = editions.find((e) => e.slug === i.edition);
               return (
               <Reveal key={i.slug} delay={(idx % 3) * 70}>
                 <Link

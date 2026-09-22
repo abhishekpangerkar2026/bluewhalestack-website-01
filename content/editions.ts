@@ -10,7 +10,11 @@
  * Enterprise is the featured / most-common starting point.
  */
 
+import type { CmsImage } from "@/content/cmsTypes";
+
 export interface EditionDef {
+  /** editor-chosen hero photograph (CMS) */
+  cmsImage?: CmsImage;
   slug: string;
   name: string;
   badge: string;

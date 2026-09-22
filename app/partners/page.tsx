@@ -2,7 +2,7 @@ import { InnerPage } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
 import { ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { PhotoHero } from "@/components/sections/PhotoHero";
+import { CmsPhotoHero } from "@/components/sections/CmsPhotoHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
@@ -24,7 +24,8 @@ export default function PartnersPage() {
   return (
     <InnerPage category="company" current="/partners">
       {/* ── Hero: clean light statement band ── */}
-      <PhotoHero
+      <CmsPhotoHero
+        route="/partners"
         photo="hybrid-bridge"
         eyebrow="Partner Ecosystem"
         title={<>Grow together. <span className="whitespace-nowrap text-accent">Win together.</span></>}
@@ -50,7 +51,7 @@ export default function PartnersPage() {
             {partnerPortal.url.replace(/^https?:\/\//, "")}
           </a>
         </p>
-      </PhotoHero>
+      </CmsPhotoHero>
 
       {/* ── Why partner: editorial split, heading left / reasons right ── */}
       <section className="bg-canvas py-24 sm:py-32">

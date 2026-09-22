@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Check, ChevronDown, ShieldCheck } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { PhotoHero } from "@/components/sections/PhotoHero";
+import { CmsPhotoHero } from "@/components/sections/CmsPhotoHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
@@ -22,7 +22,8 @@ export default function TrustPage() {
   return (
     <InnerPage category="resources" current="/trust">
       {/* ── Hero ── */}
-      <PhotoHero
+      <CmsPhotoHero
+        route="/trust"
         photo="sovereign-vault"
         eyebrow="Trust Center"
         title={<>Security and compliance, <span className="text-accent">independently verified.</span></>}
@@ -41,7 +42,7 @@ export default function TrustPage() {
             <ArrowRight className="h-4 w-4" />
           </Button>
         </div>
-      </PhotoHero>
+      </CmsPhotoHero>
 
       {/* Cert badge cloud — the real certification marks */}
       <section className="border-b border-line bg-sunken py-10">

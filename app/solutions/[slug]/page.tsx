@@ -5,17 +5,7 @@ import Link from "next/link";
 import { Check, ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { PhotoHero } from "@/components/sections/PhotoHero";
-import type { PhotoKey } from "@/content/photos";
-
-/** the studio photograph that carries each solution's idea */
-const SOLUTION_PHOTO: Record<string, PhotoKey> = {
-  "unified-cloud-inventory": "discovery-lens",
-  "ai-native-provisioning": "appliance-enclosure",
-  "bundled-observability": "estates-row",
-  "cloud-migration": "migration-wave",
-  "security-compliance": "sovereign-vault",
-  "sovereign-cloud": "sovereign-regions",
-};
+import { SOLUTION_PHOTO } from "@/content/photos";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
@@ -28,11 +18,10 @@ import { ConsoleMockup } from "@/components/sections/mockups/ConsoleMockup";
 import { FAQ } from "@/components/sections/FAQ";
 import { ClosingCTA } from "@/components/sections/ClosingCTA";
 import { moduleDetails } from "@/content/moduleDetails";
-import { customerStories } from "@/content/customers";
-import { getSolutions, getSolution, getModule, getEdition } from "@/lib/content";
+import { getSolutions, getSolution, getModules, getEditions, getCustomerStories } from "@/lib/content";
 
-export function generateStaticParams() {
-  return getSolutions().map((s) => ({ slug: s.slug }));
+export async function generateStaticParams() {
+  return (await getSolutions()).map((s) => ({ slug: s.slug }));
 }
 
 export async function generateMetadata({
@@ -41,7 +30,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const s = getSolution(slug);
+  const s = await getSolution(slug);
   if (!s) return {};
   return { title: s.name, description: s.description };
 }
@@ -52,25 +41,27 @@ export default async function SolutionDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const solution = getSolution(slug);
+  const solution = await getSolution(slug);
   if (!solution) notFound();
+  const [allModules, allEditions, allSolutions, customerStories] = await Promise.all([getModules(), getEditions(), getSolutions(), getCustomerStories()]);
 
   const relatedModules = solution.modules
-    .map((m) => getModule(m))
+    .map((m) => allModules.find((x) => x.slug === m))
     .filter((m): m is NonNullable<typeof m> => Boolean(m));
   const recEditions = (solution.editions ?? [])
-    .map((e) => getEdition(e))
+    .map((e) => allEditions.find((x) => x.slug === e))
     .filter((e): e is NonNullable<typeof e> => Boolean(e));
   const primaryModule = relatedModules[0];
   const screen = primaryModule ? moduleDetails[primaryModule.slug]?.screen : undefined;
   const story = solution.story ? customerStories.find((c) => c.slug === solution.story) : undefined;
-  const siblings = getSolutions().filter((s) => s.slug !== slug).slice(0, 3);
+  const siblings = allSolutions.filter((s) => s.slug !== slug).slice(0, 3);
 
   return (
     <InnerPage category="solutions" current="/solutions">
       {/* ── Hero ── */}
       <PhotoHero
         photo={SOLUTION_PHOTO[solution.slug] ?? "hybrid-bridge"}
+        image={solution.cmsImage}
         above={
           <div className="mb-8">
             <Breadcrumbs items={[{ label: "Solutions", href: "/solutions" }, { label: solution.name }]} />

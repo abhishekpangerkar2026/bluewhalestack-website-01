@@ -1,64 +1,22 @@
-import { InnerPage, IntroPanel, IntroPanelLink } from "@/components/layout/InnerPage";
+import { InnerPage } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
-import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Calendar } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { CmsPhotoHero } from "@/components/sections/CmsPhotoHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
+import { formatPostDate } from "@/content/newsroom";
+import { getPosts } from "@/lib/content";
+import { imageUrl } from "@/lib/cms";
 
 export const metadata: Metadata = {
   title: "Newsroom",
   description:
     "Product launches, partnerships, and company milestones from BlueWhale Stack. Press enquiries: contact@bluewhalestack.com",
 };
-
-const announcements = [
-  {
-    date: "June 2026",
-    category: "Product",
-    title: "Whale AI reaches 50+ use cases across the platform",
-    body: "The Whale AI layer now covers 50+ production use cases spanning FinOps, security, ITSM, migration and observability — available in Spark, Tide and Abyss tiers from Standard edition up.",
-    badge: "Product launch",
-  },
-  {
-    date: "May 2026",
-    category: "Certification",
-    title: "BlueWhale Stack achieves ISO 27001:2022 and completes SOC 2 Type II readiness",
-    body: "ISO 27001:2022 is now certified, alongside a SOC 2 Type II readiness assessment against the AICPA Trust Services Criteria. Signed certificates are downloadable from the Trust Center.",
-    badge: "Trust & compliance",
-  },
-  {
-    date: "April 2026",
-    category: "Product",
-    title: "WhaleForge IaC enters public beta",
-    body: "WhaleForge — the declarative YAML-to-Terraform engine — is now in public beta with support for AWS, Azure and GCP, plus live HLD/LLD/TOGAF architecture diagrams.",
-    badge: "Beta",
-  },
-  {
-    date: "March 2026",
-    category: "Platform",
-    title: "Landing Zone Builder ships for AWS Control Tower & Azure CLZ",
-    body: "The visual Landing Zone Builder generates multi-account baseline HCL for AWS Control Tower, Azure Cloud Landing Zone and GCP foundations — no Terraform expertise required.",
-    badge: "Product launch",
-  },
-  {
-    date: "January 2026",
-    category: "Platform",
-    title: "Government Edition: sovereign & air-gapped deployment GA",
-    body: "The Government Edition with full air-gapped, in-region sovereign deployment is generally available. Supports DPDP, GDPR and NCA-ECC compliance with no outbound connectivity required.",
-    badge: "GA",
-  },
-  {
-    date: "February 2026",
-    category: "Platform",
-    title: "Oracle Cloud, Alibaba Cloud and Huawei Cloud connectors live",
-    body: "The Cloud Connectors module now covers all six major public clouds — AWS, Azure, GCP, Oracle Cloud, Alibaba Cloud and Huawei Cloud — plus private, virtualization, hybrid and edge estates via the Edge Agent.",
-    badge: "Product launch",
-  },
-];
 
 const pressContacts = [
   {
@@ -77,61 +35,44 @@ type BadgeTone = "brand" | "accent" | "neutral" | "success" | "warning";
 const badgeTone: Record<string, BadgeTone> = {
   "Product launch": "accent",
   "Trust & compliance": "success",
-  "Beta": "warning",
-  "GA": "success",
+  Beta: "warning",
+  GA: "success",
 };
 
-export default function NewsroomPage() {
+/** CMS posts carry ISO dates; the fallback list carries "June 2026". */
+const showDate = (d: string) => (/^\d{4}-\d{2}-\d{2}$/.test(d) ? formatPostDate(d) : d);
+
+export default async function NewsroomPage() {
+  const posts = await getPosts();
   return (
     <InnerPage category="company" current="/newsroom">
       {/* ── Hero ── */}
-      <section className="border-b border-line bg-surface py-20 sm:py-28">
-        <Container>
-          <div className="grid gap-x-16 gap-y-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
-            <Reveal>
-              <div className="max-w-2xl">
-                <div className="mb-5 flex items-center gap-3">
-                  <span aria-hidden className="h-px w-8 bg-accent/50" />
-                  <span className="eyebrow">
-                    Newsroom
-                  </span>
-                </div>
-                <h1 className="display-1 text-ink">
-                  Releases, certifications and milestones — dated.
-                </h1>
-                <p className="mt-6 text-lg leading-relaxed text-muted">
-                  What shipped and when: edition general availability, new cloud connectors, module betas and the
-                  certification audits as they complete. For press enquiries, reach us at{" "}
-                  <a
-                    href="mailto:contact@bluewhalestack.com"
-                    className="font-semibold text-accent underline-offset-2 hover:underline"
-                  >
-                    contact@bluewhalestack.com
-                  </a>
-                  .
-                </p>
-                <div className="mt-8 flex flex-wrap gap-3">
-                  <Button href="/contact" size="lg">
-                    Contact press team
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
-                  <Button href="/trust" size="lg" variant="secondary">
-                    Trust Center
-                  </Button>
-                </div>
-              </div>
-            </Reveal>
-            <Reveal delay={90}>
-              <IntroPanel eyebrow="From the newsroom" dark>
-                <p className="border-t border-white/15 pt-6 text-xs text-white/55">{announcements[0].date} · {announcements[0].category}</p>
-                <h2 className="mt-4 text-2xl font-medium leading-tight tracking-tight text-white">{announcements[0].title}</h2>
-                <p className="mb-6 mt-4 text-sm leading-relaxed text-white/65">{announcements[0].body}</p>
-                <IntroPanelLink index="↗" href="#announcements" title="All announcements" description="Product launches, certifications and milestones." />
-              </IntroPanel>
-            </Reveal>
-          </div>
-        </Container>
-      </section>
+      <CmsPhotoHero
+        route="/newsroom"
+        photo="edge-tower"
+        eyebrow="Newsroom"
+        title="Releases, certifications and milestones — dated."
+        description={
+          <>
+            What shipped and when: edition general availability, new cloud connectors, module betas and the certification
+            audits as they complete. For press enquiries, reach us at{" "}
+            <a href="mailto:contact@bluewhalestack.com" className="font-semibold text-accent underline-offset-2 hover:underline">
+              contact@bluewhalestack.com
+            </a>
+            .
+          </>
+        }
+      >
+        <div className="flex flex-wrap gap-3">
+          <Button href="/contact" size="lg">
+            Contact press team
+            <ArrowRight className="h-4 w-4" />
+          </Button>
+          <Button href="/trust" size="lg" variant="secondary">
+            Trust Center
+          </Button>
+        </div>
+      </CmsPhotoHero>
 
       {/* ── Announcements ── */}
       <section id="announcements" className="py-24 sm:py-32">
@@ -144,13 +85,13 @@ export default function NewsroomPage() {
             />
           </Reveal>
           <div className="mt-14 flex flex-col divide-y divide-line">
-            {announcements.map((item, i) => (
+            {posts.map((item, i) => (
               <Reveal key={item.title} delay={(i % 4) * 50}>
                 <article className="group flex flex-col gap-4 py-8 first:pt-0 sm:flex-row sm:gap-8">
                   <div className="flex shrink-0 items-center gap-3 sm:w-44 sm:flex-col sm:items-start sm:gap-2">
                     <span className="inline-flex items-center gap-1.5 text-xs text-faint">
                       <Calendar className="h-3.5 w-3.5" />
-                      {item.date}
+                      {showDate(item.date)}
                     </span>
                     <Badge tone={badgeTone[item.badge] ?? "neutral"} className="text-[11px]">
                       {item.badge}
@@ -159,7 +100,23 @@ export default function NewsroomPage() {
                   <div className="flex flex-1 flex-col gap-2">
                     <h3 className="text-lg font-bold text-ink">{item.title}</h3>
                     <p className="text-sm leading-relaxed text-muted">{item.body}</p>
+                    {item.href && (
+                      <a href={item.href} className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent hover:underline">
+                        Read more <ArrowUpRight className="h-3.5 w-3.5" />
+                      </a>
+                    )}
                   </div>
+                  {item.cmsImage && (
+                    <img
+                      src={imageUrl(item.cmsImage.src, 480)}
+                      alt={item.cmsImage.alt ?? ""}
+                      width={item.cmsImage.width}
+                      height={item.cmsImage.height}
+                      loading="lazy"
+                      className="aspect-[3/2] w-full rounded-lg object-cover sm:w-56"
+                      style={{ objectPosition: item.cmsImage.focal }}
+                    />
+                  )}
                 </article>
               </Reveal>
             ))}
@@ -181,13 +138,8 @@ export default function NewsroomPage() {
             {pressContacts.map((c, i) => (
               <Reveal key={c.type} delay={i * 70}>
                 <Card className="flex flex-col gap-3 p-6">
-                  <p className="eyebrow">
-                    {c.type}
-                  </p>
-                  <a
-                    href={`mailto:${c.email}`}
-                    className="flex items-center gap-1.5 text-lg font-bold text-accent hover:underline"
-                  >
+                  <p className="eyebrow">{c.type}</p>
+                  <a href={`mailto:${c.email}`} className="flex items-center gap-1.5 text-lg font-bold text-accent hover:underline">
                     {c.email}
                     <ArrowUpRight className="h-4 w-4 shrink-0" />
                   </a>
@@ -205,9 +157,7 @@ export default function NewsroomPage() {
           <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
             <Reveal>
               <div className="max-w-2xl">
-                <p className="eyebrow text-[var(--gold)]">
-                  See it live
-                </p>
+                <p className="eyebrow text-[var(--gold)]">See it live</p>
                 <h2 className="mt-5 text-3xl font-bold leading-[1.1] tracking-tight text-white sm:text-4xl">
                   Ready to put every cloud on one control plane?
                 </h2>
