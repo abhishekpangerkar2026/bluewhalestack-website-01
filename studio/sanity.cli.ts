@@ -7,5 +7,6 @@ export default defineCliConfig({
   },
   // https://<studioHost>.sanity.studio
   studioHost: process.env.SANITY_STUDIO_HOST ?? "bluewhalestack",
+  deployment: { appId: "ty2k9aw3mzi8aw10sww8n95y" },
   autoUpdates: true,
 });
