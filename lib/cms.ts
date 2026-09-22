@@ -17,7 +17,8 @@ import type { CmsImage } from "@/content/cmsTypes";
  */
 export const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 export const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production";
-export const studioUrl = process.env.NEXT_PUBLIC_SANITY_STUDIO_URL ?? "https://bluewhalestack.sanity.studio";
+// bluewhalestack.sanity.studio redirects into Sanity's dashboard; edit links point straight there.
+export const studioUrl = process.env.NEXT_PUBLIC_SANITY_STUDIO_URL ?? "https://www.sanity.io/@o0nwy16u4/studio/ty2k9aw3mzi8aw10sww8n95y";
 const readToken = process.env.SANITY_API_READ_TOKEN;
 export const cmsEnabled = Boolean(projectId);
 export const CMS_TAG = "cms";

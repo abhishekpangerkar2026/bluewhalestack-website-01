@@ -1,7 +1,16 @@
 /** @type {import('next').NextConfig} */
 
-// The Studio's Presentation tool shows the live site in a frame; nobody else may frame it.
-const STUDIO_ORIGIN = process.env.NEXT_PUBLIC_SANITY_STUDIO_URL ?? "https://bluewhalestack.sanity.studio";
+// The Studio's Presentation tool shows the live site in a frame — from the hosted
+// studio or from Sanity's dashboard, which embeds the studio (nested frames need every
+// ancestor listed). Nobody else may frame the site.
+const FRAME_ANCESTORS = [
+  "'self'",
+  "https://www.sanity.io",
+  "https://*.sanity.io",
+  "https://*.sanity.studio",
+  "https://bluewhalestack.sanity.studio",
+  "http://localhost:3333",
+].join(" ");
 
 const nextConfig = {
   reactStrictMode: true,
@@ -12,7 +21,7 @@ const nextConfig = {
       {
         source: "/(.*)",
         headers: [
-          { key: "Content-Security-Policy", value: `frame-ancestors 'self' ${STUDIO_ORIGIN} http://localhost:3333` },
+          { key: "Content-Security-Policy", value: `frame-ancestors ${FRAME_ANCESTORS}` },
         ],
       },
     ];
