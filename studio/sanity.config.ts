@@ -1,8 +1,10 @@
 import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
+import { presentationTool } from "sanity/presentation";
 import { visionTool } from "@sanity/vision";
 import { schemaTypes } from "./schemaTypes";
 import { structure, SINGLETONS } from "./structure";
+import { presentationOptions } from "./presentation";
 
 /**
  * The editing screen for the BlueWhale Stack website. Hosted separately from
@@ -15,7 +17,11 @@ export default defineConfig({
   title: "BlueWhale Stack Website",
   projectId: process.env.SANITY_STUDIO_PROJECT_ID ?? "",
   dataset: process.env.SANITY_STUDIO_DATASET ?? "production",
-  plugins: [structureTool({ structure }), visionTool({ defaultApiVersion: "2025-09-01" })],
+  plugins: [
+    presentationTool({ ...presentationOptions, name: "presentation", title: "Edit on the website" }),
+    structureTool({ structure }),
+    visionTool({ defaultApiVersion: "2025-09-01" }),
+  ],
   schema: { types: schemaTypes },
   document: {
     // singletons are opened from the sidebar, never created twice

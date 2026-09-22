@@ -10,6 +10,20 @@ a change makes it live on the site within seconds (no redeploy).
 - **Invite editors:** https://www.sanity.io/manage → the project → Members →
   Invite (role *Editor* can edit and publish; *Viewer* can only read)
 
+## Editing directly on the website ("Edit on the website" tab)
+
+The Studio's first tab shows the live website. Click any headline,
+paragraph, label or photo on the page — the matching field opens beside it,
+the page updates as you type, and **Publish** makes it live. Use the page's
+own navigation inside the frame to move to another page; the document
+list on the left follows you. Unpublished edits are only visible in this
+preview (and to anyone who opens the site while in preview mode — the
+"Preview · exit" badge at the bottom-left leaves it).
+
+Not clickable on the page: things that are still code (navigation, diagrams,
+the generated document pages) and images used as backgrounds — open the
+document in the *Content* tab for those.
+
 ## What you can edit
 
 | In the Studio sidebar | What it changes on the site |

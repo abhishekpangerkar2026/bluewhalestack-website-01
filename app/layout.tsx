@@ -4,7 +4,9 @@ import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ChatWidget } from "@/components/layout/ChatWidget";
+import { PreviewBar } from "@/components/layout/PreviewBar";
 import { company, offices } from "@/content/company";
+import { draftMode } from "next/headers";
 
 // The brand guidelines call for "a clean geometric sans" on screen (Calibri
 // is the print face). Plus Jakarta Sans carries the whole hierarchy; the mono
@@ -107,11 +109,12 @@ const websiteJsonLd = {
   url: siteOrigin,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const { isEnabled: preview } = await draftMode();
   return (
     <html lang="en" className={`${jakarta.variable} ${plexMono.variable}`} suppressHydrationWarning>
       <head>
@@ -131,6 +134,7 @@ export default function RootLayout({
         <main id="main-content" tabIndex={-1}>{children}</main>
         <Footer />
         <ChatWidget />
+        {preview && <PreviewBar />}
       </body>
     </html>
   );

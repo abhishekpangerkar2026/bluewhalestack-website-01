@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { stegaClean } from "@sanity/client/stega";
 
 /**
  * A number that counts up once when it scrolls into view. Renders the final
@@ -20,8 +21,10 @@ export function CountUp({
   duration?: number;
   className?: string;
 }) {
-  const target = typeof value === "number" ? value : Number.parseFloat(String(value).replace(/[^0-9.]/g, ""));
-  const animatable = typeof value === "number" || (/^\s*[0-9][0-9,.]*\s*$/.test(String(value)) && Number.isFinite(target));
+  // preview mode stega-encodes strings with invisible characters; strip them before parsing
+  const raw = typeof value === "number" ? value : stegaClean(String(value));
+  const target = typeof raw === "number" ? raw : Number.parseFloat(String(raw).replace(/[^0-9.]/g, ""));
+  const animatable = typeof raw === "number" || (/^\s*[0-9][0-9,.]*\s*$/.test(String(raw)) && Number.isFinite(target));
   const ref = useRef<HTMLSpanElement>(null);
   const [shown, setShown] = useState<number>(animatable ? 0 : target);
   const [done, setDone] = useState(!animatable);
@@ -52,7 +55,7 @@ export function CountUp({
     return () => io.disconnect();
   }, [animatable, done, duration, target]);
 
-  if (!animatable) return <span ref={ref} className={className}>{prefix}{value}{suffix}</span>;
+  if (!animatable) return <span ref={ref} className={className}>{prefix}{raw}{suffix}</span>;
   const decimals = Number.isInteger(target) ? 0 : 1;
   const text = (done ? target : shown).toLocaleString("en-US", { maximumFractionDigits: decimals, minimumFractionDigits: decimals });
   return <span ref={ref} className={className}>{prefix}{text}{suffix}</span>;
