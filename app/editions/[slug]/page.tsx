@@ -74,6 +74,7 @@ export default async function EditionDetailPage({
       <PhotoHero
         photo={EDITION_PHOTO[edition.slug] ?? "editions-rack"}
         image={edition.cmsImage}
+        edit={edition.cmsId ? { id: edition.cmsId, type: "edition", path: "image" } : undefined}
         above={
           <div className="mb-8">
             <Breadcrumbs items={[{ label: "Editions", href: "/editions" }, { label: `${edition.name} Edition` }]} />

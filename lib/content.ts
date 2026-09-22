@@ -18,8 +18,8 @@ import { leadership, type LeadershipMember } from "@/content/about";
 import { announcements, type Announcement } from "@/content/newsroom";
 import { collateral, collateralHref, type CollateralDoc } from "@/content/collateral";
 import { hero as homeHero, story as homeStory, proofStrip, problems, differentiators, portfolio } from "@/content/home";
-import type { CmsImage, CmsVideo } from "@/content/cmsTypes";
-import { cmsFetch, toCmsImage } from "@/lib/cms";
+import type { CmsImage, CmsRef, CmsVideo } from "@/content/cmsTypes";
+import { cmsFetch, toCmsImage, ref } from "@/lib/cms";
 import {
   homePageQuery,
   pageHeroQuery,
@@ -34,7 +34,7 @@ import {
 } from "@/lib/cms-queries";
 
 type RawImage = Parameters<typeof toCmsImage>[0];
-type WithImage<T> = Omit<T, "image"> & { image?: RawImage };
+type WithImage<T> = Omit<T, "image"> & { image?: RawImage; _id?: string };
 
 const list = <T>(rows: T[] | null | undefined): T[] | null => (rows && rows.length > 0 ? rows : null);
 const clean = <T extends object>(row: T): T =>
@@ -56,7 +56,8 @@ export async function getEditions(): Promise<EditionDef[]> {
       highlights: r.highlights ?? [],
       modules: r.modules ?? [],
       operatorModel: operatorProfiles?.length ? { profiles: operatorProfiles } : undefined,
-      cmsImage: toCmsImage(image),
+      cmsId: r._id,
+      cmsImage: toCmsImage(image, ref(r._id, "edition", "image")),
     }) as EditionDef,
   );
 }
@@ -74,7 +75,7 @@ export async function getModules(): Promise<ModuleDef[]> {
   const rows = await moduleRows();
   if (!rows) return modules;
   return rows.map(({ image, status, summary, facts, capabilities, howItWorks, faq, ...m }) =>
-    clean({ ...m, features: m.features ?? [], cmsImage: toCmsImage(image) }) as ModuleDef,
+    clean({ ...m, features: m.features ?? [], cmsId: m._id, cmsImage: toCmsImage(image, ref(m._id, "module", "image")) }) as ModuleDef,
   );
 }
 export async function getModule(slug: string): Promise<ModuleDef | undefined> {
@@ -117,7 +118,8 @@ export async function getIndustries(): Promise<IndustryDef[]> {
       compliance: i.compliance ?? [],
       regimes: i.regimes ?? [],
       faq: i.faq ?? [],
-      cmsImage: toCmsImage(image),
+      cmsId: i._id,
+      cmsImage: toCmsImage(image, ref(i._id, "industry", "image")),
     }) as IndustryDef,
   );
 }
@@ -137,7 +139,8 @@ export async function getSolutions(): Promise<SolutionDef[]> {
       facts: s.facts ?? [],
       modules: s.modules ?? [],
       faq: s.faq ?? [],
-      cmsImage: toCmsImage(image),
+      cmsId: s._id,
+      cmsImage: toCmsImage(image, ref(s._id, "solution", "image")),
     }) as SolutionDef,
   );
 }
@@ -150,8 +153,9 @@ export async function getCustomerStories(): Promise<CustomerStory[]> {
   const rows = list(await cmsFetch<WithImage<CustomerStory>[]>(customerStoriesQuery, {}, ["customerStory"]));
   if (!rows) return customerStories;
   return rows.map(({ image, ...c }) => {
-    const cmsImage = toCmsImage(image);
+    const cmsImage = toCmsImage(image, ref(c._id, "customerStory", "image"));
     return clean({
+      cmsId: c._id,
       ...c,
       imageAlt: c.imageAlt ?? cmsImage?.alt ?? c.headline,
       metrics: c.metrics ?? [],
@@ -168,14 +172,14 @@ export async function getCustomerStory(slug: string): Promise<CustomerStory | un
 export async function getTeam(): Promise<LeadershipMember[]> {
   const rows = list(await cmsFetch<WithImage<LeadershipMember>[]>(teamQuery, {}, ["teamMember"]));
   if (!rows) return leadership;
-  return rows.map(({ image, ...m }) => clean({ ...m, cmsImage: toCmsImage(image) }) as LeadershipMember);
+  return rows.map(({ image, ...m }) => clean({ ...m, cmsId: m._id, cmsImage: toCmsImage(image, ref(m._id, "teamMember", "image")) }) as LeadershipMember);
 }
 
 // ── Newsroom ──────────────────────────────────────────────────
 export async function getPosts(): Promise<Announcement[]> {
   const rows = list(await cmsFetch<WithImage<Announcement & { slug?: string }>[]>(postsQuery, {}, ["post"]));
   if (!rows) return announcements;
-  return rows.map(({ image, ...p }) => clean({ ...p, cmsImage: toCmsImage(image) }) as Announcement);
+  return rows.map(({ image, ...p }) => clean({ ...p, cmsId: p._id, cmsImage: toCmsImage(image, ref(p._id, "post", "image")) }) as Announcement);
 }
 
 // ── Official collateral ───────────────────────────────────────
@@ -198,6 +202,8 @@ export async function getCollateral(): Promise<CollateralItem[]> {
 
 // ── Page heroes ───────────────────────────────────────────────
 export interface PageHeroOverride {
+  /** CMS document id — lets the hero picture open its upload field in preview */
+  id?: string;
   eyebrow?: string;
   title?: string;
   titleAccent?: string;
@@ -206,22 +212,23 @@ export interface PageHeroOverride {
   video?: CmsVideo;
 }
 export async function getPageHero(route: string): Promise<PageHeroOverride | null> {
-  type Row = { eyebrow?: string; title?: string; titleAccent?: string; description?: string; image?: RawImage; video?: CmsVideo | null };
+  type Row = { _id: string; eyebrow?: string; title?: string; titleAccent?: string; description?: string; image?: RawImage; video?: CmsVideo | null };
   const row = await cmsFetch<Row | null>(pageHeroQuery, { route }, ["pageHero"]);
   if (!row) return null;
   return clean({
+    id: row._id,
     eyebrow: row.eyebrow ?? undefined,
     title: row.title ?? undefined,
     titleAccent: row.titleAccent ?? undefined,
     description: row.description ?? undefined,
-    image: toCmsImage(row.image),
-    video: row.video ?? undefined,
+    image: toCmsImage(row.image, ref(row._id, "pageHero", "image")),
+    video: row.video ? { ...row.video, sanity: ref(row._id, "pageHero", "video") } : undefined,
   });
 }
 
 // ── Home page ─────────────────────────────────────────────────
 export interface HomeContent {
-  hero: typeof homeHero & { image?: CmsImage; video?: CmsVideo; titleAccent?: string };
+  hero: typeof homeHero & { image?: CmsImage; video?: CmsVideo; titleAccent?: string; editRef?: CmsRef };
   story: typeof homeStory;
   proofStrip: typeof proofStrip;
   problems: typeof problems;
@@ -231,7 +238,7 @@ export interface HomeContent {
     title: string;
     description: string;
     note: string;
-    products: { name: string; role: string; body: string; status: string; href: string; photo?: (typeof portfolio.products)[number]["photo"]; image?: CmsImage }[];
+    products: { name: string; role: string; body: string; status: string; href: string; photo?: (typeof portfolio.products)[number]["photo"]; image?: CmsImage; editRef?: CmsRef }[];
   };
 }
 
@@ -246,7 +253,7 @@ export async function getHomePage(): Promise<HomeContent> {
     differentEyebrow?: string; differentTitle?: string; differentDescription?: string;
     differentiators?: { icon?: string; title: string; body?: string }[];
     portfolioEyebrow?: string; portfolioTitle?: string; portfolioDescription?: string; portfolioNote?: string;
-    products?: { name: string; role?: string; body?: string; status?: string; href?: string; image?: RawImage }[];
+    products?: { _key?: string; name: string; role?: string; body?: string; status?: string; href?: string; image?: RawImage }[];
   } | null;
   const fallback: HomeContent = {
     hero: homeHero,
@@ -270,8 +277,9 @@ export async function getHomePage(): Promise<HomeContent> {
       primaryNote: row.primaryNote ?? homeHero.primaryNote,
       secondaryCta: row.secondaryCta?.label ? row.secondaryCta : homeHero.secondaryCta,
       facts: facts as typeof homeHero.facts,
-      image: toCmsImage(row.image),
-      video: row.video ?? undefined,
+      image: toCmsImage(row.image, ref("homePage", "homePage", "image")),
+      video: row.video ? { ...row.video, sanity: ref("homePage", "homePage", "video") } : undefined,
+      editRef: ref("homePage", "homePage", "image"),
     },
     story: {
       eyebrow: row.storyEyebrow ?? homeStory.eyebrow,
@@ -306,7 +314,8 @@ export async function getHomePage(): Promise<HomeContent> {
             status: p.status ?? "",
             href: p.href ?? "/platform",
             photo: portfolio.products[i]?.photo,
-            image: toCmsImage(p.image),
+            image: toCmsImage(p.image, p._key ? ref("homePage", "homePage", `products[_key=="${p._key}"].image`) : undefined),
+            editRef: p._key ? ref("homePage", "homePage", `products[_key=="${p._key}"].image`) : undefined,
           }))
         : fallback.portfolio.products,
     },

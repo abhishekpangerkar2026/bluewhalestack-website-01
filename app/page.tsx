@@ -16,7 +16,7 @@ import { moduleGroups, moduleGroupOrder, moduleGroupBlurbs } from "@/content/mod
 import { familyTileSrc } from "@/content/moduleArt";
 import { photos, photoSrc, photoSrcSet } from "@/content/photos";
 import { getCustomerStories, getEditions, getHomePage } from "@/lib/content";
-import { imageSrcSet, imageUrl } from "@/lib/cms";
+import { editAttr, imageSrcSet, imageUrl } from "@/lib/cms";
 import { cn } from "@/lib/utils";
 
 /** One-line teasers for the facts row under the console. */
@@ -245,7 +245,7 @@ export default async function HomePage() {
                 <Reveal key={pr.name} delay={i * 70}>
                   <Link href={pr.href} className="card-lift group flex h-full flex-col overflow-hidden rounded-xl border border-line bg-surface shadow-sm">
                     <div className="overflow-hidden bg-[#f6f7fa]">
-                      <img src={src} srcSet={srcSet} sizes="(min-width:1280px) 320px, (min-width:768px) 50vw, 100vw" alt={pr.image?.alt ?? ph.alt} width={pr.image?.width ?? ph.width} height={pr.image?.height ?? ph.height} loading="lazy" className="aspect-[3/2] w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" style={{ objectPosition: pr.image?.focal }} />
+                      <img data-sanity={editAttr(pr.image?.sanity ?? pr.editRef)} src={src} srcSet={srcSet} sizes="(min-width:1280px) 320px, (min-width:768px) 50vw, 100vw" alt={pr.image?.alt ?? ph.alt} width={pr.image?.width ?? ph.width} height={pr.image?.height ?? ph.height} loading="lazy" className="aspect-[3/2] w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" style={{ objectPosition: pr.image?.focal }} />
                     </div>
                     <div className="flex flex-1 flex-col p-6">
                       <span className={cn("self-start rounded-full border px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em]", pr.status === "Available" ? "border-[var(--gold)] bg-[var(--brand-deep)] text-white" : "border-line bg-sunken text-muted")}>{pr.status}</span>

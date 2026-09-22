@@ -2,8 +2,8 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { Container } from "@/components/ui/Container";
 import { photos, photoSrc, photoSrcSet, type PhotoKey } from "@/content/photos";
-import type { CmsImage, CmsVideo } from "@/content/cmsTypes";
-import { imageSrcSet, imageUrl } from "@/lib/cms";
+import type { CmsImage, CmsRef, CmsVideo } from "@/content/cmsTypes";
+import { editAttr, imageSrcSet, imageUrl } from "@/lib/cms";
 
 /**
  * Image-with-text hero. The studio photograph bleeds off the right edge and
@@ -16,6 +16,7 @@ export function PhotoHero({
   photo,
   image,
   video,
+  edit,
   tone = "light",
   eyebrow,
   title,
@@ -33,6 +34,8 @@ export function PhotoHero({
   image?: CmsImage;
   /** CMS video — plays muted behind the copy; the photograph is the poster */
   video?: CmsVideo;
+  /** the document's image field — makes the picture click-to-edit in preview even before an editor image exists */
+  edit?: CmsRef;
   tone?: "light" | "dark";
   eyebrow?: ReactNode;
   title: ReactNode;
@@ -70,9 +73,12 @@ export function PhotoHero({
         focal: p.focal ?? "center",
       };
 
+  const imageRef = image?.sanity ?? edit;
+  const videoRef = video?.sanity ?? (edit ? { ...edit, path: "video" } : undefined);
   const media = (mobile: boolean) =>
     video ? (
       <video
+        data-sanity={editAttr(videoRef)}
         src={video.src}
         poster={mobile ? pic.mobileSrc : pic.src}
         autoPlay
@@ -86,6 +92,7 @@ export function PhotoHero({
       />
     ) : (
       <img
+        data-sanity={editAttr(imageRef)}
         src={mobile ? pic.mobileSrc : pic.src}
         srcSet={pic.srcSet}
         sizes={mobile ? "100vw" : "60vw"}
@@ -109,11 +116,12 @@ export function PhotoHero({
       )}
     >
       <div className="relative">
-      {/* desktop: the photograph (or video) off the right edge */}
+      {/* desktop: the photograph (or video) off the right edge — clickable in preview so it can be replaced */}
       <div
         aria-hidden
         className={cn(
-          "pointer-events-none absolute inset-y-0 right-0 hidden w-[58%] lg:block",
+          "absolute inset-y-0 right-0 hidden w-[58%] lg:block",
+          imageRef ? "pointer-events-auto" : "pointer-events-none",
           dark ? "[mask-image:linear-gradient(to_right,transparent_0%,black_30%)]" : "[mask-image:linear-gradient(to_right,transparent_0%,black_26%)]",
         )}
       >

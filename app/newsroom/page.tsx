@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { formatPostDate } from "@/content/newsroom";
 import { getPosts } from "@/lib/content";
-import { imageUrl } from "@/lib/cms";
+import { editAttr, imageUrl } from "@/lib/cms";
 
 export const metadata: Metadata = {
   title: "Newsroom",
@@ -108,6 +108,7 @@ export default async function NewsroomPage() {
                   </div>
                   {item.cmsImage && (
                     <img
+                      data-sanity={editAttr(item.cmsImage.sanity)}
                       src={imageUrl(item.cmsImage.src, 480)}
                       alt={item.cmsImage.alt ?? ""}
                       width={item.cmsImage.width}

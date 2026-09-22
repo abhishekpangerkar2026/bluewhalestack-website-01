@@ -20,9 +20,18 @@ list on the left follows you. Unpublished edits are only visible in this
 preview (and to anyone who opens the site while in preview mode — the
 "Preview · exit" badge at the bottom-left leaves it).
 
+**Changing a picture or adding a video:** click the photograph on the page
+(hero photos, product cards, team portraits, newsroom images). The
+*Photograph* field opens beside the page — **Upload** a new file or
+**Select** one already in the media library, drag the hotspot, then Publish.
+The *Hero video* fields sit directly under the photograph in the same form;
+upload an MP4/WebM or paste a direct link and the video plays in place of
+the photo. Built-in photos are clickable too, so a page that has never had
+an editor image still opens its upload field.
+
 Not clickable on the page: things that are still code (navigation, diagrams,
-the generated document pages) and images used as backgrounds — open the
-document in the *Content* tab for those.
+the generated document pages, the capability-family illustrations) — open
+the document in the *Content* tab for those.
 
 ## What you can edit
 

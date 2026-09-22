@@ -10,7 +10,7 @@ import { CmsPhotoHero } from "@/components/sections/CmsPhotoHero";
 import { ClosingCTA } from "@/components/sections/ClosingCTA";
 import { photos, photoSrc, photoSrcSet } from "@/content/photos";
 import { getHomePage } from "@/lib/content";
-import { imageSrcSet, imageUrl } from "@/lib/cms";
+import { editAttr, imageSrcSet, imageUrl } from "@/lib/cms";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -62,7 +62,7 @@ export default async function ProductsPage() {
                 <Reveal key={pr.name} delay={(i % 2) * 80}>
                   <Link href={pr.href} className="card-lift group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-sm sm:flex-row">
                     <div className="overflow-hidden bg-[#f6f7fa] sm:w-[44%] sm:shrink-0">
-                      <img src={src} srcSet={srcSet} sizes="(min-width:768px) 30vw, 100vw" alt={pr.image?.alt ?? ph.alt} width={pr.image?.width ?? ph.width} height={pr.image?.height ?? ph.height} loading="lazy" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04] max-sm:aspect-[3/2]" style={{ objectPosition: pr.image?.focal }} />
+                      <img data-sanity={editAttr(pr.image?.sanity ?? pr.editRef)} src={src} srcSet={srcSet} sizes="(min-width:768px) 30vw, 100vw" alt={pr.image?.alt ?? ph.alt} width={pr.image?.width ?? ph.width} height={pr.image?.height ?? ph.height} loading="lazy" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04] max-sm:aspect-[3/2]" style={{ objectPosition: pr.image?.focal }} />
                     </div>
                     <div className="flex flex-1 flex-col p-7">
                       <span className={cn("self-start rounded-full border px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em]", pr.status === "Available" ? "border-[var(--gold)] bg-[var(--brand-deep)] text-white" : "border-line bg-sunken text-muted")}>{pr.status}</span>

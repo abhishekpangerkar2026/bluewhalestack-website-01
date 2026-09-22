@@ -72,6 +72,7 @@ export default async function ModuleDetailPage({
       <PhotoHero
         photo={FAMILY_PHOTO[mod.group]}
         image={mod.cmsImage}
+        edit={mod.cmsId ? { id: mod.cmsId, type: "module", path: "image" } : undefined}
         priority
         above={
           <div className="mb-8">

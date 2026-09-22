@@ -15,6 +15,7 @@ type Props = ComponentProps<typeof PhotoHero> & {
 export async function CmsPhotoHero({ route, ...props }: Props) {
   const cms = await getPageHero(route);
   if (!cms) return <PhotoHero {...props} />;
+  const edit = cms.id ? { id: cms.id, type: "pageHero", path: "image" } : undefined;
   const title = cms.title
     ? cms.titleAccent
       ? <>{cms.title} <span className="text-accent">{cms.titleAccent}</span></>
@@ -28,6 +29,7 @@ export async function CmsPhotoHero({ route, ...props }: Props) {
       description={cms.description ?? props.description}
       image={cms.image ?? props.image}
       video={cms.video ?? props.video}
+      edit={edit ?? props.edit}
     />
   );
 }

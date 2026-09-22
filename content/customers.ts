@@ -15,6 +15,8 @@ import type { CmsImage } from "@/content/cmsTypes";
 export interface CustomerStory {
   /** editor-chosen story image (CMS) */
   cmsImage?: CmsImage;
+  /** CMS document id (click-to-edit) */
+  cmsId?: string;
   slug: string;
   org: string;
   industry: string;

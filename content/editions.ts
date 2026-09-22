@@ -15,6 +15,8 @@ import type { CmsImage } from "@/content/cmsTypes";
 export interface EditionDef {
   /** editor-chosen hero photograph (CMS) */
   cmsImage?: CmsImage;
+  /** CMS document id (click-to-edit) */
+  cmsId?: string;
   slug: string;
   name: string;
   badge: string;

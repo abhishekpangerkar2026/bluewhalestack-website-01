@@ -9,6 +9,8 @@ import type { CmsImage } from "@/content/cmsTypes";
 export interface SolutionDef {
   /** editor-chosen hero photograph (CMS) */
   cmsImage?: CmsImage;
+  /** CMS document id (click-to-edit) */
+  cmsId?: string;
   slug: string;
   name: string;
   icon: string;

@@ -5,7 +5,7 @@ import { CountUp } from "@/components/ui/CountUp";
 import { EstateTicker } from "./EstateTicker";
 import type { HomeContent } from "@/lib/content";
 import { photos, photoSrc, photoSrcSet } from "@/content/photos";
-import { imageSrcSet, imageUrl } from "@/lib/cms";
+import { editAttr, imageSrcSet, imageUrl } from "@/lib/cms";
 import { cn } from "@/lib/utils";
 import styles from "./Home.module.css";
 
@@ -35,11 +35,14 @@ export function Hero({ data }: { data: HomeContent["hero"] }) {
     );
   };
 
+  const imageRef = data.image?.sanity ?? data.editRef;
+  const videoRef = data.video?.sanity ?? (data.editRef ? { ...data.editRef, path: "video" } : undefined);
   const media = (mobile: boolean) =>
     data.video ? (
-      <video src={data.video.src} poster={mobile ? pic.mobile : pic.src} autoPlay muted loop playsInline preload={mobile ? "metadata" : "auto"} aria-hidden style={{ objectPosition: pic.focal }} />
+      <video data-sanity={editAttr(videoRef)} src={data.video.src} poster={mobile ? pic.mobile : pic.src} autoPlay muted loop playsInline preload={mobile ? "metadata" : "auto"} aria-hidden style={{ objectPosition: pic.focal }} />
     ) : (
       <img
+        data-sanity={editAttr(imageRef)}
         src={mobile ? pic.mobile : pic.src}
         srcSet={pic.srcSet}
         sizes={mobile ? "100vw" : "58vw"}

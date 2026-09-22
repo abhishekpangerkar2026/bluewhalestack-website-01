@@ -62,6 +62,7 @@ export default async function SolutionDetailPage({
       <PhotoHero
         photo={SOLUTION_PHOTO[solution.slug] ?? "hybrid-bridge"}
         image={solution.cmsImage}
+        edit={solution.cmsId ? { id: solution.cmsId, type: "solution", path: "image" } : undefined}
         above={
           <div className="mb-8">
             <Breadcrumbs items={[{ label: "Solutions", href: "/solutions" }, { label: solution.name }]} />

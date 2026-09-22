@@ -1,6 +1,7 @@
 import { createClient, type SanityClient } from "@sanity/client";
+import { createDataAttribute } from "@sanity/visual-editing/create-data-attribute";
 import { draftMode } from "next/headers";
-import type { CmsImage } from "@/content/cmsTypes";
+import type { CmsImage, CmsRef } from "@/content/cmsTypes";
 
 /**
  * The CMS seam. When NEXT_PUBLIC_SANITY_PROJECT_ID is unset (or a query
@@ -105,12 +106,24 @@ export const videoProjection = `"video": select(defined(video.asset) => { "src":
 
 type RawImage = { src: string; alt?: string; width?: number; height?: number; hotspot?: { x: number; y: number } | null } | null;
 
-/** Normalise a projected image: hotspot → CSS object-position. */
-export function toCmsImage(raw: RawImage | undefined): CmsImage | undefined {
+/** Normalise a projected image: hotspot → CSS object-position; `ref` says which field it came from. */
+export function toCmsImage(raw: RawImage | undefined, ref?: CmsRef): CmsImage | undefined {
   if (!raw?.src) return undefined;
   const focal = raw.hotspot ? `${Math.round(raw.hotspot.x * 100)}% ${Math.round(raw.hotspot.y * 100)}%` : undefined;
-  return { src: raw.src, alt: raw.alt || undefined, width: raw.width, height: raw.height, focal };
+  return { src: raw.src, alt: raw.alt || undefined, width: raw.width, height: raw.height, focal, sanity: ref };
 }
+
+/**
+ * The `data-sanity` attribute that makes an element click-to-edit in the
+ * Studio's Presentation tool: it names the document and field the element
+ * shows, so a picture (even a built-in one) opens its upload field.
+ */
+export function editAttr(ref?: CmsRef | null): string | undefined {
+  if (!ref || !cmsEnabled) return undefined;
+  return createDataAttribute({ id: ref.id, type: ref.type, path: ref.path, baseUrl: studioUrl, projectId, dataset }).toString();
+}
+
+export const ref = (id: string | undefined, type: string, path: string): CmsRef | undefined => (id ? { id, type, path } : undefined);
 
 /** A sized, auto-formatted URL for a Sanity CDN image (other hosts are returned unchanged). */
 export function imageUrl(src: string, width: number): string {

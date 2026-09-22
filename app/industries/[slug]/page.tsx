@@ -55,6 +55,7 @@ export default async function IndustryDetailPage({
       <PhotoHero
         photo={INDUSTRY_PHOTO[industry.slug] ?? "enterprise-campus"}
         image={industry.cmsImage}
+        edit={industry.cmsId ? { id: industry.cmsId, type: "industry", path: "image" } : undefined}
         above={
           <div className="mb-8">
             <Breadcrumbs items={[{ label: "Industries", href: "/industries" }, { label: industry.name }]} />

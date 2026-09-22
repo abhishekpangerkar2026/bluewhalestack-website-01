@@ -186,6 +186,8 @@ export const milestones = [
 export type LeadershipMember = {
   /** editor-uploaded photograph (CMS) */
   cmsImage?: import("@/content/cmsTypes").CmsImage;
+  /** CMS document id (click-to-edit) */
+  cmsId?: string;
   name?: string;
   role: string;
   bio?: string;

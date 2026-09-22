@@ -3,7 +3,7 @@ import path from "node:path";
 import { User } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { cld, publicIdFromPath } from "@/lib/cloudinary";
-import { imageUrl } from "@/lib/cms";
+import { editAttr, imageUrl, ref } from "@/lib/cms";
 import type { LeadershipMember } from "@/content/about";
 
 /** Official LinkedIn mark — blue rounded square with the white "in" glyph. */
@@ -52,7 +52,7 @@ function Portrait({
       : undefined;
   const badgeSize = Math.round(size * 0.3);
   return (
-    <div className={`relative shrink-0 ${className}`} style={{ width: size, height: size }}>
+    <div className={`relative shrink-0 ${className}`} style={{ width: size, height: size }} data-sanity={editAttr(member.cmsImage?.sanity ?? ref(member.cmsId, "teamMember", "image"))}>
       <div className="h-full w-full overflow-hidden rounded-full ring-1 ring-line">
         {hasImage ? (
           // eslint-disable-next-line @next/next/no-img-element -- may resolve to an external Cloudinary URL

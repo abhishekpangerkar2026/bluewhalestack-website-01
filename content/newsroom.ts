@@ -9,6 +9,8 @@ export interface Announcement {
   badge: string;
   href?: string;
   cmsImage?: CmsImage;
+  /** CMS document id (click-to-edit) */
+  cmsId?: string;
 }
 
 export const announcements: Announcement[] = [
