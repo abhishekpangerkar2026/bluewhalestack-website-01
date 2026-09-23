@@ -56,7 +56,7 @@ contact form's field labels.
 | **Documentation guides** | The six developer guides under `/docs`: sections with paragraphs, sub-headings, callouts, code blocks, steps, lists and card grids; their order sets the previous/next links |
 | **Official collateral** | The PDFs offered on `/resources` — upload a new PDF, give it a title and blurb |
 
-**The resource library** (the 28 datasheets, briefs, whitepapers and case
+**The resource library** (the 29 datasheets, briefs, whitepapers and case
 studies under `/resources/<slug>`) is *assembled* from the content above — an
 edition's datasheet is built from the edition document, an industry brief from
 the industry document, the trust summary from the certifications, the company
