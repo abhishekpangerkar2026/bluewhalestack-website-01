@@ -1,68 +1,6 @@
 import { defineField, defineType } from "sanity";
 
-/** Reusable field groups that mirror the site's typed content shapes. */
-
-export const fact = defineType({
-  name: "fact",
-  title: "Fact",
-  type: "object",
-  fields: [
-    defineField({ name: "value", title: "Value", type: "string", validation: (r) => r.required() }),
-    defineField({ name: "label", title: "Label", type: "string", validation: (r) => r.required() }),
-  ],
-  preview: { select: { title: "value", subtitle: "label" } },
-});
-
-export const qa = defineType({
-  name: "qa",
-  title: "Question & answer",
-  type: "object",
-  fields: [
-    defineField({ name: "q", title: "Question", type: "string", validation: (r) => r.required() }),
-    defineField({ name: "a", title: "Answer", type: "text", rows: 4, validation: (r) => r.required() }),
-  ],
-  preview: { select: { title: "q" } },
-});
-
-export const titledBody = defineType({
-  name: "titledBody",
-  title: "Title + body",
-  type: "object",
-  fields: [
-    defineField({ name: "title", title: "Title", type: "string", validation: (r) => r.required() }),
-    defineField({ name: "body", title: "Body", type: "text", rows: 3, validation: (r) => r.required() }),
-  ],
-  preview: { select: { title: "title", subtitle: "body" } },
-});
-
-export const iconItem = defineType({
-  name: "iconItem",
-  title: "Icon + title + body",
-  type: "object",
-  fields: [
-    defineField({
-      name: "icon",
-      title: "Icon (lucide name)",
-      type: "string",
-      description: "e.g. Plug, FileCheck, Sparkles, Landmark, Building2, Layers, Network, TrendingUp, ShieldAlert",
-    }),
-    defineField({ name: "title", title: "Title", type: "string", validation: (r) => r.required() }),
-    defineField({ name: "body", title: "Body", type: "text", rows: 3 }),
-    defineField({ name: "cost", title: "Cost line (optional, used by the 'problems' row)", type: "string" }),
-  ],
-  preview: { select: { title: "title", subtitle: "body" } },
-});
-
-export const cta = defineType({
-  name: "cta",
-  title: "Call to action",
-  type: "object",
-  fields: [
-    defineField({ name: "label", title: "Label", type: "string", validation: (r) => r.required() }),
-    defineField({ name: "href", title: "Link", type: "string", validation: (r) => r.required() }),
-  ],
-  preview: { select: { title: "label", subtitle: "href" } },
-});
+/** Reusable field groups for the hand-written catalog types (editions, industries…). */
 
 export const regime = defineType({
   name: "regime",
@@ -151,4 +89,5 @@ export const videoFields = () => [
   }),
 ];
 
-export const objectTypes = [fact, qa, titledBody, iconItem, cta, regime, useCase, revenueStream, phase, operatorProfile];
+// fact, qa, titledBody, iconItem and cta are compiled from content/cms/objects.ts (see index.ts)
+export const objectTypes = [regime, useCase, revenueStream, phase, operatorProfile];

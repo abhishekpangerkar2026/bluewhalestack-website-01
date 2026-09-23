@@ -1,4 +1,6 @@
 import { imageProjection, videoProjection } from "./cms";
+import { projection } from "./cms-page";
+import { homePageExtras } from "@/content/cms/docs/homePage";
 
 const img = imageProjection("image");
 const slug = `"slug": slug.current`;
@@ -15,7 +17,8 @@ export const homePageQuery = `*[_type == "homePage" && _id == "homePage"][0]{
   differentEyebrow, differentTitle, differentDescription,
   differentiators[]{icon, title, body},
   portfolioEyebrow, portfolioTitle, portfolioDescription, portfolioNote,
-  products[]{_key, name, role, body, status, href, ${img}}
+  products[]{_key, name, role, body, status, href, ${img}},
+  ${projection(homePageExtras)}
 }`;
 
 export const pageHeroQuery = `*[_type == "pageHero" && route == $route][0]{

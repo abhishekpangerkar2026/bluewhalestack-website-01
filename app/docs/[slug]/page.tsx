@@ -8,17 +8,17 @@ import { Container } from "@/components/ui/Container";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
-import {
-  docPages,
-  docPagesBySlug,
-  type ContentBlock,
-  type DocPageDef,
-} from "@/content/docs";
+import type { ContentBlock } from "@/content/docs";
+import { docsPageSpec } from "@/content/cms/docs/docsPage";
+import { docsPage } from "@/content/sections/docsPage";
+import { getPageDoc } from "@/lib/cms-page";
+import { getDocPage, getDocPages } from "@/lib/content";
 
 // ─── Static params ────────────────────────────────────────────────────────────
 
-export function generateStaticParams() {
-  return docPages.map((p) => ({ slug: p.slug }));
+export async function generateStaticParams() {
+  const pages = await getDocPages();
+  return pages.map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({
@@ -27,7 +27,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const page = docPagesBySlug[slug];
+  const page = await getDocPage(slug);
   if (!page) return {};
   return {
     title: `${page.title} — Docs`,
@@ -153,7 +153,7 @@ export default async function DocSlugPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const page: DocPageDef | undefined = docPagesBySlug[slug];
+  const [page, c] = await Promise.all([getDocPage(slug), getPageDoc(docsPageSpec, docsPage)]);
   if (!page) notFound();
 
   return (
@@ -169,7 +169,7 @@ export default async function DocSlugPage({
                 className="flex items-center gap-1 transition-colors hover:text-accent"
               >
                 <ArrowLeft className="h-3 w-3" />
-                Docs
+                {c.detail.breadcrumb}
               </Link>
               <span>/</span>
               <span className="text-muted">{page.title}</span>
@@ -211,7 +211,7 @@ export default async function DocSlugPage({
             <Reveal delay={80}>
               <div className="hidden lg:block">
                 <p className="mb-3 text-xs font-semibold uppercase tracking-[0.15em] text-faint">
-                  On this page
+                  {c.detail.onThisPage}
                 </p>
                 <nav className="space-y-2">
                   {page.sections.map((s) => (
@@ -238,7 +238,7 @@ export default async function DocSlugPage({
             {/* Mobile TOC */}
             <div className="mb-10 rounded-lg border border-line bg-sunken p-5 lg:hidden">
               <p className="mb-3 text-xs font-semibold uppercase tracking-[0.15em] text-faint">
-                On this page
+                {c.detail.onThisPage}
               </p>
               <nav className="space-y-2">
                 {page.sections.map((s) => (
@@ -293,7 +293,7 @@ export default async function DocSlugPage({
                 >
                   <ArrowLeft className="h-4 w-4 text-faint transition-colors group-hover:text-accent" />
                   <div>
-                    <p className="text-xs text-faint">Previous</p>
+                    <p className="text-xs text-faint">{c.detail.previous}</p>
                     <p className="font-semibold text-ink transition-colors group-hover:text-accent">
                       {page.prev.title}
                     </p>
@@ -308,7 +308,7 @@ export default async function DocSlugPage({
                   className="group flex items-center gap-3 text-sm text-right"
                 >
                   <div>
-                    <p className="text-xs text-faint">Next</p>
+                    <p className="text-xs text-faint">{c.detail.next}</p>
                     <p className="font-semibold text-ink transition-colors group-hover:text-accent">
                       {page.next.title}
                     </p>
@@ -328,13 +328,13 @@ export default async function DocSlugPage({
         <Container>
           <div className="mx-auto flex max-w-3xl flex-col items-start gap-5 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <p className="font-bold text-ink">Have a question or hit a blocker?</p>
+              <p className="font-bold text-ink">{c.detail.helpTitle}</p>
               <p className="mt-1 text-sm text-muted">
-                Our support team and account engineers are here to help.
+                {c.detail.helpBody}
               </p>
             </div>
-            <Button href="/contact" variant="primary" size="sm" className="shrink-0">
-              Contact support
+            <Button href={c.detail.helpCta.href} variant="primary" size="sm" className="shrink-0">
+              {c.detail.helpCta.label}
               <ArrowRight className="h-4 w-4" />
             </Button>
           </div>

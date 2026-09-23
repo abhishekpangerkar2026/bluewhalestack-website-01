@@ -3,9 +3,9 @@ import { notFound } from "next/navigation";
 import { Logo } from "@/components/layout/Logo";
 import { DocumentView } from "@/components/documents/DocumentView";
 import { PrintChrome } from "../PrintChrome";
-import { documents, documentsBySlug } from "@/content/documents";
+import { documents } from "@/content/documents";
+import { getDocument, getSiteSettings } from "@/lib/content";
 import { scenes } from "@/content/scenes.generated";
-import { company } from "@/content/company";
 
 export const metadata: Metadata = { robots: { index: false, follow: false } };
 
@@ -21,7 +21,7 @@ export function generateStaticParams() {
  */
 export default async function PrintDocumentPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const doc = documentsBySlug[slug];
+  const [doc, { company }] = await Promise.all([getDocument(slug), getSiteSettings()]);
   if (!doc) notFound();
   const scene = (scenes as Record<string, { src: string; width: number; height: number; tagline: string }>)[doc.scene];
 

@@ -1,7 +1,6 @@
 import { InnerPage } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowRight, Check, ChevronDown, ShieldCheck } from "lucide-react";
+import { ArrowRight, Check, ChevronDown } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { CmsPhotoHero } from "@/components/sections/CmsPhotoHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -10,15 +9,20 @@ import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
 import { CertBadgeGrid } from "@/components/brand/CertBadge";
 import { CertificateVault } from "@/components/trust/CertificateVault";
-import { certifications, trustPillars, trustFaq } from "@/content/trust";
+import { trustPageSpec } from "@/content/cms/docs/trustPage";
+import { trustPage } from "@/content/sections/trustPage";
+import { getPageDoc } from "@/lib/cms-page";
+import { getCertifications } from "@/lib/content";
 
-export const metadata: Metadata = {
-  title: "Trust Center",
-  description:
-    "BlueWhale Stack's security certifications, compliance posture, and privacy programme. ISO 27001, ISO 27017, ISO 27018, ISO 27701, ISO 22301, CSA STAR Level 1, SOC 2 Type II readiness assessment, GDPR, and India DPDP Act 2023.",
-};
+const getContent = () => getPageDoc(trustPageSpec, trustPage);
 
-export default function TrustPage() {
+export async function generateMetadata(): Promise<Metadata> {
+  const c = await getContent();
+  return { title: c.seoTitle, description: c.seoDescription };
+}
+
+export default async function TrustPage() {
+  const [c, certifications] = await Promise.all([getContent(), getCertifications()]);
   return (
     <InnerPage category="resources" current="/trust">
       {/* ── Hero ── */}
@@ -30,15 +34,15 @@ export default function TrustPage() {
         description="Five ISO management-system certifications — 27001, 27017, 27018, 27701 and 22301 — audited by accredited third-party bodies, plus a CSA STAR Level 1 self-assessment, a GDPR compliance assessment and a SOC 2 Type II readiness assessment. All current, with eight signed certificates downloadable below and full audit reports available to customers under NDA."
       >
         <div className="flex flex-wrap gap-3">
-          <Button href="#certifications" size="lg">
-            Download certificates
+          <Button href={c.hero.primary.href} size="lg">
+            {c.hero.primary.label}
           </Button>
-          <Button href="/legal/privacy" variant="outline" size="lg">
-            Privacy policy
+          <Button href={c.hero.secondary.href} variant="outline" size="lg">
+            {c.hero.secondary.label}
             <ArrowRight className="h-4 w-4" />
           </Button>
-          <Button href="/legal/terms" variant="outline" size="lg">
-            Terms of service
+          <Button href={c.hero.tertiary.href} variant="outline" size="lg">
+            {c.hero.tertiary.label}
             <ArrowRight className="h-4 w-4" />
           </Button>
         </div>
@@ -59,7 +63,7 @@ export default function TrustPage() {
       <section className="border-b border-line bg-surface py-16 sm:py-20">
         <Container>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {trustPillars.map((p, i) => (
+            {c.pillars.items.map((p, i) => (
               <Reveal key={p.title} delay={i * 70}>
                 <div className="flex gap-4">
                   <div className="grid h-11 w-11 shrink-0 place-items-center rounded-lg bg-[var(--bg-active)] text-accent">
@@ -80,11 +84,7 @@ export default function TrustPage() {
       <section id="certifications" className="scroll-mt-20 bg-canvas py-20 sm:py-24">
         <Container>
           <Reveal>
-            <SectionHeading
-              eyebrow="Certifications"
-              title="Five ISO certifications, independently audited. Three assessments, stated as such."
-              description="ISO certifications are audited by accredited third-party bodies and carry certificate numbers you can verify. CSA STAR Level 1 is a self-assessment, GDPR is a compliance assessment, and SOC 2 Type II is a readiness assessment — not a CPA-issued audit opinion. Signed certificate PDFs are below; full audit reports and attestation letters are available to Enterprise customers under NDA."
-            />
+            <SectionHeading {...c.certifications.heading} />
           </Reveal>
 
           <div className="mt-14">
@@ -97,11 +97,7 @@ export default function TrustPage() {
       <section className="border-y border-line bg-surface py-16 sm:py-20">
         <Container>
           <Reveal>
-            <SectionHeading
-              eyebrow="Deployment models"
-              title="Compliance across every deployment"
-              description="All certifications apply to SaaS. BYOC and Sovereign deployments additionally scope in-region data residency and customer-managed key controls."
-            />
+            <SectionHeading {...c.matrix.heading} />
           </Reveal>
           <Reveal delay={80}>
             <div className="mt-10 overflow-x-auto">
@@ -109,16 +105,16 @@ export default function TrustPage() {
                 <thead>
                   <tr className="border-b border-line">
                     <th className="pb-3 text-left text-xs font-semibold uppercase tracking-wider text-faint">
-                      Certification
+                      {c.matrix.columns.certification}
                     </th>
                     <th className="pb-3 text-center text-xs font-semibold normal-case tracking-wider text-faint">
-                      SaaS
+                      {c.matrix.columns.saas}
                     </th>
                     <th className="pb-3 text-center text-xs font-semibold uppercase tracking-wider text-faint">
-                      BYOC
+                      {c.matrix.columns.byoc}
                     </th>
                     <th className="pb-3 text-center text-xs font-semibold uppercase tracking-wider text-faint">
-                      Sovereign
+                      {c.matrix.columns.sovereign}
                     </th>
                   </tr>
                 </thead>
@@ -148,13 +144,10 @@ export default function TrustPage() {
       <section className="bg-canvas py-20 sm:py-24">
         <Container>
           <Reveal>
-            <SectionHeading
-              eyebrow="FAQ"
-              title="Common security questions"
-            />
+            <SectionHeading {...c.faq.heading} />
           </Reveal>
           <div className="mt-10 max-w-3xl divide-y divide-line">
-            {trustFaq.map((item, i) => (
+            {c.faq.items.map((item, i) => (
               <Reveal key={i} delay={i * 50}>
                 <details className="group py-5 [&_summary::-webkit-details-marker]:hidden">
                   <summary className="flex cursor-pointer items-start justify-between gap-4 list-none">
@@ -180,20 +173,18 @@ export default function TrustPage() {
             <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <h2 className="text-2xl font-bold text-white">
-                  Need the full audit package?
+                  {c.cta.title}
                 </h2>
                 <p className="mt-2 text-white/70">
-                  Signed ISO certificates are downloadable above. SOC 2
-                  readiness reports, underlying audit evidence, and DPA
-                  templates are available to Enterprise customers under NDA.
+                  {c.cta.body}
                 </p>
               </div>
               <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
-                <Button href="/contact" variant="white" size="lg">
-                  Request documents
+                <Button href={c.cta.primary.href} variant="white" size="lg">
+                  {c.cta.primary.label}
                 </Button>
-                <Button href="/editions/government" variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/10">
-                  Government Edition
+                <Button href={c.cta.secondary.href} variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/10">
+                  {c.cta.secondary.label}
                 </Button>
               </div>
             </div>

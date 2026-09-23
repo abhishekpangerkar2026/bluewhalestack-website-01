@@ -5,7 +5,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ChatWidget } from "@/components/layout/ChatWidget";
 import { PreviewBar } from "@/components/layout/PreviewBar";
-import { company, offices } from "@/content/company";
+import { getSiteSettings, type SiteSettings } from "@/lib/content";
 import { draftMode } from "next/headers";
 
 // The brand guidelines call for "a clean geometric sans" on screen (Calibri
@@ -30,7 +30,9 @@ const themeInit = `(function(){var t;try{t=localStorage.getItem('bws-theme');}ca
 
 const siteOrigin = process.env.NEXT_PUBLIC_SITE_URL ?? "https://bluewhalestack-website-production-6507.up.railway.app";
 
-export const metadata: Metadata = {
+export async function generateMetadata(): Promise<Metadata> {
+  const { company } = await getSiteSettings();
+  return {
   metadataBase: new URL(siteOrigin),
   title: {
     default: `${company.name} — ${company.tagline}`,
@@ -77,9 +79,10 @@ export const metadata: Metadata = {
     site: "@bluewhalestack",
     images: ["/og.png"],
   },
-};
+  };
+}
 
-const organizationJsonLd = {
+const organizationJsonLd = (company: SiteSettings["company"], offices: SiteSettings["offices"]) => ({
   "@context": "https://schema.org",
   "@type": "Organization",
   name: company.name,
@@ -100,21 +103,21 @@ const organizationJsonLd = {
     areaServed: p.region,
     availableLanguage: ["en"],
   })),
-};
+});
 
-const websiteJsonLd = {
+const websiteJsonLd = (company: SiteSettings["company"]) => ({
   "@context": "https://schema.org",
   "@type": "WebSite",
   name: company.name,
   url: siteOrigin,
-};
+});
 
 export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { isEnabled: preview } = await draftMode();
+  const [{ isEnabled: preview }, settings] = await Promise.all([draftMode(), getSiteSettings()]);
   return (
     <html lang="en" className={`${jakarta.variable} ${plexMono.variable}`} suppressHydrationWarning>
       <head>
@@ -124,15 +127,15 @@ export default async function RootLayout({
         <a href="#main-content" className="skip-link">Skip to content</a>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd(settings.company, settings.offices)) }}
         />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd(settings.company)) }}
         />
-        <Header />
+        <Header nav={settings.header} appUrl={settings.company.appUrl} />
         <main id="main-content" tabIndex={-1}>{children}</main>
-        <Footer />
+        <Footer settings={settings} />
         <ChatWidget />
         {preview && <PreviewBar />}
       </body>

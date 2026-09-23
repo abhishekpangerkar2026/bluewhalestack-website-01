@@ -1,5 +1,7 @@
 import { defineField, defineType } from "sanity";
 import { photoField, videoFields } from "./objects";
+import { compileFields } from "./fromSpec";
+import { homePageExtras } from "../../content/cms/docs/homePage";
 
 /** The landing page — one document. */
 export const homePage = defineType({
@@ -12,6 +14,7 @@ export const homePage = defineType({
     { name: "proof", title: "Proof & problems" },
     { name: "different", title: "What makes it different" },
     { name: "portfolio", title: "Product portfolio" },
+    { name: "more", title: "Other sections" },
   ],
   fields: [
     defineField({ name: "badge", title: "Kicker above the headline", type: "string", group: "hero" }),
@@ -81,6 +84,7 @@ export const homePage = defineType({
         },
       ],
     }),
+    ...compileFields(homePageExtras),
   ],
   preview: { prepare: () => ({ title: "Home page" }) },
 });

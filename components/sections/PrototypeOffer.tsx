@@ -3,11 +3,15 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
-import { prototypeOffer } from "@/content/platform";
+import { prototypeOfferContent } from "@/content/sections/platformPage";
+import type { prototypeOffer } from "@/content/cms/docs/platformPage";
+import type { Infer } from "@/content/cms/spec";
 import styles from "./EditorialSections.module.css";
 
-export function PrototypeOffer({ tinted = false }: { tinted?: boolean }) {
-  const offer = prototypeOffer;
+export type PrototypeOfferContent = Infer<typeof prototypeOffer.fields>;
+
+/** The standing 90-day prototype offer. `offer` comes from the page's CMS document; the code copy is the fallback. */
+export function PrototypeOffer({ tinted = false, offer = prototypeOfferContent }: { tinted?: boolean; offer?: PrototypeOfferContent }) {
   return (
     <section id="prototype" className={`border-b border-line py-20 sm:py-28 ${tinted ? "bg-sunken" : "bg-canvas"}`}>
       <Container>
@@ -27,8 +31,8 @@ export function PrototypeOffer({ tinted = false }: { tinted?: boolean }) {
         </ol>
         <Reveal>
           <div className="mt-12 flex flex-col gap-7 border-t border-line pt-9 lg:flex-row lg:items-center lg:justify-between lg:gap-16">
-            <div className="max-w-2xl"><p className="font-display text-lg font-semibold tracking-tight text-ink">{offer.cta.title}</p><p className="mt-2 text-sm leading-[1.8] text-muted">{offer.cta.body}</p></div>
-            <Button href={offer.cta.href} size="lg" className="self-start lg:self-center">{offer.cta.label}<ArrowUpRight aria-hidden className="h-4 w-4" /></Button>
+            <div className="max-w-2xl"><p className="font-display text-lg font-semibold tracking-tight text-ink">{offer.ctaTitle}</p><p className="mt-2 text-sm leading-[1.8] text-muted">{offer.ctaBody}</p></div>
+            <Button href={offer.ctaHref} size="lg" className="self-start lg:self-center">{offer.ctaLabel}<ArrowUpRight aria-hidden className="h-4 w-4" /></Button>
           </div>
         </Reveal>
       </Container>

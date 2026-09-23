@@ -2,14 +2,12 @@
 
 import { useState } from "react";
 import { Icon } from "@/components/ui/Icon";
-import { tracks } from "@/content/partners";
+import type { PartnerTrack } from "@/content/partners";
 import { cn } from "@/lib/utils";
 
 /** Tabbed onboarding journey — pick a track, see its path from apply to launch. */
-export function PartnerJourney() {
-  const [slug, setSlug] = useState<(typeof tracks)[number]["slug"]>(
-    tracks[0].slug,
-  );
+export function PartnerJourney({ tracks }: { tracks: PartnerTrack[] }) {
+  const [slug, setSlug] = useState<PartnerTrack["slug"]>(tracks[0].slug);
   const track = tracks.find((t) => t.slug === slug) ?? tracks[0];
 
   return (

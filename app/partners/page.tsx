@@ -7,20 +7,24 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
-import { Iso } from "@/components/illustrations/Iso";
 import { PartnerTracks } from "@/components/sections/PartnerTracks";
 import { PartnerJourney } from "@/components/sections/PartnerJourney";
 import { PartnerDocuments } from "@/components/sections/PartnerDocuments";
-import { partnerPortal } from "@/content/company";
-import { portalFeatures, tiers, tiersNote, whyPartner } from "@/content/partners";
+import { partnersPageSpec } from "@/content/cms/docs/partnersPage";
+import { partnersPage } from "@/content/sections/partnersPage";
+import { getPageDoc } from "@/lib/cms-page";
+import { getPartnerTracks, getSiteSettings } from "@/lib/content";
 
-export const metadata: Metadata = {
-  title: "Partners",
-  description:
-    "Three ways to partner with BlueWhale Stack — License Service Provider, System Implementation Partner, or Strategic (country) Partner. Apply and run your business through the Partner Portal at partners.bluewhalestack.com.",
-};
+const getContent = () => getPageDoc(partnersPageSpec, partnersPage);
 
-export default function PartnersPage() {
+export async function generateMetadata(): Promise<Metadata> {
+  const c = await getContent();
+  return { title: c.seoTitle, description: c.seoDescription };
+}
+
+export default async function PartnersPage() {
+  const [c, settings, tracks] = await Promise.all([getContent(), getSiteSettings(), getPartnerTracks()]);
+  const { partnerPortal } = settings;
   return (
     <InnerPage category="company" current="/partners">
       {/* ── Hero: clean light statement band ── */}
@@ -33,7 +37,7 @@ export default function PartnersPage() {
       >
         <div className="flex flex-wrap gap-3">
           <Button href={partnerPortal.register} external size="lg">
-            Become a partner
+            {c.hero.registerLabel}
             <ArrowUpRight className="h-4 w-4" />
           </Button>
           <Button
@@ -42,11 +46,11 @@ export default function PartnersPage() {
             size="lg"
             variant="secondary"
           >
-            Partner login
+            {c.hero.loginLabel}
           </Button>
         </div>
         <p className="mt-5 text-sm text-faint">
-          Portal:{" "}
+          {c.hero.portalLabel}{" "}
           <a href={partnerPortal.url} className="text-accent hover:underline">
             {partnerPortal.url.replace(/^https?:\/\//, "")}
           </a>
@@ -59,15 +63,11 @@ export default function PartnersPage() {
           <div className="grid gap-x-16 gap-y-12 lg:grid-cols-[0.9fr_1.1fr]">
             <Reveal>
               <div className="lg:sticky lg:top-28 lg:self-start">
-                <SectionHeading
-                  eyebrow="Why partner"
-                  title="A platform built to grow your business"
-                  description="Hyperscaler-neutral, multi-edition, and backed by a portal that runs the commercial side for you."
-                />
+                <SectionHeading {...c.why.heading} />
               </div>
             </Reveal>
             <div className="flex flex-col">
-              {whyPartner.map((w, i) => (
+              {c.why.items.map((w, i) => (
                 <Reveal key={w.title} delay={i * 90}>
                   <div className="flex items-start gap-6 border-t border-line py-7 first:border-t-0 first:pt-0">
                     <span className="num text-2xl font-bold text-accent/40">
@@ -93,37 +93,29 @@ export default function PartnersPage() {
       </section>
 
       {/* ── Partner tracks: alternating detail + code-rendered visual ── */}
-      <PartnerTracks />
+      <PartnerTracks tracks={tracks} labels={c.tracks} registerHref={partnerPortal.register} />
 
       {/* ── Partner journey: tabbed onboarding path per track ── */}
       <section id="journey" className="scroll-mt-24 bg-canvas py-24 sm:py-32">
         <Container>
           <Reveal>
-            <SectionHeading
-              eyebrow="The journey"
-              title="From application to launch"
-              description="Every track runs through the Partner Portal, but the enablement steps differ. Pick a track to see its path."
-            />
+            <SectionHeading {...c.journey.heading} />
           </Reveal>
           <div className="mt-14">
-            <PartnerJourney />
+            <PartnerJourney tracks={tracks} />
           </div>
         </Container>
       </section>
 
       {/* ── Program guides: gated PDF download per track ── */}
-      <PartnerDocuments />
+      <PartnerDocuments documents={c.guides.documents} tracks={tracks} copy={c.guides} />
 
       {/* ── Partner Portal: asymmetric feature grid + tiers ── */}
       <section id="portal" className="scroll-mt-24 bg-canvas py-24 sm:py-32">
         <Container>
           <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
             <Reveal>
-              <SectionHeading
-                eyebrow="Partner Portal"
-                title="Run your reselling business in one place"
-                description="Deal registration, two-sided invoicing, margins, payments and provisioning — live at partners.bluewhalestack.com."
-              />
+              <SectionHeading {...c.portal.heading} />
             </Reveal>
             <Reveal delay={80}>
               <Button
@@ -132,14 +124,14 @@ export default function PartnersPage() {
                 variant="secondary"
                 className="shrink-0"
               >
-                Open the portal
+                {c.portal.openLabel}
                 <ArrowUpRight className="h-4 w-4" />
               </Button>
             </Reveal>
           </div>
 
           <div className="mt-14 grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
-            {portalFeatures.map((f, i) => (
+            {c.portal.features.map((f, i) => (
               <Reveal key={f.title} delay={(i % 3) * 70}>
                 <div className="h-full bg-surface p-7">
                   <span className="grid h-10 w-10 place-items-center rounded-lg bg-brand-50 text-accent">
@@ -161,15 +153,13 @@ export default function PartnersPage() {
             <div className="relative mt-12 overflow-hidden rounded-lg border border-line bg-surface p-8 shadow-sm">
               <div className="relative">
                 <p className="eyebrow">
-                  LSP margin tiers
+                  {c.tiers.kicker}
                 </p>
                 <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted">
-                  Tiers apply to License Service Providers and grow with
-                  committed volume. Strategic Partners operate above Platinum
-                  under a bespoke territory agreement.
+                  {c.tiers.body}
                 </p>
                 <div className="mt-6 grid gap-px overflow-hidden rounded-lg bg-line sm:grid-cols-2 lg:grid-cols-4">
-                  {tiers.map((t, i) => (
+                  {c.tiers.items.map((t, i) => (
                     <div key={t.name} className="flex h-full flex-col bg-surface p-5">
                       <div className="flex items-baseline gap-2">
                         <span className="num text-sm font-bold text-accent">
@@ -184,18 +174,18 @@ export default function PartnersPage() {
                       </p>
                       <dl className="mt-4 space-y-1.5 border-t border-line pt-3 text-xs">
                         <div className="flex justify-between gap-2">
-                          <dt className="text-faint">Margin</dt>
+                          <dt className="text-faint">{c.tiers.marginLabel}</dt>
                           <dd className="text-right font-semibold text-ink">{t.margin}</dd>
                         </div>
                         <div className="flex justify-between gap-2">
-                          <dt className="text-faint">Commitment</dt>
+                          <dt className="text-faint">{c.tiers.commitmentLabel}</dt>
                           <dd className="text-right font-semibold text-ink">{t.commitment}</dd>
                         </div>
                       </dl>
                     </div>
                   ))}
                 </div>
-                <p className="mt-4 text-xs italic text-faint">{tiersNote}</p>
+                <p className="mt-4 text-xs italic text-faint">{c.tiers.note}</p>
               </div>
             </div>
           </Reveal>
@@ -203,7 +193,7 @@ export default function PartnersPage() {
           <Reveal delay={160}>
             <div className="mt-10 flex flex-wrap gap-3">
               <Button href={partnerPortal.register} external size="lg">
-                Become a partner
+                {c.bottom.registerLabel}
                 <ArrowUpRight className="h-4 w-4" />
               </Button>
               <Button
@@ -212,7 +202,7 @@ export default function PartnersPage() {
                 size="lg"
                 variant="secondary"
               >
-                Partner login
+                {c.bottom.loginLabel}
               </Button>
             </div>
           </Reveal>

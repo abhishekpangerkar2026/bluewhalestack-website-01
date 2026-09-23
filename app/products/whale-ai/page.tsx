@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { InnerPage } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
 import { ArrowRight, Check } from "lucide-react";
@@ -9,152 +10,23 @@ import { Card } from "@/components/ui/Card";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { ClosingCTA } from "@/components/sections/ClosingCTA";
-import { modules } from "@/content/modules";
+import { whaleAiPageSpec } from "@/content/cms/docs/whaleAiPage";
+import { whaleAiPage } from "@/content/sections/whaleAiPage";
+import { getPageDoc } from "@/lib/cms-page";
+import { getModules } from "@/lib/content";
 
-export const metadata: Metadata = {
-  title: "Whale AI — Horizontal Intelligence Layer",
-  description:
-    "Whale AI is a horizontal intelligence layer woven into every module of BlueWhale Stack — grounded in your live data, reasoning over your real estate, and acting within your governance boundaries.",
-};
+const getContent = () => getPageDoc(whaleAiPageSpec, whaleAiPage);
 
-const STATS = [
-  { value: "50+", label: "Production use cases" },
-  { value: "10", label: "Capability categories" },
-  { value: "3", label: "Intelligence tiers" },
-  { value: "<3s", label: "Avg. response (Spark)" },
-];
+export async function generateMetadata(): Promise<Metadata> {
+  const c = await getContent();
+  return { title: c.seoTitle, description: c.seoDescription };
+}
 
-const TIERS = [
-  {
-    key: "abyss",
-    name: "Whale-Abyss",
-    badge: "Flagship",
-    tagline: "For the hardest problems that require multi-step analysis",
-    accentColor: "#4f46e5",
-    topGrad: "#002ca0",
-    features: [
-      "Executive monthly cost narratives with trend analysis",
-      "Security root cause analysis across multi-cloud",
-      "Architecture review and risk assessment",
-      "Complex incident post-mortem generation",
-      "Compliance gap analysis against frameworks",
-      "Business case generation for cloud investment",
-    ],
-    tags: ["exec-monthly-report", "security-rca", "architecture-review"],
-  },
-  {
-    key: "tide",
-    name: "Whale-Tide",
-    badge: "Balanced",
-    tagline: "The daily workhorse for operational intelligence",
-    accentColor: "#0284c7",
-    topGrad: "#5f82f7",
-    features: [
-      "Cost optimization recommendations per account",
-      "Capacity planning and right-sizing analysis",
-      "Incident triage and prioritization guidance",
-      "IaC template review and security checks",
-      "Multi-cloud resource inventory analysis",
-      "Change request risk assessment",
-    ],
-    tags: ["cost-optimization", "capacity-planning", "iac-review"],
-  },
-  {
-    key: "spark",
-    name: "Whale-Spark",
-    badge: "Fast",
-    tagline: "Instant answers for interactive, conversational use",
-    accentColor: "#d97706",
-    topGrad: "#b9cafb",
-    features: [
-      "Ask Whale drawer — context-aware per resource",
-      "Quick resource summaries and state checks",
-      "Tag compliance spot-checks",
-      "Runbook lookups and step-by-step guidance",
-      "Alert explanation and next-action suggestion",
-      "Dashboard metric interpretation",
-    ],
-    tags: ["resource-chat", "alert-explain", "runbook-lookup"],
-  },
-];
-
-const CATEGORIES = [
-  { icon: "Wallet", name: "FinOps & Cost", count: 12 },
-  { icon: "ShieldCheck", name: "Security", count: 10 },
-  { icon: "Headset", name: "ITSM & Incidents", count: 8 },
-  { icon: "Cloud", name: "Cloud Operations", count: 8 },
-  { icon: "Server", name: "Infrastructure", count: 6 },
-  { icon: "Activity", name: "Observability", count: 5 },
-  { icon: "TrendingUp", name: "Executive Intelligence", count: 4 },
-  { icon: "MoveRight", name: "Migration", count: 3 },
-  { icon: "ScrollText", name: "Governance", count: 4 },
-  { icon: "Gauge", name: "Performance", count: 3 },
-];
-
-const HOW_STEPS = [
-  {
-    icon: "Eye",
-    step: "01",
-    title: "User Prompt",
-    body: "User asks a question or selects a use case from any module in the platform.",
-  },
-  {
-    icon: "Plug",
-    step: "02",
-    title: "Live Grounding",
-    body: "Context providers query the live BlueWhale database — cost facts, inventory state, incidents, security findings.",
-  },
-  {
-    icon: "Sparkles",
-    step: "03",
-    title: "AI Reasoning",
-    body: "The appropriate intelligence tier reasons over the grounded context with a hardened system prompt.",
-  },
-  {
-    icon: "FileText",
-    step: "04",
-    title: "Streamed Answer",
-    body: "Response streams token-by-token. Export as PDF, Excel, or Markdown in one click.",
-  },
-];
-
-const DIFFERENTIATORS = [
-  {
-    icon: "Layers",
-    title: "Built into every module",
-    body: "Every module exposes its data as a grounding provider, and every screen has an Ask Whale entry point — so the AI reads everything the platform knows about your estate, from the screen you are on.",
-  },
-  {
-    icon: "DatabaseBackup",
-    title: "Grounded in your live data, with citations",
-    body: "Every use case declares the providers it reads. Before the model answers, the grounding layer queries the live database — resource_inventory, cost_summary, cost_recommendations, scanner_findings, open_incidents, tenant_metadata — and appends your tenant's real rows to the context. Numbers come from the platform, and the answer cites them.",
-  },
-  {
-    icon: "Lock",
-    title: "Enterprise security model",
-    body: "Every AI call is scoped to the authenticated tenant, and tenant isolation is enforced at the database layer with Postgres row-level security. Spend caps are enforced per tenant, and conversations are persisted in your data-residency region.",
-  },
-  {
-    icon: "Zap",
-    title: "Streaming with instant feedback",
-    body: "Responses stream token-by-token — no waiting for a blank screen to fill. Stop mid-stream, copy answers, rate quality, and export to PDF or Excel in one click. The feedback loop continuously improves answer quality.",
-  },
-];
-
-// The modules Whale AI runs across — the real catalog minus Whale AI itself,
-// so this list can never drift from /modules.
-const MODULES = modules.filter((m) => m.slug !== "whale-ai");
-
-const GROUNDING = [
-  "resource_inventory",
-  "cost_summary",
-  "cost_recommendations",
-  "scanner_findings",
-  "open_incidents",
-  "tenant_metadata",
-];
-
-export default function WhaleAIPage() {
+export default async function WhaleAIPage() {
+  const [c, modules] = await Promise.all([getContent(), getModules()]);
+  // The modules Whale AI runs across — the real catalog minus Whale AI itself,
+  // so this list can never drift from /modules.
+  const fabricModules = modules.filter((m) => m.slug !== "whale-ai");
   return (
     <InnerPage category="platform" current="/products/whale-ai">
       {/* ── Hero: the brand band, the night studio ── */}
@@ -168,19 +40,19 @@ export default function WhaleAIPage() {
       >
         <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
           <div>
-            <Button href="/contact?intent=demo" size="lg" variant="white">
-              See it on your estate
+            <Button href={c.hero.primary.href} size="lg" variant="white">
+              {c.hero.primary.label}
               <ArrowRight className="h-4 w-4" />
             </Button>
-            <p className="mt-2 text-xs text-white/50">45 minutes · one account connected read-only · ask it about your own bill</p>
+            {c.hero.primary.note && <p className="mt-2 text-xs text-white/50">{c.hero.primary.note}</p>}
           </div>
           <Button
-            href="/modules/whale-ai"
+            href={c.hero.secondary.href}
             size="lg"
             variant="outline"
             className="border-white/30 text-white hover:border-white hover:bg-white/10 hover:text-white"
           >
-            Module page and FAQ
+            {c.hero.secondary.label}
             <ArrowRight className="h-4 w-4" />
           </Button>
         </div>
@@ -190,7 +62,7 @@ export default function WhaleAIPage() {
       <section className="bg-brand-900 pb-14 text-white">
         <Container>
           <div className="grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-white/15 bg-white/10 sm:grid-cols-4">
-            {STATS.map((s) => (
+            {c.hero.stats.map((s) => (
               <div key={s.label} className="px-5 py-4">
                 <p className="text-2xl font-bold text-white num">{s.value}</p>
                 <p className="mt-0.5 text-xs font-medium text-white/70">{s.label}</p>
@@ -206,27 +78,13 @@ export default function WhaleAIPage() {
           <div className="grid gap-14 lg:grid-cols-2 lg:items-start">
             <Reveal>
               <div>
-                <SectionHeading
-                  eyebrow="What is Whale AI"
-                  title="Questions about your resources, your spend and your incidents"
-                  description="Whale AI answers about the estate you have connected — pulled live at question time, scoped to your tenant and your permissions."
-                />
-                <h3 className="mt-8 text-xl font-bold text-ink">
-                  A layer every module feeds
-                </h3>
-                <p className="mt-3 text-base leading-relaxed text-muted">
-                  Whale AI runs across every module rather than beside them. Each module contributes grounding
-                  data: Whalenomics feeds live cost facts, Inventory feeds resource state, ITSM feeds open incidents,
-                  the scanner feeds security findings — and the assistant drawer on each screen already knows what
-                  you are looking at.
-                </p>
-                <h3 className="mt-6 text-xl font-bold text-ink">Grounded before it reasons</h3>
-                <p className="mt-3 text-base leading-relaxed text-muted">
-                  Every use case declares its data dependencies. Before generating a response, the grounding layer
-                  queries the live database, appends your real tenant rows to the context window, and only then
-                  reasons over them — so the numbers in an answer are the platform&apos;s numbers, and the answer
-                  cites where each one came from.
-                </p>
+                <SectionHeading {...c.what.heading} />
+                {c.what.points.map((p, i) => (
+                  <Fragment key={p.title}>
+                    <h3 className={`${i === 0 ? "mt-8" : "mt-6"} text-xl font-bold text-ink`}>{p.title}</h3>
+                    <p className="mt-3 text-base leading-relaxed text-muted">{p.body}</p>
+                  </Fragment>
+                ))}
               </div>
             </Reveal>
 
@@ -242,13 +100,13 @@ export default function WhaleAIPage() {
                     <Icon name="Sparkles" className="h-9 w-9" />
                   </div>
                   <p className="mt-4 text-center text-base font-bold text-ink">
-                    Whale AI Fabric
+                    {c.what.fabricTitle}
                   </p>
                   <p className="mt-1 text-center text-sm text-muted">
-                    One intelligence layer across all {MODULES.length} modules
+                    {c.what.fabricSubtitleBefore} {fabricModules.length} {c.what.fabricSubtitleAfter}
                   </p>
                   <div className="mt-6 flex flex-wrap justify-center gap-2">
-                    {MODULES.map((m) => (
+                    {fabricModules.map((m) => (
                       <span
                         key={m.slug}
                         className="inline-flex items-center gap-1.5 rounded-md border border-line bg-surface px-3 py-1.5 text-xs font-semibold text-ink shadow-[3px_3px_0_0_rgba(0,45,161,0.10)]"
@@ -260,10 +118,10 @@ export default function WhaleAIPage() {
                   </div>
                   <div className="mt-6 rounded-lg border border-line bg-surface p-4">
                     <p className="eyebrow mb-3 ">
-                      Grounding providers
+                      {c.what.groundingKicker}
                     </p>
                     <div className="flex flex-wrap gap-1.5">
-                      {GROUNDING.map((g) => (
+                      {c.what.grounding.map((g) => (
                         <span
                           key={g}
                           className="rounded-md border border-line bg-sunken px-2 py-0.5 font-mono text-xs text-muted"
@@ -284,14 +142,10 @@ export default function WhaleAIPage() {
       <section className="bg-sunken py-20 sm:py-24">
         <Container>
           <Reveal>
-            <SectionHeading
-              eyebrow="Intelligence Tiers"
-              title="Right model for every task"
-              description="Whale AI automatically routes each use case to the appropriate tier — balancing depth of reasoning with response speed and cost."
-            />
+            <SectionHeading {...c.tiers.heading} />
           </Reveal>
           <div className="mt-12 grid gap-6 lg:grid-cols-3">
-            {TIERS.map((t, i) => (
+            {c.tiers.items.map((t, i) => (
               <Reveal key={t.key} delay={i * 80}>
                 <div className="relative flex h-full flex-col overflow-hidden rounded-xl border border-line bg-surface shadow-sm">
                   {/* Colored top bar */}
@@ -349,21 +203,17 @@ export default function WhaleAIPage() {
       <section className="py-20 sm:py-24">
         <Container>
           <Reveal>
-            <SectionHeading
-              eyebrow="Use Case Catalog"
-              title="50+ production-ready use cases"
-              description="Every use case ships with a hardened system prompt, declared data dependencies, pre-configured intelligence tier, and grounding providers — ready to use from day one."
-            />
+            <SectionHeading {...c.categories.heading} />
           </Reveal>
           <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-            {CATEGORIES.map((c, i) => (
-              <Reveal key={c.name} delay={(i % 5) * 50}>
+            {c.categories.items.map((cat, i) => (
+              <Reveal key={cat.name} delay={(i % 5) * 50}>
                 <div className="flex h-full flex-col items-center rounded-lg border border-line bg-surface p-4 text-center shadow-sm transition-all hover:-translate-y-0.5 hover:border-accent/40 hover:shadow-md">
                   <div className="grid h-10 w-10 place-items-center rounded-lg bg-[var(--bg-active)] text-accent">
-                    <Icon name={c.icon} className="h-5 w-5" />
+                    <Icon name={cat.icon} className="h-5 w-5" />
                   </div>
-                  <p className="mt-3 text-sm font-bold text-ink">{c.name}</p>
-                  <p className="mt-1 text-xs text-muted">{c.count} use cases</p>
+                  <p className="mt-3 text-sm font-bold text-ink">{cat.name}</p>
+                  <p className="mt-1 text-xs text-muted">{cat.count} use cases</p>
                 </div>
               </Reveal>
             ))}
@@ -372,38 +222,7 @@ export default function WhaleAIPage() {
           {/* Featured use cases three-column */}
           <Reveal delay={80}>
             <div className="mt-10 grid gap-6 rounded-xl border border-line bg-sunken p-6 sm:grid-cols-3">
-              {[
-                {
-                  heading: "Featured FinOps",
-                  items: [
-                    "Executive Monthly Cost Report",
-                    "Cost Optimization Recommendations",
-                    "Spend Narrative Generator",
-                    "Anomaly Explanation & Root Cause",
-                    "Budget Forecast & Variance Analysis",
-                  ],
-                },
-                {
-                  heading: "Featured Security",
-                  items: [
-                    "Security RCA — Root Cause Analysis",
-                    "Compliance Gap Assessment",
-                    "IAM Posture Review",
-                    "Network Exposure Analysis",
-                    "Remediation Playbook Generator",
-                  ],
-                },
-                {
-                  heading: "Featured ITSM",
-                  items: [
-                    "Incident RCA Generator",
-                    "Change Risk Assessor",
-                    "Post-Mortem Writer",
-                    "Smart Ticket Classifier",
-                    "Runbook Auto-Generator",
-                  ],
-                },
-              ].map((col) => (
+              {c.categories.featured.map((col) => (
                 <div key={col.heading}>
                   <p className="eyebrow mb-3 ">
                     {col.heading}
@@ -429,11 +248,7 @@ export default function WhaleAIPage() {
       <section className="bg-sunken py-20 sm:py-24">
         <Container>
           <Reveal>
-            <SectionHeading
-              eyebrow="How it works"
-              title="From question to grounded answer"
-              description="Four stages, the same for every use case: the question, the live grounding query, tier selection and reasoning, then a streamed, exportable answer."
-            />
+            <SectionHeading {...c.how.heading} />
           </Reveal>
           <div className="relative mt-14 grid gap-0 sm:grid-cols-4">
             {/* Connector line */}
@@ -441,7 +256,7 @@ export default function WhaleAIPage() {
               aria-hidden
               className="absolute left-[12.5%] right-[12.5%] top-9 hidden h-px bg-line sm:block"
             />
-            {HOW_STEPS.map((s, i) => (
+            {c.how.steps.map((s, i) => (
               <Reveal key={s.step} delay={i * 70}>
                 <div className="relative z-10 flex flex-col items-center px-4 text-center">
                   <div className="grid h-[72px] w-[72px] place-items-center rounded-full bg-primary text-white shadow-md">
@@ -463,14 +278,10 @@ export default function WhaleAIPage() {
       <section className="py-20 sm:py-24">
         <Container>
           <Reveal>
-            <SectionHeading
-              eyebrow="Key differentiators"
-              title="Four properties you can verify in the product"
-              description="Where the data comes from, how tenants are isolated, and what the answer looks like — each one is observable in the console, not a claim."
-            />
+            <SectionHeading {...c.differentiators.heading} />
           </Reveal>
           <div className="mt-12 grid gap-6 sm:grid-cols-2">
-            {DIFFERENTIATORS.map((d, i) => (
+            {c.differentiators.items.map((d, i) => (
               <Reveal key={d.title} delay={(i % 2) * 80}>
                 <Card className="h-full">
                   <div className="flex items-start gap-4">
@@ -493,11 +304,7 @@ export default function WhaleAIPage() {
       <section className="bg-sunken py-20 sm:py-24">
         <Container>
           <Reveal>
-            <SectionHeading
-              eyebrow="Compared by category"
-              title="Whale AI against the three usual alternatives"
-              description="A general-purpose assistant, an APM vendor's AI and an ITSM vendor's AI each ground in one slice of the estate. The comparison is by category, based on public documentation as of September 2026."
-            />
+            <SectionHeading {...c.comparison.heading} />
           </Reveal>
           <Reveal delay={80}>
             <div className="mt-10 overflow-x-auto rounded-xl border border-line bg-surface shadow-sm">
@@ -505,12 +312,12 @@ export default function WhaleAIPage() {
                 <thead>
                   <tr className="border-b border-line bg-primary">
                     <th className="py-3 pl-5 pr-4 text-left text-xs font-semibold text-white/80">
-                      Capability
+                      {c.comparison.firstColumn}
                     </th>
-                    {["Whale AI", "General-purpose assistant", "APM-native AI", "ITSM-native AI"].map((h) => (
+                    {c.comparison.columns.map((h, i) => (
                       <th
                         key={h}
-                        className={`px-4 py-3 text-center text-xs font-semibold ${h === "Whale AI" ? "text-white" : "text-white/60"}`}
+                        className={`px-4 py-3 text-center text-xs font-semibold ${i === 0 ? "text-white" : "text-white/60"}`}
                       >
                         {h}
                       </th>
@@ -518,18 +325,10 @@ export default function WhaleAIPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {[
-                    ["Grounded in live cost data", "✓ Real-time", "✗ Training cutoff", "⊘ APM only", "✗"],
-                    ["Native platform integration", "✓ All modules", "✗ External", "⊘ APM only", "⊘ ITSM only"],
-                    ["Multi-cloud inventory awareness", "✓ 6 clouds + on-prem", "✗", "⊘ Limited", "✗"],
-                    ["Streaming token-by-token", "✓", "✓", "✗", "✗"],
-                    ["Exportable reports (PDF / Excel)", "✓ Built-in", "✗ Manual", "⊘ Dashboard", "⊘ ITSM only"],
-                    ["Usage metering & spend caps", "✓ Per-tenant", "✗", "✗", "✗"],
-                    ["FinOps-specific use cases", "✓ 12 use cases", "⊘ Generic", "✗", "✗"],
-                  ].map((row, i) => (
-                    <tr key={row[0]} className={`border-b border-line last:border-0 ${i % 2 === 1 ? "bg-sunken/50" : ""}`}>
-                      <td className="py-3 pl-5 pr-4 font-medium text-muted">{row[0]}</td>
-                      {row.slice(1).map((cell, j) => (
+                  {c.comparison.rows.map((row, i) => (
+                    <tr key={row.cells[0]} className={`border-b border-line last:border-0 ${i % 2 === 1 ? "bg-sunken/50" : ""}`}>
+                      <td className="py-3 pl-5 pr-4 font-medium text-muted">{row.cells[0]}</td>
+                      {row.cells.slice(1).map((cell, j) => (
                         <td
                           key={j}
                           className={`px-4 py-3 text-center text-xs font-semibold ${
@@ -552,22 +351,7 @@ export default function WhaleAIPage() {
         </Container>
       </section>
 
-      <ClosingCTA
-        eyebrow="Next step"
-        title="Ask Whale AI about your own bill."
-        body="In a 45-minute working session we connect one of your accounts read-only and put a real question to Whale AI — why a cost line rose, what a finding means, which instances to rightsize — and you see the grounding and the citations behind the answer."
-        primary={{
-          label: "Book a working session",
-          href: "/contact?intent=demo",
-          note: "45 minutes · read-only credentials · your data stays in your region",
-        }}
-        secondary={{
-          label: "Start the 90-day prototype",
-          href: "/platform#prototype",
-          note: "One AI use case on your estate is part of the prototype scope.",
-        }}
-        tertiary={{ label: "Whale AI module page", href: "/modules/whale-ai", note: "capabilities, tiers and FAQ" }}
-      />
+      <ClosingCTA {...c.closing} />
     </InnerPage>
   );
 }

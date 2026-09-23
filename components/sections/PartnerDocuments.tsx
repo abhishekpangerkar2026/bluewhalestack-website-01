@@ -7,7 +7,10 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Card } from "@/components/ui/Card";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
-import { programDocuments, tracks } from "@/content/partners";
+import type { PartnerTrack } from "@/content/partners";
+import type { PartnersPage } from "@/content/cms/docs/partnersPage";
+
+type Guides = PartnersPage["guides"];
 
 const UNLOCK_KEY = "bws_partner_doc_unlocked";
 
@@ -25,7 +28,16 @@ function triggerDownload(url: string) {
 }
 
 /** Gated PDF program guides — one per partner track, same pattern as the Trust Center certificate vault. */
-export function PartnerDocuments() {
+export function PartnerDocuments({
+  documents,
+  tracks,
+  copy,
+}: {
+  documents: Guides["documents"];
+  tracks: PartnerTrack[];
+  /** the heading, the download-button label and the note under the cards (from the Partners page document) */
+  copy: Omit<Guides, "documents">;
+}) {
   const [unlocked, setUnlocked] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
   const [pendingDocId, setPendingDocId] = useState<string | null>(null);
@@ -81,15 +93,11 @@ export function PartnerDocuments() {
     <section id="documents" className="scroll-mt-24 bg-sunken py-24 sm:py-32">
       <Container>
         <Reveal>
-          <SectionHeading
-            eyebrow="Program guides"
-            title="Download the full program guide for your track"
-            description="Each PDF covers the commercial model, benefits and onboarding journey — the LSP guide also includes the full margin-tier table."
-          />
+          <SectionHeading {...copy.heading} />
         </Reveal>
 
         <div className="mt-14 grid gap-5 md:grid-cols-3">
-          {programDocuments.map((doc, i) => {
+          {documents.map((doc, i) => {
             const track = tracks.find((t) => t.slug === doc.trackSlug);
             return (
               <Reveal key={doc.id} delay={i * 80}>
@@ -111,7 +119,7 @@ export function PartnerDocuments() {
                     ) : (
                       <Lock className="h-4 w-4" />
                     )}
-                    Download PDF
+                    {copy.downloadLabel}
                   </button>
                 </Card>
               </Reveal>
@@ -121,8 +129,7 @@ export function PartnerDocuments() {
 
         <Reveal delay={200}>
           <p className="mt-8 text-sm text-faint">
-            Margin and commitment figures in the LSP guide are illustrative —
-            final terms are confirmed in your signed Partner Agreement.
+            {copy.note}
           </p>
         </Reveal>
       </Container>

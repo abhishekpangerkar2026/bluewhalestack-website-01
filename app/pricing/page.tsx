@@ -1,4 +1,4 @@
-import { InnerPage, IntroPanel, IntroPanelStat } from "@/components/layout/InnerPage";
+import { InnerPage } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Check, Minus } from "lucide-react";
@@ -9,52 +9,20 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { ClosingCTA } from "@/components/sections/ClosingCTA";
-import { getEditions } from "@/lib/content";
-import { modules } from "@/content/modules";
+import { pricingPageSpec } from "@/content/cms/docs/pricingPage";
+import { pricingPage } from "@/content/sections/pricingPage";
+import { getPageDoc } from "@/lib/cms-page";
+import { getEditions, getModules } from "@/lib/content";
 
-export const metadata: Metadata = {
-  title: "Pricing",
-  description:
-    "BlueWhale Stack pricing — four editions from Standard to Government, with a feature-by-edition comparison.",
-};
+const getContent = () => getPageDoc(pricingPageSpec, pricingPage);
 
-const faqs = [
-  {
-    q: "What's included in each edition?",
-    a: "Every edition runs the same control plane. Standard is scoped to three public clouds (AWS/Azure/GCP) and a single tenant. Enterprise unlocks all six public clouds, on-prem via Edge Agent, and multi-tenancy. Telco & Datacenter and Government are full Enterprise plus domain-specific layers. See the comparison table below.",
-  },
-  {
-    q: "Can I upgrade to a higher edition later?",
-    a: "Yes — editions are licensing configurations of one platform, not separate products. Upgrading from Standard to Enterprise (or from Enterprise to Telco & Datacenter or Government) is a licensing change, not a migration or re-deployment.",
-  },
-  {
-    q: "How does Managed Resource Unit (MRU) pricing work?",
-    a: "Standard includes 1,000 MRU at the base price, with overage bands available. Enterprise includes 100 cloud accounts and up to 1,000,000 managed resources at $120K list. The Telco & Datacenter Edition is metered per network element (telecom operators) or per rack (datacenter operators).",
-  },
-  {
-    q: "How is Whale AI priced?",
-    a: "Each edition includes a Whale AI tier with a monthly token allowance — Spark (1M) for Standard, Spark/Tide/Abyss (100M) for Enterprise and above. Additional token packs are available as add-ons.",
-  },
-  {
-    q: "Do you offer BYOC or air-gapped sovereign deployment?",
-    a: "Yes. Enterprise supports SaaS, BYOC, and Sovereign. The Government edition is purpose-built for air-gapped sovereign deployment — FIPS crypto, PAM always-on, WORM audit log, in-region AI only, and offline update channel.",
-  },
-  {
-    q: "Is there a proof-of-concept option?",
-    a: "Yes — the 90-day prototype. A half-day discovery workshop agrees the success criteria, then the platform runs on your own estate for 90 days with no licence cost and is scored on those criteria before any licensing decision. Conversion pricing is agreed up front.",
-  },
-  {
-    q: "Which currencies and procurement routes do you support?",
-    a: "USD list prices; INR and AED invoicing through the Indian and UAE entities; USD through the Delaware entity. Government buys through tender or empanelment on 3–5 year fixed-bid terms; partners can transact through the Partner Portal.",
-  },
-  {
-    q: "What about the DPA and security review?",
-    a: "A DPA covering GDPR Article 28 and DPDP is standard. Five ISO certifications, a SOC 2 Type II readiness assessment and a CSA STAR Level 1 self-assessment are downloadable from the Trust Center; full audit reports are available under NDA.",
-  },
-];
+export async function generateMetadata(): Promise<Metadata> {
+  const c = await getContent();
+  return { title: c.seoTitle, description: c.seoDescription };
+}
 
 export default async function PricingPage() {
-  const editions = await getEditions();
+  const [c, editions, modules] = await Promise.all([getContent(), getEditions(), getModules()]);
   return (
     <InnerPage category="pricing" current="/pricing">
       {/* ── Hero: editorial split, oversized statement left ── */}
@@ -68,24 +36,32 @@ export default async function PricingPage() {
           <div className="border-t border-line bg-sunken">
             <Container>
               <div className="grid gap-y-6 sm:grid-cols-3 sm:divide-x sm:divide-line">
-                <div className="py-6 sm:pr-6"><p className="eyebrow">Standard</p><p className="num mt-2 text-3xl font-extrabold text-accent">$24,000</p><p className="mt-1 text-sm text-muted">Per year · 1,000 managed resource units included</p></div>
-                <div className="py-6 sm:px-6"><p className="eyebrow">Enterprise</p><p className="num mt-2 text-3xl font-extrabold text-accent">$120,000</p><p className="mt-1 text-sm text-muted">Per year · up to 1,000,000 resources across 100 cloud accounts</p></div>
-                <div className="py-6 sm:pl-6"><p className="eyebrow">Telco &amp; Datacenter · Government</p><p className="mt-2 text-3xl font-extrabold text-ink">Scoped</p><p className="mt-1 text-sm text-muted">Operator licensing and sovereign programmes, shaped to the estate · 2-yr −10% · 3-yr −15%</p></div>
+                {c.hero.cells.map((cell, i) => {
+                  // first · middle · last cells share the row; the last is the scoped, non-numeric one
+                  const last = i === c.hero.cells.length - 1;
+                  return (
+                    <div key={cell.kicker} className={`py-6 ${i === 0 ? "sm:pr-6" : last ? "sm:pl-6" : "sm:px-6"}`}>
+                      <p className="eyebrow">{cell.kicker}</p>
+                      <p className={last ? "mt-2 text-3xl font-extrabold text-ink" : "num mt-2 text-3xl font-extrabold text-accent"}>{cell.value}</p>
+                      <p className="mt-1 text-sm text-muted">{cell.note}</p>
+                    </div>
+                  );
+                })}
               </div>
             </Container>
           </div>
         }
       >
         <p className="text-sm leading-relaxed text-muted">
-          <span className="font-semibold text-ink">The unit:</span> a Managed Resource Unit (MRU) is one discovered resource under management — an instance, a bucket, a database, a VM. Standard includes 1,000; Enterprise includes up to 1,000,000 across 100 cloud accounts.
+          <span className="font-semibold text-ink">{c.hero.unitLabel}</span> {c.hero.unitText}
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
-          <Button href="/contact?intent=sales" size="lg">
-            Get a quote for your resource count
+          <Button href={c.hero.primary.href} size="lg">
+            {c.hero.primary.label}
             <ArrowRight className="h-4 w-4" />
           </Button>
-          <Button href="#compare" size="lg" variant="outline">
-            Module-by-edition matrix
+          <Button href={c.hero.secondary.href} size="lg" variant="outline">
+            {c.hero.secondary.label}
           </Button>
         </div>
       </CmsPhotoHero>
@@ -94,11 +70,7 @@ export default async function PricingPage() {
       <section className="bg-canvas py-20 sm:py-24">
         <Container>
           <Reveal>
-            <SectionHeading
-              eyebrow="Editions"
-              title="Pick where you start"
-              description="Every edition runs the same control plane. The featured plan is where most teams begin."
-            />
+            <SectionHeading {...c.tiers.heading} />
           </Reveal>
           <div className="mt-14 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
             {editions.map((e, i) => (
@@ -116,11 +88,11 @@ export default async function PricingPage() {
                     <div className="flex items-center justify-between">
                       {e.comingSoon ? (
                         <Badge tone="neutral">
-                          Preview{e.gaTarget ? ` · GA ${e.gaTarget}` : ""}
+                          {c.tiers.previewLabel}{e.gaTarget ? ` · GA ${e.gaTarget}` : ""}
                         </Badge>
                       ) : e.featured ? (
                         <Badge tone="brand" className="self-start">
-                          Most popular
+                          {c.tiers.popularLabel}
                         </Badge>
                       ) : (
                         <span className="num text-sm font-bold text-faint">
@@ -143,7 +115,7 @@ export default async function PricingPage() {
                       </p>
                     )}
                     <p className="mt-3 text-sm leading-relaxed text-muted">
-                      <span className="font-semibold text-ink">For:</span> {e.audience}
+                      <span className="font-semibold text-ink">{c.tiers.forLabel}</span> {e.audience}
                     </p>
                     <ul className="mt-3 flex-1 space-y-1.5">
                       {e.includes.map((x) => (
@@ -163,16 +135,16 @@ export default async function PricingPage() {
                       className="mt-5"
                     >
                       {e.comingSoon
-                        ? "Join the preview"
+                        ? c.tiers.previewCta
                         : ["standard", "enterprise"].includes(e.slug)
-                        ? "Get a quote"
-                        : "Talk to sales"}
+                        ? c.tiers.quoteCta
+                        : c.tiers.salesCta}
                     </Button>
                     <Link
                       href={`/editions/${e.slug}`}
                       className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-accent"
                     >
-                      Edition details <ArrowRight className="h-3 w-3" />
+                      {c.tiers.detailsLink} <ArrowRight className="h-3 w-3" />
                     </Link>
                   </div>
                 </div>
@@ -186,31 +158,19 @@ export default async function PricingPage() {
       <section className="border-t border-line bg-canvas py-20 sm:py-24">
         <Container>
           <Reveal>
-            <SectionHeading
-              eyebrow="What drives the price"
-              title="Four inputs, and a worked example"
-              description="Every proposal is built from the same four numbers. Bring them to the quote and the answer comes back in days, not a procurement cycle."
-            />
+            <SectionHeading {...c.drivers.heading} />
           </Reveal>
           <div className="mt-12 grid gap-px overflow-hidden rounded-lg border border-line bg-line md:grid-cols-2 lg:grid-cols-4">
-            {[
-              { k: "Managed resources", v: "Discovered resources under management (MRU). Standard 1,000 · Enterprise up to 1,000,000." },
-              { k: "Cloud accounts", v: "Standard 5 · Enterprise 100. On-prem sites connect through the Edge Agent and count by resource." },
-              { k: "Deployment mode", v: "SaaS in four regions, BYOC in your accounts, on-premises, sovereign air-gapped or edge." },
-              { k: "Operator or sovereign scope", v: "Telco & Datacenter is metered per network element or per rack; Government per contract and accreditation scope." },
-            ].map((d) => (
-              <div key={d.k} className="bg-surface p-6">
-                <p className="font-bold text-ink">{d.k}</p>
-                <p className="mt-2 text-sm leading-relaxed text-muted">{d.v}</p>
+            {c.drivers.items.map((d) => (
+              <div key={d.label} className="bg-surface p-6">
+                <p className="font-bold text-ink">{d.label}</p>
+                <p className="mt-2 text-sm leading-relaxed text-muted">{d.body}</p>
               </div>
             ))}
           </div>
           <Reveal delay={100}>
             <div className="mt-8 rounded-lg border-l-4 border-amber-400 bg-sunken p-6 text-sm leading-relaxed text-ink">
-              <span className="font-bold">Worked example:</span> a bank with 60 AWS and Azure accounts, 180,000 discovered
-              resources and two VMware sites, deployed BYOC in its own accounts, fits inside Enterprise at $120,000 a year —
-              all twelve modules, 1,000 users and Whale AI at 100M tokens a month included. On a three-year term the list
-              price is $102,000 a year.
+              <span className="font-bold">{c.drivers.exampleLabel}</span> {c.drivers.example}
             </div>
           </Reveal>
         </Container>
@@ -220,11 +180,7 @@ export default async function PricingPage() {
       <section id="compare" className="scroll-mt-20 bg-sunken py-20 sm:py-24">
         <Container>
           <Reveal>
-            <SectionHeading
-              eyebrow="Compare"
-              title="Every module, mapped to every edition"
-              description="Fourteen modules across four editions. A tick means included in the licence; the module pages carry each one's current maturity."
-            />
+            <SectionHeading {...c.compare.heading} />
           </Reveal>
           <Reveal delay={80}>
             <div className="mt-12 overflow-x-auto rounded-lg border border-line bg-surface shadow-sm">
@@ -232,7 +188,7 @@ export default async function PricingPage() {
                 <thead>
                   <tr className="border-b border-line">
                     <th className="py-4 pl-6 pr-4 text-left font-bold text-ink">
-                      Module
+                      {c.compare.moduleColumn}
                     </th>
                     {editions.map((e) => (
                       <th
@@ -242,7 +198,7 @@ export default async function PricingPage() {
                         <span className={e.comingSoon ? "text-faint" : "text-ink"}>{e.name}</span>
                         {e.comingSoon && (
                           <span className="mt-0.5 block text-xs font-medium text-faint">
-                            Preview{e.gaTarget ? ` · GA ${e.gaTarget}` : ""}
+                            {c.tiers.previewLabel}{e.gaTarget ? ` · GA ${e.gaTarget}` : ""}
                           </span>
                         )}
                       </th>
@@ -282,19 +238,15 @@ export default async function PricingPage() {
           <div className="grid gap-x-16 gap-y-12 lg:grid-cols-[0.8fr_1.2fr]">
             <Reveal>
               <div className="lg:sticky lg:top-28 lg:self-start">
-                <SectionHeading
-                  eyebrow="FAQ"
-                  title="Pricing questions, answered"
-                  description="Licensing unit, upgrade path, Whale AI allowances, sovereign deployment and proof-of-concept terms."
-                />
-                <Button href="/contact?intent=sales" variant="secondary" className="mt-8">
-                  Get a quote for your resource count
+                <SectionHeading {...c.faq.heading} />
+                <Button href={c.faq.cta.href} variant="secondary" className="mt-8">
+                  {c.faq.cta.label}
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </div>
             </Reveal>
             <div className="flex flex-col">
-              {faqs.map((f, i) => (
+              {c.faq.items.map((f, i) => (
                 <Reveal key={f.q} delay={i * 70}>
                   <div className="group flex items-start gap-6 border-t border-line py-7 first:border-t-0 first:pt-0">
                     <span className="num text-2xl font-bold text-accent/40">
@@ -316,22 +268,7 @@ export default async function PricingPage() {
         </Container>
       </section>
 
-      <ClosingCTA
-        eyebrow="Two ways to buy"
-        title="A proposal for your estate, or a prototype on it."
-        body="Send your account and resource counts and a written proposal comes back within the week. Or start with the 90-day prototype and decide on evidence."
-        primary={{
-          label: "Get a proposal for your estate",
-          href: "/contact?intent=sales",
-          note: "Account and resource counts in, a written proposal out — usually within a week",
-        }}
-        secondary={{
-          label: "Start the 90-day prototype",
-          href: "/platform#prototype",
-          note: "Half-day discovery workshop, then 90 days on your estate with no licence cost.",
-        }}
-        tertiary={{ label: "Trust Center", href: "/trust", note: "certificates and the DPA for procurement" }}
-      />
+      <ClosingCTA {...c.closing} />
     </InnerPage>
   );
 }

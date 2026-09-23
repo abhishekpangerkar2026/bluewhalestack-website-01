@@ -6,19 +6,77 @@
  * pages. Read online at /resources/[slug]; printed to public/docs/[slug].pdf
  * by scripts/build-docs.mjs through /print/[slug].
  */
-import { editions, editionSpecs, type EditionDef } from "./editions";
+import { editions, editionSpecs, type EditionDef, type EditionSpecRow } from "./editions";
 import { solutions, type SolutionDef } from "./solutions";
 import { industries, type IndustryDef } from "./industries";
-import { modules, moduleGroups, moduleGroupOrder, moduleGroupBlurbs } from "./modules";
-import { moduleDetails } from "./moduleDetails";
+import { modules, moduleGroups, moduleGroupOrder, moduleGroupBlurbs, type ModuleDef } from "./modules";
+import { moduleDetails, type ModuleDetail } from "./moduleDetails";
 import { customerStories, type CustomerStory } from "./customers";
 import {
   platformHero, heroStats, whatItReplaces, architectureLayers, deploymentModes, deploymentNote,
   supportModel, prototypeOffer, whaleTiers, securityPosture, platformFaq, whyNow,
 } from "./platform";
-import { certifications, trustFaq, trustPillars } from "./trust";
-import { aboutHero, companyFacts, missionVision, story, principles, productFamily, services, servicesNote, milestones, leadership, trustPoints } from "./about";
+import { certifications, trustFaq, trustPillars, type Certification } from "./trust";
+import { aboutHero, companyFacts, missionVision, story, principles, productFamily, services, servicesNote, milestones, leadership, trustPoints, type LeadershipMember } from "./about";
 import { company, offices, regions } from "./company";
+
+/**
+ * Everything a document can be assembled from. The site passes the
+ * CMS-backed versions (lib/content.ts getDocuments) so the datasheets, briefs
+ * and whitepapers follow every edit; the typed modules are the fallback.
+ */
+export interface DocSources {
+  editions: EditionDef[];
+  editionSpecs: EditionSpecRow[];
+  solutions: SolutionDef[];
+  industries: IndustryDef[];
+  modules: ModuleDef[];
+  moduleGroups: Record<string, string>;
+  moduleGroupOrder: ModuleDef["group"][];
+  moduleGroupBlurbs: Record<string, string>;
+  moduleDetails: Record<string, Pick<ModuleDetail, "status" | "summary" | "facts" | "capabilities" | "howItWorks" | "faq">>;
+  customerStories: CustomerStory[];
+  platformHero: { title: string; description: string; tagline: string };
+  heroStats: { value: string; label: string }[];
+  whatItReplaces: { category: string; answer: string; status: string }[];
+  architectureLayers: { n: string; name: string; body: string }[];
+  deploymentModes: { name: string; badge: string; body: string }[];
+  deploymentNote: string;
+  supportModel: { title: string; body: string }[];
+  prototypeOffer: { title: string; steps: { title: string; when?: string; body: string }[] };
+  whaleTiers: { name: string; edition: string; body: string }[];
+  securityPosture: string[];
+  platformFaq: { q: string; a: string }[];
+  whyNow: string;
+  certifications: Certification[];
+  trustFaq: { q: string; a: string }[];
+  trustPillars: { title: string; body: string }[];
+  aboutHero: { title: string; mission: string };
+  companyFacts: { label: string; value: string }[];
+  missionVision: { mission: string; vision: string };
+  story: { heading: string; body: string }[];
+  principles: { title: string; body: string }[];
+  productFamily: { name: string; badge: string; body: string }[];
+  services: { name: string; body: string }[];
+  servicesNote: string;
+  milestones: { year: string; title: string; body: string }[];
+  leadership: LeadershipMember[];
+  trustPoints: string[];
+  company: { name: string; emails: { sales: string }; phones: { region: string; number: string }[]; social: { linkedin: string } };
+  offices: { city: string; label: string; entity: string; address: string }[];
+  regions: { code: string; city: string }[];
+}
+
+/** The typed content modules — what the site ships without a CMS. */
+export const defaultSources: DocSources = {
+  editions, editionSpecs, solutions, industries, modules, moduleGroups, moduleGroupOrder, moduleGroupBlurbs, moduleDetails, customerStories,
+  platformHero, heroStats, whatItReplaces, architectureLayers, deploymentModes, deploymentNote, supportModel, prototypeOffer, whaleTiers, securityPosture, platformFaq, whyNow,
+  certifications, trustFaq, trustPillars,
+  aboutHero, companyFacts, missionVision, story, principles, productFamily, services, servicesNote, milestones, leadership, trustPoints,
+  company: { name: company.name, emails: { sales: company.emails.sales }, phones: [...company.phones], social: { linkedin: company.social.linkedin } },
+  offices: [...offices],
+  regions: [...regions],
+};
 
 export type DocType = "Datasheet" | "Solution brief" | "Industry brief" | "Whitepaper" | "Case study" | "Company";
 
@@ -53,6 +111,15 @@ export interface DocumentDef {
 }
 
 const UPDATED = "September 2026";
+/** Assembles the whole library from a set of sources (CMS-backed or the typed modules). */
+export function buildDocuments(src: DocSources): DocumentDef[] {
+  const {
+    editions, editionSpecs, solutions, industries, modules, moduleGroups, moduleGroupOrder, moduleGroupBlurbs, moduleDetails, customerStories,
+    platformHero, heroStats, whatItReplaces, architectureLayers, deploymentModes, deploymentNote, supportModel, prototypeOffer, whaleTiers, securityPosture, platformFaq, whyNow,
+    certifications, trustFaq, trustPillars, aboutHero, companyFacts, missionVision, story, principles, productFamily, services, servicesNote, milestones, leadership, trustPoints,
+    company, offices, regions,
+  } = src;
+
 const stripStatus = (s: string) => s.replace(/\s*\([^)]*\)\s*$/, "");
 const modName = (slug: string) => modules.find((m) => m.slug === slug)?.name ?? slug;
 const editionName = (slug: string) => editions.find((e) => e.slug === slug)?.name ?? slug;
@@ -365,8 +432,8 @@ function companyProfile(): DocumentDef {
   });
 }
 
-/* ── the library ────────────────────────────────────────────────── */
-export const documents: DocumentDef[] = [
+  /* ── the library ── */
+  return [
   platformOverview(),
   capabilityGuide(),
   ...editions.map(editionDatasheet),
@@ -378,7 +445,11 @@ export const documents: DocumentDef[] = [
   ...customerStories.map(caseStudy),
   trustSummary(),
   companyProfile(),
-];
+  ];
+}
+
+/** The library as the typed modules define it — the fallback when the CMS is off. */
+export const documents: DocumentDef[] = buildDocuments(defaultSources);
 
 export const documentsBySlug = Object.fromEntries(documents.map((d) => [d.slug, d])) as Record<string, DocumentDef>;
 

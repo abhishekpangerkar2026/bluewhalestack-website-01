@@ -2,54 +2,33 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { contextNavFallback } from "@/content/sections/siteSettings";
+import { getSiteSettings } from "@/lib/content";
 import styles from "./InnerPage.module.css";
 
-const navigation = {
-  platform: {
-    label: "The platform",
-    links: [["Overview", "/platform"], ["Capabilities", "/modules"], ["Editions", "/editions"], ["Whale AI", "/products/whale-ai"], ["WhaleForge", "/products/whaleforge"]],
-  },
-  solutions: {
-    label: "Built for your estate",
-    links: [["Solutions", "/solutions"], ["Industries", "/industries"], ["Customer stories", "/customers"], ["Case studies", "/case-studies"]],
-  },
-  resources: {
-    label: "Knowledge & resources",
-    links: [["Resource library", "/resources"], ["Documentation", "/docs"], ["Trust Center", "/trust"]],
-  },
-  company: {
-    label: "Inside BlueWhale",
-    links: [["Our story", "/about"], ["Leadership", "/about/leadership"], ["Careers", "/careers"], ["Partners", "/partners"], ["Newsroom", "/newsroom"]],
-  },
-  pricing: {
-    label: "A platform that grows with you",
-    links: [["Pricing", "/pricing"], ["Compare editions", "/editions"], ["The 90-day prototype", "/platform#prototype"]],
-  },
-  legal: {
-    label: "Trust & transparency",
-    links: [["Trust Center", "/trust"], ["Privacy", "/legal/privacy"], ["Terms of use", "/legal/terms"]],
-  },
-} as const;
+export type PageCategory = "platform" | "solutions" | "resources" | "company" | "pricing" | "legal";
 
 /** A shared editorial frame keeps the extensive catalogue easy to navigate. */
-export function InnerPage({ children, category, current, document = false }: {
+export async function InnerPage({ children, category, current, document = false }: {
   children: ReactNode;
-  category: keyof typeof navigation;
+  category: PageCategory;
   current: string;
   document?: boolean;
 }) {
-  const section = navigation[category];
+  const settings = await getSiteSettings();
+  const section = settings.contextNav.find((s) => s.key === category) ?? contextNavFallback.find((s) => s.key === category)!;
+  const action = settings.contextAction;
   return (
     <div className={`${styles.page} ${document ? styles.document : ""}`} data-page={current}>
       <div className={styles.contextBar}>
         <Container className={styles.contextInner}>
           <span className={styles.contextLabel}><span aria-hidden className={styles.contextDot} />{section.label}</span>
           <nav aria-label={`${section.label} navigation`} className={styles.contextNav}>
-            {section.links.map(([label, href]) => (
+            {section.links.map(({ label, href }) => (
               <Link key={href} href={href} aria-current={current === href ? "page" : undefined}>{label}</Link>
             ))}
           </nav>
-          {current !== "/contact" && <Link href="/contact?intent=demo" className={styles.contextAction}>Let’s talk <ArrowUpRight size={13} /></Link>}
+          {current !== "/contact" && <Link href={action.href} className={styles.contextAction}>{action.label} <ArrowUpRight size={13} /></Link>}
         </Container>
       </div>
       {children}

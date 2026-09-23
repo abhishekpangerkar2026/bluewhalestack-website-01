@@ -10,16 +10,20 @@ import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { Iso, INDUSTRY_ISO } from "@/components/illustrations/Iso";
+import { caseStudiesPageSpec } from "@/content/cms/docs/caseStudiesPage";
+import { caseStudiesPage } from "@/content/sections/caseStudiesPage";
+import { getPageDoc } from "@/lib/cms-page";
 import { getCustomerStories } from "@/lib/content";
 
-export const metadata: Metadata = {
-  title: "Case studies",
-  description:
-    "BlueWhale Stack case studies — the situation, what the platform did and the outcome, for banks, ministries, telco and datacenter operators and a global media network.",
-};
+const getContent = () => getPageDoc(caseStudiesPageSpec, caseStudiesPage);
+
+export async function generateMetadata(): Promise<Metadata> {
+  const c = await getContent();
+  return { title: c.seoTitle, description: c.seoDescription };
+}
 
 export default async function CaseStudiesPage() {
-  const customerStories = await getCustomerStories();
+  const [c, customerStories] = await Promise.all([getContent(), getCustomerStories()]);
   return (
     <InnerPage category="solutions" current="/case-studies">
       {/* ── Hero ── */}
@@ -32,17 +36,17 @@ export default async function CaseStudiesPage() {
         description="Four delivered engagements, written up the way an architect or a CFO would want to read them — what the estate looked like, what BlueWhale Stack changed, and what the auditor, the board and the bill said afterwards."
       >
         <div className="flex flex-wrap gap-3">
-          <Button href="/contact?intent=demo" size="lg" variant="white">
-            Discuss a similar estate
+          <Button href={c.hero.primary.href} size="lg" variant="white">
+            {c.hero.primary.label}
             <ArrowRight className="h-4 w-4" />
           </Button>
           <Button
-            href="/customers"
+            href={c.hero.secondary.href}
             size="lg"
             variant="outline"
             className="border-white/30 text-white hover:border-white hover:bg-white/10 hover:text-white"
           >
-            Success stories overview
+            {c.hero.secondary.label}
           </Button>
         </div>
       </CmsPhotoHero>
@@ -52,9 +56,9 @@ export default async function CaseStudiesPage() {
         <Container>
           <Reveal>
             <SectionHeading
-              eyebrow="Index"
-              title={`${customerStories.length} case studies`}
-              description="Anonymized under confidentiality; challenge, solution and outcome facts are as delivered."
+              eyebrow={c.index.eyebrow}
+              title={`${customerStories.length}${c.index.titleAfterCount}`}
+              description={c.index.description}
             />
           </Reveal>
           <div className="mt-12 flex flex-col">
@@ -90,7 +94,7 @@ export default async function CaseStudiesPage() {
                     </dl>
                   </div>
                   <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent">
-                    Read
+                    {c.index.readLabel}
                     <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </span>
                 </Link>

@@ -28,6 +28,10 @@ export const CMS_TAG = "cms";
 const NO_STEGA_KEYS = new Set([
   "slug", "current", "icon", "tone", "route", "href", "url", "src", "status", "category", "badge", "kind",
   "group", "edition", "editions", "modules", "story", "architectureId", "photo", "date", "value", "linkedin",
+  // page-document fields used as keys, lookups, hrefs or code
+  "id", "key", "type", "code", "lang", "iso", "city", "industry", "sector", "scene", "access", "trackSlug",
+  "department", "variant", "statusTone", "verifyUrl", "login", "register", "portal", "email", "number",
+  "twitter", "accentColor", "topGrad", "pdf", "file", "intent", "entity", "tags", "focus",
 ]);
 
 let client: SanityClient | null = null;

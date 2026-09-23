@@ -13,16 +13,20 @@ import { Button } from "@/components/ui/Button";
 import { Iso, SOLUTION_ISO } from "@/components/illustrations/Iso";
 import { StoryVisual } from "@/components/sections/CustomerStories";
 import { ClosingCTA } from "@/components/sections/ClosingCTA";
+import { solutionsPageSpec } from "@/content/cms/docs/solutionsPage";
+import { solutionsPage } from "@/content/sections/solutionsPage";
+import { getPageDoc } from "@/lib/cms-page";
 import { getSolutions, getIndustries, getEditions, getCustomerStories } from "@/lib/content";
 
-export const metadata: Metadata = {
-  title: "Solutions",
-  description:
-    "Outcome-focused solutions, industry solutions for government, BFSI, healthcare, telco and datacenter operators, and the customer success stories and case studies behind them.",
-};
+const getContent = () => getPageDoc(solutionsPageSpec, solutionsPage);
+
+export async function generateMetadata(): Promise<Metadata> {
+  const c = await getContent();
+  return { title: c.seoTitle, description: c.seoDescription };
+}
 
 export default async function SolutionsPage() {
-  const [solutions, industries, editions, customerStories] = await Promise.all([getSolutions(), getIndustries(), getEditions(), getCustomerStories()]);
+  const [c, solutions, industries, editions, customerStories] = await Promise.all([getContent(), getSolutions(), getIndustries(), getEditions(), getCustomerStories()]);
 
   return (
     <InnerPage category="solutions" current="/solutions">
@@ -36,14 +40,14 @@ export default async function SolutionsPage() {
       >
         <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
           <div>
-            <Button href="/contact?intent=demo" size="lg">
-              See it on your estate
+            <Button href={c.hero.primary.href} size="lg">
+              {c.hero.primary.label}
               <ArrowRight className="h-4 w-4" />
             </Button>
-            <p className="mt-2 text-xs text-faint">45 minutes · one of your accounts, connected read-only</p>
+            {c.hero.primary.note && <p className="mt-2 text-xs text-faint">{c.hero.primary.note}</p>}
           </div>
-          <Button href="/case-studies" size="lg" variant="outline">
-            Read the case studies
+          <Button href={c.hero.secondary.href} size="lg" variant="outline">
+            {c.hero.secondary.label}
           </Button>
         </div>
         {/* the six solutions as icon chips — a jump list */}
@@ -61,21 +65,13 @@ export default async function SolutionsPage() {
         </div>
       </CmsPhotoHero>
 
-      <PageIndex items={[
-        { label: "By outcome", href: "#outcomes" },
-        { label: "By industry", href: "#industries" },
-        { label: "Customer stories", href: "#customers" },
-      ]} />
+      <PageIndex items={c.hero.pageIndex} />
 
       {/* ── By outcome ── */}
       <section id="outcomes" className="scroll-mt-24 border-b border-line bg-sunken py-20 sm:py-24">
         <Container>
           <Reveal>
-            <SectionHeading
-              eyebrow="By outcome"
-              title="Six solutions, one control plane"
-              description="Five are generally available today; Cloud Migration ships its assessment now and execution hooks next. Each links to its reference architecture, the modules it uses and the editions that include it."
-            />
+            <SectionHeading {...c.outcomes.heading} />
           </Reveal>
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {solutions.map((s, i) => (
@@ -95,7 +91,7 @@ export default async function SolutionsPage() {
                     <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">{s.summary}</p>
                     <p className="mt-3 text-xs font-medium text-faint">{s.facts[0].value} · {s.facts[0].label}</p>
                     <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-accent">
-                      How it works
+                      {c.outcomes.cardLink}
                       <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover/card:translate-x-0.5" />
                     </span>
                   </Card>
@@ -111,15 +107,11 @@ export default async function SolutionsPage() {
         <Container>
           <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
             <Reveal>
-              <SectionHeading
-                eyebrow="Industry solutions"
-                title="Packaged for your sector"
-                description="The same solutions, shaped to each industry's regime, workloads and edition — government, BFSI, healthcare, telco, datacenter, regulated enterprise and digital natives."
-              />
+              <SectionHeading {...c.industries.heading} />
             </Reveal>
             <Reveal delay={80}>
-              <Button href="/industries" variant="outline" className="shrink-0">
-                All industries
+              <Button href={c.industries.cta.href} variant="outline" className="shrink-0">
+                {c.industries.cta.label}
                 <ArrowRight className="h-4 w-4" />
               </Button>
             </Reveal>
@@ -136,16 +128,16 @@ export default async function SolutionsPage() {
                           <Icon name={ind.icon} className="h-5 w-5" />
                         </span>
                         {edition?.comingSoon ? (
-                          <Badge tone="warning">Preview</Badge>
+                          <Badge tone="warning">{c.industries.previewLabel}</Badge>
                         ) : (
-                          <Badge tone="success">Available</Badge>
+                          <Badge tone="success">{c.industries.availableLabel}</Badge>
                         )}
                       </div>
                       <h3 className="mt-4 text-base font-bold text-ink">{ind.name}</h3>
                       <p className="mt-1 text-sm font-medium text-accent">{ind.title}</p>
                       <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">{ind.outcome}</p>
                       <span className="mt-4 text-xs text-faint">
-                        {edition ? `${edition.name} Edition` : ""}
+                        {edition ? `${edition.name}${c.industries.editionSuffix}` : ""}
                       </span>
                     </Card>
                   </Link>
@@ -161,20 +153,16 @@ export default async function SolutionsPage() {
         <Container>
           <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
             <Reveal>
-              <SectionHeading
-                eyebrow="Customer success stories"
-                title="Proven in regulated estates"
-                description="Delivered engagements across banking, government, telco and datacenter operators, and media — anonymized under confidentiality, real in every outcome."
-              />
+              <SectionHeading {...c.customers.heading} />
             </Reveal>
             <Reveal delay={80}>
               <div className="flex shrink-0 flex-wrap gap-3">
-                <Button href="/customers" variant="outline">
-                  All success stories
+                <Button href={c.customers.primary.href} variant="outline">
+                  {c.customers.primary.label}
                   <ArrowRight className="h-4 w-4" />
                 </Button>
-                <Button href="/case-studies" variant="secondary">
-                  Case studies
+                <Button href={c.customers.secondary.href} variant="secondary">
+                  {c.customers.secondary.label}
                 </Button>
               </div>
             </Reveal>
@@ -200,7 +188,7 @@ export default async function SolutionsPage() {
                         ))}
                       </dl>
                       <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-accent">
-                        Read the case study
+                        {c.customers.readLabel}
                         <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/card:translate-x-1" />
                       </span>
                     </div>
@@ -212,22 +200,7 @@ export default async function SolutionsPage() {
         </Container>
       </section>
 
-      <ClosingCTA
-        eyebrow="Next step"
-        title="Bring your hardest problem to a working session."
-        body="We connect one of your accounts read-only, map your estate to the solutions above, and walk the one that matters most on your real resources — before any commercial conversation."
-        primary={{
-          label: "Book a working session",
-          href: "/contact?intent=demo",
-          note: "45 minutes · a solutions engineer, not a sales deck · nothing installed on your side",
-        }}
-        secondary={{
-          label: "Start the 90-day prototype",
-          href: "/platform#prototype",
-          note: "Half-day discovery workshop, then 90 days on your estate with no licence cost.",
-        }}
-        tertiary={{ label: "Compare the four editions", href: "/editions", note: "which edition includes which solution" }}
-      />
+      <ClosingCTA {...c.closing} />
     </InnerPage>
   );
 }

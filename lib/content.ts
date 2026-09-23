@@ -20,6 +20,30 @@ import { collateral, collateralHref, type CollateralDoc } from "@/content/collat
 import { hero as homeHero, story as homeStory, proofStrip, problems, differentiators, portfolio } from "@/content/home";
 import type { CmsImage, CmsRef, CmsVideo } from "@/content/cmsTypes";
 import { cmsFetch, toCmsImage, ref } from "@/lib/cms";
+import { getCollection, getPageDoc, mergeContent } from "@/lib/cms-page";
+import { homePageExtras, type HomeExtras } from "@/content/cms/docs/homePage";
+import { homeExtras } from "@/content/sections/homePage";
+import { siteSettingsSpec, type SiteSettings } from "@/content/cms/docs/siteSettings";
+import { siteSettings } from "@/content/sections/siteSettings";
+import { capabilityFamilySpec, type CapabilityFamily } from "@/content/cms/docs/capabilityFamily";
+import { moduleGroupOrder, type ModuleGroup } from "@/content/modules";
+import { certificationSpec, docPageSpec, jobOpeningSpec, legalPageSpec, partnerTrackSpec, type LegalPageDoc } from "@/content/cms/docs/collections";
+import { certificationFromCms, certificationsFallback, familiesFallback, jobFromCms, jobsFallback, partnerTrackFromCms, partnerTracksFallback } from "@/content/sections/collections";
+import { legalPages } from "@/content/sections/legalPages";
+import { docPagesFallback, docPagesFromCms } from "@/content/sections/docPages";
+import { buildDocuments, defaultSources, documents as staticDocuments, type DocSources, type DocumentDef } from "@/content/documents";
+import { platformPageSpec } from "@/content/cms/docs/platformPage";
+import { platformPage } from "@/content/sections/platformPage";
+import { platformHero as staticPlatformHero } from "@/content/platform";
+import { aboutPageSpec } from "@/content/cms/docs/aboutPage";
+import { aboutPage } from "@/content/sections/aboutPage";
+import { aboutHero as staticAboutHero } from "@/content/about";
+import { trustPageSpec } from "@/content/cms/docs/trustPage";
+import { trustPage } from "@/content/sections/trustPage";
+import type { Certification } from "@/content/trust";
+import type { Job } from "@/content/careers";
+import type { PartnerTrack } from "@/content/partners";
+import type { DocPageDef } from "@/content/docs";
 import {
   homePageQuery,
   pageHeroQuery,
@@ -37,6 +61,124 @@ type RawImage = Parameters<typeof toCmsImage>[0];
 type WithImage<T> = Omit<T, "image"> & { image?: RawImage; _id?: string };
 
 const list = <T>(rows: T[] | null | undefined): T[] | null => (rows && rows.length > 0 ? rows : null);
+
+// ── Site settings (navigation, footer, contact details) ───────
+export type { SiteSettings };
+export const getSiteSettings = (): Promise<SiteSettings> => getPageDoc(siteSettingsSpec, siteSettings);
+
+// ── Capability families ───────────────────────────────────────
+export type Family = Omit<CapabilityFamily, "key"> & { key: ModuleGroup; cmsId?: string };
+/** The families in official order; only keys the module catalog knows are returned. */
+export async function getFamilies(): Promise<Family[]> {
+  const rows = await getCollection(capabilityFamilySpec, familiesFallback, (fam) => fam.key);
+  const known = new Set<string>(moduleGroupOrder);
+  return rows.filter((r) => known.has(r.key)) as Family[];
+}
+
+// ── Trust Center certifications ───────────────────────────────
+export async function getCertifications(): Promise<(Certification & { cmsId?: string })[]> {
+  const rows = await getCollection(certificationSpec, certificationsFallback, (c) => c.slug);
+  return rows.map((r) => ({ ...certificationFromCms(r), cmsId: r.cmsId }));
+}
+
+// ── Careers: open roles ───────────────────────────────────────
+export async function getJobs(): Promise<(Job & { applyUrl?: string; cmsId?: string })[]> {
+  const rows = await getCollection(jobOpeningSpec, jobsFallback, (j) => j.title);
+  return rows.map((r) => ({ ...jobFromCms(r), cmsId: r.cmsId }));
+}
+
+// ── Partner tracks ────────────────────────────────────────────
+export async function getPartnerTracks(): Promise<(PartnerTrack & { cmsId?: string })[]> {
+  const rows = await getCollection(partnerTrackSpec, partnerTracksFallback, (t) => t.slug);
+  const out: (PartnerTrack & { cmsId?: string })[] = [];
+  for (const r of rows) {
+    const track = partnerTrackFromCms(r);
+    if (track) out.push({ ...track, cmsId: r.cmsId });
+  }
+  return out;
+}
+
+// ── Legal pages ───────────────────────────────────────────────
+export async function getLegalPage(slug: string): Promise<(LegalPageDoc & { cmsId?: string }) | undefined> {
+  const rows = await getCollection(legalPageSpec, legalPages, (p) => p.slug);
+  return rows.find((p) => p.slug === slug);
+}
+
+// ── Developer docs ────────────────────────────────────────────
+export async function getDocPages(): Promise<(DocPageDef & { cmsId?: string })[]> {
+  const rows = await getCollection(docPageSpec, docPagesFallback, (p) => p.slug);
+  const pages = docPagesFromCms(rows);
+  return pages.map((p, i) => ({ ...p, cmsId: rows[i].cmsId }));
+}
+export async function getDocPage(slug: string): Promise<(DocPageDef & { cmsId?: string }) | undefined> {
+  return (await getDocPages()).find((p) => p.slug === slug);
+}
+
+// ── The resource library (28 generated documents) ─────────────
+/** Every document, assembled from the CMS-backed content — so the PDF reading pages follow edits. */
+export async function getDocuments(): Promise<DocumentDef[]> {
+  const [editions, solutions, industries, modules, families, stories, platform, platformHero, certifications, team, settings, about, aboutHero, trust] = await Promise.all([
+    getEditions(), getSolutions(), getIndustries(), getModules(), getFamilies(), getCustomerStories(),
+    getPageDoc(platformPageSpec, platformPage), getPageHero("/platform"), getCertifications(), getTeam(), getSiteSettings(),
+    getPageDoc(aboutPageSpec, aboutPage), getPageHero("/about"), getPageDoc(trustPageSpec, trustPage),
+  ]);
+  const heroTitle = (hero: PageHeroOverride | null, fallback: string) =>
+    hero?.title ? `${hero.title}${hero.titleAccent ? ` ${hero.titleAccent}` : ""}` : fallback;
+  const details = await Promise.all(modules.map(async (m) => [m.slug, await getModuleDetail(m.slug)] as const));
+  const moduleDetails: DocSources["moduleDetails"] = {};
+  for (const [slug, d] of details) if (d) moduleDetails[slug] = d;
+  const sources: DocSources = {
+    ...defaultSources,
+    editions, solutions, industries, modules, customerStories: stories,
+    moduleGroups: Object.fromEntries(families.map((f) => [f.key, f.name])),
+    moduleGroupOrder: families.map((f) => f.key),
+    moduleGroupBlurbs: Object.fromEntries(families.map((f) => [f.key, f.blurb])),
+    moduleDetails,
+    platformHero: {
+      title: heroTitle(platformHero, staticPlatformHero.title),
+      description: platformHero?.description ?? staticPlatformHero.description,
+      tagline: platform.hero.tagline,
+    },
+    heroStats: platform.hero.stats,
+    whatItReplaces: platform.replaces.rows,
+    architectureLayers: platform.architecture.layers,
+    deploymentModes: platform.deployment.modes,
+    deploymentNote: platform.deployment.note,
+    supportModel: platform.support.items,
+    prototypeOffer: { title: platform.prototype.title, steps: platform.prototype.steps },
+    whaleTiers: platform.whaleAi.tiers,
+    securityPosture: platform.trust.posture,
+    platformFaq: platform.faq.items,
+    whyNow: platform.who.whyNow,
+    certifications,
+    leadership: team,
+    company: { name: settings.company.name, emails: { sales: settings.company.emails.sales }, phones: settings.company.phones, social: { linkedin: settings.company.social.linkedin } },
+    offices: settings.offices,
+    regions: settings.regions,
+    // Trust Center and About pages
+    trustFaq: trust.faq.items,
+    trustPillars: trust.pillars.items,
+    aboutHero: { title: heroTitle(aboutHero, staticAboutHero.title), mission: about.seoDescription },
+    companyFacts: about.facts,
+    missionVision: { mission: about.missionVision.mission, vision: about.missionVision.vision },
+    story: about.story.items.map((s) => ({ heading: s.title, body: s.body })),
+    principles: about.principles.items,
+    productFamily: about.products.items,
+    services: about.services.items,
+    servicesNote: about.services.note,
+    milestones: about.journey.items,
+    trustPoints: about.trust.points,
+  };
+  try {
+    return buildDocuments(sources);
+  } catch (error) {
+    console.error("[documents] assembling from CMS content failed — using the typed fallback", error);
+    return staticDocuments;
+  }
+}
+export async function getDocument(slug: string): Promise<DocumentDef | undefined> {
+  return (await getDocuments()).find((d) => d.slug === slug);
+}
 const clean = <T extends object>(row: T): T =>
   Object.fromEntries(Object.entries(row).filter(([, v]) => v !== null && v !== undefined)) as T;
 
@@ -240,6 +382,9 @@ export interface HomeContent {
     note: string;
     products: { name: string; role: string; body: string; status: string; href: string; photo?: (typeof portfolio.products)[number]["photo"]; image?: CmsImage; editRef?: CmsRef }[];
   };
+  /** the remaining landing-page sections (content/cms/docs/homePage.ts) */
+  sections: HomeExtras;
+  cmsId?: string;
 }
 
 export async function getHomePage(): Promise<HomeContent> {
@@ -254,7 +399,7 @@ export async function getHomePage(): Promise<HomeContent> {
     differentiators?: { icon?: string; title: string; body?: string }[];
     portfolioEyebrow?: string; portfolioTitle?: string; portfolioDescription?: string; portfolioNote?: string;
     products?: { _key?: string; name: string; role?: string; body?: string; status?: string; href?: string; image?: RawImage }[];
-  } | null;
+  } & Partial<Record<keyof HomeExtras, unknown>> | null;
   const fallback: HomeContent = {
     hero: homeHero,
     story: homeStory,
@@ -262,9 +407,11 @@ export async function getHomePage(): Promise<HomeContent> {
     problems,
     differentiators,
     portfolio: { ...portfolio, products: portfolio.products.map((p) => ({ ...p })) },
+    sections: homeExtras,
   };
   const row = await cmsFetch<Row>(homePageQuery, {}, ["homePage"]);
   if (!row) return fallback;
+  const extras = Object.fromEntries(Object.keys(homePageExtras).map((k) => [k, row[k as keyof HomeExtras]]));
   const facts = row.facts?.length ? row.facts.map((f) => ({ value: /^\d+$/.test(f.value) ? Number(f.value) : f.value, label: f.label })) : homeHero.facts;
   return {
     hero: {
@@ -319,5 +466,7 @@ export async function getHomePage(): Promise<HomeContent> {
           }))
         : fallback.portfolio.products,
     },
+    sections: mergeContent(homeExtras, extras),
+    cmsId: "homePage",
   };
 }

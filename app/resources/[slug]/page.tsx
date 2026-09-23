@@ -22,22 +22,23 @@ import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Reveal } from "@/components/ui/Reveal";
 import { DocumentView, sectionHeading, sectionId } from "@/components/documents/DocumentView";
 import { ClosingCTA } from "@/components/sections/ClosingCTA";
-import { documents, documentsBySlug } from "@/content/documents";
+import { documents as staticDocuments } from "@/content/documents";
+import { getDocument, getDocuments } from "@/lib/content";
 
 export function generateStaticParams() {
-  return documents.map((d) => ({ slug: d.slug }));
+  return staticDocuments.map((d) => ({ slug: d.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const d = documentsBySlug[slug];
+  const d = await getDocument(slug);
   if (!d) return {};
   return { title: `${d.title} — ${d.type}`, description: d.summary };
 }
 
 export default async function ResourceDocumentPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const doc = documentsBySlug[slug];
+  const [doc, documents] = await Promise.all([getDocument(slug), getDocuments()]);
   if (!doc) notFound();
   const toc = doc.sections.map((s, i) => ({ id: sectionId(i), label: sectionHeading(s) })).filter((t): t is { id: string; label: string } => Boolean(t.label));
   const siblings = documents.filter((d) => d.type === doc.type && d.slug !== doc.slug).slice(0, 3);

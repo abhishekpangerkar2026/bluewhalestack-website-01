@@ -13,27 +13,24 @@ import { CmsPhotoHero } from "@/components/sections/CmsPhotoHero";
 import { CountUp } from "@/components/ui/CountUp";
 import { familyTileSrc } from "@/content/moduleArt";
 import { moduleDetails } from "@/content/moduleDetails";
-import {
-  modules,
-  moduleGroups,
-  moduleGroupOrder,
-  moduleGroupBlurbs,
-  moduleGroupIcons,
-  type ModuleGroup,
-} from "@/content/modules";
+import { modulesPageSpec } from "@/content/cms/docs/modulesPage";
+import { modulesPage } from "@/content/sections/modulesPage";
+import { getPageDoc } from "@/lib/cms-page";
+import { editAttr, imageSrcSet, imageUrl } from "@/lib/cms";
+import { getFamilies, getModules } from "@/lib/content";
 
-export const metadata: Metadata = {
-  title: "Modules",
-  description:
-    "What lives in the BlueWhale Stack platform core — 54 capabilities across nine families: Management & Delivery, Whalenomics · FinOps, Security & Identity, Governance & Audit, Whale AI, Migration & Discovery, Observability & ITSM, Tenancy & Monetization and Sovereign Operations — gated per edition.",
-};
+const getContent = () => getPageDoc(modulesPageSpec, modulesPage);
 
-// Only families that actually contain modules — an empty section is worse than none.
-const ORDER: ModuleGroup[] = moduleGroupOrder.filter((g) =>
-  modules.some((m) => m.group === g),
-);
+export async function generateMetadata(): Promise<Metadata> {
+  const c = await getContent();
+  return { title: c.seoTitle, description: c.seoDescription };
+}
 
-export default function ModulesPage() {
+export default async function ModulesPage() {
+  const [c, families, modules] = await Promise.all([getContent(), getFamilies(), getModules()]);
+  // Only families that actually contain modules — an empty section is worse than none.
+  const ORDER = families.filter((fam) => modules.some((m) => m.group === fam.key));
+  const shipsKicker = (n: number) => (n === 1 ? c.families.shipsOne : c.families.shipsMany).replace("{n}", String(n));
   return (
     <InnerPage category="platform" current="/modules">
       {/* ── Hero ── */}
@@ -48,10 +45,10 @@ export default function ModulesPage() {
             <Container>
               <div className="grid grid-cols-2 gap-y-6 sm:grid-cols-4 sm:divide-x sm:divide-line">
                 {[
-                  { value: 54, label: "capabilities shipped across the platform" },
-                  { value: ORDER.length, label: "capability families under one console" },
-                  { value: modules.length, label: "modules, each with its own page and maturity" },
-                  { value: 4, label: "editions on one architecture — upgrade is a licence change" },
+                  { value: c.hero.statCapabilities.value, label: c.hero.statCapabilities.label },
+                  { value: ORDER.length, label: c.hero.statFamiliesLabel },
+                  { value: modules.length, label: c.hero.statModulesLabel },
+                  { value: c.hero.statEditions.value, label: c.hero.statEditions.label },
                 ].map((s) => (
                   <div key={s.label} className="py-6 sm:px-6 sm:first:pl-0 sm:last:pr-0">
                     <p className="num text-3xl font-extrabold text-accent sm:text-4xl"><CountUp value={s.value} /></p>
@@ -63,16 +60,16 @@ export default function ModulesPage() {
           </div>
         }
       >
-        <p className="text-sm text-faint">One identity, one inventory and one policy plane. The full 54-capability list with edition mapping is in the technical datasheet, on request.</p>
+        <p className="text-sm text-faint">{c.hero.note}</p>
       </CmsPhotoHero>
 
       <nav aria-label="Capability families" className="border-b border-line bg-surface">
         <Container>
           <div className="flex items-center gap-5 overflow-x-auto py-5">
-            <span className="shrink-0 text-[10px] font-bold uppercase tracking-widest text-faint">Explore families</span>
-            {ORDER.map((group, i) => (
-              <a key={group} href={`#${group}`} className="inline-flex shrink-0 items-center gap-2 text-xs font-medium text-muted transition-colors hover:text-accent">
-                <span className="font-mono text-[10px] text-faint">0{i + 1}</span>{moduleGroups[group]}
+            <span className="shrink-0 text-[10px] font-bold uppercase tracking-widest text-faint">{c.families.navLabel}</span>
+            {ORDER.map((fam, i) => (
+              <a key={fam.key} href={`#${fam.key}`} className="inline-flex shrink-0 items-center gap-2 text-xs font-medium text-muted transition-colors hover:text-accent">
+                <span className="font-mono text-[10px] text-faint">0{i + 1}</span>{fam.name}
               </a>
             ))}
           </div>
@@ -80,13 +77,13 @@ export default function ModulesPage() {
       </nav>
 
       {/* ── Family sections, alternating surface, indexed, asymmetric heading column ── */}
-      {ORDER.map((group, gi) => {
-        const groupMods = modules.filter((m) => m.group === group);
+      {ORDER.map((fam, gi) => {
+        const groupMods = modules.filter((m) => m.group === fam.key);
         const tinted = gi % 2 === 1;
         return (
           <section
-            key={group}
-            id={group}
+            key={fam.key}
+            id={fam.key}
             className={`scroll-mt-24 border-t border-line py-20 sm:py-24 ${
               tinted ? "bg-sunken" : "bg-canvas"
             }`}
@@ -95,28 +92,44 @@ export default function ModulesPage() {
               <div className="grid gap-x-14 gap-y-10 lg:grid-cols-[0.85fr_1.15fr]">
                 <Reveal>
                   <div className="lg:sticky lg:top-28 lg:self-start">
-                    <img
-                      src={familyTileSrc(group, 800)}
-                      srcSet={`${familyTileSrc(group, 480)} 480w, ${familyTileSrc(group, 800)} 800w`}
-                      sizes="(min-width:1024px) 360px, 100vw"
-                      alt=""
-                      width={1200}
-                      height={942}
-                      loading="lazy"
-                      className="mb-6 w-full max-w-[360px] rounded-xl border border-line shadow-md"
-                    />
+                    {fam.tile ? (
+                      <img
+                        data-sanity={editAttr(fam.tile.sanity)}
+                        src={imageUrl(fam.tile.src, 800)}
+                        srcSet={imageSrcSet(fam.tile.src, [480, 800, 1200])}
+                        sizes="(min-width:1024px) 360px, 100vw"
+                        alt={fam.tile.alt ?? ""}
+                        width={fam.tile.width ?? 1200}
+                        height={fam.tile.height ?? 942}
+                        loading="lazy"
+                        className="mb-6 w-full max-w-[360px] rounded-xl border border-line shadow-md"
+                        style={{ objectPosition: fam.tile.focal }}
+                      />
+                    ) : (
+                      <img
+                        data-sanity={editAttr(fam.cmsId ? { id: fam.cmsId, type: "capabilityFamily", path: "tile" } : undefined)}
+                        src={familyTileSrc(fam.key, 800)}
+                        srcSet={`${familyTileSrc(fam.key, 480)} 480w, ${familyTileSrc(fam.key, 800)} 800w`}
+                        sizes="(min-width:1024px) 360px, 100vw"
+                        alt=""
+                        width={1200}
+                        height={942}
+                        loading="lazy"
+                        className="mb-6 w-full max-w-[360px] rounded-xl border border-line shadow-md"
+                      />
+                    )}
                     <div className="mb-4 flex items-center gap-3">
                       <span className="grid h-10 w-10 place-items-center rounded-lg bg-primary text-primary-fg">
-                        <Icon name={moduleGroupIcons[group]} className="h-5 w-5" />
+                        <Icon name={fam.icon} className="h-5 w-5" />
                       </span>
                       <span className="text-sm font-bold text-faint num">
                         {String(gi + 1).padStart(2, "0")} / {String(ORDER.length).padStart(2, "0")}
                       </span>
                     </div>
                     <SectionHeading
-                      eyebrow={`${groupMods.length} ${groupMods.length === 1 ? "module" : "modules"} ship in this family`}
-                      title={moduleGroups[group]}
-                      description={moduleGroupBlurbs[group]}
+                      eyebrow={shipsKicker(groupMods.length)}
+                      title={fam.name}
+                      description={fam.blurb}
                     />
                   </div>
                 </Reveal>
@@ -150,7 +163,7 @@ export default function ModulesPage() {
                             </span>
                           )}
                           <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-accent">
-                            What it does, how it works, FAQ
+                            {c.families.cardLink}
                             <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/card:translate-x-1" />
                           </span>
                         </Card>
@@ -168,12 +181,9 @@ export default function ModulesPage() {
       <section className="border-t border-line bg-sunken py-20 sm:py-24">
         <Container>
           <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-            <SectionHeading
-              title="Not sure which families you need?"
-              description="Tell us how you run today — we will map the families and edition to your estate, and show it running on your estate's shape in the discovery workshop."
-            />
-            <Button href="/contact?intent=demo" size="lg" className="shrink-0">
-              Book the discovery workshop
+            <SectionHeading {...c.closing.heading} />
+            <Button href={c.closing.cta.href} size="lg" className="shrink-0">
+              {c.closing.cta.label}
               <ArrowRight className="h-4 w-4" />
             </Button>
           </div>

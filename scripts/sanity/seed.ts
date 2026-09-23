@@ -6,9 +6,12 @@
  *
  *   SANITY_PROJECT_ID=xxxx SANITY_DATASET=production SANITY_API_WRITE_TOKEN=sk... \
  *     npx tsx scripts/sanity/seed.ts
+ *
+ * SEED_DRY_RUN=out.json skips every upload and write and dumps the documents
+ * it would send instead — a structural check that needs no token.
  */
 import { createClient } from "@sanity/client";
-import { createReadStream, existsSync, statSync } from "node:fs";
+import { createReadStream, existsSync, statSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
 import { editions } from "../../content/editions";
@@ -23,22 +26,28 @@ import { collateral } from "../../content/collateral";
 import { hero, story, proofStrip, problems, differentiators, portfolio } from "../../content/home";
 import { photos, photoSrc, EDITION_PHOTO, INDUSTRY_PHOTO, SOLUTION_PHOTO, ROUTE_PHOTO, type PhotoKey } from "../../content/photos";
 import { FAMILY_PHOTO } from "../../content/moduleArt";
+import { annotate, collectionId } from "../../content/cms/annotate";
+import { homePageExtras } from "../../content/cms/docs/homePage";
+import { homeExtras } from "../../content/sections/homePage";
+import { singletonEntries, collectionEntries } from "../../content/sections/registry";
 
 const projectId = process.env.SANITY_PROJECT_ID ?? process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 const dataset = process.env.SANITY_DATASET ?? process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production";
 const token = process.env.SANITY_API_WRITE_TOKEN;
-if (!projectId || !token) {
+const dryRun = process.env.SEED_DRY_RUN;
+if (!dryRun && (!projectId || !token)) {
   console.error("Set SANITY_PROJECT_ID and SANITY_API_WRITE_TOKEN (an Editor token) in the environment.");
   process.exit(1);
 }
 
-const client = createClient({ projectId, dataset, token, apiVersion: "2025-09-01", useCdn: false });
+const client = createClient({ projectId: projectId ?? "dry-run", dataset, token, apiVersion: "2025-09-01", useCdn: false });
 const PUBLIC = path.resolve(__dirname, "../../public");
 
 const assetCache = new Map<string, string>();
 async function upload(kind: "image" | "file", publicPath: string): Promise<string | undefined> {
   const abs = path.join(PUBLIC, publicPath);
   if (!existsSync(abs)) { console.warn("  missing asset", publicPath); return undefined; }
+  if (dryRun) return undefined;
   const key = `${kind}:${publicPath}`;
   if (assetCache.has(key)) return assetCache.get(key);
   const size = statSync(abs).size;
@@ -127,7 +136,22 @@ async function main() {
         })),
       ),
     ),
+    ...annotate(homePageExtras, homeExtras),
   });
+
+  console.log("Page documents (site settings + one document per page)");
+  for (const { spec, content } of singletonEntries) {
+    docs.push({ _id: spec.name, _type: spec.name, ...annotate(spec.fields, content) });
+    console.log(`  ${spec.name}`);
+  }
+
+  console.log("Collections (families, certifications, roles, partner tracks, legal pages, docs guides)");
+  for (const { spec, rows, keyOf } of collectionEntries) {
+    for (const [i, row] of rows.entries()) {
+      docs.push({ _id: collectionId(spec.name, keyOf(row)), _type: spec.name, order: i + 1, ...annotate(spec.fields, row) });
+    }
+    console.log(`  ${spec.name} × ${rows.length}`);
+  }
 
   console.log("Page heroes");
   for (const [route, h] of Object.entries(PAGE_HEROES)) {
@@ -265,6 +289,11 @@ async function main() {
     });
   }
 
+  if (dryRun) {
+    writeFileSync(dryRun, JSON.stringify(docs, null, 1));
+    console.log(`\nDry run: ${docs.length} documents written to ${dryRun}`);
+    return;
+  }
   console.log(`\nWriting ${docs.length} documents…`);
   for (let i = 0; i < docs.length; i += 25) {
     const tx = client.transaction();

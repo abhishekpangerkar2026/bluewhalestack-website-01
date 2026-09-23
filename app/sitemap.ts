@@ -1,16 +1,16 @@
 import type { MetadataRoute } from "next";
-import { documents } from "@/content/documents";
-import { getCustomerStories, getEditions, getIndustries, getModules, getSolutions } from "@/lib/content";
+import { getCustomerStories, getDocuments, getEditions, getIndustries, getModules, getSolutions } from "@/lib/content";
 
 const BASE = "https://www.bluewhalestack.com";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [editions, modules, industries, solutions, stories] = await Promise.all([
+  const [editions, modules, industries, solutions, stories, documents] = await Promise.all([
     getEditions(),
     getModules(),
     getIndustries(),
     getSolutions(),
     getCustomerStories(),
+    getDocuments(),
   ]);
 
   const staticRoutes = [

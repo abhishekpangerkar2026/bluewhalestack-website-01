@@ -11,40 +11,32 @@ import { Stat } from "@/components/ui/Stat";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { ArchitectureDiagram } from "@/components/diagrams/ArchitectureDiagram";
-import { editionsBySlug } from "@/content/editions";
-import {
-  fabricHero,
-  fabricStats,
-  fabricStatsNote,
-  fabricProblems,
-  fabricTiers,
-  fabricStakeholders,
-  fabricRevenueStreams,
-  fabricPhases,
-  fabricAtAGlance,
-  fabricGettingStarted,
-  fabricMarkets,
-} from "@/content/fabric";
+import { fabricHero } from "@/content/fabric";
+import { fabricPageSpec } from "@/content/cms/docs/fabricPage";
+import { fabricPage } from "@/content/sections/fabricPage";
+import { getPageDoc } from "@/lib/cms-page";
+import { getEdition } from "@/lib/content";
 
-export const metadata: Metadata = {
-  title: "BlueWhale Stack Fabric",
-  description:
-    "A market's datacenter capacity — every operator, every tier — unified on one platform and consumed as a single sovereign cloud. One catalog, one identity, one bill. Launching in India, built for every country.",
-};
+const getContent = () => getPageDoc(fabricPageSpec, fabricPage);
 
-export default function FabricPage() {
-  const platformEdition = editionsBySlug["telco-datacenter"];
+export async function generateMetadata(): Promise<Metadata> {
+  const c = await getContent();
+  return { title: c.seoTitle, description: c.seoDescription };
+}
+
+export default async function FabricPage() {
+  const [c, platformEdition] = await Promise.all([getContent(), getEdition("telco-datacenter")]);
   return (
     <InnerPage category="platform" current="/fabric">
       {/* ── Hero ── */}
       <CmsPhotoHero
         route="/fabric"
         photo="sovereign-regions"
-        eyebrow={`${fabricHero.eyebrow} · Strategic initiative · launching in India`}
+        eyebrow={`${fabricHero.eyebrow} · ${c.hero.eyebrowSuffix}`}
         above={
           platformEdition?.comingSoon ? (
             <div className="mb-5">
-              <Badge tone="warning">Preview{platformEdition.gaTarget ? ` · GA ${platformEdition.gaTarget}` : ""}</Badge>
+              <Badge tone="warning">{c.hero.previewLabel}{platformEdition.gaTarget ? ` · GA ${platformEdition.gaTarget}` : ""}</Badge>
             </div>
           ) : undefined
         }
@@ -52,12 +44,12 @@ export default function FabricPage() {
         description={fabricHero.description}
       >
         <div className="flex flex-wrap gap-3">
-          <Button href="/contact?intent=demo" size="lg">
-            Request a fabric workshop
+          <Button href={c.hero.primary.href} size="lg">
+            {c.hero.primary.label}
             <ArrowRight className="h-4 w-4" />
           </Button>
-          <Button href="/editions/telco-datacenter" size="lg" variant="outline">
-            Runs on Telco &amp; Datacenter Edition
+          <Button href={c.hero.secondary.href} size="lg" variant="outline">
+            {c.hero.secondary.label}
             <ArrowRight className="h-4 w-4" />
           </Button>
         </div>
@@ -67,7 +59,7 @@ export default function FabricPage() {
       <section className="border-b border-line bg-sunken py-14">
         <Container>
           <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
-            {fabricStats.map((s, i) => (
+            {c.hero.stats.map((s, i) => (
               <Reveal key={s.label} delay={i * 70}>
                 <Stat value={s.value} label={s.label} />
               </Reveal>
@@ -80,14 +72,10 @@ export default function FabricPage() {
       <section className="bg-canvas py-20 sm:py-28">
         <Container>
           <Reveal>
-            <SectionHeading
-              eyebrow="Why now"
-              title="Strong datacenters, fragmented consumption"
-              description="Every growing market builds world-class datacenter capacity fast — but for the buyer, it arrives fragmented: every operator is its own island, with its own portal, contract, billing and compliance posture."
-            />
+            <SectionHeading {...c.problem.heading} />
           </Reveal>
           <div className="mt-14 grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-2">
-            {fabricProblems.map((p, i) => (
+            {c.problem.items.map((p, i) => (
               <Reveal key={p.title} delay={(i % 2) * 80}>
                 <div className="flex h-full flex-col bg-surface p-7">
                   <span className="text-sm font-bold text-accent num">
@@ -108,11 +96,7 @@ export default function FabricPage() {
       <section className="border-y border-line bg-sunken py-20 sm:py-28">
         <Container>
           <Reveal>
-            <SectionHeading
-              eyebrow="Reference architecture"
-              title="One catalog. One identity. Placement by policy."
-              description="A workload enters the fabric with a policy — residency zone, latency bound, compliance class, price ceiling, GPU class — and the platform places it on qualifying capacity, meters it per customer, and governs it identically wherever it lands."
-            />
+            <SectionHeading {...c.architecture.heading} />
           </Reveal>
           <Reveal delay={100}>
             <div className="mt-12">
@@ -126,14 +110,10 @@ export default function FabricPage() {
       <section className="border-t border-line bg-canvas py-20 sm:py-28">
         <Container>
           <Reveal>
-            <SectionHeading
-              eyebrow="The supply"
-              title="Every operator, every tier — federated per market"
-              description="In any market the datacenter sector sorts into three tiers. The fabric federates all three, so the buyer's policy can land on hyperscale, national or regional capacity — and move between them."
-            />
+            <SectionHeading {...c.supply.heading} />
           </Reveal>
           <div className="mt-14 grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-3">
-            {fabricTiers.map((t, i) => (
+            {c.supply.tiers.map((t, i) => (
               <Reveal key={t.name} delay={i * 90}>
                 <div className="flex h-full flex-col bg-surface p-7">
                   <span className="eyebrow">
@@ -150,9 +130,7 @@ export default function FabricPage() {
             ))}
           </div>
           <p className="mt-6 text-xs italic text-faint">
-            Tier structure is illustrative; specific operator names, agreements
-            and federations are confirmed individually per market and are not
-            implied here.
+            {c.supply.note}
           </p>
         </Container>
       </section>
@@ -161,14 +139,10 @@ export default function FabricPage() {
       <section className="border-t border-line bg-sunken py-20 sm:py-28">
         <Container>
           <Reveal>
-            <SectionHeading
-              eyebrow="Where the fabric runs"
-              title="Launching in India. Built for every market."
-              description="The fabric plane is the same everywhere — what changes per market is the operator roster, the residency regime and the sovereign classes. India is the launch market; the Gulf and the United States follow from BlueWhale's own entities there."
-            />
+            <SectionHeading {...c.markets.heading} />
           </Reveal>
           <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-            {fabricMarkets.map((m, i) => (
+            {c.markets.items.map((m, i) => (
               <Reveal key={m.name} delay={i * 80}>
                 <div
                   className={`flex h-full flex-col rounded-lg border bg-surface p-6 shadow-sm ${
@@ -184,7 +158,7 @@ export default function FabricPage() {
                   </span>
                   <h3 className="mt-4 text-lg font-bold text-ink">{m.name}</h3>
                   <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">{m.body}</p>
-                  {m.stats && (
+                  {m.stats && m.stats.length > 0 && (
                     <dl className="mt-5 grid grid-cols-2 gap-3 border-t border-line pt-4">
                       {m.stats.map((s) => (
                         <div key={s.label}>
@@ -200,7 +174,7 @@ export default function FabricPage() {
               </Reveal>
             ))}
           </div>
-          <p className="mt-6 text-xs text-faint">{fabricStatsNote}</p>
+          <p className="mt-6 text-xs text-faint">{c.markets.note}</p>
         </Container>
       </section>
 
@@ -208,14 +182,10 @@ export default function FabricPage() {
       <section className="border-y border-line bg-sunken py-20 sm:py-28">
         <Container>
           <Reveal>
-            <SectionHeading
-              eyebrow="Value, by stakeholder"
-              title="Who gains what — four parties, one fabric"
-              description="The fabric only works if every party is better inside it than outside it."
-            />
+            <SectionHeading {...c.stakeholders.heading} />
           </Reveal>
           <div className="mt-14 grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-2">
-            {fabricStakeholders.map((s, i) => (
+            {c.stakeholders.items.map((s, i) => (
               <Reveal key={s.title} delay={(i % 2) * 80}>
                 <div className="flex h-full flex-col bg-surface p-7">
                   <span className="grid h-11 w-11 place-items-center rounded-lg bg-brand-50 text-accent">
@@ -246,14 +216,10 @@ export default function FabricPage() {
       <section className="bg-canvas py-20 sm:py-28">
         <Container>
           <Reveal>
-            <SectionHeading
-              eyebrow="Commercial model"
-              title="Six revenue streams, none requiring new construction"
-              description="All metered, governed and billable from the phase that launches them — on capacity operators already own."
-            />
+            <SectionHeading {...c.revenue.heading} />
           </Reveal>
           <div className="mt-14 grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
-            {fabricRevenueStreams.map((r, i) => (
+            {c.revenue.streams.map((r, i) => (
               <Reveal key={r.name} delay={(i % 3) * 70}>
                 <div className="flex h-full flex-col bg-surface p-7">
                   <span className="eyebrow">
@@ -276,14 +242,10 @@ export default function FabricPage() {
       <section className="border-t border-line bg-sunken py-20 sm:py-28">
         <Container>
           <Reveal>
-            <SectionHeading
-              eyebrow="Phased delivery"
-              title="From anchor to institutionalized, in four phases"
-              description="Each phase has a month range and an exit criterion; the fabric expands on customer pull, with operators joining as demand for their tier appears."
-            />
+            <SectionHeading {...c.phases.heading} />
           </Reveal>
           <div className="relative mt-14 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-            {fabricPhases.map((p, i) => (
+            {c.phases.items.map((p, i) => (
               <Reveal key={p.name} delay={i * 90}>
                 <div className="border-t-2 border-ink pt-5">
                   <span className="num text-sm font-bold text-accent">
@@ -308,13 +270,9 @@ export default function FabricPage() {
           <div className="grid gap-x-16 gap-y-14 lg:grid-cols-[1fr_1fr]">
             <Reveal>
               <div>
-                <SectionHeading
-                  eyebrow="At a glance"
-                  title="The fabric, summarized"
-                  description="The facts a board or a regulator asks for first — what it is, who operates it, where it launches and how it is consumed."
-                />
+                <SectionHeading {...c.glance.heading} />
                 <dl className="mt-10 flex flex-col">
-                  {fabricAtAGlance.map((row) => (
+                  {c.glance.rows.map((row) => (
                     <div
                       key={row.label}
                       className="flex items-start justify-between gap-6 border-t border-line py-5 first:border-t-0 first:pt-0"
@@ -331,10 +289,10 @@ export default function FabricPage() {
             <Reveal delay={120}>
               <div className="rounded-lg border border-line bg-sunken p-8">
                 <p className="eyebrow">
-                  Getting started
+                  {c.gettingStarted.kicker}
                 </p>
                 <ol className="mt-6 flex flex-col">
-                  {fabricGettingStarted.map((s, i) => (
+                  {c.gettingStarted.steps.map((s, i) => (
                     <li
                       key={s.step}
                       className="flex items-start gap-5 border-t border-line py-5 first:border-t-0 first:pt-0"
@@ -362,22 +320,7 @@ export default function FabricPage() {
         </Container>
       </section>
 
-      <ClosingCTA
-        eyebrow="No market needs another datacenter"
-        title="It needs a fabric that lets buyers pick a policy."
-        body="The fabric workshop takes one week: your market's operator roster, residency regime and sovereign classes mapped onto the fabric plane, and a 90-day pilot scoped — two workloads, two operator regions, one DR scenario, no platform-licence cost."
-        primary={{
-          label: "Request a fabric workshop",
-          href: "/contact?intent=demo",
-          note: "One week · operators, regulators and anchor buyers in the room · pilot scoped at the end",
-        }}
-        secondary={{
-          label: "Telco & Datacenter Edition",
-          href: "/editions/telco-datacenter",
-          note: "The operator edition the fabric runs on — preview, GA Q4 2026.",
-        }}
-        tertiary={{ label: "For datacenter operators", href: "/industries/datacenter", note: "DCIM beside the cloud estate" }}
-      />
+      <ClosingCTA {...c.closing} />
     </InnerPage>
   );
 }

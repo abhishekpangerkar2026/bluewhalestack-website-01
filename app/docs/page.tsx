@@ -8,24 +8,19 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
-import { docCards } from "@/content/docs";
+import { docsPageSpec } from "@/content/cms/docs/docsPage";
+import { docsPage } from "@/content/sections/docsPage";
+import { getPageDoc } from "@/lib/cms-page";
 
-export const metadata: Metadata = {
-  title: "Docs",
-  description:
-    "Technical documentation, API reference, quick-start guides and integration tutorials for BlueWhale Stack.",
-};
+const getContent = () => getPageDoc(docsPageSpec, docsPage);
 
-/** Hero "Jump to" chips — only destinations that actually exist as routes. */
-const quickLinks: { label: string; href: string }[] = [
-  { label: "Quick start", href: "/docs/quick-start" },
-  { label: "API reference", href: "/docs/api-reference" },
-  { label: "Cloud integration", href: "/docs/cloud-integration" },
-  { label: "Security & compliance", href: "/trust" },
-  { label: "Support", href: "/contact" },
-];
+export async function generateMetadata(): Promise<Metadata> {
+  const c = await getContent();
+  return { title: c.seoTitle, description: c.seoDescription };
+}
 
-export default function DocsPage() {
+export default async function DocsPage() {
+  const c = await getContent();
   return (
     <InnerPage category="resources" current="/docs">
       {/* ── Hero: editorial split, oversized statement left ── */}
@@ -37,22 +32,20 @@ export default function DocsPage() {
                 <div className="mb-5 flex items-center gap-3">
                   <span aria-hidden className="h-px w-8 bg-accent/50" />
                   <span className="eyebrow">
-                    Documentation
+                    {c.hero.kicker}
                   </span>
                 </div>
                 <h1 className="display-1 text-ink">
-                  Connect an account, federate your IdP, call the API.
+                  {c.hero.title}
                 </h1>
                 <p className="mt-6 text-lg leading-relaxed text-muted">
-                  Six guides written for the engineer doing the work: the exact IAM role, app registration or service
-                  account each cloud needs, the Edge Agent&apos;s outbound-only path on port 443, SSO and SCIM setup,
-                  the service catalog, and the REST API with webhooks and events.
+                  {c.hero.description}
                 </p>
                 <p className="eyebrow mt-8 ">
-                  Jump to
+                  {c.hero.jumpLabel}
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">
-                  {quickLinks.map((q) => (
+                  {c.hero.quickLinks.map((q) => (
                     <Link
                       key={q.href}
                       href={q.href}
@@ -65,10 +58,10 @@ export default function DocsPage() {
               </div>
             </Reveal>
             <Reveal delay={90}>
-              <IntroPanel eyebrow="From setup to your first integration" dark>
-                <IntroPanelLink index="01" href="/docs/quick-start" title="Connect your first account" description="Set up SaaS and run your first discovery." />
-                <IntroPanelLink index="02" href="/docs/identity-access" title="Bring your identity provider" description="Configure federation, SSO and access." />
-                <IntroPanelLink index="03" href="/docs/api-reference" title="Build with the API" description="Authentication, resources and webhooks." />
+              <IntroPanel eyebrow={c.hero.panelKicker} dark>
+                {c.hero.panelLinks.map((l) => (
+                  <IntroPanelLink key={l.href} index={l.index} href={l.href} title={l.title} description={l.description} />
+                ))}
               </IntroPanel>
             </Reveal>
           </div>
@@ -79,14 +72,10 @@ export default function DocsPage() {
       <section className="py-24 sm:py-32">
         <Container>
           <Reveal>
-            <SectionHeading
-              eyebrow="Guides"
-              title="Start here"
-              description="The reference set most teams open first — from a platform overview to the full REST API."
-            />
+            <SectionHeading {...c.guides.heading} />
           </Reveal>
           <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {docCards.map((d, i) => (
+            {c.guides.cards.map((d, i) => (
               <Reveal key={d.title} delay={(i % 3) * 70}>
                 <Link href={`/docs/${d.slug}`} className="group block h-full">
                   <Card
@@ -118,7 +107,7 @@ export default function DocsPage() {
                       ))}
                     </div>
                     <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-accent">
-                      Read guide
+                      {c.guides.cardLink}
                       <ArrowRight className="h-3 w-3" />
                     </div>
                   </Card>
@@ -134,26 +123,21 @@ export default function DocsPage() {
         <Container className="relative">
           <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
             <Reveal>
-              <SectionHeading
-                inverse
-                eyebrow="Developer reference"
-                title="Looking for the API?"
-                description="Full REST reference with OAuth2, webhooks, and Python & Go SDKs."
-              />
+              <SectionHeading {...c.api.heading} inverse />
             </Reveal>
             <Reveal delay={90}>
               <div className="flex shrink-0 flex-wrap gap-3">
-                <Button href="/docs/api-reference" size="lg" variant="white">
-                  Open the API reference
+                <Button href={c.api.primary.href} size="lg" variant="white">
+                  {c.api.primary.label}
                   <ArrowRight className="h-4 w-4" />
                 </Button>
                 <Button
-                  href="/contact"
+                  href={c.api.secondary.href}
                   size="lg"
                   variant="outline"
                   className="border-white/30 text-white hover:border-white hover:bg-white/10 hover:text-white"
                 >
-                  Request SDK access
+                  {c.api.secondary.label}
                 </Button>
               </div>
             </Reveal>

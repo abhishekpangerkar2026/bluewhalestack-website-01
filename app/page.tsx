@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, Boxes, Sparkles, Server, ShieldCheck, Layers, Building2, RadioTower, Landmark } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Layers, Building2, RadioTower, Landmark } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
@@ -12,26 +12,18 @@ import { StoryVisual } from "@/components/sections/CustomerStories";
 import { PrototypeOffer } from "@/components/sections/PrototypeOffer";
 import { ClosingCTA } from "@/components/sections/ClosingCTA";
 import { LayerStack, LayerList } from "@/components/diagrams/LayerStack";
-import { moduleGroups, moduleGroupOrder, moduleGroupBlurbs } from "@/content/modules";
 import { familyTileSrc } from "@/content/moduleArt";
 import { photos, photoSrc, photoSrcSet } from "@/content/photos";
-import { getCustomerStories, getEditions, getHomePage } from "@/lib/content";
+import { getCustomerStories, getEditions, getFamilies, getHomePage, getSiteSettings } from "@/lib/content";
 import { editAttr, imageSrcSet, imageUrl } from "@/lib/cms";
 import { cn } from "@/lib/utils";
-
-/** One-line teasers for the facts row under the console. */
-const CONSOLE_FACTS = [
-  { icon: Boxes, title: "Nine families, one inventory", body: "A cost anomaly, a finding and a ticket point at the same workload and owner." },
-  { icon: Sparkles, title: "Whale AI in every family", body: "50+ grounded use cases, including fully offline inside the perimeter." },
-  { icon: Server, title: "Six clouds, one datacenter floor", body: "Public cloud by API; VMware, Hyper-V and Nutanix by Edge Agent." },
-  { icon: ShieldCheck, title: "Sovereign by architecture", body: "SaaS, BYOC, on-premises or fully air-gapped — the same build, every mode." },
-];
 
 const EDITION_ICONS: Record<string, typeof Layers> = { standard: Layers, enterprise: Building2, "telco-datacenter": RadioTower, government: Landmark };
 
 export default async function HomePage() {
-  const [home, editions, stories] = await Promise.all([getHomePage(), getEditions(), getCustomerStories()]);
-  const spotlight = stories.find((s) => s.slug === "bfsi-singapore-qatar") ?? stories[0];
+  const [home, editions, stories, families, settings] = await Promise.all([getHomePage(), getEditions(), getCustomerStories(), getFamilies(), getSiteSettings()]);
+  const s = home.sections;
+  const spotlight = stories.find((st) => st.slug === "bfsi-singapore-qatar") ?? stories[0];
   const dark = photos["dark-gateway"];
   return (
     <>
@@ -41,8 +33,8 @@ export default async function HomePage() {
       <section className="border-b border-line bg-sunken py-14 sm:py-16">
         <Container>
           <div className="flex flex-wrap items-end justify-between gap-4">
-            <p className="eyebrow flex items-center gap-3"><span aria-hidden className="h-px w-7 bg-[var(--gold)]" />From delivered engagements · anonymized under confidentiality</p>
-            <Link className="inline-flex items-center gap-2 text-sm font-semibold text-accent" href="/case-studies">The outcomes <ArrowUpRight size={15} /></Link>
+            <p className="eyebrow flex items-center gap-3"><span aria-hidden className="h-px w-7 bg-[var(--gold)]" />{s.proofSection.kicker}</p>
+            <Link className="inline-flex items-center gap-2 text-sm font-semibold text-accent" href={s.proofSection.link.href}>{s.proofSection.link.label} <ArrowUpRight size={15} /></Link>
           </div>
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {home.proofStrip.map((p, i) => (
@@ -95,15 +87,11 @@ export default async function HomePage() {
           <div className="grid items-center gap-12 lg:grid-cols-[0.92fr_1.08fr]">
             <div>
               <Reveal>
-                <SectionHeading
-                  eyebrow="The architecture"
-                  title="One platform, six layers — read top-down, the way value flows."
-                  description="Industries consume governed services through the Digital Experience Layer; nine capability families in the Unified Platform Core govern every estate underneath — in whichever mode it must run."
-                />
+                <SectionHeading {...s.architectureSection.heading} />
               </Reveal>
               <Reveal delay={80}><LayerList className="mt-8" /></Reveal>
               <Reveal delay={120}>
-                <Button href="/platform#architecture" variant="outline" className="mt-8">See the full architecture <ArrowRight size={16} /></Button>
+                <Button href={s.architectureSection.cta.href} variant="outline" className="mt-8">{s.architectureSection.cta.label} <ArrowRight size={16} /></Button>
               </Reveal>
             </div>
             <Reveal delay={100}><LayerStack /></Reveal>
@@ -115,14 +103,14 @@ export default async function HomePage() {
       <section className="py-20 sm:py-28" id="product">
         <Container>
           <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-            <SectionHeading eyebrow="See the product" title="One console. Every job." description="Cost, inventory and security posture — three of the screens teams live in. Every module page shows its own screen alongside how it works." />
-            <Link href="/modules" className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-accent">Explore all modules <ArrowUpRight size={17} /></Link>
+            <SectionHeading {...s.productSection.heading} />
+            <Link href={s.productSection.link.href} className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-accent">{s.productSection.link.label} <ArrowUpRight size={17} /></Link>
           </div>
           <div className="mt-12"><ProductShowcase /></div>
           <div className="mt-10 grid gap-x-10 gap-y-6 border-t border-line pt-8 sm:grid-cols-2 lg:grid-cols-4">
-            {CONSOLE_FACTS.map((f) => (
+            {s.productSection.facts.map((f) => (
               <div key={f.title} className="flex items-start gap-3">
-                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-[var(--bg-active)] text-accent"><f.icon aria-hidden size={16} /></span>
+                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-[var(--bg-active)] text-accent"><Icon name={f.icon} className="h-4 w-4" /></span>
                 <div><strong className="block text-[14px] font-bold text-ink">{f.title}</strong><span className="mt-1 block text-[13px] leading-relaxed text-muted">{f.body}</span></div>
               </div>
             ))}
@@ -153,17 +141,21 @@ export default async function HomePage() {
       <section className="py-20 sm:py-28">
         <Container>
           <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-            <SectionHeading eyebrow="The nine capability families" title="What lives in the platform core." description="Fifty-four capabilities under one console, one identity, one policy and one bill — every family reads from and writes to the same inventory, identity and policy plane." />
-            <Link href="/modules" className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-accent">All fourteen modules <ArrowUpRight size={17} /></Link>
+            <SectionHeading {...s.familiesSection.heading} />
+            <Link href={s.familiesSection.link.href} className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-accent">{s.familiesSection.link.label} <ArrowUpRight size={17} /></Link>
           </div>
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {moduleGroupOrder.map((g, i) => (
-              <Reveal key={g} delay={(i % 3) * 70}>
-                <Link href={`/modules#${g}`} className="card-lift group block h-full overflow-hidden rounded-xl border border-line bg-surface shadow-sm">
-                  <img src={familyTileSrc(g, 800)} srcSet={`${familyTileSrc(g, 480)} 480w, ${familyTileSrc(g, 800)} 800w`} sizes="(min-width:1024px) 400px, (min-width:640px) 50vw, 100vw" alt="" width={1200} height={942} loading="lazy" className="aspect-[1200/942] w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+            {families.map((fam, i) => (
+              <Reveal key={fam.key} delay={(i % 3) * 70}>
+                <Link href={`/modules#${fam.key}`} className="card-lift group block h-full overflow-hidden rounded-xl border border-line bg-surface shadow-sm">
+                  {fam.tile ? (
+                    <img data-sanity={editAttr(fam.tile.sanity)} src={imageUrl(fam.tile.src, 800)} srcSet={imageSrcSet(fam.tile.src, [480, 800, 1200])} sizes="(min-width:1024px) 400px, (min-width:640px) 50vw, 100vw" alt={fam.tile.alt ?? ""} width={fam.tile.width ?? 1200} height={fam.tile.height ?? 942} loading="lazy" className="aspect-[1200/942] w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" style={{ objectPosition: fam.tile.focal }} />
+                  ) : (
+                    <img data-sanity={editAttr(fam.cmsId ? { id: fam.cmsId, type: "capabilityFamily", path: "tile" } : undefined)} src={familyTileSrc(fam.key, 800)} srcSet={`${familyTileSrc(fam.key, 480)} 480w, ${familyTileSrc(fam.key, 800)} 800w`} sizes="(min-width:1024px) 400px, (min-width:640px) 50vw, 100vw" alt="" width={1200} height={942} loading="lazy" className="aspect-[1200/942] w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+                  )}
                   <div className="border-t border-line p-5">
-                    <div className="flex items-center justify-between"><h3 className="text-[15px] font-bold text-ink">{moduleGroups[g]}</h3><span className="num text-xs font-bold text-gold-text">0{i + 1}</span></div>
-                    <p className="mt-1.5 text-[13px] leading-relaxed text-muted">{moduleGroupBlurbs[g]}</p>
+                    <div className="flex items-center justify-between"><h3 className="text-[15px] font-bold text-ink">{fam.name}</h3><span className="num text-xs font-bold text-gold-text">0{i + 1}</span></div>
+                    <p className="mt-1.5 text-[13px] leading-relaxed text-muted">{fam.blurb}</p>
                   </div>
                 </Link>
               </Reveal>
@@ -177,8 +169,8 @@ export default async function HomePage() {
         <section className="border-t border-line bg-sunken py-20 sm:py-28">
           <Container>
             <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-              <SectionHeading eyebrow="Delivered in the real world" title="One estate, told in full." description="Anonymized under confidentiality; every figure is as briefed by BlueWhale Stack, not illustrative." />
-              <Link href="/case-studies" className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-accent">All engagements <ArrowUpRight size={17} /></Link>
+              <SectionHeading {...s.spotlightSection.heading} />
+              <Link href={s.spotlightSection.link.href} className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-accent">{s.spotlightSection.link.label} <ArrowUpRight size={17} /></Link>
             </div>
             <div className="mt-12 grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
               <div>
@@ -187,8 +179,8 @@ export default async function HomePage() {
                 <p className="mt-5 max-w-[48ch] text-[15.5px] leading-[1.8] text-muted">{spotlight.summary}</p>
                 <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px] text-faint"><strong className="font-semibold text-ink">{spotlight.org}</strong><span>{spotlight.note}</span></div>
                 <div className="mt-7 flex flex-wrap gap-6">
-                  <Link href={`/case-studies/${spotlight.slug}`} className="inline-flex items-center gap-2 text-sm font-semibold text-accent">Read the full case study <ArrowUpRight size={15} /></Link>
-                  <Link href="/customers" className="inline-flex items-center gap-2 text-sm font-semibold text-ink">All success stories <ArrowRight size={15} /></Link>
+                  <Link href={`/case-studies/${spotlight.slug}`} className="inline-flex items-center gap-2 text-sm font-semibold text-accent">{s.spotlightSection.readLabel} <ArrowUpRight size={15} /></Link>
+                  <Link href="/customers" className="inline-flex items-center gap-2 text-sm font-semibold text-ink">{s.spotlightSection.allLabel} <ArrowRight size={15} /></Link>
                 </div>
               </div>
               <StoryVisual story={spotlight} />
@@ -201,8 +193,8 @@ export default async function HomePage() {
       <section className="py-20 sm:py-28">
         <Container>
           <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-            <SectionHeading eyebrow="Editions" title="Four editions. One architecture." description="Standard and Enterprise carry published prices; the operator and government editions are shaped to the estate. An upgrade is a licence change, not a migration." />
-            <Link href="/editions" className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-accent">Compare in full <ArrowUpRight size={17} /></Link>
+            <SectionHeading {...s.editionsSection.heading} />
+            <Link href={s.editionsSection.link.href} className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-accent">{s.editionsSection.link.label} <ArrowUpRight size={17} /></Link>
           </div>
           <div className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             {editions.map((e, i) => {
@@ -210,26 +202,26 @@ export default async function HomePage() {
               return (
                 <Reveal key={e.slug} delay={i * 70}>
                   <Link href={`/editions/${e.slug}`} className={cn("card-lift relative flex h-full flex-col rounded-xl border p-6 shadow-sm", e.featured ? "border-[var(--gold)] bg-[var(--brand-deep)] text-white" : "border-line bg-surface")}>
-                    {e.featured && <span className="absolute right-5 top-5 text-[10px] font-extrabold uppercase tracking-[0.16em] text-[var(--gold)]">Most deployed</span>}
+                    {e.featured && <span className="absolute right-5 top-5 text-[10px] font-extrabold uppercase tracking-[0.16em] text-[var(--gold)]">{s.editionsSection.featuredLabel}</span>}
                     <span className={cn("grid h-10 w-10 place-items-center rounded-lg", e.featured ? "bg-white/10 text-[var(--gold)]" : "bg-[var(--bg-active)] text-accent")}><I aria-hidden size={18} /></span>
                     <h3 className={cn("mt-5 text-xl font-bold tracking-[-0.02em]", e.featured ? "text-white" : "text-ink")}>{e.name}</h3>
-                    <p className={cn("mt-1 text-xs font-semibold", e.featured ? "text-[var(--gold)]" : "text-gold-text")}>{e.comingSoon ? `Preview · GA ${e.gaTarget}` : "Available now"}</p>
+                    <p className={cn("mt-1 text-xs font-semibold", e.featured ? "text-[var(--gold)]" : "text-gold-text")}>{e.comingSoon ? `${s.editionsSection.previewPrefix} ${e.gaTarget}` : s.editionsSection.availableLabel}</p>
                     <p className={cn("mt-3 flex-1 text-[13.5px] leading-relaxed", e.featured ? "text-white/72" : "text-muted")}>{e.audience}</p>
                     <p className={cn("mt-5 border-t pt-4 text-[15px] font-bold", e.featured ? "border-white/15 text-white" : "border-line text-ink")}>{e.priceAnchor}</p>
-                    <span className={cn("mt-3 inline-flex items-center gap-1.5 text-sm font-semibold", e.featured ? "text-[var(--gold)]" : "text-accent")}>Explore <ArrowRight size={14} /></span>
+                    <span className={cn("mt-3 inline-flex items-center gap-1.5 text-sm font-semibold", e.featured ? "text-[var(--gold)]" : "text-accent")}>{s.editionsSection.exploreLabel} <ArrowRight size={14} /></span>
                   </Link>
                 </Reveal>
               );
             })}
           </div>
           <p className="mt-6 text-xs leading-relaxed text-faint">
-            Telco &amp; Datacenter Edition is also what BlueWhale Stack Fabric runs on — a market&apos;s datacenter capacity, every operator and tier, consumed as one sovereign cloud. <Link href="/fabric" className="font-semibold text-accent">Explore the Fabric <ArrowRight className="inline h-3 w-3" /></Link>
+            {s.editionsSection.fabricNote} <Link href={s.editionsSection.fabricLink.href} className="font-semibold text-accent">{s.editionsSection.fabricLink.label} <ArrowRight className="inline h-3 w-3" /></Link>
           </p>
         </Container>
       </section>
 
       {/* 09 — the 90-day prototype, the standing offer */}
-      <PrototypeOffer tinted />
+      <PrototypeOffer tinted offer={s.prototype} />
 
       {/* 10 — the product portfolio */}
       <section className="border-t border-line py-20 sm:py-28">
@@ -263,16 +255,9 @@ export default async function HomePage() {
       </section>
 
       {/* 11 — deployment and trust: where it runs, in region */}
-      <GlobalInfra />
+      <GlobalInfra content={s.global} regions={settings.regions} />
 
-      <ClosingCTA
-        eyebrow="Your next chapter"
-        title="We prove it on your estate, in ninety days, before any commercial conversation."
-        body="Start with the discovery workshop — half a day with your technology and finance leaders. Bring your hardest audit finding and your least explainable cloud bill; we show what the platform does with both, on your estate's shape."
-        primary={{ label: "Book the discovery workshop", href: "/contact?intent=demo", note: "Half a day · success criteria agreed with technology and finance" }}
-        secondary={{ label: "The 90-day prototype", href: "/platform#prototype", note: "Full-featured on your own estate, no licence cost, scored on day 90." }}
-        tertiary={{ label: "Published pricing", href: "/pricing", note: "Standard $24,000 · Enterprise $120,000 a year" }}
-      />
+      <ClosingCTA {...s.closing} />
     </>
   );
 }

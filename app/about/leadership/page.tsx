@@ -1,6 +1,5 @@
 import { InnerPage } from "@/components/layout/InnerPage";
 import type { Metadata } from "next";
-import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -10,71 +9,21 @@ import { LocationVisual } from "@/components/diagrams/LocationVisual";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { LeadershipFeature, LeadershipSpotlight, LeadershipTile } from "@/components/sections/LeadershipCard";
-import { getTeam } from "@/lib/content";
-import { offices } from "@/content/company";
+import { leadershipPageSpec } from "@/content/cms/docs/leadershipPage";
+import { leadershipPage } from "@/content/sections/leadershipPage";
+import { getPageDoc } from "@/lib/cms-page";
+import { getSiteSettings, getTeam } from "@/lib/content";
 
-export const metadata: Metadata = {
-  title: "Leadership & Team",
-  description:
-    "Meet the team building the command center for every cloud — engineers, architects and product thinkers solving enterprise cloud management at scale.",
-};
+const getContent = () => getPageDoc(leadershipPageSpec, leadershipPage);
 
-const departments = [
-  {
-    name: "Engineering",
-    icon: "Code2",
-    description:
-      "Platform infrastructure, cloud connectors, the Whale AI engine, and the core control-plane services that power every edition.",
-    focus: ["Core Platform", "Cloud Connectors", "Whale AI", "Security & Compliance"],
-  },
-  {
-    name: "Product",
-    icon: "Layers",
-    description:
-      "Module strategy, UX design, and the roadmap that keeps every edition growing from Standard to Government.",
-    focus: ["Platform Strategy", "UX & Design", "Editions Roadmap", "Partner Integrations"],
-  },
-  {
-    name: "Go-to-Market",
-    icon: "Globe",
-    description:
-      "Sales, partnerships, and customer success — helping governments, telcos and enterprises get the most from the platform.",
-    focus: ["Enterprise Sales", "Channel Partners", "Customer Success", "Solutions Engineering"],
-  },
-  {
-    name: "Operations",
-    icon: "ShieldCheck",
-    description:
-      "Trust, compliance, finance and business operations keeping the platform reliable and the company growing responsibly.",
-    focus: ["Trust & Compliance", "Finance", "Legal", "People & Culture"],
-  },
-];
-
-const values = [
-  {
-    icon: "Boxes",
-    title: "Build for the whole estate",
-    body: "We solve the hard problem — governing every cloud, on-prem and sovereign — not just one hyperscaler's happy path.",
-  },
-  {
-    icon: "ShieldCheck",
-    title: "Trust is earned, not claimed",
-    body: "We hold ISO 27001 and completed a SOC 2 Type II readiness assessment. Our security posture is verifiable, not a marketing badge.",
-  },
-  {
-    icon: "Sparkles",
-    title: "Intelligence where work happens",
-    body: "Whale AI runs inside every module. We embed intelligence into the workflow, not into a separate chat window.",
-  },
-  {
-    icon: "MapPin",
-    title: "Sovereign by design",
-    body: "Air-gapped, in-region, and DPDP/GDPR-compliant from day one — because regulated customers can't retrofit these requirements.",
-  },
-];
+export async function generateMetadata(): Promise<Metadata> {
+  const c = await getContent();
+  return { title: c.seoTitle, description: c.seoDescription };
+}
 
 export default async function LeadershipPage() {
-  const leadership = await getTeam();
+  const [c, settings, leadership] = await Promise.all([getContent(), getSiteSettings(), getTeam()]);
+  const { offices } = settings;
   const announcedLeaders = leadership.filter((l) => l.name);
   const unannouncedRoles = leadership.filter((l) => !l.name);
   // The founder gets the full-width feature; everyone else fills a balanced grid.
@@ -90,29 +39,26 @@ export default async function LeadershipPage() {
                 <div className="mb-5 flex items-center gap-3">
                   <span aria-hidden className="h-px w-8 bg-accent/50" />
                   <span className="eyebrow">
-                    About · Leadership
+                    {c.hero.kicker}
                   </span>
                 </div>
                 <h1 className="display-1 text-ink">
-                  Founder-led, with delivery leaders who have run the estates we sell into.
+                  {c.hero.title}
                 </h1>
                 <p className="mt-6 text-lg leading-relaxed text-muted">
-                  The leadership team combines the founder who started the consultancy in 2018, an 18-year product
-                  and platform engineering lead, and go-to-market and delivery leaders with decades in Gulf
-                  infrastructure, utilities, government and defence programmes. Based across Mumbai, Ajman and
-                  Wilmington.
+                  {c.hero.description}
                 </p>
               </div>
             </Reveal>
             <Reveal delay={90}>
               <div className="lg:pb-2">
                 <div className="flex flex-wrap gap-3">
-                  <Button href="/careers" size="lg">
-                    Join the team
+                  <Button href={c.hero.primary.href} size="lg">
+                    {c.hero.primary.label}
                     <ArrowRight className="h-4 w-4" />
                   </Button>
-                  <Button href="/about" size="lg" variant="secondary">
-                    Our story
+                  <Button href={c.hero.secondary.href} size="lg" variant="secondary">
+                    {c.hero.secondary.label}
                   </Button>
                 </div>
               </div>
@@ -125,11 +71,7 @@ export default async function LeadershipPage() {
       <section className="pb-20 pt-24 sm:pb-24 sm:pt-32">
         <Container>
           <Reveal>
-            <SectionHeading
-              eyebrow="Meet the team"
-              title="Leadership"
-              description="The people setting direction for the platform, the product, and the company."
-            />
+            <SectionHeading {...c.roster.heading} />
           </Reveal>
           <div className="mt-14">
             {founder && (
@@ -167,14 +109,10 @@ export default async function LeadershipPage() {
       <section className="border-t border-line bg-surface py-24 sm:py-32">
         <Container>
           <Reveal>
-            <SectionHeading
-              eyebrow="How we're organised"
-              title="Four disciplines, one platform"
-              description="We build, ship, sell and support the platform as one team across India, the UAE and the United States."
-            />
+            <SectionHeading {...c.departments.heading} />
           </Reveal>
           <div className="mt-14 grid gap-5 sm:grid-cols-2">
-            {departments.map((d, i) => (
+            {c.departments.items.map((d, i) => (
               <Reveal key={d.name} delay={(i % 2) * 60}>
                 <Card className="flex h-full flex-col gap-5 p-6">
                   <div className="flex items-center gap-3">
@@ -205,14 +143,10 @@ export default async function LeadershipPage() {
       <section className="border-y border-line bg-sunken py-24 sm:py-32">
         <Container>
           <Reveal>
-            <SectionHeading
-              eyebrow="Operating values"
-              title="How we work, day to day"
-              description="The four principles on the About page are what we build; these are how the team operates while building it."
-            />
+            <SectionHeading {...c.values.heading} />
           </Reveal>
           <div className="mt-14 grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
-            {values.map((v, i) => (
+            {c.values.items.map((v, i) => (
               <Reveal key={v.title} delay={(i % 4) * 60}>
                 <div className="h-full bg-surface p-6">
                   <div className="grid h-10 w-10 place-items-center rounded-md bg-[var(--bg-active)] text-accent">
@@ -231,11 +165,7 @@ export default async function LeadershipPage() {
       <section className="py-24 sm:py-32">
         <Container>
           <Reveal>
-            <SectionHeading
-              eyebrow="Where we are"
-              title="Global team, three hubs"
-              description="Headquartered in Mumbai, with offices in Ajman and Wilmington — serving customers across Asia-Pacific, the Middle East and the Americas."
-            />
+            <SectionHeading {...c.presence.heading} />
           </Reveal>
           <div className="mt-14 grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {offices.map((o, i) => (
@@ -270,25 +200,24 @@ export default async function LeadershipPage() {
             <Reveal>
               <div className="max-w-2xl">
                 <p className="eyebrow text-[var(--gold)]">
-                  We&apos;re hiring
+                  {c.hiring.kicker}
                 </p>
                 <h2 className="display-2 mt-5 text-white">
-                  Build the platform that governs the world&apos;s clouds.
+                  {c.hiring.title}
                 </h2>
                 <p className="mt-5 text-lg leading-relaxed text-white/70">
-                  Open roles across engineering, product, sales and operations —
-                  in India, the UAE, the United States, and remote.
+                  {c.hiring.body}
                 </p>
               </div>
             </Reveal>
             <Reveal delay={90}>
               <div className="flex shrink-0 flex-wrap gap-3">
-                <Button href="/careers" size="lg" variant="white">
-                  See open roles
+                <Button href={c.hiring.primary.href} size="lg" variant="white">
+                  {c.hiring.primary.label}
                   <ArrowRight className="h-4 w-4" />
                 </Button>
-                <Button href="/contact" size="lg" className="bg-white/10 text-white ring-1 ring-inset ring-white/20 hover:bg-white/15">
-                  Send your CV
+                <Button href={c.hiring.secondary.href} size="lg" className="bg-white/10 text-white ring-1 ring-inset ring-white/20 hover:bg-white/15">
+                  {c.hiring.secondary.label}
                 </Button>
               </div>
             </Reveal>

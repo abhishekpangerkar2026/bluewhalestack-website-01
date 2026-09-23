@@ -3,65 +3,46 @@ import type { Metadata } from "next";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { ContactForm } from "@/components/forms/ContactForm";
-import { company, offices } from "@/content/company";
-import { resources } from "@/content/resources";
+import { resourcesFrom } from "@/content/resources";
+import { contactPageSpec } from "@/content/cms/docs/contactPage";
+import { contactPage } from "@/content/sections/contactPage";
+import { getPageDoc } from "@/lib/cms-page";
+import { getDocuments, getSiteSettings } from "@/lib/content";
 
-export const metadata: Metadata = {
-  title: "Contact",
-  description:
-    "Talk to the BlueWhale Stack team — book a demo, discuss your cloud strategy, or reach sales.",
-};
+const getContent = () => getPageDoc(contactPageSpec, contactPage);
+
+export async function generateMetadata(): Promise<Metadata> {
+  const c = await getContent();
+  return { title: c.seoTitle, description: c.seoDescription };
+}
 
 export default async function ContactPage({
   searchParams,
 }: {
   searchParams: Promise<{ intent?: string; resource?: string }>;
 }) {
+  const [c, settings] = await Promise.all([getContent(), getSiteSettings()]);
+  const { company, offices } = settings;
   const { intent = "demo", resource } = await searchParams;
   const requestedResource = resource
-    ? resources.find((r) => r.slug === resource)
+    ? resourcesFrom(await getDocuments()).find((r) => r.slug === resource)
     : undefined;
 
-  const hero =
-    intent === "sales"
-      ? {
-          eyebrow: "Contact Sales",
-          title: "Let's talk about your cloud strategy",
-          body: "Reach our sales team for pricing, editions, and a tailored evaluation for your environment. We reply within one business day.",
-          formTitle: "Talk to sales",
-          formBody: "Tell us about your organisation and what you're looking to solve.",
-          submitLabel: "Contact sales",
-        }
-      : intent === "resource"
-        ? {
-            eyebrow: "Resource access",
-            title: requestedResource
-              ? `Request “${requestedResource.title}”`
-              : "Request a resource or control mapping",
-            body: "Tell us who you are and which document or regime mapping you need. We send it directly — usually within one business day.",
-            formTitle: "Request access",
-            formBody: requestedResource
-              ? `You're requesting: ${requestedResource.title} (${requestedResource.type}).`
-              : "Tell us which resource, datasheet or regime control mapping you're after.",
-            submitLabel: "Request access",
-          }
-        : intent === "preview"
-          ? {
-              eyebrow: "Preview programme",
-              title: "Join the Telco & Datacenter Edition preview",
-              body: "Design partners deploy the edition on their own infrastructure with BlueWhale engineers, run it on real tenants, and move to general-availability licensing (Q4 2026) on a pre-agreed basis.",
-              formTitle: "Apply for the preview",
-              formBody: "Tell us about your facilities, network and the tenants you would run first.",
-              submitLabel: "Apply for the preview",
-            }
-          : {
-              eyebrow: "Working session",
-              title: "See the platform on one of your own accounts",
-              body: "A 45-minute working session with a solutions engineer: one cloud account connected read-only, the inventory, cost and audit screens on your real resources, and the export left with you. Nothing is installed on your side.",
-              formTitle: "Book a working session",
-              formBody: "Tell us which clouds you run and what you would like to see first.",
-              submitLabel: "Book a working session",
-            };
+  // the variant for ?intent=…; an unknown intent renders the working-session (demo) variant
+  const variant =
+    c.intents.find((i) => i.key === intent) ?? c.intents.find((i) => i.key === "demo") ?? contactPage.intents[0];
+  const hero = {
+    ...variant,
+    // the resource variant names the requested document when the page is opened with ?resource=<slug>
+    title:
+      requestedResource && variant.titleWithResourceBefore != null
+        ? `${variant.titleWithResourceBefore}${requestedResource.title}${variant.titleWithResourceAfter ?? ""}`
+        : variant.title,
+    formBody:
+      requestedResource && variant.formBodyWithResourceBefore != null
+        ? `${variant.formBodyWithResourceBefore}${requestedResource.title} (${requestedResource.type})${variant.formBodyWithResourceAfter ?? ""}`
+        : variant.formBody,
+  };
 
   return (
     <InnerPage category="company" current="/contact">
@@ -87,13 +68,13 @@ export default async function ContactPage({
               <div className="mt-10 grid gap-8 sm:grid-cols-2">
                 <div>
                   <h3 className="eyebrow text-[var(--gold)]">
-                    Reach us directly
+                    {c.channels.reachLabel}
                   </h3>
                   <ul className="mt-4 space-y-4">
                     <li className="flex items-start gap-3">
                       <Mail className="mt-0.5 h-5 w-5 shrink-0 text-white/70" />
                       <div>
-                        <div className="text-sm font-medium text-white">Sales</div>
+                        <div className="text-sm font-medium text-white">{c.channels.salesLabel}</div>
                         <a
                           href={`mailto:${company.emails.sales}`}
                           className="text-sm text-white/70 hover:text-white"
@@ -105,7 +86,7 @@ export default async function ContactPage({
                     <li className="flex items-start gap-3">
                       <Mail className="mt-0.5 h-5 w-5 shrink-0 text-white/70" />
                       <div>
-                        <div className="text-sm font-medium text-white">General</div>
+                        <div className="text-sm font-medium text-white">{c.channels.generalLabel}</div>
                         <a
                           href={`mailto:${company.emails.contact}`}
                           className="text-sm text-white/70 hover:text-white"
@@ -131,7 +112,7 @@ export default async function ContactPage({
 
                 <div>
                   <h3 className="eyebrow text-[var(--gold)]">
-                    Offices
+                    {c.channels.officesLabel}
                   </h3>
                   <ul className="mt-4 space-y-4">
                     {offices.map((o) => (

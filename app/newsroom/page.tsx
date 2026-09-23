@@ -9,27 +9,18 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { formatPostDate } from "@/content/newsroom";
+import { newsroomPageSpec } from "@/content/cms/docs/newsroomPage";
+import { newsroomPage } from "@/content/sections/newsroomPage";
+import { getPageDoc } from "@/lib/cms-page";
 import { getPosts } from "@/lib/content";
 import { editAttr, imageUrl } from "@/lib/cms";
 
-export const metadata: Metadata = {
-  title: "Newsroom",
-  description:
-    "Product launches, partnerships, and company milestones from BlueWhale Stack. Press enquiries: contact@bluewhalestack.com",
-};
+const getContent = () => getPageDoc(newsroomPageSpec, newsroomPage);
 
-const pressContacts = [
-  {
-    type: "Press & media",
-    email: "contact@bluewhalestack.com",
-    note: "For interview requests, product briefings and press kit access.",
-  },
-  {
-    type: "Partnerships",
-    email: "partners@bluewhalestack.com",
-    note: "Technology alliances, channel and reseller partnerships.",
-  },
-];
+export async function generateMetadata(): Promise<Metadata> {
+  const c = await getContent();
+  return { title: c.seoTitle, description: c.seoDescription };
+}
 
 type BadgeTone = "brand" | "accent" | "neutral" | "success" | "warning";
 const badgeTone: Record<string, BadgeTone> = {
@@ -43,7 +34,7 @@ const badgeTone: Record<string, BadgeTone> = {
 const showDate = (d: string) => (/^\d{4}-\d{2}-\d{2}$/.test(d) ? formatPostDate(d) : d);
 
 export default async function NewsroomPage() {
-  const posts = await getPosts();
+  const [c, posts] = await Promise.all([getContent(), getPosts()]);
   return (
     <InnerPage category="company" current="/newsroom">
       {/* ── Hero ── */}
@@ -64,12 +55,12 @@ export default async function NewsroomPage() {
         }
       >
         <div className="flex flex-wrap gap-3">
-          <Button href="/contact" size="lg">
-            Contact press team
+          <Button href={c.hero.primary.href} size="lg">
+            {c.hero.primary.label}
             <ArrowRight className="h-4 w-4" />
           </Button>
-          <Button href="/trust" size="lg" variant="secondary">
-            Trust Center
+          <Button href={c.hero.secondary.href} size="lg" variant="secondary">
+            {c.hero.secondary.label}
           </Button>
         </div>
       </CmsPhotoHero>
@@ -78,11 +69,7 @@ export default async function NewsroomPage() {
       <section id="announcements" className="py-24 sm:py-32">
         <Container>
           <Reveal>
-            <SectionHeading
-              eyebrow="Latest"
-              title="Announcements"
-              description="Recent product milestones, certifications and platform updates."
-            />
+            <SectionHeading {...c.announcements.heading} />
           </Reveal>
           <div className="mt-14 flex flex-col divide-y divide-line">
             {posts.map((item, i) => (
@@ -102,7 +89,7 @@ export default async function NewsroomPage() {
                     <p className="text-sm leading-relaxed text-muted">{item.body}</p>
                     {item.href && (
                       <a href={item.href} className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent hover:underline">
-                        Read more <ArrowUpRight className="h-3.5 w-3.5" />
+                        {c.announcements.readMoreLabel} <ArrowUpRight className="h-3.5 w-3.5" />
                       </a>
                     )}
                   </div>
@@ -129,22 +116,18 @@ export default async function NewsroomPage() {
       <section className="border-t border-line bg-sunken py-20 sm:py-24">
         <Container>
           <Reveal>
-            <SectionHeading
-              eyebrow="Media"
-              title="Press &amp; media contacts"
-              description="We aim to respond to press enquiries within one business day."
-            />
+            <SectionHeading {...c.press.heading} />
           </Reveal>
           <div className="mt-12 grid gap-5 sm:grid-cols-2">
-            {pressContacts.map((c, i) => (
-              <Reveal key={c.type} delay={i * 70}>
+            {c.press.contacts.map((contact, i) => (
+              <Reveal key={contact.type} delay={i * 70}>
                 <Card className="flex flex-col gap-3 p-6">
-                  <p className="eyebrow">{c.type}</p>
-                  <a href={`mailto:${c.email}`} className="flex items-center gap-1.5 text-lg font-bold text-accent hover:underline">
-                    {c.email}
+                  <p className="eyebrow">{contact.type}</p>
+                  <a href={`mailto:${contact.email}`} className="flex items-center gap-1.5 text-lg font-bold text-accent hover:underline">
+                    {contact.email}
                     <ArrowUpRight className="h-4 w-4 shrink-0" />
                   </a>
-                  <p className="text-sm text-muted">{c.note}</p>
+                  <p className="text-sm text-muted">{contact.note}</p>
                 </Card>
               </Reveal>
             ))}
@@ -158,18 +141,18 @@ export default async function NewsroomPage() {
           <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
             <Reveal>
               <div className="max-w-2xl">
-                <p className="eyebrow text-[var(--gold)]">See it live</p>
+                <p className="eyebrow text-[var(--gold)]">{c.cta.kicker}</p>
                 <h2 className="mt-5 text-3xl font-bold leading-[1.1] tracking-tight text-white sm:text-4xl">
-                  Ready to put every cloud on one control plane?
+                  {c.cta.title}
                 </h2>
                 <p className="mt-5 text-lg leading-relaxed text-white/70">
-                  Book a personalised demo and see BlueWhale Stack across your actual estate.
+                  {c.cta.body}
                 </p>
               </div>
             </Reveal>
             <Reveal delay={90}>
-              <Button href="/contact" size="lg" variant="white" className="shrink-0">
-                Book a demo
+              <Button href={c.cta.button.href} size="lg" variant="white" className="shrink-0">
+                {c.cta.button.label}
                 <ArrowRight className="h-4 w-4" />
               </Button>
             </Reveal>

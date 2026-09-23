@@ -1,4 +1,5 @@
 import { defineDocuments, defineLocations, type PresentationPluginOptions } from "sanity/presentation";
+import { singletonSpecs, collectionSpecs } from "../content/cms/index";
 
 /**
  * Presentation tool: the live website inside the Studio, with click-to-edit.
@@ -17,6 +18,33 @@ const detail = (base: string, label: string) =>
       ],
     }),
   });
+
+/** Locations for the spec-driven documents: fixed pages, or a detail route by slug. */
+const specLocations = Object.fromEntries(
+  [...singletonSpecs, ...collectionSpecs].map((spec) => {
+    if (spec.detailRoute) {
+      const base = spec.detailRoute.replace("/:slug", "");
+      return [
+        spec.name,
+        defineLocations({
+          select: { title: "title", slug: "slug.current" },
+          resolve: (doc) => ({
+            locations: [
+              { title: doc?.title ?? spec.title, href: `${base}/${doc?.slug ?? ""}` },
+              ...(spec.locations ?? []),
+            ],
+          }),
+        }),
+      ];
+    }
+    return [spec.name, defineLocations({ message: spec.singleton ? `${spec.title} — the whole page` : `Shown on ${(spec.locations ?? []).map((l) => l.title).join(", ") || "the site"}`, locations: spec.locations ?? [] })];
+  }),
+);
+
+/** The page document that "owns" each route — what opens in the side panel when you navigate there. */
+const pageRoutes = singletonSpecs
+  .filter((s) => s.name !== "siteSettings" && s.locations?.[0]?.href)
+  .map((s) => ({ route: s.locations![0].href, filter: `_type == "${s.name}"` }));
 
 export const presentationOptions: PresentationPluginOptions = {
   previewUrl: {
@@ -48,6 +76,7 @@ export const presentationOptions: PresentationPluginOptions = {
       teamMember: defineLocations({ message: "Shown on the leadership page and the careers page", locations: [{ title: "Leadership", href: "/about/leadership" }, { title: "Careers", href: "/careers" }] }),
       post: defineLocations({ message: "Shown on the newsroom page", locations: [{ title: "Newsroom", href: "/newsroom" }] }),
       collateralDoc: defineLocations({ message: "Listed on the resources page", locations: [{ title: "Resources", href: "/resources" }] }),
+      ...specLocations,
     },
     mainDocuments: defineDocuments([
       { route: "/", filter: `_type == "homePage"` },
@@ -56,10 +85,10 @@ export const presentationOptions: PresentationPluginOptions = {
       { route: "/industries/:slug", filter: `_type == "industry" && slug.current == $slug` },
       { route: "/solutions/:slug", filter: `_type == "solution" && slug.current == $slug` },
       { route: "/case-studies/:slug", filter: `_type == "customerStory" && slug.current == $slug` },
-      { route: "/newsroom", filter: `_type == "pageHero" && route == "/newsroom"` },
-      { route: "/about/leadership", filter: `_type == "teamMember"` },
+      { route: "/legal/:slug", filter: `_type == "legalPage" && slug.current == $slug` },
+      { route: "/docs/:slug", filter: `_type == "docPage" && slug.current == $slug` },
+      ...pageRoutes,
       { route: "/:page", filter: `_type == "pageHero" && route == "/" + $page` },
-      { route: "/products/whale-ai", filter: `_type == "pageHero" && route == "/products/whale-ai"` },
     ]),
   },
 };

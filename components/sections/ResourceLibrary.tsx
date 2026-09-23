@@ -3,12 +3,10 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Download, FileText, BookOpen, Building2, Landmark, Layers, Newspaper } from "lucide-react";
-import { resources, resourceTypes, type ResourceType } from "@/content/resources";
+import { resources as staticResources, resourceTypes, type ResourceDef, type ResourceType } from "@/content/resources";
 import { Badge } from "@/components/ui/Badge";
 import { cn } from "@/lib/utils";
 
-/** Only offer filters for types that actually have resources — no empty tabs. */
-const presentTypes = resourceTypes.filter((t) => resources.some((r) => r.type === t));
 
 const COVER_ICON: Record<ResourceType, React.ComponentType<{ className?: string }>> = {
   Whitepaper: BookOpen,
@@ -19,7 +17,10 @@ const COVER_ICON: Record<ResourceType, React.ComponentType<{ className?: string 
   Company: Building2,
 };
 
-export function ResourceLibrary() {
+/** `resources` comes from the server page (CMS-backed); the static list is the fallback. */
+export function ResourceLibrary({ resources = staticResources }: { resources?: ResourceDef[] }) {
+  // Only offer filters for types that actually have resources — no empty tabs.
+  const presentTypes = resourceTypes.filter((t) => resources.some((r) => r.type === t));
   const [filter, setFilter] = useState<ResourceType | "All">("All");
   const list = filter === "All" ? resources : resources.filter((r) => r.type === filter);
 

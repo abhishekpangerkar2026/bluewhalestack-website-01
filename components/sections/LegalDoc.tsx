@@ -15,11 +15,14 @@ export function LegalDoc({
   intro,
   lastUpdated,
   sections,
+  kicker = "Legal",
 }: {
   title: string;
   intro: string;
   lastUpdated: string;
   sections: LegalSection[];
+  /** The small label above the title. */
+  kicker?: string;
 }) {
   return (
     <>
@@ -32,7 +35,7 @@ export function LegalDoc({
           <div className="flex items-center gap-3">
             <span aria-hidden className="h-px w-8 bg-white/40" />
             <span className="eyebrow text-[var(--gold)]">
-              Legal
+              {kicker}
             </span>
           </div>
           <h1 className="mt-5 text-4xl font-bold tracking-tight text-white sm:text-5xl">

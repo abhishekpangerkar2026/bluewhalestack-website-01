@@ -5,20 +5,26 @@ import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { PartnerTrackVisual } from "@/components/diagrams/PartnerTrackVisual";
-import { tracks } from "@/content/partners";
-import { partnerPortal } from "@/content/company";
+import type { PartnerTrack } from "@/content/partners";
+import type { PartnersPage } from "@/content/cms/docs/partnersPage";
 
 /** The three partner tracks — alternating visual + detail, like a product showcase. */
-export function PartnerTracks() {
+export function PartnerTracks({
+  tracks,
+  labels,
+  registerHref,
+}: {
+  tracks: PartnerTrack[];
+  /** the section heading and the small labels around each track (from the Partners page document) */
+  labels: PartnersPage["tracks"];
+  /** where "Apply for the … track" goes — the Partner Portal registration */
+  registerHref: string;
+}) {
   return (
     <section id="tracks" className="scroll-mt-24 bg-sunken py-24 sm:py-32">
       <Container>
         <Reveal>
-          <SectionHeading
-            eyebrow="Three ways to partner"
-            title="Pick the track that matches how you work"
-            description="Resell licenses, deliver implementations, or operate a territory — each track has its own agreement, enablement and portal access."
-          />
+          <SectionHeading {...labels.heading} />
         </Reveal>
 
         <div className="mt-16 space-y-16 sm:space-y-20">
@@ -35,7 +41,7 @@ export function PartnerTracks() {
                       <Icon name={t.icon} className="h-5 w-5" />
                     </span>
                     <span className="num text-sm font-bold text-faint">
-                      Track 0{i + 1}
+                      {labels.trackLabel} 0{i + 1}
                     </span>
                   </div>
                   <h3 className="mt-4 text-2xl font-bold leading-snug text-ink sm:text-3xl">
@@ -48,7 +54,7 @@ export function PartnerTracks() {
                     {t.description}
                   </p>
                   <p className="mt-4 text-sm">
-                    <span className="font-semibold text-ink">Ideal for — </span>
+                    <span className="font-semibold text-ink">{labels.idealForLabel}{" "}</span>
                     <span className="text-muted">{t.idealFor}</span>
                   </p>
 
@@ -65,8 +71,8 @@ export function PartnerTracks() {
                   </ul>
 
                   <div className="mt-7">
-                    <Button href={partnerPortal.register} external variant="secondary">
-                      Apply for the {t.shortName} track
+                    <Button href={registerHref} external variant="secondary">
+                      {labels.applyLead} {t.shortName} {labels.applyTrail}
                       <ArrowUpRight className="h-4 w-4" />
                     </Button>
                   </div>
