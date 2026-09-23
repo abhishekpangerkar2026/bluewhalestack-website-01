@@ -14,3 +14,4 @@ docs
 # the Sanity Studio workspace and local tooling are not part of the site image
 studio
 scripts
+.builder

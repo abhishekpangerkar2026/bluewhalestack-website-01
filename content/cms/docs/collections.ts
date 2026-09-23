@@ -152,3 +152,55 @@ export const docPageSpec = defineDoc(
 docPageSpec.preview = { title: "title", subtitle: "readTime" };
 export type DocPageDoc = InferDoc<typeof docPageSpec>;
 export type DocBlockDoc = DocPageDoc["sections"][number]["blocks"][number];
+
+// ── Website builder (pages composed at /builder) ─────────────────
+/** A page composed in the website builder; `draft`/`published` hold the block tree as JSON. */
+export const builderPageSpec = defineDoc(
+  "builderPage",
+  "Builder page",
+  {
+    path: f.str("Address"),
+    title: f.str("Title"),
+    draft: f.text("Draft (block tree, JSON — edited in the website builder)", { rows: 6, optional: true }),
+    published: f.text("Published (block tree, JSON)", { rows: 6, optional: true }),
+    createdAt: f.str("Created"),
+    updatedAt: f.str("Updated"),
+    updatedBy: f.str("Updated by", { optional: true }),
+    publishedAt: f.str("Published at", { optional: true }),
+  },
+  { keyField: "path" },
+);
+builderPageSpec.preview = { title: "title", subtitle: "path" };
+
+/** An upload made in the website builder (the asset lives in the media library). */
+export const builderMediaSpec = defineDoc(
+  "builderMedia",
+  "Builder upload",
+  {
+    url: f.str("URL"),
+    name: f.str("File name"),
+    type: f.str("Type"),
+    size: f.num("Size (bytes)"),
+    width: f.num("Width", { optional: true }),
+    height: f.num("Height", { optional: true }),
+    createdAt: f.str("Uploaded"),
+    assetId: f.str("Asset id", { optional: true }),
+  },
+  { keyField: "url" },
+);
+builderMediaSpec.preview = { title: "name", subtitle: "type" };
+
+/** A builder account (always kept as a private draft — never published). */
+export const builderUserSpec = defineDoc(
+  "builderUser",
+  "Builder account",
+  {
+    name: f.str("Name"),
+    email: f.str("Email"),
+    role: f.str("Role", { list: ["admin", "editor"] }),
+    passwordHash: f.str("Password hash"),
+    createdAt: f.str("Created"),
+  },
+  { keyField: "email" },
+);
+builderUserSpec.preview = { title: "name", subtitle: "email" };

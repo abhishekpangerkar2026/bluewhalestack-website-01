@@ -56,4 +56,7 @@ export const structure: StructureResolver = (S) =>
       ...collectionSpecs
         .filter((s) => !(s.name in collectionTitles))
         .map((s) => S.documentTypeListItem(s.name).title(s.title)),
+      S.divider(),
+      S.documentTypeListItem("builderPage").title("Website builder — pages (raw)"),
+      S.documentTypeListItem("builderMedia").title("Website builder — uploads"),
     ]);

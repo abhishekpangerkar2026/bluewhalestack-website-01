@@ -512,3 +512,21 @@ section[id], h2[id], h3[id] { scroll-margin-top: 7rem; }
 @media print {
   .doc-page { max-width: none !important; }
 }
+
+/* ── Website builder: rich text blocks ─────────────────────── */
+.builder-prose { color: var(--text-secondary, inherit); line-height: 1.8; font-size: 1rem; }
+.builder-prose > :first-child { margin-top: 0; }
+.builder-prose h2 { margin-top: 1.75em; font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; color: var(--text-primary, inherit); }
+.builder-prose h3 { margin-top: 1.5em; font-size: 1.15rem; font-weight: 700; color: var(--text-primary, inherit); }
+.builder-prose p { margin-top: 1em; }
+.builder-prose ul, .builder-prose ol { margin-top: 1em; padding-left: 1.4em; }
+.builder-prose ul { list-style: disc; }
+.builder-prose ol { list-style: decimal; }
+.builder-prose li { margin-top: 0.35em; }
+.builder-prose a { color: var(--text-accent, var(--brand-blue)); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.builder-prose blockquote { margin-top: 1.25em; border-left: 3px solid var(--gold); padding-left: 1.25em; font-size: 1.15rem; font-weight: 600; color: var(--text-primary, inherit); }
+.builder-prose strong { color: var(--text-primary, inherit); font-weight: 700; }
+.builder-prose code { font-family: var(--font-mono, monospace); font-size: 0.9em; background: var(--bg-sunken, #f4f7fc); padding: 0.1em 0.35em; border-radius: 4px; }
+.builder-prose pre { margin-top: 1em; overflow-x: auto; border-radius: 8px; background: #0d1117; color: #e6edf3; padding: 1em 1.25em; font-size: 0.85rem; }
+.builder-prose hr { margin: 2em 0; border: 0; border-top: 1px solid var(--border-default, #e4e9f2); }
+.text-white .builder-prose, .text-white .builder-prose h2, .text-white .builder-prose h3, .text-white .builder-prose strong, .text-white .builder-prose blockquote { color: inherit; }

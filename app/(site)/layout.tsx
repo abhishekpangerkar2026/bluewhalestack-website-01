@@ -1,0 +1,127 @@
+import type { Metadata } from "next";
+import "../globals.css";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
+import { ChatWidget } from "@/components/layout/ChatWidget";
+import { PreviewBar } from "@/components/layout/PreviewBar";
+import { getSiteSettings, type SiteSettings } from "@/lib/content";
+import { fontClass } from "@/lib/fonts";
+import { draftMode } from "next/headers";
+
+/** Apply the saved theme before first paint to avoid a flash. */
+const themeInit = `(function(){var t;try{t=localStorage.getItem('bws-theme');}catch(e){}if(t!=='dark'&&t!=='light'){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.setAttribute('data-theme',t);})();`;
+
+const siteOrigin = process.env.NEXT_PUBLIC_SITE_URL ?? "https://bluewhalestack-website-production-6507.up.railway.app";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { company } = await getSiteSettings();
+  return {
+  metadataBase: new URL(siteOrigin),
+  title: {
+    default: `${company.name} — ${company.tagline}`,
+    template: `%s · ${company.name}`,
+  },
+  description: company.metaDescription,
+  applicationName: company.name,
+  keywords: [
+    "cloud management platform",
+    "CMP",
+    "multi-cloud governance",
+    "FinOps",
+    "cloud cost optimization",
+    "cloud migration",
+    "CSPM",
+    "cloud security & compliance",
+    "DCIM",
+    "sovereign cloud",
+    "hybrid cloud",
+    "AWS Azure GCP management",
+    "BlueWhale Stack",
+  ],
+  authors: [{ name: company.name }],
+  creator: company.name,
+  publisher: company.name,
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large" },
+  },
+  openGraph: {
+    title: `${company.name} — ${company.tagline}`,
+    description: company.metaDescription,
+    siteName: company.name,
+    url: siteOrigin,
+    images: [{ url: "/og.png", width: 2400, height: 1260, alt: "BlueWhale Stack — Every cloud. One control plane." }],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${company.name} — ${company.tagline}`,
+    description: company.metaDescription,
+    site: "@bluewhalestack",
+    images: ["/og.png"],
+  },
+  };
+}
+
+const organizationJsonLd = (company: SiteSettings["company"], offices: SiteSettings["offices"]) => ({
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: company.name,
+  url: "https://www.bluewhalestack.com",
+  description: company.metaDescription,
+  sameAs: [company.social.linkedin, company.social.twitter],
+  email: company.emails.contact,
+  address: offices.map((o) => ({
+    "@type": "PostalAddress",
+    name: o.label,
+    streetAddress: o.address,
+    addressLocality: o.city,
+  })),
+  contactPoint: company.phones.map((p) => ({
+    "@type": "ContactPoint",
+    telephone: p.number,
+    contactType: "sales",
+    areaServed: p.region,
+    availableLanguage: ["en"],
+  })),
+});
+
+const websiteJsonLd = (company: SiteSettings["company"]) => ({
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: company.name,
+  url: siteOrigin,
+});
+
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const [{ isEnabled: preview }, settings] = await Promise.all([draftMode(), getSiteSettings()]);
+  return (
+    <html lang="en" className={fontClass} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInit }} />
+      </head>
+      <body className="min-h-screen font-sans antialiased">
+        <a href="#main-content" className="skip-link">Skip to content</a>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd(settings.company, settings.offices)) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd(settings.company)) }}
+        />
+        <Header nav={settings.header} appUrl={settings.company.appUrl} />
+        <main id="main-content" tabIndex={-1}>{children}</main>
+        <Footer settings={settings} />
+        <ChatWidget />
+        {preview && <PreviewBar />}
+      </body>
+    </html>
+  );
+}

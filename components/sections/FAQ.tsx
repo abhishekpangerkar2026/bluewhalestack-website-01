@@ -23,7 +23,7 @@ export function FAQ({
 }: {
   items: FaqItem[];
   eyebrow?: string;
-  title: string;
+  title: React.ReactNode;
   description?: string;
   tinted?: boolean;
   id?: string;
