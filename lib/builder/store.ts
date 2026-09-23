@@ -10,7 +10,8 @@
  *    a redeploy; the builder shows a warning in that case).
  */
 import { createClient, type SanityClient } from "@sanity/client";
-import { promises as fs } from "node:fs";
+import { promises as fs, accessSync, constants } from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import { randomBytes } from "node:crypto";
 import type { Backend, MediaRecord, PageRecord, UserRecord } from "./types";
@@ -20,7 +21,9 @@ const newId = () => randomBytes(9).toString("base64url");
 
 // ── file backend ────────────────────────────────────────────────
 function fileBackend(): Backend {
-  const root = process.env.BUILDER_DATA_DIR ?? path.join(process.cwd(), ".builder");
+  // the production container runs as a non-root user and its app folder is read-only → fall back to the temp dir
+  const writable = (dir: string) => { try { accessSync(dir, constants.W_OK); return true; } catch { return false; } };
+  const root = process.env.BUILDER_DATA_DIR ?? (writable(process.cwd()) ? path.join(process.cwd(), ".builder") : path.join(os.tmpdir(), "bws-builder"));
   const pagesDir = path.join(root, "pages");
   const mediaDir = path.join(root, "media");
   const usersFile = path.join(root, "users.json");
