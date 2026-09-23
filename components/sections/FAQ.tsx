@@ -4,8 +4,8 @@ import { Reveal } from "@/components/ui/Reveal";
 import { cn } from "@/lib/utils";
 
 export interface FaqItem {
-  q: string;
-  a: string;
+  q: React.ReactNode;
+  a: React.ReactNode;
 }
 
 /**
@@ -22,9 +22,9 @@ export function FAQ({
   id = "faq",
 }: {
   items: FaqItem[];
-  eyebrow?: string;
+  eyebrow?: React.ReactNode;
   title: React.ReactNode;
-  description?: string;
+  description?: React.ReactNode;
   tinted?: boolean;
   id?: string;
 }) {
@@ -32,7 +32,8 @@ export function FAQ({
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: items.map((f) => ({
+    // structured data only for plain-text answers (inline editing hands the block React nodes)
+    mainEntity: items.filter((f) => typeof f.q === "string" && typeof f.a === "string").map((f) => ({
       "@type": "Question",
       name: f.q,
       acceptedAnswer: { "@type": "Answer", text: f.a },
@@ -57,7 +58,7 @@ export function FAQ({
           </Reveal>
           <div className="flex flex-col">
             {items.map((f, i) => (
-              <Reveal key={f.q} delay={i * 60}>
+              <Reveal key={i} delay={i * 60}>
                 <div className="flex items-start gap-5 border-t border-line py-6 first:border-t-0 first:pt-0 sm:gap-6">
                   <span className="num pt-0.5 text-lg font-bold text-accent/50">
                     {String(i + 1).padStart(2, "0")}

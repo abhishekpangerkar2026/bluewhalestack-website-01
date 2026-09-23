@@ -64,6 +64,43 @@ profile from the About page and the team. Edit the source and the reading page
 follows. The downloadable PDFs are printed from those pages by a developer
 (`scripts/build-docs.mjs`), so ask for a PDF refresh after a round of edits.
 
+## The website builder (drag-and-drop pages) — /builder
+
+For page-builder style editing — like a website builder — the site has its
+own editor at **https://bluewhalestack-website-production-6507.up.railway.app/builder**.
+
+- **First visit:** the setup screen creates the first account (it becomes
+  the administrator). Then **Team** adds colleagues with a temporary
+  password; everyone changes their own password there.
+- **Pages:** create a new page at any address (for example `/webinars`), or
+  **Take over** one of the existing pages — it opens pre-filled with the
+  page's current sections as blocks. Publishing a taken-over page replaces
+  the coded page at that address; **Unpublish** hands it back; **Duplicate**
+  copies a page.
+- **The editor:** drag blocks from the left (page sections, pictures and
+  video, layout, BlueWhale specials, live catalog blocks) onto the canvas,
+  reorder by dragging, click any text to type on the page, use the panel on
+  the right for pictures, video, links and options. Preview per device with
+  the phone / tablet / laptop / desktop switch. Drafts autosave; **Publish**
+  makes the page live within seconds.
+- **Pictures and video:** every picture/video field lets you upload, pick
+  from the library, or paste a link. Videos can autoplay muted or show
+  controls; YouTube and Vimeo links go in the *Embed* block.
+- **Live catalog blocks** (editions, modules, industries, solutions, customer
+  stories, team, open roles, certifications, collateral, newsroom, resource
+  library) always show what the CMS holds — edit those items in the Studio.
+- **Storage:** with the CMS write token (`SANITY_API_WRITE_TOKEN` on the
+  server) pages, uploads and accounts are stored in the CMS (uploads on its
+  CDN). Without it the builder still works but keeps everything on the
+  server's disk, which is wiped on the next deployment — the dashboard shows
+  a warning in that case.
+
+Developers: `lib/builder/` (store, auth, actions, blocks, config, import,
+render), `app/(builder)/` (screens), `middleware.ts` (sign-in gate),
+`app/(site)/[...slug]` (new addresses), `builtPage()` in every coded page
+(the takeover hook). `scripts/builder-smoke.mjs` and
+`scripts/builder-takeover.mjs` exercise the flow in a real browser.
+
 ## Photographs and video
 
 - Every hero has a **Photograph** field: click it, upload a JPEG/PNG/WebP

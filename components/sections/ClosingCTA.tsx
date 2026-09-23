@@ -7,16 +7,16 @@ import { cn } from "@/lib/utils";
 import styles from "./EditorialSections.module.css";
 
 export interface CtaPath {
-  label: string;
+  label: React.ReactNode;
   href: string;
   /** What happens after this next step, and its time commitment. */
-  note?: string;
+  note?: React.ReactNode;
 }
 
 export function ClosingCTA({ eyebrow = "Next step", title, body, primary, secondary, tertiary, variant = "dark" }: {
-  eyebrow?: string;
-  title: string;
-  body: string;
+  eyebrow?: React.ReactNode;
+  title: React.ReactNode;
+  body: React.ReactNode;
   primary: CtaPath;
   secondary?: CtaPath;
   tertiary?: CtaPath;

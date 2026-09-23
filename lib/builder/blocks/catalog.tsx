@@ -25,7 +25,7 @@ type Heading = { eyebrow?: Txt; title?: Txt; description?: Txt };
 const Head = ({ h, right }: { h: Heading; right?: React.ReactNode }) =>
   h.title ? (
     <div className="mb-12 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-      <Reveal><SectionHeading eyebrow={str(h.eyebrow) || undefined} title={h.title} description={str(h.description) || undefined} /></Reveal>
+      <Reveal><SectionHeading eyebrow={h.eyebrow || undefined} title={h.title} description={h.description || undefined} /></Reveal>
       {right}
     </div>
   ) : null;

@@ -24,7 +24,7 @@ import { str, type Txt } from "./shared";
 
 type Heading = { eyebrow?: Txt; title?: Txt; description?: Txt };
 const Head = ({ h, inverse }: { h: Heading; inverse?: boolean }) =>
-  h.title ? <Reveal><SectionHeading eyebrow={str(h.eyebrow) || undefined} title={h.title} description={str(h.description) || undefined} inverse={inverse} /></Reveal> : null;
+  h.title ? <Reveal><SectionHeading eyebrow={h.eyebrow || undefined} title={h.title} description={h.description || undefined} inverse={inverse} /></Reveal> : null;
 
 export const Architecture: ComponentConfig<Heading & { button: { label: string; href: string } }> = {
   label: "Animated architecture (six layers)",

@@ -18,7 +18,7 @@ type Heading = { eyebrow?: Txt; title?: Txt; description?: Txt };
 const HeadingRow = ({ h, inverse, align, right }: { h: Heading; inverse?: boolean; align?: string; right?: React.ReactNode }) =>
   h.title || h.eyebrow ? (
     <div className={cn("flex flex-col gap-6", right && "sm:flex-row sm:items-end sm:justify-between")}>
-      <SectionHeading eyebrow={str(h.eyebrow) || undefined} title={h.title ?? ""} description={str(h.description) || undefined} inverse={inverse} align={align === "center" ? "center" : "left"} />
+      <SectionHeading eyebrow={h.eyebrow || undefined} title={h.title ?? ""} description={h.description || undefined} inverse={inverse} align={align === "center" ? "center" : "left"} />
       {right}
     </div>
   ) : null;
@@ -101,7 +101,7 @@ export const Hero: ComponentConfig<HeroProps> = {
               <div className={cn("grid grid-cols-2 gap-y-6 sm:grid-cols-4 sm:divide-x", dark ? "sm:divide-white/10" : "sm:divide-line")}>
                 {stats.map((s, i) => (
                   <div key={i} className="py-6 sm:px-6 sm:first:pl-0 sm:last:pr-0">
-                    <p className={cn("num text-3xl font-extrabold sm:text-4xl", dark ? "text-[var(--gold)]" : "text-accent")}><CountUp value={s.value} /></p>
+                    <p className={cn("num text-3xl font-extrabold sm:text-4xl", dark ? "text-[var(--gold)]" : "text-accent")}>{typeof s.value === "string" ? <CountUp value={s.value} /> : s.value}</p>
                     <p className={cn("mt-1 text-sm leading-snug", dark ? "text-white/70" : "text-muted")}>{s.label}</p>
                   </div>
                 ))}
@@ -244,7 +244,7 @@ export const Stats: ComponentConfig<StatsProps> = {
     <div className={cn("grid grid-cols-2 gap-6 lg:grid-cols-4", style === "strip" && "sm:divide-x sm:divide-line")}>
       {(list ?? []).map((s, i) => (
         <div key={i} className={cn(style === "cards" && "rounded-xl border border-line bg-surface p-6 shadow-sm", style === "strip" && "sm:px-6 sm:first:pl-0 sm:last:pr-0")}>
-          <p className={cn("num text-3xl font-extrabold sm:text-4xl", style === "dark" ? "text-[var(--gold)]" : "text-accent")}><CountUp value={s.value} /></p>
+          <p className={cn("num text-3xl font-extrabold sm:text-4xl", style === "dark" ? "text-[var(--gold)]" : "text-accent")}>{typeof s.value === "string" ? <CountUp value={s.value} /> : s.value}</p>
           <p className={cn("mt-1 text-sm leading-snug", style === "dark" ? "text-white/70" : "text-muted")}>{s.label}</p>
         </div>
       ))}
@@ -259,7 +259,7 @@ export const Faq: ComponentConfig<FaqProps> = {
   fields: { ...headingFields, tinted: bool("Grey background"), items: items("Questions", { q: text("Question"), a: textarea("Answer") }, { q: "A question buyers ask?", a: "The straight answer." }, "q") },
   defaultProps: { eyebrow: "Questions", title: "What buyers ask", description: "", tinted: true, items: [{ q: "What do you need from us to start?", a: "Read-only credentials for one cloud account." }] },
   render: ({ eyebrow, title, description, tinted, items: list }) => (
-    <FAQ items={(list ?? []).map((i) => ({ q: str(i.q), a: str(i.a) }))} eyebrow={str(eyebrow) || undefined} title={title ?? ""} description={str(description) || undefined} tinted={tinted} />
+    <FAQ items={(list ?? []).map((i) => ({ q: i.q, a: i.a }))} eyebrow={eyebrow || undefined} title={title ?? ""} description={description || undefined} tinted={tinted} />
   ),
 };
 
@@ -273,7 +273,7 @@ export const Closing: ComponentConfig<ClosingProps> = {
     primary: { label: "Book a working session", href: "/contact?intent=demo", note: "45 minutes · read-only credentials" }, secondary: { label: "", href: "", note: "" }, tertiary: { label: "", href: "", note: "" },
   },
   render: ({ eyebrow, title, body, variant, primary, secondary, tertiary }) => (
-    <ClosingCTA eyebrow={str(eyebrow)} title={str(title)} body={str(body)} variant={variant} primary={{ label: str(primary?.label), href: primary?.href || "#", note: primary?.note || undefined }}
+    <ClosingCTA eyebrow={eyebrow} title={title} body={body} variant={variant} primary={{ label: primary?.label, href: primary?.href || "#", note: primary?.note || undefined }}
       secondary={secondary?.label ? { label: secondary.label, href: secondary.href || "#", note: secondary.note || undefined } : undefined}
       tertiary={tertiary?.label ? { label: tertiary.label, href: tertiary.href || "#", note: tertiary.note || undefined } : undefined} />
   ),
