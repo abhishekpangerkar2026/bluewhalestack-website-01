@@ -50,6 +50,9 @@ builder.Services.AddSwaggerGen(o =>
     });
 });
 
+// Bearer-token API (no cookies), so any origin is safe to allow for the web build.
+builder.Services.AddCors(o => o.AddDefaultPolicy(p => p.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -59,6 +62,7 @@ using (var scope = app.Services.CreateScope())
 
 app.UseSwagger();
 app.UseSwaggerUI();
+app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 

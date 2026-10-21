@@ -269,6 +269,97 @@ public static partial class ApiRoutes
             return Results.Ok(new { resident = name, b.StartsAt, b.EndsAt });
         }).RequireAuthorization(p => p.RequireRole("Staff", "Trainer", "Admin")).WithTags("Bookings");
 
+        api.MapGet("/trainers/{id:guid}/availability", async (Guid id, string? date, AppDb db) =>
+        {
+            var day = DateTime.UtcNow.Add(Seed.Dubai).Date;
+            if (!string.IsNullOrEmpty(date) && !DateTime.TryParse(date, out day)) return Problem(400, "date must be yyyy-MM-dd.");
+            var from = DateTime.SpecifyKind(day.Date - Seed.Dubai, DateTimeKind.Utc);
+            var to = from.AddDays(1);
+            var taken = await db.Bookings
+                .Where(b => b.TrainerId == id && b.Status != BookingStatus.Cancelled && b.StartsAt >= from && b.StartsAt < to)
+                .Select(b => b.StartsAt).ToListAsync();
+            var now = DateTime.UtcNow;
+            var hours = Enumerable.Range(6, 16).Select(h =>
+            {
+                var start = from.AddHours(h);
+                return new { StartsAt = start, Available = start > now && !taken.Contains(start) };
+            });
+            return Results.Ok(hours);
+        }).WithTags("Trainers");
+
+        // ---- Challenges ----
+        // Monthly challenge: workouts are checked-in bookings. Names are shortened for privacy.
+        api.MapGet("/challenges/current", async (Guid? communityId, ClaimsPrincipal p, AppDb db) =>
+        {
+            var uid = p.UserId();
+            var local = DateTime.UtcNow.Add(Seed.Dubai);
+            var monthStart = DateTime.SpecifyKind(new DateTime(local.Year, local.Month, 1) - Seed.Dubai, DateTimeKind.Utc);
+            var monthEnd = monthStart.AddMonths(1);
+
+            var cid = communityId ?? await db.Leases.Where(l => l.UserId == uid).Select(l => (Guid?)l.CommunityId).FirstOrDefaultAsync();
+            if (cid is null) return Problem(400, "Link a Wasl lease first.");
+
+            var inMonth = db.Bookings.Where(b => b.Status == BookingStatus.CheckedIn && b.StartsAt >= monthStart && b.StartsAt < monthEnd);
+            var totals = await inMonth.GroupBy(b => b.CommunityId).Select(g => new { CommunityId = g.Key, Workouts = g.Count() }).ToListAsync();
+            var names = await db.Communities.ToDictionaryAsync(c => c.Id, c => c.Name);
+            var top = await inMonth.Where(b => b.CommunityId == cid)
+                .GroupBy(b => b.UserId).Select(g => new { UserId = g.Key, Workouts = g.Count() })
+                .OrderByDescending(x => x.Workouts).Take(10).ToListAsync();
+            var userNames = await db.Users.Where(u => top.Select(t => t.UserId).Contains(u.Id)).ToDictionaryAsync(u => u.Id, u => u.Name);
+            var mine = await inMonth.CountAsync(b => b.UserId == uid);
+
+            static string Short(string n)
+            {
+                var parts = n.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                return parts.Length > 1 ? $"{parts[0]} {parts[^1][0]}." : n;
+            }
+
+            return Results.Ok(new
+            {
+                title = $"{local:MMMM} challenge",
+                endsAt = monthEnd,
+                goal = 20,
+                myWorkouts = mine,
+                communities = totals.OrderByDescending(t => t.Workouts)
+                    .Select(t => new { t.CommunityId, Name = names.GetValueOrDefault(t.CommunityId, ""), t.Workouts }),
+                leaderboard = top.Select((t, i) => new
+                {
+                    Rank = i + 1, Name = Short(userNames.GetValueOrDefault(t.UserId, "Resident")), t.Workouts, IsMe = t.UserId == uid,
+                }),
+            });
+        }).WithTags("Challenges");
+
+        // ---- Trainer app ----
+        api.MapGet("/trainer/me/sessions", async (ClaimsPrincipal p, AppDb db) =>
+        {
+            var uid = p.UserId();
+            var trainer = await db.Trainers.FirstOrDefaultAsync(t => t.UserId == uid);
+            if (trainer is null) return Problem(403, "This account is not a trainer.");
+
+            var local = DateTime.UtcNow.Add(Seed.Dubai);
+            var dayStart = DateTime.SpecifyKind(local.Date - Seed.Dubai, DateTimeKind.Utc);
+            var monthStart = DateTime.SpecifyKind(new DateTime(local.Year, local.Month, 1) - Seed.Dubai, DateTimeKind.Utc);
+
+            var today = await db.Bookings
+                .Where(b => b.TrainerId == trainer.Id && b.Status != BookingStatus.Cancelled && b.StartsAt >= dayStart && b.StartsAt < dayStart.AddDays(1))
+                .OrderBy(b => b.StartsAt)
+                .Select(b => new
+                {
+                    b.Id, b.StartsAt, b.EndsAt, b.Status,
+                    Resident = db.Users.Where(u => u.Id == b.UserId).Select(u => u.Name).First(),
+                }).ToListAsync();
+            var month = await db.Bookings
+                .Where(b => b.TrainerId == trainer.Id && b.Status != BookingStatus.Cancelled && b.StartsAt >= monthStart && b.StartsAt < monthStart.AddMonths(1))
+                .Select(b => b.PriceAed).ToListAsync();
+            const decimal platformFee = 0.15m; // placeholder commission
+            return Results.Ok(new
+            {
+                trainer.Rating, today,
+                sessionsThisMonth = month.Count,
+                earningsThisMonthAed = Math.Round(month.Sum() * (1 - platformFee), 2),
+            });
+        }).WithTags("Trainers");
+
         // ---- Wallet ----
         api.MapGet("/wallet", async (ClaimsPrincipal p, AppDb db) =>
         {
