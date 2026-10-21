@@ -1,5 +1,5 @@
 # Builds the Flutter web app and serves it with nginx (Railway sets $PORT).
-FROM ghcr.io/cirruslabs/flutter:3.47.7 AS build
+FROM ghcr.io/cirruslabs/flutter:stable AS build
 WORKDIR /app
 COPY pubspec.yaml pubspec.lock ./
 RUN flutter pub get
