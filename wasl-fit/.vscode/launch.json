@@ -1,0 +1,51 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "App (web) → live Railway API",
+      "type": "dart",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/mobile",
+      "program": "lib/main.dart",
+      "deviceId": "chrome",
+      "args": ["--dart-define=API_URL=https://api-production-11c6f.up.railway.app"]
+    },
+    {
+      "name": "App (web) → local API",
+      "type": "dart",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/mobile",
+      "program": "lib/main.dart",
+      "deviceId": "chrome",
+      "args": ["--dart-define=API_URL=http://localhost:5080"]
+    },
+    {
+      "name": "App (phone/emulator) → live Railway API",
+      "type": "dart",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/mobile",
+      "program": "lib/main.dart",
+      "args": ["--dart-define=API_URL=https://api-production-11c6f.up.railway.app"]
+    },
+    {
+      "name": "API (.NET) → local Postgres",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build api",
+      "program": "${workspaceFolder}/api/bin/Debug/net8.0/WaslFit.Api.dll",
+      "cwd": "${workspaceFolder}/api",
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_URLS": "http://localhost:5080",
+        "ConnectionStrings__Default": "Host=localhost;Port=5432;Database=waslfit;Username=postgres;Password=postgres",
+        "SELF_SERVE_LEASE": "true",
+        "FAKE_PAYMENTS": "true"
+      },
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "Now listening on: (https?://\\S+)",
+        "uriFormat": "%s/swagger"
+      }
+    }
+  ]
+}

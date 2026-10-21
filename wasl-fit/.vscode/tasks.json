@@ -1,0 +1,10 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    { "label": "build api", "type": "process", "command": "dotnet", "args": ["build", "${workspaceFolder}/api/WaslFit.Api.csproj"], "problemMatcher": "$msCompile", "group": "build" },
+    { "label": "local database (Postgres)", "type": "shell", "command": "docker compose up -d db", "options": { "cwd": "${workspaceFolder}" }, "problemMatcher": [] },
+    { "label": "app: analyze", "type": "shell", "command": "flutter analyze", "options": { "cwd": "${workspaceFolder}/mobile" }, "problemMatcher": [] },
+    { "label": "app: test", "type": "shell", "command": "flutter test", "options": { "cwd": "${workspaceFolder}/mobile" }, "problemMatcher": [], "group": "test" },
+    { "label": "app: build web", "type": "shell", "command": "flutter build web --release --dart-define=API_URL=https://api-production-11c6f.up.railway.app", "options": { "cwd": "${workspaceFolder}/mobile" }, "problemMatcher": [] }
+  ]
+}

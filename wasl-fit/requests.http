@@ -1,0 +1,29 @@
+### Smoke-test the API (VS Code "REST Client" extension). Change @base to http://localhost:5080 for local.
+@base = https://api-production-11c6f.up.railway.app
+
+### Health
+GET {{base}}/health
+
+### Register (copy the token from the response into @token below)
+POST {{base}}/auth/register
+Content-Type: application/json
+
+{ "phone": "+971551110002", "name": "Test Resident", "password": "SmokeTest!234" }
+
+###
+@token = PASTE_TOKEN_HERE
+
+### Communities
+GET {{base}}/communities
+Authorization: Bearer {{token}}
+
+### Link a lease (needs SELF_SERVE_LEASE=true)
+POST {{base}}/me/leases
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "communityId": "PASTE_COMMUNITY_ID", "unit": "1204" }
+
+### My bookings
+GET {{base}}/bookings/mine
+Authorization: Bearer {{token}}
