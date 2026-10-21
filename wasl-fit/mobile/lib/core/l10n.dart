@@ -120,4 +120,7 @@ const _ar = <String, String>{
   'No trainers match': 'لا يوجد مدربون مطابقون',
   'No workouts logged yet': 'لم تُسجَّل تمارين بعد',
   'Paid': 'المدفوع',
+  'Enter your name': 'أدخل اسمك',
+  'to go': 'متبقية',
+  'Enter a valid phone number, e.g. +971501234567': 'أدخل رقم هاتف صحيحاً، مثال: ‎+971501234567',
 };

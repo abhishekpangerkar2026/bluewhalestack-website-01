@@ -42,7 +42,9 @@ class ConfirmScreen extends StatelessWidget {
                 decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16), border: Border.all(color: Palette.line)),
                 child: QrImageView(data: b.qrToken, size: 200, eyeStyle: const QrEyeStyle(color: Palette.ink, eyeShape: QrEyeShape.square)),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 10),
+              SelectableText(b.qrToken, textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 11, letterSpacing: .5)),
+              const SizedBox(height: 12),
               Text(b.isTrainer ? 'Session with ${b.title}' : b.title, style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 17)),
               const SizedBox(height: 4),
               Text(fmtDayTime(b.startsAt), style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 14)),
@@ -336,7 +338,7 @@ class CompeteScreen extends StatelessWidget {
                 Expanded(
                   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                     Text('${context.tr('Your goal')}: ${c.goal} ${context.tr('workouts')}', style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15)),
-                    Text('${(c.goal - c.mine).clamp(0, c.goal)} ${context.tr('workouts')}', style: Theme.of(context).textTheme.bodySmall),
+                    Text('${(c.goal - c.mine).clamp(0, c.goal)} ${context.tr('to go')}', style: Theme.of(context).textTheme.bodySmall),
                   ]),
                 ),
               ]),

@@ -120,7 +120,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 keyboardType: TextInputType.phone,
                 autofillHints: const [AutofillHints.telephoneNumber],
                 decoration: InputDecoration(labelText: context.tr('Phone number')),
-                validator: (v) => RegExp(r'^\+?\d{8,15}$').hasMatch((v ?? '').trim()) ? null : '+9715XXXXXXXX',
+                validator: (v) => RegExp(r'^\+?\d{8,15}$').hasMatch((v ?? '').trim()) ? null : context.trRead('Enter a valid phone number, e.g. +971501234567'),
               ),
               if (widget.register) ...[
                 const SizedBox(height: 14),
@@ -129,7 +129,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   textCapitalization: TextCapitalization.words,
                   autofillHints: const [AutofillHints.name],
                   decoration: InputDecoration(labelText: context.tr('Full name')),
-                  validator: (v) => (v ?? '').trim().isEmpty ? '•' : null,
+                  validator: (v) => (v ?? '').trim().isEmpty ? context.trRead('Enter your name') : null,
                 ),
               ],
               const SizedBox(height: 14),

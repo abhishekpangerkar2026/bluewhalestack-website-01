@@ -5,7 +5,7 @@ COPY pubspec.yaml pubspec.lock ./
 RUN flutter pub get
 COPY . .
 ARG API_URL=https://api-production-11c6f.up.railway.app
-RUN flutter build web --release --dart-define=API_URL=${API_URL}
+RUN flutter build web --release --no-web-resources-cdn --dart-define=API_URL=${API_URL}
 
 FROM nginx:1.27-alpine
 ENV PORT=8080
